@@ -2,10 +2,12 @@
 #define ELFFILE_H
 
 #include <QFile>
+#include <QVector>
 
 #include <memory>
 
 class ElfHeader;
+class ElfSection;
 
 /** Represents a ELF file. */
 class ElfFile
@@ -23,6 +25,7 @@ private:
     QFile m_file;
     uchar *m_data;
     std::unique_ptr<ElfHeader> m_header;
+    QVector<ElfSection*> m_sections;
 };
 
 #endif // ELFFILE_H

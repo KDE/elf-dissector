@@ -16,6 +16,9 @@ set(elf_dissector_srcs
     elffile.cpp
     elfheader.cpp
     elfsectionheader.cpp
+    elfsection.cpp
+    elfstringtablesection.cpp
+    elfsymboltablesection.cpp
     main.cpp
 )
 
