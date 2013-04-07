@@ -13,10 +13,10 @@ public:
 //    virtual uint64_t address() const = 0;
    virtual uint64_t offset() const = 0;
    virtual uint64_t size() const = 0;
-//    virtual uint32_t link() const = 0;
+   virtual uint32_t link() const = 0;
 //    virtual uint32_t info() const = 0;
 //    virtual uint64_t alignment() const = 0;
-//    virtual uint64_t entrySize() const = 0;
+   virtual uint64_t entrySize() const = 0;
 };
 
 template <typename T>
@@ -31,6 +31,9 @@ public:
 
     inline uint64_t offset() const override { return m_hdr->sh_offset; }
     inline uint64_t size() const override { return m_hdr->sh_size; }
+    inline uint32_t link() const override { return m_hdr->sh_link; }
+
+    inline uint64_t entrySize() const override { return m_hdr->sh_entsize; }
 
 private:
     T* m_hdr;
