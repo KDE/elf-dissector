@@ -21,16 +21,19 @@ QVector<QByteArray> Demangler::demangle(const char* name)
         return result;
     }
 
+    handleNameComponent(component, result);
+    if (!result.isEmpty()) {
+        free(memory);
+        return result;
+    }
+
     qDebug() << name << component << memory << component->type;
     size_t size;
     char * fullName = cplus_demangle_print(DMGL_NO_OPTS, component, strlen(name), &size);
     result << fullName;
     free(fullName);
 
-    handleNameComponent(component, result);
-
     free(memory);
-    qDebug() << result;
     return result;
 }
 

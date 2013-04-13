@@ -46,13 +46,19 @@ void MainWindow::fileOpen()
     m_treeMap->setFieldForced(1, false);
     ui->tab_2->layout()->addWidget(m_treeMap);
 
-    QVector<TreeMapItem*> sectionItems;
+    struct SymbolNode {
+        TreeMapItem *item;
+        QHash<QByteArray, SymbolNode*> children;
+    };
+
+    QVector<SymbolNode*> sectionItems;
     sectionItems.resize(file.sectionHeaders().size());
 
     for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
         auto item = new TreeMapItem(baseItem, shdr->size(), file.stringTableEntry(shdr->name()), QString::number(shdr->size()));
         item->setSum(shdr->size());
-        sectionItems[shdr->sectionIndex()] = item;
+        sectionItems[shdr->sectionIndex()] = new SymbolNode;
+        sectionItems[shdr->sectionIndex()]->item = item;
     }
 
     Demangler demangler;
@@ -65,9 +71,21 @@ void MainWindow::fileOpen()
                 ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
                 if (entry->size() < 128)
                     continue;
-                auto item = new TreeMapItem(sectionItems.at(entry->sectionIndex()), entry->size());
-                item->setField(0, demangler.demangle(symtab->linkedSection<ElfStringTableSection>()->string(entry->name())).first());
-                item->setField(1, QString::number(entry->size())); // TODO pretty print size
+                SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
+                const QVector<QByteArray> demangledNames = demangler.demangle(symtab->linkedSection<ElfStringTableSection>()->string(entry->name()));
+                for (const QByteArray &demangledName : demangledNames) {
+                    SymbolNode *node = parentNode->children.value(demangledName);
+                    if (!node) {
+                        node = new SymbolNode;
+                        node->item = new TreeMapItem(parentNode->item);
+                        node->item->setField(0, demangledName);
+                        parentNode->children.insert(demangledName, node);
+                    }
+                    node->item->setSum(node->item->sum() + entry->size());
+                    node->item->setValue(node->item->sum());
+                    node->item->setField(1, QString::number(node->item->sum()));
+                    parentNode = node;
+                }
                 delete entry;
             }
         }
