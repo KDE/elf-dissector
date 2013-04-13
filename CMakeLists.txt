@@ -11,7 +11,12 @@ if(Qt5_POSITION_INDEPENDENT_CODE)
 endif()
 
 
-include_directories(${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS})
+include_directories(
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Gui_INCLUDE_DIRS}
+    ${Qt5Widgets_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}/3rdparty
+)
 
 set(elf_dissector_srcs
     main.cpp
@@ -24,6 +29,8 @@ set(elf_dissector_srcs
     elf/elfsection.cpp
     elf/elfstringtablesection.cpp
     elf/elfsymboltablesection.cpp
+
+    3rdparty/treemap/treemap.cpp
 )
 
 qt5_wrap_ui(elf_dissector_srcs

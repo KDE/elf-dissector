@@ -5,6 +5,8 @@
 
 #include <memory>
 
+class TreeMapWidget;
+
 namespace Ui
 {
 class MainWindow;
@@ -22,6 +24,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;
+    TreeMapWidget *m_treeMap = 0;
 };
 
 #endif // MAINWINDOW_H
