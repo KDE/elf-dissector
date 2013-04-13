@@ -64,6 +64,7 @@ void ElfFile::parse()
 
         ElfSection *section = 0;
         switch (shdr->type()) {
+            // TODO make shared pointers
             case SHT_STRTAB:
                 section = new ElfStringTableSection(m_data + shdr->sectionOffset(), shdr->size());
                 break;
@@ -88,7 +89,7 @@ void ElfFile::parse()
     for (const ElfSectionHeader::Ptr &shdr : m_sectionHeaders) {
         qDebug() << shdr->sectionIndex() << "size:" << shdr->size() << "offset:" << shdr->sectionOffset() << stringTableEntry(shdr->name()) << shdr->type();
         if (shdr->type() == SHT_SYMTAB) {
-            ElfSymbolTableSection* symtab = static_cast<ElfSymbolTableSection*>(m_sections.at(shdr->sectionIndex()));
+            auto symtab = section<ElfSymbolTableSection>(shdr->sectionIndex());
             for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
                 ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
                 qDebug() << j << symtab->linkedSection<ElfStringTableSection>()->string(entry->name()) << entry->size();
@@ -100,6 +101,7 @@ void ElfFile::parse()
 
 const char* ElfFile::stringTableEntry(int index) const
 {
+    // TODO port to string table section class
     Elf64_Shdr *stringTableSection = reinterpret_cast<Elf64_Shdr*>(
         m_data + m_header->sectionHeaderTableOffset() + m_header->stringTableSectionHeader() * m_header->sectionHeaderEntrySize());
     return (const char*)(m_data + stringTableSection->sh_offset + index);

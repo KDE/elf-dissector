@@ -33,6 +33,12 @@ public:
     ElfHeader* header() const;
     /** Returns a list of all available section headers. */
     QVector<ElfSectionHeader::Ptr> sectionHeaders();
+    /** Returns the section at index @p index. */
+    template <typename T>
+    inline T* section(int index) const
+    {
+        return static_cast<T*>(m_sections.at(index));
+    }
 
     void parse();
 
