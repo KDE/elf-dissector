@@ -10,9 +10,6 @@
     <height>600</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
@@ -61,11 +58,17 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset theme="document-open"/>
+   </property>
    <property name="text">
     <string>&amp;Open...</string>
    </property>
   </action>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset theme="application-exit"/>
+   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>

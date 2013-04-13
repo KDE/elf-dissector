@@ -22,6 +22,7 @@ MainWindow::~MainWindow()
 void MainWindow::fileOpen()
 {
     const QString fileName = QFileDialog::getOpenFileName(this, tr("Open ELF Object"));
+    setWindowFilePath(fileName);
     if (fileName.isEmpty())
         return;
 
@@ -39,6 +40,6 @@ void MainWindow::fileOpen()
     ui->tab_2->layout()->addWidget(m_treeMap);
 
     for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
-        auto item = new TreeMapItem(baseItem, shdr->size(), file.stringTableEntry(shdr->name()), QString::number(shdr->size()));
+        new TreeMapItem(baseItem, shdr->size(), file.stringTableEntry(shdr->name()), QString::number(shdr->size()));
     }
 }
