@@ -29,8 +29,8 @@ void MainWindow::fileOpen()
     file.parse();
 
     TreeMapItem *baseItem = new TreeMapItem;
-    baseItem->setText(0, "myfile.so");
-    baseItem->setSum(1.0);
+    baseItem->setText(0, file.displayName());
+    baseItem->setSum(file.size());
 
     m_treeMap = new TreeMapWidget(baseItem);
     // looks weird, but this forces m_treeMap->_attrs to be resided correctly for text to be drawn
@@ -38,8 +38,7 @@ void MainWindow::fileOpen()
     m_treeMap->setFieldForced(1, false);
     ui->tab_2->layout()->addWidget(m_treeMap);
 
-    auto item = new TreeMapItem(baseItem, 0.5, "hello1", "hello2");
-    item->setBackColor(Qt::red);
-    item = new TreeMapItem(baseItem, 0.4, "bla", "blub", "blab", "lalala");
-    item->setBackColor(Qt::green);
+    for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
+        auto item = new TreeMapItem(baseItem, shdr->size(), file.stringTableEntry(shdr->name()), QString::number(shdr->size()));
+    }
 }

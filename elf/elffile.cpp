@@ -21,6 +21,21 @@ ElfFile::~ElfFile()
     qDeleteAll(m_sections);
 }
 
+QString ElfFile::displayName() const
+{
+    return m_file.fileName();
+}
+
+qint64 ElfFile::size() const
+{
+    return m_file.size();
+}
+
+QVector< ElfSectionHeader::Ptr > ElfFile::sectionHeaders()
+{
+    return m_sectionHeaders;
+}
+
 void ElfFile::parse()
 {
     // TODO detect 32/64 versions
@@ -28,22 +43,25 @@ void ElfFile::parse()
 
 //     qDebug() << Q_FUNC_INFO << m_header->e_ehsize << m_header->e_machine << m_header->e_shnum;
 
+    m_sectionHeaders.reserve(m_header->sectionHeaderCount());
     m_sections.resize(m_header->sectionHeaderCount());
 
     // pass 1: create sections
     for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
         // TODO 32/64 detection
-        ElfSectionHeaderImpl<Elf64_Shdr> shdr(m_data + m_header->sectionHeaderTableOffset() + i * m_header->sectionHeaderEntrySize());
+        ElfSectionHeader::Ptr shdr(new ElfSectionHeaderImpl<Elf64_Shdr>(m_data + m_header->sectionHeaderTableOffset() + i * m_header->sectionHeaderEntrySize()));
+        m_sectionHeaders.push_back(shdr);
+
         ElfSection *section = 0;
-        switch (shdr.type()) {
+        switch (shdr->type()) {
             case SHT_STRTAB:
-                section = new ElfStringTableSection(m_data + shdr.offset(), shdr.size());
+                section = new ElfStringTableSection(m_data + shdr->offset(), shdr->size());
                 break;
             case SHT_SYMTAB:
-                section = new ElfSymbolTableSectionImpl<Elf64_Sym>(m_data + shdr.offset(), shdr.size());
+                section = new ElfSymbolTableSectionImpl<Elf64_Sym>(m_data + shdr->offset(), shdr->size());
                 break;
             default:
-                section = new ElfSection(m_data + shdr.offset(), shdr.size());
+                section = new ElfSection(m_data + shdr->offset(), shdr->size());
                 break;
         }
         m_sections[i] = section;

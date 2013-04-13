@@ -2,21 +2,28 @@
 #define ELFSECTIONHEADER_H
 
 #include <cstdint>
+#include <memory>
 
 /** Size-independent adapter to ElfXX_Shdr. */
 class ElfSectionHeader
 {
 public:
-   virtual uint32_t name() const = 0;
-   virtual uint32_t type() const = 0;
-   virtual uint64_t flags() const = 0;
+    typedef std::shared_ptr<ElfSectionHeader> Ptr;
+
+    ElfSectionHeader() = default;
+    ElfSectionHeader(const ElfSectionHeader &other) = delete;
+    ElfSectionHeader& operator=(const ElfSectionHeader &other) = delete;
+
+    virtual uint32_t name() const = 0;
+    virtual uint32_t type() const = 0;
+    virtual uint64_t flags() const = 0;
 //    virtual uint64_t address() const = 0;
-   virtual uint64_t offset() const = 0;
-   virtual uint64_t size() const = 0;
-   virtual uint32_t link() const = 0;
+    virtual uint64_t offset() const = 0;
+    virtual uint64_t size() const = 0;
+    virtual uint32_t link() const = 0;
 //    virtual uint32_t info() const = 0;
 //    virtual uint64_t alignment() const = 0;
-   virtual uint64_t entrySize() const = 0;
+    virtual uint64_t entrySize() const = 0;
 };
 
 template <typename T>
@@ -36,7 +43,7 @@ public:
     inline uint64_t entrySize() const override { return m_hdr->sh_entsize; }
 
 private:
-    T* m_hdr;
+    T* m_hdr = 0;
 };
 
 #endif // ELFSECTIONHEADER_H
