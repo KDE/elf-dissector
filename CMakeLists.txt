@@ -10,6 +10,8 @@ if(Qt5_POSITION_INDEPENDENT_CODE)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
+# TODO: find headers/libs: elf.h demangle.h libiberty
+
 
 include_directories(
     ${Qt5Core_INCLUDE_DIRS}
@@ -30,6 +32,8 @@ set(elf_dissector_srcs
     elf/elfstringtablesection.cpp
     elf/elfsymboltablesection.cpp
 
+    demangle/demangler.cpp
+
     3rdparty/treemap/treemap.cpp
 )
 
@@ -38,5 +42,4 @@ qt5_wrap_ui(elf_dissector_srcs
 )
 
 add_executable(elf-dissector ${elf_dissector_srcs})
-target_link_libraries(elf-dissector Qt5::Widgets)
-
+target_link_libraries(elf-dissector Qt5::Widgets iberty)

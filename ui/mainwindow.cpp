@@ -5,6 +5,8 @@
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfstringtablesection.h>
 
+#include <demangle/demangler.h>
+
 #include <treemap/treemap.h>
 
 #include <QApplication>
@@ -53,6 +55,8 @@ void MainWindow::fileOpen()
         sectionItems[shdr->sectionIndex()] = item;
     }
 
+    Demangler demangler;
+
     for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
         if (shdr->type() == SHT_SYMTAB) {
             auto symtab = file.section<ElfSymbolTableSection>(shdr->sectionIndex());
@@ -62,7 +66,7 @@ void MainWindow::fileOpen()
                 if (entry->size() < 128)
                     continue;
                 auto item = new TreeMapItem(sectionItems.at(entry->sectionIndex()), entry->size());
-                item->setField(0, symtab->linkedSection<ElfStringTableSection>()->string(entry->name()));
+                item->setField(0, demangler.demangle(symtab->linkedSection<ElfStringTableSection>()->string(entry->name())).first());
                 item->setField(1, QString::number(entry->size())); // TODO pretty print size
                 delete entry;
             }
