@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "elffile.h"
+#include <elf/elffile.h>
 
 int main(int argc, char** argv)
 {
