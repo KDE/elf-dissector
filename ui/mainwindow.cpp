@@ -2,10 +2,15 @@
 #include "ui_mainwindow.h"
 
 #include <elf/elffile.h>
+#include <elf/elfsymboltablesection.h>
+#include <elf/elfstringtablesection.h>
+
 #include <treemap/treemap.h>
 
 #include <QApplication>
 #include <QFileDialog>
+
+#include <elf.h>
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -39,7 +44,29 @@ void MainWindow::fileOpen()
     m_treeMap->setFieldForced(1, false);
     ui->tab_2->layout()->addWidget(m_treeMap);
 
+    QVector<TreeMapItem*> sectionItems;
+    sectionItems.resize(file.sectionHeaders().size());
+
     for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
-        new TreeMapItem(baseItem, shdr->size(), file.stringTableEntry(shdr->name()), QString::number(shdr->size()));
+        auto item = new TreeMapItem(baseItem, shdr->size(), file.stringTableEntry(shdr->name()), QString::number(shdr->size()));
+        item->setSum(shdr->size());
+        sectionItems[shdr->sectionIndex()] = item;
+    }
+
+    for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
+        if (shdr->type() == SHT_SYMTAB) {
+            auto symtab = file.section<ElfSymbolTableSection>(shdr->sectionIndex());
+            for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
+                // TODO make these shared pointers and keep them in the section object
+                ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
+                if (entry->size() < 128)
+                    continue;
+                auto item = new TreeMapItem(sectionItems.at(entry->sectionIndex()), entry->size());
+                item->setField(0, symtab->linkedSection<ElfStringTableSection>()->string(entry->name()));
+                item->setField(1, QString::number(entry->size())); // TODO pretty print size
+                delete entry;
+            }
+        }
+
     }
 }
