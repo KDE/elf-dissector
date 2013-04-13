@@ -1,6 +1,6 @@
 #include "elffile.h"
 #include "elfheader.h"
-#include "elfsectionheader.h"
+#include "elfsectionheader_impl.h"
 #include "elfstringtablesection.h"
 #include "elfsymboltablesection.h"
 
@@ -31,6 +31,16 @@ qint64 ElfFile::size() const
     return m_file.size();
 }
 
+const unsigned char* ElfFile::rawData() const
+{
+    return m_data;
+}
+
+ElfHeader* ElfFile::header() const
+{
+    return m_header.get();
+}
+
 QVector< ElfSectionHeader::Ptr > ElfFile::sectionHeaders()
 {
     return m_sectionHeaders;
@@ -49,41 +59,37 @@ void ElfFile::parse()
     // pass 1: create sections
     for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
         // TODO 32/64 detection
-        ElfSectionHeader::Ptr shdr(new ElfSectionHeaderImpl<Elf64_Shdr>(m_data + m_header->sectionHeaderTableOffset() + i * m_header->sectionHeaderEntrySize()));
+        ElfSectionHeader::Ptr shdr(new ElfSectionHeaderImpl<Elf64_Shdr>(this, i));
         m_sectionHeaders.push_back(shdr);
 
         ElfSection *section = 0;
         switch (shdr->type()) {
             case SHT_STRTAB:
-                section = new ElfStringTableSection(m_data + shdr->offset(), shdr->size());
+                section = new ElfStringTableSection(m_data + shdr->sectionOffset(), shdr->size());
                 break;
             case SHT_SYMTAB:
-                section = new ElfSymbolTableSectionImpl<Elf64_Sym>(m_data + shdr->offset(), shdr->size());
+                section = new ElfSymbolTableSectionImpl<Elf64_Sym>(m_data + shdr->sectionOffset(), shdr->size());
                 break;
             default:
-                section = new ElfSection(m_data + shdr->offset(), shdr->size());
+                section = new ElfSection(m_data + shdr->sectionOffset(), shdr->size());
                 break;
         }
         m_sections[i] = section;
     }
 
     // pass 2: set section links
-    for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
-        // TODO 32/64 detection
-        ElfSectionHeaderImpl<Elf64_Shdr> shdr(m_data + m_header->sectionHeaderTableOffset() + i * m_header->sectionHeaderEntrySize());
-        if (shdr.link()) {
-            m_sections[i]->setLinkedSection(m_sections[shdr.link()]);
+    for (const ElfSectionHeader::Ptr &shdr : m_sectionHeaders) {
+        if (shdr->link()) {
+            m_sections[shdr->sectionIndex()]->setLinkedSection(m_sections[shdr->link()]);
         }
     }
 
     // pass 3: debug output
-    for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
-        // TODO 32/64 detection
-        ElfSectionHeaderImpl<Elf64_Shdr> shdr(m_data + m_header->sectionHeaderTableOffset() + i * m_header->sectionHeaderEntrySize());
-        qDebug() << i << "size:" << shdr.size() << "offset:" << shdr.offset() << stringTableEntry(shdr.name()) << shdr.type();
-        if (shdr.type() == SHT_SYMTAB) {
-            ElfSymbolTableSection* symtab = static_cast<ElfSymbolTableSection*>(m_sections.at(i));
-            for (unsigned int j = 0; j < (shdr.size() / shdr.entrySize()); ++j) {
+    for (const ElfSectionHeader::Ptr &shdr : m_sectionHeaders) {
+        qDebug() << shdr->sectionIndex() << "size:" << shdr->size() << "offset:" << shdr->sectionOffset() << stringTableEntry(shdr->name()) << shdr->type();
+        if (shdr->type() == SHT_SYMTAB) {
+            ElfSymbolTableSection* symtab = static_cast<ElfSymbolTableSection*>(m_sections.at(shdr->sectionIndex()));
+            for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
                 ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
                 qDebug() << j << symtab->linkedSection<ElfStringTableSection>()->string(entry->name()) << entry->size();
                 delete entry;

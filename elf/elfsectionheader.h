@@ -4,46 +4,39 @@
 #include <cstdint>
 #include <memory>
 
+class ElfFile;
+
 /** Size-independent adapter to ElfXX_Shdr. */
 class ElfSectionHeader
 {
 public:
     typedef std::shared_ptr<ElfSectionHeader> Ptr;
 
-    ElfSectionHeader() = default;
     ElfSectionHeader(const ElfSectionHeader &other) = delete;
     ElfSectionHeader& operator=(const ElfSectionHeader &other) = delete;
+
+    uint16_t sectionIndex() const;
+    /** The location of the header (not the section it describes) in the ELF file. */
+    uint64_t headerOffset() const;
 
     virtual uint32_t name() const = 0;
     virtual uint32_t type() const = 0;
     virtual uint64_t flags() const = 0;
 //    virtual uint64_t address() const = 0;
-    virtual uint64_t offset() const = 0;
+    /** The location of the section (not this header) in the ELF file. */
+    virtual uint64_t sectionOffset() const = 0;
     virtual uint64_t size() const = 0;
     virtual uint32_t link() const = 0;
 //    virtual uint32_t info() const = 0;
 //    virtual uint64_t alignment() const = 0;
     virtual uint64_t entrySize() const = 0;
-};
 
-template <typename T>
-class ElfSectionHeaderImpl : public ElfSectionHeader
-{
-public:
-    inline ElfSectionHeaderImpl(unsigned char *data) : m_hdr(reinterpret_cast<T*>(data)) {}
-
-    inline uint32_t name() const override { return m_hdr->sh_name; }
-    inline uint32_t type() const override { return m_hdr->sh_type; }
-    inline uint64_t flags() const override { return m_hdr->sh_flags; }
-
-    inline uint64_t offset() const override { return m_hdr->sh_offset; }
-    inline uint64_t size() const override { return m_hdr->sh_size; }
-    inline uint32_t link() const override { return m_hdr->sh_link; }
-
-    inline uint64_t entrySize() const override { return m_hdr->sh_entsize; }
+protected:
+    explicit ElfSectionHeader(ElfFile *file, uint16_t sectionIndex);
 
 private:
-    T* m_hdr = 0;
+    ElfFile *m_file = 0;
+    uint16_t m_sectionIndex = 0;
 };
 
 #endif // ELFSECTIONHEADER_H
