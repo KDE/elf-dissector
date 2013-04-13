@@ -14,6 +14,7 @@ public:
     public:
         virtual ~ElfSymbolTableEntry();
         virtual uint32_t name() const = 0;
+        virtual uint16_t sectionIndex() const = 0;
         virtual uint64_t size() const = 0;
     };
 
@@ -38,13 +39,18 @@ public:
             return m_symbol->st_name;
         }
 
+        inline uint16_t sectionIndex() const override
+        {
+            return m_symbol->st_shndx;
+        }
+
         inline uint64_t size() const override
         {
             return m_symbol->st_size;
         }
 
     private:
-        S* m_symbol;
+        S* m_symbol = 0;
     };
 
     inline ElfSymbolTableSection::ElfSymbolTableEntry* entry(uint32_t index) const override
