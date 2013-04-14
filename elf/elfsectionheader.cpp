@@ -25,3 +25,8 @@ const char* ElfSectionHeader::name() const
 {
     return m_file->section<ElfStringTableSection>(m_file->header()->stringTableSectionHeader())->string(nameIndex());
 }
+
+bool ElfSectionHeader::isDebugInformation() const
+{
+    return strncmp(name(), ".debug", 6) == 0;
+}

@@ -34,6 +34,8 @@ public:
 
     /** Section name. */
     const char* name() const;
+    /** Returns @c true if this section is related to debug information in some way. */
+    bool isDebugInformation() const;
 
 protected:
     explicit ElfSectionHeader(ElfFile *file, uint16_t sectionIndex);

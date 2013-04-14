@@ -96,6 +96,10 @@ void MainWindow::loadFile(const QString& fileName)
     sectionItems.resize(file.sectionHeaders().size());
 
     for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
+        if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation()) {
+            baseItem->setSum(baseItem->sum() - shdr->size());
+            continue;
+        }
         auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
         item->setSum(shdr->size());
         sectionItems[shdr->sectionIndex()] = new SymbolNode;
@@ -105,12 +109,14 @@ void MainWindow::loadFile(const QString& fileName)
     Demangler demangler;
 
     for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
+        if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation())
+            continue;
         if (shdr->type() == SHT_SYMTAB) {
             auto symtab = file.section<ElfSymbolTableSection>(shdr->sectionIndex());
             for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
                 // TODO make these shared pointers and keep them in the section object
                 ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
-                if (entry->size() < 128)
+                if (entry->size() < 128 || !sectionItems.at(entry->sectionIndex()))
                     continue;
                 SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
                 const QVector<QByteArray> demangledNames = demangler.demangle(symtab->linkedSection<ElfStringTableSection>()->string(entry->name()));
