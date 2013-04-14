@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "colorizer.h"
 #include "ui_mainwindow.h"
 
 #include <elf/elffile.h>
@@ -94,6 +95,7 @@ void MainWindow::loadFile(const QString& fileName)
 
     QVector<SymbolNode*> sectionItems;
     sectionItems.resize(file.sectionHeaders().size());
+    Colorizer colorizer;
 
     for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
         if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation()) {
@@ -102,6 +104,7 @@ void MainWindow::loadFile(const QString& fileName)
         }
         auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
         item->setSum(shdr->size());
+        item->setBackColor(colorizer.nextColor());
         sectionItems[shdr->sectionIndex()] = new SymbolNode;
         sectionItems[shdr->sectionIndex()]->item = item;
     }
