@@ -23,6 +23,7 @@ private slots:
     void fileOpen();
     void hideDebugInformation();
     void reloadFileOnStartup();
+    void colorizationChanged();
 
 private:
     void restoreSettings();

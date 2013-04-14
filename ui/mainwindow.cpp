@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::fileOpen);
     connect(ui->actionQuit, &QAction::triggered, &QCoreApplication::quit);
     connect(ui->actionHideDebugInformation, &QAction::triggered, this, &MainWindow::hideDebugInformation);
+    connect(ui->actionColorizeSections, &QAction::triggered, this, &MainWindow::colorizationChanged);
+    connect(ui->actionColorizeSymbols, &QAction::triggered, this, &MainWindow::colorizationChanged);
 
     restoreSettings();
 }
@@ -56,20 +58,32 @@ void MainWindow::reloadFileOnStartup()
     settings.setValue("Settings/ReloadPreviousFile", ui->actionReopenPreviousFile->isChecked());
 }
 
+void MainWindow::colorizationChanged()
+{
+    QSettings settings;
+    settings.setValue("View/ColorizeSections", ui->actionColorizeSections->isChecked());
+    settings.setValue("View/ColorizeSymbols", ui->actionColorizeSymbols->isChecked());
+    loadFile(m_currentFileName);
+}
+
 void MainWindow::restoreSettings()
 {
     QSettings settings;
     ui->actionHideDebugInformation->setChecked(settings.value("View/HideDebugInfo", false).toBool());
+    ui->actionColorizeSections->setChecked(settings.value("View/ColorizeSections", true).toBool());
+    ui->actionColorizeSymbols->setChecked(settings.value("View/ColorizeSymbols", false).toBool());
     ui->actionReopenPreviousFile->setChecked(settings.value("Settings/ReloadPreviousFile", true).toBool());
     if (ui->actionReopenPreviousFile->isChecked()) {
         m_currentFileName = settings.value("Recent/PreviousFile").toString();
-        if (!m_currentFileName.isEmpty())
-            loadFile(m_currentFileName);
+        loadFile(m_currentFileName);
     }
 }
 
 void MainWindow::loadFile(const QString& fileName)
 {
+    if (fileName.isEmpty())
+        return;
+
     // TODO all temporary, still needs a proper model!
 
     delete m_treeMap; // TODO: really needed? deletes items as well?
@@ -104,7 +118,8 @@ void MainWindow::loadFile(const QString& fileName)
         }
         auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
         item->setSum(shdr->size());
-        item->setBackColor(colorizer.nextColor());
+        if (ui->actionColorizeSections->isChecked())
+            item->setBackColor(colorizer.nextColor());
         sectionItems[shdr->sectionIndex()] = new SymbolNode;
         sectionItems[shdr->sectionIndex()]->item = item;
     }
@@ -119,7 +134,7 @@ void MainWindow::loadFile(const QString& fileName)
             for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
                 // TODO make these shared pointers and keep them in the section object
                 ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
-                if (entry->size() < 128 || !sectionItems.at(entry->sectionIndex()))
+                if (entry->size() < 256 || !sectionItems.at(entry->sectionIndex()))
                     continue;
                 SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
                 const QVector<QByteArray> demangledNames = demangler.demangle(symtab->linkedSection<ElfStringTableSection>()->string(entry->name()));
@@ -129,6 +144,11 @@ void MainWindow::loadFile(const QString& fileName)
                         node = new SymbolNode;
                         node->item = new TreeMapItem(parentNode->item);
                         node->item->setField(0, demangledName);
+                        if (ui->actionColorizeSymbols->isChecked() && parentNode->item->parent() == baseItem) {
+                            node->item->setBackColor(colorizer.nextColor());
+                        } else {
+                            node->item->setBackColor(parentNode->item->backColor());
+                        }
                         parentNode->children.insert(demangledName, node);
                     }
                     node->item->setSum(node->item->sum() + entry->size());

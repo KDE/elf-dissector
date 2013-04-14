@@ -101,6 +101,9 @@
      <string>&amp;View</string>
     </property>
     <addaction name="actionHideDebugInformation"/>
+    <addaction name="separator"/>
+    <addaction name="actionColorizeSections"/>
+    <addaction name="actionColorizeSymbols"/>
    </widget>
    <widget class="QMenu" name="menu_Settings">
     <property name="title">
@@ -159,6 +162,22 @@
    </property>
    <property name="text">
     <string>Reopen &amp;Previously Loaded Files</string>
+   </property>
+  </action>
+  <action name="actionColorizeSections">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Colorize &amp;Sections</string>
+   </property>
+  </action>
+  <action name="actionColorizeSymbols">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Colorize S&amp;ymbols</string>
    </property>
   </action>
  </widget>
