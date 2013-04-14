@@ -6,6 +6,7 @@
 
 #include <QDebug>
 
+#include <cassert>
 #include <elf.h>
 
 ElfFile::ElfFile(const QString& fileName) : m_file(fileName), m_data(nullptr)
@@ -14,6 +15,8 @@ ElfFile::ElfFile(const QString& fileName) : m_file(fileName), m_data(nullptr)
     m_file.open(QFile::ReadOnly);
     m_data = m_file.map(0, m_file.size());
     Q_ASSERT(m_data);
+
+    parse();
 }
 
 ElfFile::~ElfFile()
@@ -37,6 +40,15 @@ const unsigned char* ElfFile::rawData() const
     return m_data;
 }
 
+int ElfFile::type() const
+{
+    // TODO throw exception
+    assert(m_data);
+    assert(m_file.size() > EI_CLASS);
+    assert(m_data[EI_CLASS] == ELFCLASS32 || m_data[EI_CLASS] == ELFCLASS64);
+    return m_data[EI_CLASS];
+}
+
 ElfHeader* ElfFile::header() const
 {
     return m_header.get();
@@ -49,10 +61,27 @@ QVector< ElfSectionHeader::Ptr > ElfFile::sectionHeaders()
 
 void ElfFile::parse()
 {
-    // TODO detect 32/64 versions
-    m_header.reset(new ElfHeaderImpl<Elf64_Ehdr>(m_data));
+    parseHeader();
+    parseSections();
+}
 
-//     qDebug() << Q_FUNC_INFO << m_header->e_ehsize << m_header->e_machine << m_header->e_shnum;
+void ElfFile::parseHeader()
+{
+    switch (type()) {
+        case ELFCLASS32:
+            m_header.reset(new ElfHeaderImpl<Elf32_Ehdr>(m_data));
+            break;
+        case ELFCLASS64:
+            m_header.reset(new ElfHeaderImpl<Elf64_Ehdr>(m_data));
+            break;
+        default:
+            assert(false); // TODO throw exception
+    }
+}
+
+void ElfFile::parseSections()
+{
+    assert(m_header.get());
 
     m_sectionHeaders.reserve(m_header->sectionHeaderCount());
     m_sections.resize(m_header->sectionHeaderCount());
@@ -65,11 +94,11 @@ void ElfFile::parse()
 
         ElfSection::Ptr section;
         switch (shdr->type()) {
-            // TODO make shared pointers
             case SHT_STRTAB:
                 section.reset(new ElfStringTableSection(this, shdr));
                 break;
             case SHT_SYMTAB:
+                // TODO 32/64 detection
                 section.reset(new ElfSymbolTableSectionImpl<Elf64_Sym>(this, shdr));
                 break;
             default:
@@ -83,19 +112,6 @@ void ElfFile::parse()
     for (const ElfSectionHeader::Ptr &shdr : m_sectionHeaders) {
         if (shdr->link()) {
             m_sections[shdr->sectionIndex()]->setLinkedSection(m_sections[shdr->link()]);
-        }
-    }
-
-    // pass 3: debug output
-    for (const ElfSectionHeader::Ptr &shdr : m_sectionHeaders) {
-        qDebug() << shdr->sectionIndex() << "size:" << shdr->size() << "offset:" << shdr->sectionOffset() << shdr->name() << shdr->type();
-        if (shdr->type() == SHT_SYMTAB) {
-            auto symtab = section<ElfSymbolTableSection>(shdr->sectionIndex());
-            for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
-                ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
-                qDebug() << j << symtab->linkedSection<ElfStringTableSection>()->string(entry->name()) << entry->size();
-                delete entry;
-            }
         }
     }
 }

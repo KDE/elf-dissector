@@ -29,6 +29,9 @@ public:
     /** Returns a pointer to the raw ELF data. */
     const unsigned char* rawData() const;
 
+    /** ELF class type (32/64 bit). */
+    int type() const;
+
     /** Returns the ELF header. */
     ElfHeader* header() const;
     /** Returns a list of all available section headers. */
@@ -40,7 +43,10 @@ public:
         return std::dynamic_pointer_cast<T>(m_sections.at(index));
     }
 
+private:
     void parse();
+    void parseHeader();
+    void parseSections();
 
 private:
     QFile m_file;

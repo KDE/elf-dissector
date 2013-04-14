@@ -69,10 +69,11 @@ void MainWindow::restoreSettings()
 
 void MainWindow::loadFile(const QString& fileName)
 {
+    // TODO all temporary, still needs a proper model!
+
     delete m_treeMap; // TODO: really needed? deletes items as well?
 
     ElfFile file(fileName);
-    file.parse();
 
     TreeMapItem *baseItem = new TreeMapItem;
     baseItem->setText(0, file.displayName());
