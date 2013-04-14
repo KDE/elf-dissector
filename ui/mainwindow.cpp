@@ -11,6 +11,8 @@
 
 #include <QApplication>
 #include <QFileDialog>
+#include <QSettings>
+#include <QStatusBar>
 
 #include <elf.h>
 
@@ -20,6 +22,9 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
 
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::fileOpen);
     connect(ui->actionQuit, &QAction::triggered, &QCoreApplication::quit);
+    connect(ui->actionHideDebugInformation, &QAction::triggered, this, &MainWindow::hideDebugInformation);
+
+    restoreSettings();
 }
 
 MainWindow::~MainWindow()
@@ -33,6 +38,39 @@ void MainWindow::fileOpen()
     if (fileName.isEmpty())
         return;
 
+    m_currentFileName = fileName;
+    loadFile(fileName);
+}
+
+void MainWindow::hideDebugInformation()
+{
+    QSettings settings;
+    settings.setValue("View/HideDebugInfo", ui->actionHideDebugInformation->isChecked());
+    loadFile(m_currentFileName);
+}
+
+void MainWindow::reloadFileOnStartup()
+{
+    QSettings settings;
+    settings.setValue("Settings/ReloadPreviousFile", ui->actionReopenPreviousFile->isChecked());
+}
+
+void MainWindow::restoreSettings()
+{
+    QSettings settings;
+    ui->actionHideDebugInformation->setChecked(settings.value("View/HideDebugInfo", false).toBool());
+    ui->actionReopenPreviousFile->setChecked(settings.value("Settings/ReloadPreviousFile", true).toBool());
+    if (ui->actionReopenPreviousFile->isChecked()) {
+        m_currentFileName = settings.value("Recent/PreviousFile").toString();
+        if (!m_currentFileName.isEmpty())
+            loadFile(m_currentFileName);
+    }
+}
+
+void MainWindow::loadFile(const QString& fileName)
+{
+    delete m_treeMap; // TODO: really needed? deletes items as well?
+
     ElfFile file(fileName);
     file.parse();
 
@@ -41,6 +79,8 @@ void MainWindow::fileOpen()
     baseItem->setSum(file.size());
 
     m_treeMap = new TreeMapWidget(baseItem);
+//     m_treeMap->setMinimalArea(200);
+//     m_treeMap->setVisibleWidth(10, false);
     // looks weird, but this forces m_treeMap->_attrs to be resided correctly for text to be drawn
     m_treeMap->setFieldForced(1, true);
     m_treeMap->setFieldForced(1, false);
@@ -91,4 +131,9 @@ void MainWindow::fileOpen()
         }
 
     }
+
+    QSettings settings;
+    settings.setValue("Recent/PreviousFile", fileName);
+
+    statusBar()->showMessage(tr("Loaded %1.").arg(fileName));
 }
