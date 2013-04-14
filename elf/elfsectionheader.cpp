@@ -28,5 +28,5 @@ const char* ElfSectionHeader::name() const
 
 bool ElfSectionHeader::isDebugInformation() const
 {
-    return strncmp(name(), ".debug", 6) == 0;
+    return strncmp(name(), ".debug", 6) == 0 || strncmp(name(), ".gdb", 4) == 0;
 }
