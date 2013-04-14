@@ -24,6 +24,7 @@ private slots:
     void hideDebugInformation();
     void reloadFileOnStartup();
     void colorizationChanged();
+    void treeMapContextMenu(const QPoint &pos);
 
 private:
     void restoreSettings();

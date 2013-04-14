@@ -37,7 +37,6 @@ MainWindow::~MainWindow()
 void MainWindow::fileOpen()
 {
     const QString fileName = QFileDialog::getOpenFileName(this, tr("Open ELF Object"));
-    setWindowFilePath(fileName);
     if (fileName.isEmpty())
         return;
 
@@ -79,10 +78,21 @@ void MainWindow::restoreSettings()
     }
 }
 
+void MainWindow::treeMapContextMenu(const QPoint& pos)
+{
+    QMenu menu;
+    m_treeMap->addSplitDirectionItems(&menu);
+    menu.exec(mapToGlobal(pos));
+
+    QSettings settings;
+    settings.setValue("TreeMap/SplitMode", m_treeMap->splitModeString());
+}
+
 void MainWindow::loadFile(const QString& fileName)
 {
     if (fileName.isEmpty())
         return;
+    setWindowFilePath(fileName);
 
     // TODO all temporary, still needs a proper model!
 
@@ -102,6 +112,11 @@ void MainWindow::loadFile(const QString& fileName)
     m_treeMap->setFieldForced(1, true);
     m_treeMap->setFieldForced(1, false);
     ui->tab_2->layout()->addWidget(m_treeMap);
+    m_treeMap->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_treeMap, &TreeMapWidget::customContextMenuRequested, this, &MainWindow::treeMapContextMenu);
+
+    QSettings settings;
+    m_treeMap->setSplitMode(settings.value("TreeMap/SplitMode", "Bisection").toString());
 
     struct SymbolNode {
         TreeMapItem *item;
@@ -163,7 +178,6 @@ void MainWindow::loadFile(const QString& fileName)
         }
     }
 
-    QSettings settings;
     settings.setValue("Recent/PreviousFile", fileName);
 
     statusBar()->showMessage(tr("Loaded %1.").arg(fileName));
