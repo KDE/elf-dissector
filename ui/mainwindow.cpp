@@ -95,6 +95,7 @@ void MainWindow::loadFile(const QString& fileName)
     baseItem->setSum(file.size());
 
     m_treeMap = new TreeMapWidget(baseItem);
+    m_treeMap->setBorderWidth(3);
 //     m_treeMap->setMinimalArea(200);
 //     m_treeMap->setVisibleWidth(10, false);
     // looks weird, but this forces m_treeMap->_attrs to be resided correctly for text to be drawn
@@ -118,6 +119,7 @@ void MainWindow::loadFile(const QString& fileName)
         }
         auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
         item->setSum(shdr->size());
+        item->setSorting(-2, true); // sort by value
         if (ui->actionColorizeSections->isChecked())
             item->setBackColor(colorizer.nextColor());
         sectionItems[shdr->sectionIndex()] = new SymbolNode;
@@ -134,7 +136,7 @@ void MainWindow::loadFile(const QString& fileName)
             for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
                 // TODO make these shared pointers and keep them in the section object
                 ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
-                if (entry->size() < 256 || !sectionItems.at(entry->sectionIndex()))
+                if (entry->size() == 0 || !sectionItems.at(entry->sectionIndex()))
                     continue;
                 SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
                 const QVector<QByteArray> demangledNames = demangler.demangle(symtab->linkedSection<ElfStringTableSection>()->string(entry->name()));
@@ -159,7 +161,6 @@ void MainWindow::loadFile(const QString& fileName)
                 delete entry;
             }
         }
-
     }
 
     QSettings settings;
