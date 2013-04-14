@@ -2,12 +2,12 @@
 
 #include <cassert>
 
-ElfStringTableSection::ElfStringTableSection(unsigned char* data, uint64_t size): ElfSection(data, size)
+ElfStringTableSection::ElfStringTableSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr): ElfSection(file, shdr)
 {
 }
 
 const char* ElfStringTableSection::string(uint32_t index) const
 {
-    assert(index < m_size);
-    return (const char*)(m_data + index);
+    assert(index < size());
+    return (const char*)(rawData() + index);
 }

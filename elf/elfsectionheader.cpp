@@ -1,6 +1,7 @@
 #include "elfsectionheader.h"
 #include "elffile.h"
 #include "elfheader.h"
+#include "elfstringtablesection.h"
 
 #include <cassert>
 
@@ -18,4 +19,9 @@ uint16_t ElfSectionHeader::sectionIndex() const
 uint64_t ElfSectionHeader::headerOffset() const
 {
     return m_file->header()->sectionHeaderTableOffset() + sectionIndex() * m_file->header()->sectionHeaderEntrySize();
+}
+
+const char* ElfSectionHeader::name() const
+{
+    return m_file->section<ElfStringTableSection>(m_file->header()->stringTableSectionHeader())->string(nameIndex());
 }

@@ -7,7 +7,7 @@
 class ElfStringTableSection : public ElfSection
 {
 public:
-    explicit ElfStringTableSection(unsigned char* data, uint64_t size);
+    explicit ElfStringTableSection(ElfFile *file, const ElfSectionHeader::Ptr &shdr);
 
     /** Returns the string at @p index. */
     const char* string(uint32_t index) const;

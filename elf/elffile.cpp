@@ -18,7 +18,8 @@ ElfFile::ElfFile(const QString& fileName) : m_file(fileName), m_data(nullptr)
 
 ElfFile::~ElfFile()
 {
-    qDeleteAll(m_sections);
+    m_sectionHeaders.clear();
+    m_sections.clear();
 }
 
 QString ElfFile::displayName() const
@@ -26,7 +27,7 @@ QString ElfFile::displayName() const
     return m_file.fileName();
 }
 
-qint64 ElfFile::size() const
+uint64_t ElfFile::size() const
 {
     return m_file.size();
 }
@@ -62,17 +63,17 @@ void ElfFile::parse()
         ElfSectionHeader::Ptr shdr(new ElfSectionHeaderImpl<Elf64_Shdr>(this, i));
         m_sectionHeaders.push_back(shdr);
 
-        ElfSection *section = 0;
+        ElfSection::Ptr section;
         switch (shdr->type()) {
             // TODO make shared pointers
             case SHT_STRTAB:
-                section = new ElfStringTableSection(m_data + shdr->sectionOffset(), shdr->size());
+                section.reset(new ElfStringTableSection(this, shdr));
                 break;
             case SHT_SYMTAB:
-                section = new ElfSymbolTableSectionImpl<Elf64_Sym>(m_data + shdr->sectionOffset(), shdr->size());
+                section.reset(new ElfSymbolTableSectionImpl<Elf64_Sym>(this, shdr));
                 break;
             default:
-                section = new ElfSection(m_data + shdr->sectionOffset(), shdr->size());
+                section.reset(new ElfSection(this, shdr));
                 break;
         }
         m_sections[i] = section;
@@ -87,7 +88,7 @@ void ElfFile::parse()
 
     // pass 3: debug output
     for (const ElfSectionHeader::Ptr &shdr : m_sectionHeaders) {
-        qDebug() << shdr->sectionIndex() << "size:" << shdr->size() << "offset:" << shdr->sectionOffset() << stringTableEntry(shdr->name()) << shdr->type();
+        qDebug() << shdr->sectionIndex() << "size:" << shdr->size() << "offset:" << shdr->sectionOffset() << shdr->name() << shdr->type();
         if (shdr->type() == SHT_SYMTAB) {
             auto symtab = section<ElfSymbolTableSection>(shdr->sectionIndex());
             for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
@@ -97,12 +98,4 @@ void ElfFile::parse()
             }
         }
     }
-}
-
-const char* ElfFile::stringTableEntry(int index) const
-{
-    // TODO port to string table section class
-    Elf64_Shdr *stringTableSection = reinterpret_cast<Elf64_Shdr*>(
-        m_data + m_header->sectionHeaderTableOffset() + m_header->stringTableSectionHeader() * m_header->sectionHeaderEntrySize());
-    return (const char*)(m_data + stringTableSection->sh_offset + index);
 }

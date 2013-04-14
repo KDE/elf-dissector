@@ -7,7 +7,7 @@
 class ElfSymbolTableSection : public ElfSection
 {
 public:
-    explicit ElfSymbolTableSection(unsigned char* data, uint64_t size);
+    explicit ElfSymbolTableSection(ElfFile *file, const ElfSectionHeader::Ptr &shdr);
 
     class ElfSymbolTableEntry
     {
@@ -26,13 +26,13 @@ template <typename T>
 class ElfSymbolTableSectionImpl : public ElfSymbolTableSection
 {
 public:
-    explicit inline ElfSymbolTableSectionImpl(unsigned char* data, uint64_t size) : ElfSymbolTableSection(data, size) {}
+    explicit inline ElfSymbolTableSectionImpl(ElfFile *file, const ElfSectionHeader::Ptr &shdr) : ElfSymbolTableSection(file, shdr) {}
 
     template <typename S>
     class ElfSymbolTableEntryImpl : public ElfSymbolTableEntry
     {
     public:
-        explicit inline ElfSymbolTableEntryImpl(unsigned char *data) : m_symbol(reinterpret_cast<S*>(data)) {}
+        explicit inline ElfSymbolTableEntryImpl(const unsigned char *data) : m_symbol(reinterpret_cast<const S*>(data)) {}
 
         inline uint32_t name() const override
         {
@@ -50,12 +50,12 @@ public:
         }
 
     private:
-        S* m_symbol = 0;
+        const S* m_symbol = 0;
     };
 
     inline ElfSymbolTableSection::ElfSymbolTableEntry* entry(uint32_t index) const override
     {
-        return new ElfSymbolTableEntryImpl<T>(m_data + index * sizeof(T));
+        return new ElfSymbolTableEntryImpl<T>(rawData() + index * sizeof(T));
     }
 };
 

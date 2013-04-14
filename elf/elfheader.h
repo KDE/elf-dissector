@@ -30,7 +30,7 @@ public:
 
     inline uint64_t sectionHeaderTableOffset() const override { return m_hdr->e_shoff; }
     inline uint16_t sectionHeaderEntrySize() const override { return m_hdr->e_shentsize; }
-    inline uint16_t  sectionHeaderCount() const override { return m_hdr->e_shnum; }
+    inline uint16_t sectionHeaderCount() const override { return m_hdr->e_shnum; }
     inline uint16_t stringTableSectionHeader() const override { return m_hdr->e_shstrndx; }
 
 private:

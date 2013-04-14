@@ -19,7 +19,8 @@ public:
     /** The location of the header (not the section it describes) in the ELF file. */
     uint64_t headerOffset() const;
 
-    virtual uint32_t name() const = 0;
+    /** String index of the section name. */
+    virtual uint32_t nameIndex() const = 0;
     virtual uint32_t type() const = 0;
     virtual uint64_t flags() const = 0;
 //    virtual uint64_t address() const = 0;
@@ -30,6 +31,9 @@ public:
 //    virtual uint32_t info() const = 0;
 //    virtual uint64_t alignment() const = 0;
     virtual uint64_t entrySize() const = 0;
+
+    /** Section name. */
+    const char* name() const;
 
 protected:
     explicit ElfSectionHeader(ElfFile *file, uint16_t sectionIndex);

@@ -14,7 +14,7 @@ public:
     {
     }
 
-    inline uint32_t name() const override { return m_hdr->sh_name; }
+    inline uint32_t nameIndex() const override { return m_hdr->sh_name; }
     inline uint32_t type() const override { return m_hdr->sh_type; }
     inline uint64_t flags() const override { return m_hdr->sh_flags; }
 

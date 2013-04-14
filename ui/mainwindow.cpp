@@ -95,7 +95,7 @@ void MainWindow::loadFile(const QString& fileName)
     sectionItems.resize(file.sectionHeaders().size());
 
     for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
-        auto item = new TreeMapItem(baseItem, shdr->size(), file.stringTableEntry(shdr->name()), QString::number(shdr->size()));
+        auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
         item->setSum(shdr->size());
         sectionItems[shdr->sectionIndex()] = new SymbolNode;
         sectionItems[shdr->sectionIndex()]->item = item;

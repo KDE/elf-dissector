@@ -2,6 +2,7 @@
 #define ELFFILE_H
 
 #include "elfsectionheader.h"
+#include "elfsection.h"
 
 #include <QFile>
 #include <QVector>
@@ -9,7 +10,6 @@
 #include <memory>
 
 class ElfHeader;
-class ElfSection;
 
 /** Represents a ELF file. */
 class ElfFile
@@ -24,7 +24,7 @@ public:
     /** Returns a user readable label for this file. */
     QString displayName() const;
     /** Returns the size of the entire file. */
-    qint64 size() const;
+    uint64_t size() const;
 
     /** Returns a pointer to the raw ELF data. */
     const unsigned char* rawData() const;
@@ -35,21 +35,19 @@ public:
     QVector<ElfSectionHeader::Ptr> sectionHeaders();
     /** Returns the section at index @p index. */
     template <typename T>
-    inline T* section(int index) const
+    inline std::shared_ptr<T> section(int index) const
     {
-        return static_cast<T*>(m_sections.at(index));
+        return std::dynamic_pointer_cast<T>(m_sections.at(index));
     }
 
     void parse();
-
-    const char* stringTableEntry(int index) const;
 
 private:
     QFile m_file;
     uchar *m_data;
     std::unique_ptr<ElfHeader> m_header;
     QVector<ElfSectionHeader::Ptr> m_sectionHeaders;
-    QVector<ElfSection*> m_sections;
+    QVector<ElfSection::Ptr> m_sections;
 };
 
 #endif // ELFFILE_H
