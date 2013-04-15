@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "colorizer.h"
 #include "ui_mainwindow.h"
+#include "elfmodel.h"
 
 #include <elf/elffile.h>
 #include <elf/elfsymboltablesection.h>
@@ -17,9 +18,10 @@
 
 #include <elf.h>
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow), m_elfModel(new ElfModel(this))
 {
     ui->setupUi(this);
+    ui->elfStructureView->setModel(m_elfModel);
 
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::fileOpen);
     connect(ui->actionQuit, &QAction::triggered, &QCoreApplication::quit);
@@ -99,6 +101,7 @@ void MainWindow::loadFile(const QString& fileName)
     delete m_treeMap; // TODO: really needed? deletes items as well?
 
     ElfFile::Ptr file(new ElfFile(fileName));
+    m_elfModel->setFile(file);
 
     TreeMapItem *baseItem = new TreeMapItem;
     baseItem->setText(0, file->displayName());

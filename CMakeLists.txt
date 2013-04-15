@@ -27,6 +27,7 @@ set(elf_dissector_srcs
 
     ui/mainwindow.cpp
     ui/colorizer.cpp
+    ui/elfmodel.cpp
 
     elf/elffile.cpp
     elf/elfheader.cpp
