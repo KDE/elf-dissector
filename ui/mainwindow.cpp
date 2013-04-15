@@ -98,11 +98,11 @@ void MainWindow::loadFile(const QString& fileName)
 
     delete m_treeMap; // TODO: really needed? deletes items as well?
 
-    ElfFile file(fileName);
+    ElfFile::Ptr file(new ElfFile(fileName));
 
     TreeMapItem *baseItem = new TreeMapItem;
-    baseItem->setText(0, file.displayName());
-    baseItem->setSum(file.size());
+    baseItem->setText(0, file->displayName());
+    baseItem->setSum(file->size());
 
     m_treeMap = new TreeMapWidget(baseItem);
     m_treeMap->setBorderWidth(3);
@@ -124,10 +124,10 @@ void MainWindow::loadFile(const QString& fileName)
     };
 
     QVector<SymbolNode*> sectionItems;
-    sectionItems.resize(file.sectionHeaders().size());
+    sectionItems.resize(file->sectionHeaders().size());
     Colorizer colorizer;
 
-    for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
+    for (const ElfSectionHeader::Ptr &shdr : file->sectionHeaders()) {
         if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation()) {
             baseItem->setSum(baseItem->sum() - shdr->size());
             continue;
@@ -143,11 +143,11 @@ void MainWindow::loadFile(const QString& fileName)
 
     Demangler demangler;
 
-    for (const ElfSectionHeader::Ptr &shdr : file.sectionHeaders()) {
+    for (const ElfSectionHeader::Ptr &shdr : file->sectionHeaders()) {
         if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation())
             continue;
         if (shdr->type() == SHT_SYMTAB) {
-            auto symtab = file.section<ElfSymbolTableSection>(shdr->sectionIndex());
+            auto symtab = file->section<ElfSymbolTableSection>(shdr->sectionIndex());
             for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
                 // TODO make these shared pointers and keep them in the section object
                 ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
