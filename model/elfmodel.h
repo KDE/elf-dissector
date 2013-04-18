@@ -1,9 +1,12 @@
 #ifndef ELFMODEL_H
 #define ELFMODEL_H
 
+#include "elfnodevariant.h"
+
 #include <QAbstractItemModel>
 
 #include <elf/elffile.h>
+
 
 class ElfFile;
 
@@ -24,7 +27,11 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 private:
+    void clearInternalPointerMap();
+
+private:
     ElfFile::Ptr m_file;
+    mutable QHash<void*, ElfNodeVariant*> m_internalPointerMap;
 
 };
 

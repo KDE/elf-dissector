@@ -25,9 +25,7 @@ include_directories(
 set(elf_dissector_srcs
     main.cpp
 
-    ui/mainwindow.cpp
-    ui/colorizer.cpp
-    ui/elfmodel.cpp
+    3rdparty/treemap/treemap.cpp
 
     elf/elffile.cpp
     elf/elfheader.cpp
@@ -38,7 +36,13 @@ set(elf_dissector_srcs
 
     demangle/demangler.cpp
 
-    3rdparty/treemap/treemap.cpp
+    model/elfmodel.cpp
+    model/indexvisitor.cpp
+    model/parentvisitor.cpp
+    model/rowcountvisitor.cpp
+
+    ui/mainwindow.cpp
+    ui/colorizer.cpp
 )
 
 qt5_wrap_ui(elf_dissector_srcs

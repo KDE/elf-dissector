@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "colorizer.h"
 #include "ui_mainwindow.h"
-#include "elfmodel.h"
 
 #include <elf/elffile.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfstringtablesection.h>
 
 #include <demangle/demangler.h>
+
+#include <model/elfmodel.h>
 
 #include <treemap/treemap.h>
 
