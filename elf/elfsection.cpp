@@ -28,3 +28,13 @@ const unsigned char* ElfSection::rawData() const
     assert(m_file->size() > m_sectionHeader->size());
     return m_file->rawData() + m_sectionHeader->sectionOffset();
 }
+
+ElfFile* ElfSection::file() const
+{
+    return m_file;
+}
+
+ElfSectionHeader::Ptr ElfSection::header() const
+{
+    return m_sectionHeader;
+}

@@ -31,6 +31,11 @@ public:
     /** Access to the raw data of the section. */
     const unsigned char* rawData() const;
 
+    /** The file this section belongs to. */
+    ElfFile* file() const;
+    /** Returns the corresponding section header. */
+    ElfSectionHeader::Ptr header() const;
+
 protected:
     ElfFile *m_file;
     ElfSectionHeader::Ptr m_sectionHeader;
