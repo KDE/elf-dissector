@@ -14,5 +14,5 @@ int RowCountVisitor::doVisit(ElfFile* file, int) const
 
 int RowCountVisitor::doVisit(ElfSymbolTableSection* symtab, int) const
 {
-    return 0;
+    return symtab->header()->entryCount();
 }

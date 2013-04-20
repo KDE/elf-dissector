@@ -34,6 +34,8 @@ public:
                 return doVisit(node->value<ElfSection>(), arg);
             case ElfNodeVariant::SymbolTableSection:
                 return doVisit(node->value<ElfSymbolTableSection>(), arg);
+            case ElfNodeVariant::SymbolTableEntry:
+                return doVisit(node->value<ElfSymbolTableSection::ElfSymbolTableEntry>(), arg);
         }
 
         assert(false);
@@ -62,6 +64,12 @@ protected:
     virtual T doVisit(ElfSymbolTableSection *symtab, int arg) const
     {
         return doVisit(static_cast<ElfSection*>(symtab), arg);
+    }
+    virtual T doVisit(ElfSymbolTableSection::ElfSymbolTableEntry *entry, int arg) const
+    {
+        Q_UNUSED(entry);
+        Q_UNUSED(arg);
+        return T();
     }
 };
 

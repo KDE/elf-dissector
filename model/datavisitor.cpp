@@ -25,3 +25,15 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
 
     return QVariant();
 }
+
+QVariant DataVisitor::doVisit(ElfSymbolTableSection::ElfSymbolTableEntry* entry, int arg) const
+{
+    switch (arg) {
+        case Qt::DisplayRole:
+            return entry->name();
+        case ElfModel::SizeRole:
+            return QVariant::fromValue<uint64_t>(entry->size());
+    }
+
+    return QVariant();
+}

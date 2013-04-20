@@ -8,7 +8,8 @@ struct ElfNodeVariant
         FileSet,
         File,
         Section,
-        SymbolTableSection
+        SymbolTableSection,
+        SymbolTableEntry
     };
 
     template <typename T> T* value() const
