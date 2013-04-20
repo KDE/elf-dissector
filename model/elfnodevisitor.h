@@ -1,16 +1,18 @@
 #ifndef ELFNODEVISITOR_H
 #define ELFNODEVISITOR_H
 
-#include <elf/elffile.h>
 #include <elf/elfheader.h>
 #include <elf/elfsymboltablesection.h>
 
 #include "elfnodevariant.h"
 
+#include <qglobal.h>
+
 #include <cassert>
 
 class ElfSymbolTableSection;
 class ElfFile;
+class ElfFileSet;
 
 template <typename T>
 class ElfNodeVisitor
@@ -24,6 +26,8 @@ public:
             case ElfNodeVariant::Invalid:
                 assert(false);
                 break;
+            case ElfNodeVariant::FileSet:
+                return doVisit(node->value<ElfFileSet>(), arg);
             case ElfNodeVariant::File:
                 return doVisit(node->value<ElfFile>(), arg);
             case ElfNodeVariant::Section:
@@ -36,6 +40,13 @@ public:
     }
 
 protected:
+    virtual T doVisit(ElfFileSet *fileSet, int arg) const
+    {
+        Q_UNUSED(fileSet);
+        Q_UNUSED(arg);
+        return T();
+    }
+
     virtual T doVisit(ElfFile* file, int arg) const
     {
         Q_UNUSED(file);

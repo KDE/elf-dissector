@@ -1,5 +1,12 @@
 #include "rowcountvisitor.h"
 
+#include <elf/elffileset.h>
+
+int RowCountVisitor::doVisit(ElfFileSet* fileSet, int) const
+{
+    return fileSet->size();
+}
+
 int RowCountVisitor::doVisit(ElfFile* file, int) const
 {
     return file->header()->sectionHeaderCount();

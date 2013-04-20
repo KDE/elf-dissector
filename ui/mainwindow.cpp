@@ -5,6 +5,7 @@
 #include <elf/elffile.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfstringtablesection.h>
+#include <elf/elffileset.h>
 
 #include <demangle/demangler.h>
 
@@ -101,9 +102,13 @@ void MainWindow::loadFile(const QString& fileName)
 
     delete m_treeMap; // TODO: really needed? deletes items as well?
 
-    ElfFile::Ptr file(new ElfFile(fileName));
-    m_elfModel->setFile(file);
+    delete m_fileSet;
+    m_fileSet = new ElfFileSet(this);
+    m_fileSet->addFile(fileName);
+    m_elfModel->setFileSet(m_fileSet);
 
+
+    ElfFile::Ptr file = m_fileSet->file(0);
     TreeMapItem *baseItem = new TreeMapItem;
     baseItem->setText(0, file->displayName());
     baseItem->setSum(file->size());

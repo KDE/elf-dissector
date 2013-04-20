@@ -38,6 +38,7 @@ set(elf_dissector_srcs
     demangle/demangler.cpp
 
     model/elfmodel.cpp
+    model/datavisitor.cpp
     model/indexvisitor.cpp
     model/parentvisitor.cpp
     model/rowcountvisitor.cpp

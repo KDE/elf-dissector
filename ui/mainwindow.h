@@ -5,6 +5,7 @@
 
 #include <memory>
 
+class ElfFileSet;
 class ElfModel;
 class TreeMapWidget;
 
@@ -36,6 +37,7 @@ private:
     TreeMapWidget *m_treeMap = 0;
     QString m_currentFileName;
     ElfModel *m_elfModel = 0;
+    ElfFileSet *m_fileSet = 0;
 };
 
 #endif // MAINWINDOW_H

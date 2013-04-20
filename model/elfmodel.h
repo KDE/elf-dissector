@@ -5,19 +5,24 @@
 
 #include <QAbstractItemModel>
 
-#include <elf/elffile.h>
+class ElfFileSet;
 
-
-class ElfFile;
-
+/** Model for the ELF structure.
+ *
+ * Internal pointer is the ElfNodeVariant pointer containing the _parent_ for the node.
+ */
 class ElfModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
+    enum Role {
+        SizeRole = Qt::UserRole + 1
+    };
+
     explicit ElfModel(QObject* parent);
     ~ElfModel();
 
-    void setFile(const ElfFile::Ptr &file);
+    void setFileSet(ElfFileSet* fileSet);
 
     QVariant data(const QModelIndex& index, int role) const override;
     int columnCount(const QModelIndex& parent) const override;
@@ -28,9 +33,12 @@ public:
 
 private:
     void clearInternalPointerMap();
+    ElfNodeVariant* variantForIndex(const QModelIndex &index) const;
+    ElfNodeVariant contentForIndex(const QModelIndex& index) const;
+    ElfNodeVariant* makeVariant(void* payload, ElfNodeVariant::Type type) const;
 
 private:
-    ElfFile::Ptr m_file;
+    ElfFileSet *m_fileSet = 0;
     mutable QHash<void*, ElfNodeVariant*> m_internalPointerMap;
 
 };

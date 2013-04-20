@@ -5,6 +5,7 @@ struct ElfNodeVariant
 {
     enum Type {
         Invalid,
+        FileSet,
         File,
         Section,
         SymbolTableSection
