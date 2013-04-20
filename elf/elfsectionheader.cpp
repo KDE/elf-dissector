@@ -30,3 +30,10 @@ bool ElfSectionHeader::isDebugInformation() const
 {
     return strncmp(name(), ".debug", 6) == 0 || strncmp(name(), ".gdb", 4) == 0;
 }
+
+uint64_t ElfSectionHeader::entryCount() const
+{
+    if (entrySize() <= 0)
+        return 0;
+    return size() / entrySize();
+}

@@ -37,6 +37,9 @@ public:
     /** Returns @c true if this section is related to debug information in some way. */
     bool isDebugInformation() const;
 
+    /** Returns the amount of entries in this section if section is an array. */
+    uint64_t entryCount() const;
+
 protected:
     explicit ElfSectionHeader(ElfFile *file, uint16_t sectionIndex);
 
