@@ -28,6 +28,7 @@ set(elf_dissector_srcs
     3rdparty/treemap/treemap.cpp
 
     elf/elffile.cpp
+    elf/elffileset.cpp
     elf/elfheader.cpp
     elf/elfsectionheader.cpp
     elf/elfsection.cpp
