@@ -27,6 +27,41 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
     return QVariant();
 }
 
+static QString sectionTypeToString(uint32_t sectionType)
+{
+    switch (sectionType) {
+        case SHT_NULL: return "&lt;null&gt;";
+        case SHT_PROGBITS: return "program data";
+        case SHT_SYMTAB: return "symbol table";
+        case SHT_STRTAB: return "string table";
+        case SHT_RELA: return "relocation entries with addends";
+        case SHT_HASH: return "symbol hash table";
+        case SHT_DYNAMIC: return "dynamic linking information";
+        case SHT_NOTE: return "notes";
+        case SHT_NOBITS: return "bss";
+        case SHT_REL: return "relocation entries, no addends";
+        case SHT_SHLIB: return "reserved";
+        case SHT_DYNSYM: return "dynamic linker symbol table";
+        case SHT_INIT_ARRAY: return "array of constructors";
+        case SHT_FINI_ARRAY: return "array of destructors";
+        case SHT_PREINIT_ARRAY: return "array of preconstructors";
+        case SHT_GROUP: return "section group";
+        case SHT_SYMTAB_SHNDX: return "extended section indices";
+
+        case SHT_GNU_ATTRIBUTES: return "GNU object attributes";
+        case SHT_GNU_HASH: return "GNU-style hash table";
+        case SHT_GNU_LIBLIST: return "GNU prelink library list";
+        case SHT_CHECKSUM: return "checksum for DSO conent";
+        case SHT_GNU_verdef: return "GNU version definition";
+        case SHT_GNU_verneed: return "GNU version needs";
+        case SHT_GNU_versym: return "GNU version symbol table";
+
+        default: QObject::tr("unknown (0x%1)").arg(sectionType, 16);
+    }
+
+    return QString();
+}
+
 QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
 {
     switch (arg) {
@@ -43,6 +78,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             s += QStringLiteral("Size: ") + QString::number(section->header()->size()) + " bytes<br/>";
             s += QStringLiteral("Offset: 0x") + QString::number(section->header()->sectionOffset(), 16) + "<br/>";
             s += QStringLiteral("Virtual Address: 0x") + QString::number(section->header()->virtualAddress(), 16) + "<br/>";
+            s += QStringLiteral("Type: ") + sectionTypeToString(section->header()->type()) + "<br/>";
             if (section->header()->link())
                 s += QStringLiteral("Linked section: ") + section->linkedSection<ElfSection>()->header()->name() + "<br/>";
             if (section->header()->entrySize()) {
@@ -62,7 +98,6 @@ static QString bindTypeToString(uint8_t bindType)
         case STB_LOCAL: return "local";
         case STB_GLOBAL: return "global";
         case STB_WEAK: return "weak";
-        case STB_NUM: return "number of defined types"; // ???
         case STB_GNU_UNIQUE: return "GNU unique";
         default: QObject::tr("unknown (%1)").arg(bindType);
     }
@@ -79,7 +114,6 @@ static QString symbolTypeToString(uint8_t symbolType)
         case STT_FILE: return "file name";
         case STT_COMMON: return "common data object";
         case STT_TLS: return "thread-local data object";
-        case STT_NUM: return "number of defined types";
         case STT_GNU_IFUNC: return "GNU indirect code object";
         default: QObject::tr("unknown (%1)").arg(symbolType);
     }
