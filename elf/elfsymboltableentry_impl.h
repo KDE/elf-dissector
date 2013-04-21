@@ -19,7 +19,7 @@ public:
         return m_symbol->st_name;
     }
 
-    inline uint8_t type() const override
+    inline uint8_t info() const override
     {
         return m_symbol->st_info;
     }
