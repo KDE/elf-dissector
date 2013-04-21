@@ -3,6 +3,7 @@
 #include "elfsectionheader_impl.h"
 #include "elfstringtablesection.h"
 #include "elfsymboltablesection_impl.h"
+#include "elfdynamicsection_impl.h"
 
 #include <QDebug>
 
@@ -103,6 +104,12 @@ void ElfFile::parseSections()
                     section.reset(new ElfSymbolTableSectionImpl<Elf32_Sym>(this, shdr));
                 else if (type() == ELFCLASS64)
                     section.reset(new ElfSymbolTableSectionImpl<Elf64_Sym>(this, shdr));
+                break;
+            case SHT_DYNAMIC:
+                if (type() == ELFCLASS32)
+                    section.reset(new ElfDynamicSectionImpl<Elf32_Dyn>(this, shdr));
+                else if (type() == ELFCLASS64)
+                    section.reset(new ElfDynamicSectionImpl<Elf64_Dyn>(this, shdr));
                 break;
             default:
                 section.reset(new ElfSection(this, shdr));

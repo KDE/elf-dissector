@@ -169,3 +169,25 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 
     return QVariant();
 }
+
+QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
+{
+    switch (arg) {
+        case Qt::DisplayRole:
+            return entry->tagName();
+        case ElfModel::DetailRole:
+        {
+            QString s;
+            s += QStringLiteral("Tag name: ") + entry->tagName() + "<br/>";
+            s += QStringLiteral("Value: ");
+            if (entry->isStringValue())
+                s+= entry->stringValue();
+            else
+                s += QString::number(entry->value());
+            s += "<br/>";
+            return s;
+        }
+    }
+
+    return QVariant();
+}

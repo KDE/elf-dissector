@@ -6,6 +6,8 @@
 
 class ElfDynamicSection;
 
+class QString;
+
 /** Entry in the dynamic section. */
 class ElfDynamicEntry
 {
@@ -18,6 +20,14 @@ public:
 
     /** The section this entry belongs to. */
     const ElfDynamicSection* dynamicSection() const;
+
+    /** Human readable tag name. */
+    QString tagName() const;
+
+    /** Returns whether value() is an index into the string table. */
+    bool isStringValue() const;
+    /** Returns the string value for this entry. */
+    const char* stringValue() const;
 
     virtual int64_t tag() const = 0;
     virtual uint64_t value() const = 0;

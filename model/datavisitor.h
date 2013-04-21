@@ -11,6 +11,7 @@ protected:
     QVariant doVisit(ElfFile* file, int arg) const override;
     QVariant doVisit(ElfSection* section, int arg) const override;
     QVariant doVisit(ElfSymbolTableEntry* entry, int arg) const override;
+    QVariant doVisit(ElfDynamicEntry* entry, int arg) const override;
 };
 
 #endif // DATAVISITOR_H
