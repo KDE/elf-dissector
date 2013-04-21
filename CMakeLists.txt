@@ -33,6 +33,7 @@ set(elf_dissector_srcs
     elf/elfsectionheader.cpp
     elf/elfsection.cpp
     elf/elfstringtablesection.cpp
+    elf/elfsymboltableentry.cpp
     elf/elfsymboltablesection.cpp
 
     demangle/demangler.cpp

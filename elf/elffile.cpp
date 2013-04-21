@@ -2,7 +2,7 @@
 #include "elfheader.h"
 #include "elfsectionheader_impl.h"
 #include "elfstringtablesection.h"
-#include "elfsymboltablesection.h"
+#include "elfsymboltablesection_impl.h"
 
 #include <QDebug>
 
@@ -98,8 +98,10 @@ void ElfFile::parseSections()
                 section.reset(new ElfStringTableSection(this, shdr));
                 break;
             case SHT_SYMTAB:
-                // TODO 32/64 detection
-                section.reset(new ElfSymbolTableSectionImpl<Elf64_Sym>(this, shdr));
+                if (type() == ELFCLASS32)
+                    section.reset(new ElfSymbolTableSectionImpl<Elf32_Sym>(this, shdr));
+                else if (type() == ELFCLASS64)
+                    section.reset(new ElfSymbolTableSectionImpl<Elf64_Sym>(this, shdr));
                 break;
             default:
                 section.reset(new ElfSection(this, shdr));

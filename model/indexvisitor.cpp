@@ -26,7 +26,6 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
 
 IndexVisitor::type IndexVisitor::doVisit(ElfSymbolTableSection* symtab, int row) const
 {
-    // TODO memory management!
-    ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(row);
-    return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::SymbolTableEntry);
+    const ElfSymbolTableEntry::Ptr entry = symtab->entry(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(entry.get(), ElfNodeVariant::SymbolTableEntry);
 }

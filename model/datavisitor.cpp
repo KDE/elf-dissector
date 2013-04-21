@@ -26,7 +26,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
     return QVariant();
 }
 
-QVariant DataVisitor::doVisit(ElfSymbolTableSection::ElfSymbolTableEntry* entry, int arg) const
+QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 {
     switch (arg) {
         case Qt::DisplayRole:

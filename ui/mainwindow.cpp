@@ -158,12 +158,11 @@ void MainWindow::loadFile(const QString& fileName)
         if (shdr->type() == SHT_SYMTAB) {
             auto symtab = file->section<ElfSymbolTableSection>(shdr->sectionIndex());
             for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
-                // TODO make these shared pointers and keep them in the section object
-                ElfSymbolTableSection::ElfSymbolTableEntry *entry = symtab->entry(j);
+                ElfSymbolTableEntry::Ptr entry = symtab->entry(j);
                 if (entry->size() == 0 || !sectionItems.at(entry->sectionIndex()))
                     continue;
                 SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
-                const QVector<QByteArray> demangledNames = demangler.demangle(symtab->linkedSection<ElfStringTableSection>()->string(entry->name()));
+                const QVector<QByteArray> demangledNames = demangler.demangle(entry->name());
                 for (const QByteArray &demangledName : demangledNames) {
                     SymbolNode *node = parentNode->children.value(demangledName);
                     if (!node) {
@@ -182,7 +181,6 @@ void MainWindow::loadFile(const QString& fileName)
                     node->item->setField(1, QString::number(node->item->sum()));
                     parentNode = node;
                 }
-                delete entry;
             }
         }
     }
