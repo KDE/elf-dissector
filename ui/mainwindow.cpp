@@ -31,6 +31,9 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionColorizeSections, &QAction::triggered, this, &MainWindow::colorizationChanged);
     connect(ui->actionColorizeSymbols, &QAction::triggered, this, &MainWindow::colorizationChanged);
 
+    connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &MainWindow::selectionChanged);
+
     restoreSettings();
 }
 
@@ -106,6 +109,8 @@ void MainWindow::loadFile(const QString& fileName)
     m_fileSet = new ElfFileSet(this);
     m_fileSet->addFile(fileName);
     m_elfModel->setFileSet(m_fileSet);
+    ui->elfStructureView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->elfStructureView->expandAll();
 
 
     ElfFile::Ptr file = m_fileSet->file(0);
@@ -188,4 +193,13 @@ void MainWindow::loadFile(const QString& fileName)
     settings.setValue("Recent/PreviousFile", fileName);
 
     statusBar()->showMessage(tr("Loaded %1.").arg(fileName));
+}
+
+void MainWindow::selectionChanged(const QItemSelection& selection)
+{
+    if (selection.isEmpty())
+        ui->elfDetailView->clear();
+
+    const QModelIndex index = selection.first().topLeft();
+    ui->elfDetailView->setHtml(index.data(ElfModel::DetailRole).toString());
 }

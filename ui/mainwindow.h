@@ -9,6 +9,8 @@ class ElfFileSet;
 class ElfModel;
 class TreeMapWidget;
 
+class QItemSelection;
+
 namespace Ui
 {
 class MainWindow;
@@ -27,6 +29,7 @@ private slots:
     void reloadFileOnStartup();
     void colorizationChanged();
     void treeMapContextMenu(const QPoint &pos);
+    void selectionChanged(const QItemSelection &selection);
 
 private:
     void restoreSettings();
