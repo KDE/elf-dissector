@@ -27,6 +27,8 @@ set(elf_dissector_srcs
 
     3rdparty/treemap/treemap.cpp
 
+    elf/elfdynamicentry.cpp
+    elf/elfdynamicsection.cpp
     elf/elffile.cpp
     elf/elffileset.cpp
     elf/elfheader.cpp
