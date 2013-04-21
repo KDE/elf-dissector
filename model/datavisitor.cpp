@@ -4,6 +4,8 @@
 #include <elf/elffile.h>
 #include <elf.h>
 
+#include <disassmbler/disassembler.h>
+
 #include <QObject>
 #include <QStringBuilder>
 
@@ -100,7 +102,11 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             s += QStringLiteral("Symbol type: ") + symbolTypeToString(entry->type()) + "<br/>";
             s += QStringLiteral("Visibility: ") + visibilityToString(entry->visibility()) + "<br/>";
             if (entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount())
-                s += QStringLiteral("Section: ") + entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->name();
+                s += QStringLiteral("Section: ") + entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->name() + "<br/>";
+            if (entry->type() == STT_FUNC && entry->size() > 0) {
+                Disassembler da;
+                s += QStringLiteral("Code:<br/><tt>") + da.disassemble(entry) + "</tt>";
+            }
             return s;
         }
     }

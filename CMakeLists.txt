@@ -38,6 +38,8 @@ set(elf_dissector_srcs
 
     demangle/demangler.cpp
 
+    disassmbler/disassembler.cpp
+
     model/elfmodel.cpp
     model/datavisitor.cpp
     model/indexvisitor.cpp
@@ -53,4 +55,4 @@ qt5_wrap_ui(elf_dissector_srcs
 )
 
 add_executable(elf-dissector ${elf_dissector_srcs})
-target_link_libraries(elf-dissector Qt5::Widgets ${Iberty_LIBRARY})
+target_link_libraries(elf-dissector Qt5::Widgets ${Iberty_LIBRARY} opcodes)
