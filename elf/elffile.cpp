@@ -98,6 +98,7 @@ void ElfFile::parseSections()
                 section.reset(new ElfStringTableSection(this, shdr));
                 break;
             case SHT_SYMTAB:
+            case SHT_DYNSYM:
                 if (type() == ELFCLASS32)
                     section.reset(new ElfSymbolTableSectionImpl<Elf32_Sym>(this, shdr));
                 else if (type() == ELFCLASS64)

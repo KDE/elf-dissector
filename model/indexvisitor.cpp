@@ -16,6 +16,7 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
     ElfNodeVariant::Type type;
     switch (section->header()->type()) {
         case SHT_SYMTAB:
+        case SHT_DYNSYM:
             type = ElfNodeVariant::SymbolTableSection;
             break;
         default:
