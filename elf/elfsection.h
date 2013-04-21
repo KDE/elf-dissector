@@ -20,7 +20,7 @@ public:
     ElfSection& operator=(const ElfSection &other) = delete;
 
     template <typename T>
-    inline std::shared_ptr<T> linkedSection()
+    inline std::shared_ptr<T> linkedSection() const
     {
         return std::dynamic_pointer_cast<T>(m_linkedSection);
     }
