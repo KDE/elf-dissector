@@ -3,6 +3,7 @@
 
 #include <elf/elfheader.h>
 #include <elf/elfsymboltablesection.h>
+#include <elf/elfdynamicsection.h>
 
 #include "elfnodevariant.h"
 
@@ -10,7 +11,7 @@
 
 #include <cassert>
 
-class ElfSymbolTableSection;
+class ElfDynamicEntry;
 class ElfFile;
 class ElfFileSet;
 
@@ -36,6 +37,10 @@ public:
                 return doVisit(node->value<ElfSymbolTableSection>(), arg);
             case ElfNodeVariant::SymbolTableEntry:
                 return doVisit(node->value<ElfSymbolTableEntry>(), arg);
+            case ElfNodeVariant::DynamicSection:
+                return doVisit(node->value<ElfDynamicSection>(), arg);
+            case ElfNodeVariant::DynamicEntry:
+                return doVisit(node->value<ElfDynamicEntry>(), arg);
         }
 
         assert(false);
@@ -69,6 +74,14 @@ protected:
     {
         Q_UNUSED(entry);
         Q_UNUSED(arg);
+        return T();
+    }
+    virtual T doVisit(ElfDynamicSection* section, int arg) const
+    {
+        return doVisit(static_cast<ElfSection*>(section), arg);
+    }
+    virtual T doVisit(ElfDynamicEntry*, int) const
+    {
         return T();
     }
 };

@@ -16,3 +16,8 @@ int RowCountVisitor::doVisit(ElfSymbolTableSection* symtab, int) const
 {
     return symtab->header()->entryCount();
 }
+
+int RowCountVisitor::doVisit(ElfDynamicSection* section, int) const
+{
+    return section->header()->entryCount();
+}

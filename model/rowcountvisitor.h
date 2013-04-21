@@ -10,6 +10,7 @@ protected:
     int doVisit(ElfFileSet* fileSet, int arg) const override;
     int doVisit(ElfFile* file, int) const override;
     int doVisit(ElfSymbolTableSection* symtab, int) const override;
+    int doVisit(ElfDynamicSection* section, int arg) const override;
 };
 
 

@@ -9,7 +9,9 @@ struct ElfNodeVariant
         File,
         Section,
         SymbolTableSection,
-        SymbolTableEntry
+        SymbolTableEntry,
+        DynamicSection,
+        DynamicEntry
     };
 
     template <typename T> T* value() const

@@ -12,6 +12,7 @@ public:
     type doVisit(ElfFileSet* fileSet, int row) const override;
     type doVisit(ElfFile* file, int row) const override;
     type doVisit(ElfSymbolTableSection* symtab, int row) const override;
+    type doVisit(ElfDynamicSection* section, int row) const override;
 };
 
 #endif // INDEXVISITOR_H
