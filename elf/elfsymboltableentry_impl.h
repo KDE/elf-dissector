@@ -24,7 +24,7 @@ public:
         return m_symbol->st_info;
     }
 
-    inline uint8_t visibility() const override
+    inline uint8_t other() const override
     {
         return m_symbol->st_other;
     }

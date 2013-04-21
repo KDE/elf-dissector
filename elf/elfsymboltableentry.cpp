@@ -14,6 +14,11 @@ ElfSymbolTableEntry::~ElfSymbolTableEntry()
 {
 }
 
+const ElfSymbolTableSection* ElfSymbolTableEntry::symbolTable() const
+{
+    return m_section;
+}
+
 const char* ElfSymbolTableEntry::name() const
 {
     return m_section->linkedSection<ElfStringTableSection>()->string(nameIndex());
@@ -34,4 +39,10 @@ uint8_t ElfSymbolTableEntry::type() const
 {
     // same as 64
     return ELF32_ST_TYPE(info());
+}
+
+uint8_t ElfSymbolTableEntry::visibility() const
+{
+    // same as 65
+    return ELF32_ST_VISIBILITY(other());
 }

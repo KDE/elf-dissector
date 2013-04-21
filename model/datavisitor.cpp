@@ -69,6 +69,18 @@ static QString symbolTypeToString(uint8_t symbolType)
     return QString();
 }
 
+static QString visibilityToString(uint8_t visibility)
+{
+    switch (visibility) {
+        case STV_DEFAULT: return "default";
+        case STV_INTERNAL: return "internal";
+        case STV_HIDDEN: return "hidden";
+        case STV_PROTECTED: return "protected";
+        default: QObject::tr("unknown (%1)").arg(visibility);
+    }
+    return QString();
+}
+
 QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 {
     switch (arg) {
@@ -86,6 +98,9 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             s += QStringLiteral("Value: 0x") + QString::number(entry->value(), 16) + "<br/>";
             s += QStringLiteral("Bind type: ") + bindTypeToString(entry->bindType()) + "<br/>";
             s += QStringLiteral("Symbol type: ") + symbolTypeToString(entry->type()) + "<br/>";
+            s += QStringLiteral("Visibility: ") + visibilityToString(entry->visibility()) + "<br/>";
+            if (entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount())
+                s += QStringLiteral("Section: ") + entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->name();
             return s;
         }
     }

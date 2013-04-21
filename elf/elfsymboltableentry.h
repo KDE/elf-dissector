@@ -17,8 +17,9 @@ public:
     virtual ~ElfSymbolTableEntry();
     ElfSymbolTableEntry& operator=(const ElfSymbolTableEntry &other) = delete;
 
+    const ElfSymbolTableSection* symbolTable() const;
+
     virtual uint32_t nameIndex() const = 0;
-    virtual uint8_t visibility() const = 0;
     virtual uint16_t sectionIndex() const = 0;
     virtual uint64_t value() const = 0;
     virtual uint64_t size() const = 0;
@@ -27,6 +28,8 @@ public:
     uint8_t bindType() const;
     /** Symbol type. */
     uint8_t type() const;
+    /** Symbol visibility. */
+    uint8_t visibility() const;
 
     /** Mangled name from string table. */
     const char* name() const;
@@ -36,6 +39,7 @@ public:
 protected:
     explicit ElfSymbolTableEntry(const ElfSymbolTableSection *section);
     virtual uint8_t info() const = 0;
+    virtual uint8_t other() const = 0;
     const ElfSymbolTableSection *m_section;
 
 };
