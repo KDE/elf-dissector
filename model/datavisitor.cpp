@@ -36,6 +36,21 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             return section->header()->name();
         case ElfModel::SizeRole:
             return QVariant::fromValue<uint64_t>(section->size());
+        case ElfModel::DetailRole:
+        {
+            QString s;
+            s += QStringLiteral("Name: ") + section->header()->name() + "<br/>";
+            s += QStringLiteral("Size: ") + QString::number(section->header()->size()) + " bytes<br/>";
+            s += QStringLiteral("Offset: 0x") + QString::number(section->header()->sectionOffset(), 16) + "<br/>";
+            s += QStringLiteral("Virtual Address: 0x") + QString::number(section->header()->virtualAddress(), 16) + "<br/>";
+            if (section->header()->link())
+                s += QStringLiteral("Linked section: ") + section->linkedSection<ElfSection>()->header()->name() + "<br/>";
+            if (section->header()->entrySize()) {
+                s += QStringLiteral("Entries: ") + QString::number(section->header()->entryCount())
+                  + " x " + QString::number(section->header()->entrySize()) + " byte<br/>";
+            }
+            return s;
+        }
     }
 
     return QVariant();
@@ -103,6 +118,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             s += QStringLiteral("Visibility: ") + visibilityToString(entry->visibility()) + "<br/>";
             if (entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount())
                 s += QStringLiteral("Section: ") + entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->name() + "<br/>";
+            // TODO: they way we interpret value() is wrong, seems to refer to program header vm addresses
             if (entry->type() == STT_FUNC && entry->size() > 0) {
                 Disassembler da;
                 s += QStringLiteral("Code:<br/><tt>") + da.disassemble(entry) + "</tt>";
