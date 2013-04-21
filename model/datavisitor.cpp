@@ -106,6 +106,12 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             if (entry->type() == STT_FUNC && entry->size() > 0) {
                 Disassembler da;
                 s += QStringLiteral("Code:<br/><tt>") + da.disassemble(entry) + "</tt>";
+            } else if (entry->type() == STT_OBJECT && entry->size() > 0) {
+                s += QStringLiteral("Data:<br/><tt>");
+                const unsigned char* data = entry->symbolTable()->file()->rawData();
+                data += entry->value();
+                s += QByteArray::fromRawData((const char*)data, entry->size()).toHex();
+                s += "</tt>";
             }
             return s;
         }
