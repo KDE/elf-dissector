@@ -23,13 +23,13 @@ public:
     virtual uint32_t nameIndex() const = 0;
     virtual uint32_t type() const = 0;
     virtual uint64_t flags() const = 0;
-//    virtual uint64_t address() const = 0;
+    virtual uint64_t virtualAddress() const = 0;
     /** The location of the section (not this header) in the ELF file. */
     virtual uint64_t sectionOffset() const = 0;
     virtual uint64_t size() const = 0;
     virtual uint32_t link() const = 0;
-//    virtual uint32_t info() const = 0;
-//    virtual uint64_t alignment() const = 0;
+    virtual uint32_t info() const = 0;
+    virtual uint64_t alignment() const = 0;
     virtual uint64_t entrySize() const = 0;
 
     /** Section name. */
