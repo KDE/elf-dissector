@@ -4,6 +4,7 @@
 #include "elffile.h"
 
 #include <QObject>
+#include <QStringList>
 
 /** A set of ELF files. */
 class ElfFileSet : public QObject
@@ -19,7 +20,10 @@ public:
     ElfFile::Ptr file(int index) const;
 
 private:
+    QString findLibrary(const QString &name) const;
+
     QVector<ElfFile::Ptr> m_files;
+    QStringList m_searchPaths;
 };
 
 #endif // ELFFILESET_H

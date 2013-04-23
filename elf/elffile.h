@@ -3,6 +3,7 @@
 
 #include "elfsectionheader.h"
 #include "elfsection.h"
+#include "elfdynamicsection.h"
 
 #include <QFile>
 #include <QVector>
@@ -44,6 +45,9 @@ public:
     {
         return std::dynamic_pointer_cast<T>(m_sections.at(index));
     }
+
+    /** Returns the dynamic section. */
+    ElfDynamicSection::Ptr dynamicSection() const;
 
 private:
     void parse();

@@ -56,7 +56,7 @@
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
              <widget class="QLineEdit" name="elfStructureSearchLine">
@@ -66,7 +66,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QTreeView" name="elfStructureView"/>
+             <widget class="QTreeView" name="elfStructureView">
+              <property name="uniformRowHeights">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

@@ -110,7 +110,6 @@ void MainWindow::loadFile(const QString& fileName)
     m_fileSet->addFile(fileName);
     m_elfModel->setFileSet(m_fileSet);
     ui->elfStructureView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    ui->elfStructureView->expandAll();
 
 
     ElfFile::Ptr file = m_fileSet->file(0);

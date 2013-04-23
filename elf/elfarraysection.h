@@ -31,7 +31,6 @@ protected:
             m_entries.push_back(createEntry(index));
     }
 
-private:
     QVector<typename T::Ptr> m_entries;
 };
 

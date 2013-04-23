@@ -125,3 +125,13 @@ void ElfFile::parseSections()
         }
     }
 }
+
+ElfDynamicSection::Ptr ElfFile::dynamicSection() const
+{
+    for (int i = 0; i < header()->sectionHeaderCount(); ++i) {
+        if (m_sections.at(i)->header()->type() == SHT_DYNAMIC)
+            return section<ElfDynamicSection>(i);
+    }
+
+    return ElfDynamicSection::Ptr();
+}
