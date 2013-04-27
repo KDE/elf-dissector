@@ -58,3 +58,5 @@ qt5_wrap_ui(elf_dissector_srcs
 
 add_executable(elf-dissector ${elf_dissector_srcs})
 target_link_libraries(elf-dissector Qt5::Widgets ${Iberty_LIBRARY} opcodes)
+
+add_subdirectory(tests)

@@ -1,6 +1,7 @@
 #include "elfsymboltableentry.h"
 #include "elfsymboltablesection.h"
 #include "elfstringtablesection.h"
+#include "elffile.h"
 
 #include <QByteArray>
 
@@ -45,4 +46,10 @@ uint8_t ElfSymbolTableEntry::visibility() const
 {
     // same as 65
     return ELF32_ST_VISIBILITY(other());
+}
+
+const unsigned char* ElfSymbolTableEntry::data() const
+{
+    ElfSection::Ptr targetSection = m_section->file()->section<ElfSection>(sectionIndex());
+    return targetSection->rawData() + value() - targetSection->header()->virtualAddress();
 }

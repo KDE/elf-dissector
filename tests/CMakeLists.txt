@@ -1,0 +1,1 @@
+add_executable(single-executable single-executable.cpp)

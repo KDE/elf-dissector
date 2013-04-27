@@ -31,6 +31,9 @@ public:
     /** Symbol visibility. */
     uint8_t visibility() const;
 
+    /** Pointer to the associated code/data. */
+    const unsigned char* data() const;
+
     /** Mangled name from string table. */
     const char* name() const;
     /** Demangled name for user display. */

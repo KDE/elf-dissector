@@ -37,9 +37,7 @@ QString Disassembler::disassemble(ElfSymbolTableEntry* entry) const
     info.endian = BFD_ENDIAN_LITTLE;
     disassemble_fn = print_insn_i386;
 
-    info.buffer = const_cast<bfd_byte*>(entry->symbolTable()->file()->rawData());
-    info.buffer += entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->sectionOffset();
-    info.buffer += entry->value();
+    info.buffer = const_cast<bfd_byte*>(entry->data());
     info.buffer_length = entry->size();
     info.buffer_vma = 0;
 
