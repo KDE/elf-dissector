@@ -33,7 +33,7 @@ QVector< QByteArray > ElfDynamicSection::runpaths() const
     return stringList(DT_RUNPATH);
 }
 
-QVector< QByteArray > ElfDynamicSection::stringList(uint64_t tag) const
+QVector< QByteArray > ElfDynamicSection::stringList(int64_t tag) const
 {
     QVector<QByteArray> v;
     for (const ElfDynamicEntry::Ptr &entry : m_entries) {

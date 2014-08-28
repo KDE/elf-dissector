@@ -21,7 +21,7 @@ public:
     QVector<QByteArray> neededLibraries() const;
 
 private:
-    QVector<QByteArray> stringList(uint64_t tag) const;
+    QVector<QByteArray> stringList(int64_t tag) const;
 };
 
 #endif // ELFDYNAMICSECTION_H
