@@ -11,7 +11,7 @@ QColor Colorizer::nextColor()
     if (m_count * m_increment >= 360) {
         m_count = 0;
         m_hue += m_offset;
-        if ((m_offset * 2) < m_increment)
+        if ((m_offset * 2) < m_increment && m_increment > 1)
             m_increment /= 2;
         m_offset /= 2;
     }
