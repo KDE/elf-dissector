@@ -77,6 +77,10 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             // TODO handle template args?
             break;
+        case DEMANGLE_COMPONENT_TEMPLATE_PARAM:
+        case DEMANGLE_COMPONENT_FUNCTION_PARAM:
+            // ??? "This holds a number, which is the  parameter index."
+            break;
         case DEMANGLE_COMPONENT_CTOR:
             // TODO: do we need to consider u.s_ctor.kind?
             handleNameComponent(component->u.s_ctor.name, nameParts);
@@ -89,6 +93,16 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.push_back("vtable");
             break;
+        case DEMANGLE_COMPONENT_VTT:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.push_back("vtt"); // what's this?
+            break;
+        case DEMANGLE_COMPONENT_CONSTRUCTION_VTABLE:
+            nameParts.push_back("construction vtable for");
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.push_back("in");
+            handleNameComponent(component->u.s_binary.right, nameParts);
+            break;
         case DEMANGLE_COMPONENT_TYPEINFO:
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.push_back("typeinfo");
@@ -96,6 +110,10 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_TYPEINFO_NAME:
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.push_back("typeinfo name");
+            break;
+        case DEMANGLE_COMPONENT_TYPEINFO_FN:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.push_back("typeinfo function");
             break;
         case DEMANGLE_COMPONENT_THUNK:
             handleNameComponent(component->u.s_binary.left, nameParts);
