@@ -163,8 +163,8 @@ void MainWindow::loadFile(const QString& fileName)
 
     QVector<SymbolNode*> sectionItems;
     sectionItems.resize(file->sectionHeaders().size());
-    Colorizer colorizer;
 
+    Colorizer sectionColorizer(96, 255);
     for (const ElfSectionHeader::Ptr &shdr : file->sectionHeaders()) {
         if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation()) {
             baseItem->setSum(baseItem->sum() - shdr->size());
@@ -174,11 +174,12 @@ void MainWindow::loadFile(const QString& fileName)
         item->setSum(shdr->size());
         item->setSorting(-2, true); // sort by value
         if (ui->actionColorizeSections->isChecked())
-            item->setBackColor(colorizer.nextColor());
+            item->setBackColor(sectionColorizer.nextColor());
         sectionItems[shdr->sectionIndex()] = new SymbolNode;
         sectionItems[shdr->sectionIndex()]->item = item;
     }
 
+    Colorizer symbolColorizer;
     Demangler demangler;
 
     for (const ElfSectionHeader::Ptr &shdr : file->sectionHeaders()) {
@@ -199,7 +200,7 @@ void MainWindow::loadFile(const QString& fileName)
                         node->item = new TreeMapItem(parentNode->item);
                         node->item->setField(0, demangledName);
                         if (ui->actionColorizeSymbols->isChecked() && parentNode->item->parent() == baseItem) {
-                            node->item->setBackColor(colorizer.nextColor());
+                            node->item->setBackColor(symbolColorizer.nextColor());
                         } else {
                             node->item->setBackColor(parentNode->item->backColor());
                         }

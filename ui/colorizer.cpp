@@ -20,9 +20,16 @@
 #include <QColor>
 #include <QDebug>
 
+
+Colorizer::Colorizer(uint8_t saturation, uint8_t value):
+    m_saturation(saturation),
+    m_value(value)
+{
+}
+
 QColor Colorizer::nextColor()
 {
-    QColor c = QColor::fromHsv(m_hue, 255, 192);
+    QColor c = QColor::fromHsv(m_hue, m_saturation, m_value);
     ++m_count;
 
     if (m_count * m_increment >= 360) {

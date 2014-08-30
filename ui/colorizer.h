@@ -28,6 +28,7 @@ class QColor;
 class Colorizer
 {
 public:
+    explicit Colorizer(uint8_t saturation = 255, uint8_t value = 192);
     QColor nextColor();
 
 private:
@@ -35,6 +36,8 @@ private:
     uint8_t m_increment = 180;
     uint8_t m_offset = 90;
     uint16_t m_count = 0;
+    uint8_t m_saturation;
+    uint8_t m_value;
 };
 
 #endif // COLORIZER_H
