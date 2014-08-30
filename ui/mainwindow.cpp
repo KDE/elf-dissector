@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionHideDebugInformation, &QAction::triggered, this, &MainWindow::hideDebugInformation);
     connect(ui->actionColorizeSections, &QAction::triggered, this, &MainWindow::colorizationChanged);
     connect(ui->actionColorizeSymbols, &QAction::triggered, this, &MainWindow::colorizationChanged);
+    connect(ui->actionReopenPreviousFile, &QAction::triggered, this, &MainWindow::reloadFileOnStartup);
 
     connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &MainWindow::selectionChanged);
