@@ -1,5 +1,14 @@
+#!/bin/bash
+
+find "$@" -name '*.h' -o -name '*.cpp' -o -name '*.qml' | grep -v /3rdparty/ | grep -v /build | while read FILE; do
+    if grep -qiE "Copyright \(C\) [0-9, -]{4,} " "$FILE" ; then continue; fi
+    thisfile=`basename $FILE`
+    authorName=`git config user.name`
+    authorEmail=`git config user.email`
+    thisYear=`date +%Y`
+    cat <<EOF > "$FILE".tmp
 /*
-    Copyright (C) 2013-2014 Volker Krause <vkrause@kde.org>
+    Copyright (C) $thisYear $authorName <$authorEmail>
 
     This program is free software; you can redistribute it and/or modify it
     under the terms of the GNU Library General Public License as published by
@@ -15,26 +24,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "colorizer.h"
+EOF
+    cat "$FILE" >> "$FILE".tmp
+    mv "$FILE".tmp "$FILE"
+done
 
-#include <QColor>
-#include <QDebug>
-
-QColor Colorizer::nextColor()
-{
-    QColor c = QColor::fromHsv(m_hue, 255, 192);
-    ++m_count;
-
-    if (m_count * m_increment >= 360) {
-        m_count = 0;
-        m_hue += m_offset;
-        if ((m_offset * 2) < m_increment && m_increment > 1)
-            m_increment /= 2;
-        m_offset /= 2;
-    }
-
-    m_hue += m_increment;
-    m_hue = m_hue % 360;
-
-    return c;
-}
