@@ -30,7 +30,10 @@
 
 #include <treemap/treemap.h>
 
+#include <kitemmodels/krecursivefilterproxymodel.h>
+
 #include <QApplication>
+#include <QDebug>
 #include <QFileDialog>
 #include <QSettings>
 #include <QStatusBar>
@@ -40,7 +43,10 @@
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow), m_elfModel(new ElfModel(this))
 {
     ui->setupUi(this);
-    ui->elfStructureView->setModel(m_elfModel);
+
+    auto *filter = new KRecursiveFilterProxyModel(this);
+    filter->setSourceModel(m_elfModel);
+    ui->elfStructureView->setModel(filter);
 
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::fileOpen);
     connect(ui->actionQuit, &QAction::triggered, &QCoreApplication::quit);
@@ -50,6 +56,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
 
     connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &MainWindow::selectionChanged);
+    connect(ui->elfStructureSearchLine, &QLineEdit::textChanged, this, [filter](const QString &text) { filter->setFilterFixedString(text); });
 
     restoreSettings();
 }

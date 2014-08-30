@@ -21,6 +21,7 @@ set(elf_dissector_srcs
     main.cpp
 
     3rdparty/treemap/treemap.cpp
+    3rdparty/kitemmodels/krecursivefilterproxymodel.cpp
 
     elf/elfdynamicentry.cpp
     elf/elfdynamicsection.cpp
