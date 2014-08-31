@@ -40,6 +40,8 @@ public:
     explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
+    void loadFile(const QString &fileName);
+
 private slots:
     void fileOpen();
     void hideDebugInformation();
@@ -50,7 +52,6 @@ private slots:
 
 private:
     void restoreSettings();
-    void loadFile(const QString &fileName);
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;

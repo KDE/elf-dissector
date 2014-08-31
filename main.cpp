@@ -16,17 +16,29 @@
 */
 
 #include <ui/mainwindow.h>
+
 #include <QApplication>
+#include <QCommandLineParser>
 
 int main(int argc, char** argv)
 {
     QCoreApplication::setApplicationName("ELF Dissector");
     QCoreApplication::setOrganizationName("KDAB");
     QCoreApplication::setOrganizationDomain("kdab.com");
+    QCoreApplication::setApplicationVersion("0.0.1");
 
     QApplication app(argc, argv);
 
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.addPositionalArgument("elf", "ELF library to open", "<elf>");
+    parser.process(app);
+
     MainWindow mainWindow;
     mainWindow.show();
+    foreach (const QString &file, parser.positionalArguments())
+        mainWindow.loadFile(file);
+
     return app.exec();
 }
