@@ -36,6 +36,7 @@ public:
 
 private:
     void handleNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
+    void handleOptionalNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
 
     // TODO shared value caching
 };

@@ -30,7 +30,7 @@
 QVector<QByteArray> Demangler::demangle(const char* name)
 {
     void *memory = 0;
-    demangle_component *component = cplus_demangle_v3_components(name, DMGL_NO_OPTS, &memory);
+    demangle_component *component = cplus_demangle_v3_components(name, DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, &memory);
 
     QVector<QByteArray> result;
     if (!memory || !component) { // demange failed, likely not mangled
@@ -46,7 +46,7 @@ QVector<QByteArray> Demangler::demangle(const char* name)
 
     qDebug() << name << component << memory << component->type;
     size_t size;
-    char * fullName = cplus_demangle_print(DMGL_NO_OPTS, component, strlen(name), &size);
+    char * fullName = cplus_demangle_print(DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, component, strlen(name), &size);
     result << fullName;
     free(fullName);
 
@@ -71,6 +71,17 @@ struct demangle_builtin_type_info {
     /*enum d_builtin_type_print*/ int print;
 };
 
+static QByteArray join(const QVector<QByteArray> &v, const QByteArray &sep)
+{
+    QByteArray res;
+    for (auto it  = v.begin(); it != v.end(); ++it) {
+        if (it != v.begin())
+            res += sep;
+        res += *it;
+    }
+    return res;
+}
+
 void Demangler::handleNameComponent(demangle_component* component, QVector< QByteArray >& nameParts)
 {
     // TODO: complete the component types
@@ -87,9 +98,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_TYPED_NAME:
+        {
+            // left is the name of the function, right is the return type (ignored here) and arguments
             handleNameComponent(component->u.s_binary.left, nameParts);
-            // TODO: right side relevant?
+            QVector<QByteArray> args;
+            handleNameComponent(component->u.s_binary.right, args);
+            nameParts.last().append("(" + join(args, ", ") + ")");
             break;
+        }
         case DEMANGLE_COMPONENT_TEMPLATE:
             handleNameComponent(component->u.s_binary.left, nameParts);
             // TODO handle template args?
@@ -105,6 +121,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_DTOR:
             // TODO: do we need to consider u.s_dtor.kind?
             handleNameComponent(component->u.s_dtor.name, nameParts);
+            nameParts.last().prepend('~');
             break;
         case DEMANGLE_COMPONENT_VTABLE:
             handleNameComponent(component->u.s_binary.left, nameParts);
@@ -198,9 +215,17 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_BUILTIN_TYPE:
             nameParts.push_back(QByteArray(component->u.s_builtin.type->name, component->u.s_builtin.type->len));
             break;
+        case DEMANGLE_COMPONENT_FUNCTION_TYPE:
+            // left is return type (ignored here), right is the (optional) argument list
+            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
+            break;
         case DEMANGLE_COMPONENT_PTRMEM_TYPE:
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, nameParts);
+            break;
+        case DEMANGLE_COMPONENT_ARGLIST:
+            handleOptionalNameComponent(component->u.s_binary.left, nameParts);
+            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_OPERATOR:
             nameParts.push_back(QByteArray("operator") + QByteArray(component->u.s_operator.op->name, component->u.s_operator.op->len));
@@ -223,4 +248,11 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         default:
             qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type;
     }
+}
+
+void Demangler::handleOptionalNameComponent(demangle_component* component, QVector< QByteArray >& nameParts)
+{
+    if (!component)
+        return;
+    handleNameComponent(component, nameParts);
 }

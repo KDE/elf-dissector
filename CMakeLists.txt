@@ -5,8 +5,9 @@ include(FeatureSummary)
 set(CMAKE_INCLUDE_CURRENT_DIR on)
 set(CMAKE_AUTOMOC on)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+enable_testing()
 
-find_package(Qt5Widgets NO_MODULE REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Test NO_MODULE REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -Wall -Wextra -pedantic")
 
 find_package(Iberty REQUIRED)
