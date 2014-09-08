@@ -26,6 +26,16 @@
 
 #include <demangle.h>
 
+template <typename T> class StateResetter
+{
+public:
+    explicit StateResetter(T& var) : m_variable(var) { m_oldValue = var; }
+    ~StateResetter() { m_variable = m_oldValue; }
+private:
+    T &m_variable;
+    T m_oldValue;
+};
+
 
 QVector<QByteArray> Demangler::demangle(const char* name)
 {
@@ -57,7 +67,7 @@ QVector<QByteArray> Demangler::demangle(const char* name)
 
 void Demangler::reset()
 {
-    m_inTemplateArgList = false;
+    m_inArgList = false;
     m_templateParamIndex = 0;
     m_templateParams.clear();
 }
@@ -111,7 +121,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             QVector<QByteArray> args;
             handleNameComponent(component->u.s_binary.right, args);
-            nameParts.last().append("(" + join(args, ", ") + ")");
+            nameParts.last().append(args.last());
             break;
         }
         case DEMANGLE_COMPONENT_TEMPLATE:
@@ -122,7 +132,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.right, args);
             m_templateParams.insert(currentIndex, join(args, ", "));
             const QByteArray fullTemplate = nameParts.last() + "<" + join(args, ", ") + ">";
-            if (m_inTemplateArgList) // we only want the template grouping on top-level
+            if (m_inArgList) // we only want the template grouping on top-level
                 nameParts.removeLast();
             nameParts.push_back(fullTemplate);
             break;
@@ -220,9 +230,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.last().append(" const");
             break;
         case DEMANGLE_COMPONENT_POINTER:
+        {
+            StateResetter<bool> resetter(m_pendingPointer);
+            m_pendingPointer = true;
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.last().append("*");
+            if (m_pendingPointer) // not consumed by a function pointer
+                nameParts.last().append("*");
             break;
+        }
         case DEMANGLE_COMPONENT_REFERENCE:
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.last().append("&");
@@ -235,24 +250,39 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back(QByteArray(component->u.s_builtin.type->name, component->u.s_builtin.type->len));
             break;
         case DEMANGLE_COMPONENT_FUNCTION_TYPE:
-            // left is return type (ignored here), right is the (optional) argument list
-            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
+        {
+            const bool previousPendingPointer = m_pendingPointer;
+            m_pendingPointer = false;
+
+            // left is return type (only relevant in argument lists), right is the (optional) argument list
+            QVector<QByteArray> returnType;
+            handleOptionalNameComponent(component->u.s_binary.left, returnType);
+
+            QVector<QByteArray> args;
+            handleOptionalNameComponent(component->u.s_binary.right, args);
+            QByteArray fullName;
+            if (m_inArgList)
+                fullName.prepend(returnType.last() + " ");
+            if (previousPendingPointer) { // function pointer
+                fullName.append("(*)");
+            } else {
+                m_pendingPointer = previousPendingPointer;
+            }
+            fullName.append("(" + join(args, ", ") + ")");
+            nameParts.push_back(fullName);
             break;
+        }
         case DEMANGLE_COMPONENT_PTRMEM_TYPE:
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_ARGLIST:
-            handleOptionalNameComponent(component->u.s_binary.left, nameParts);
-            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
-            break;
         case DEMANGLE_COMPONENT_TEMPLATE_ARGLIST:
         {
-            bool oldInTemplateArgList = m_inTemplateArgList;
-            m_inTemplateArgList = true;
+            StateResetter<bool> resetter(m_inArgList);
+            m_inArgList = true;
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
-            m_inTemplateArgList = oldInTemplateArgList;
             break;
         }
         case DEMANGLE_COMPONENT_OPERATOR:

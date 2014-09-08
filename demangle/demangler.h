@@ -42,7 +42,8 @@ private:
 
     int m_templateParamIndex = 0;
     QHash<int, QByteArray> m_templateParams;
-    bool m_inTemplateArgList = false;
+    bool m_inArgList = false;
+    bool m_pendingPointer = false;
 
     // TODO shared value caching
 };
