@@ -44,6 +44,7 @@ private:
     QHash<int, QByteArray> m_templateParams;
     bool m_inArgList = false;
     bool m_pendingPointer = false;
+    bool m_pendingReference = false;
 
     // TODO shared value caching
 };

@@ -70,6 +70,8 @@ void Demangler::reset()
     m_inArgList = false;
     m_templateParamIndex = 0;
     m_templateParams.clear();
+    m_pendingPointer = false;
+    m_pendingReference = false;
 }
 
 // not in a public binutils header, but needed anyway
@@ -239,9 +241,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         }
         case DEMANGLE_COMPONENT_REFERENCE:
+        {
+            StateResetter<bool> resetter(m_pendingReference);
+            m_pendingReference = true;
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.last().append("&");
+            if (m_pendingReference) // not consumed by the array type
+                nameParts.last().append("&");
             break;
+        }
         case DEMANGLE_COMPONENT_RVALUE_REFERENCE:
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.last().append("&&");
@@ -272,6 +279,27 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back(fullName);
             break;
         }
+        case DEMANGLE_COMPONENT_ARRAY_TYPE:
+        {
+            const bool prevRef = m_pendingReference;
+            m_pendingReference = false;
+            // left is optional dimension, right is type
+            handleNameComponent(component->u.s_binary.right, nameParts);
+            QVector<QByteArray> dim;
+            handleNameComponent(component->u.s_binary.left, dim);
+            QByteArray suffix;
+            if (prevRef) {
+                suffix += " (&)"; // array references are special...
+            } else {
+                m_pendingReference = prevRef;
+            }
+            suffix += " [";
+            if (!dim.isEmpty())
+                suffix.append(dim.last());
+            suffix += "]";
+            nameParts.last().append(suffix);
+            break;
+        }
         case DEMANGLE_COMPONENT_PTRMEM_TYPE:
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, nameParts);
@@ -294,6 +322,10 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_CAST:
             // TODO we probably want to mention this is a cast?
             handleNameComponent(component->u.s_binary.left, nameParts);
+            break;
+        case DEMANGLE_COMPONENT_LITERAL:
+            // left is type, right is value
+            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_LAMBDA:
             // TODO what's in here??
