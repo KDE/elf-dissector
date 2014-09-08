@@ -106,7 +106,7 @@ static int handleNameComponent(demangle_component* component)
         case DEMANGLE_COMPONENT_DTOR:
             writeNode("DTOR");
             // TODO: do we need to consider u.s_dtor.kind?
-            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_dtor.name));
             break;
         case DEMANGLE_COMPONENT_VTABLE:
             writeNode("VTABLE");
