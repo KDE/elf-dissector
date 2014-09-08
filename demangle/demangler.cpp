@@ -38,6 +38,7 @@ QVector<QByteArray> Demangler::demangle(const char* name)
         return result;
     }
 
+    reset();
     handleNameComponent(component, result);
     if (!result.isEmpty()) {
         free(memory);
@@ -52,6 +53,13 @@ QVector<QByteArray> Demangler::demangle(const char* name)
 
     free(memory);
     return result;
+}
+
+void Demangler::reset()
+{
+    m_inTemplateArgList = false;
+    m_templateParamIndex = 0;
+    m_templateParams.clear();
 }
 
 // not in a public binutils header, but needed anyway
@@ -107,10 +115,21 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         }
         case DEMANGLE_COMPONENT_TEMPLATE:
+        {
+            const int currentIndex = m_templateParamIndex++;
             handleNameComponent(component->u.s_binary.left, nameParts);
-            // TODO handle template args?
+            QVector<QByteArray> args;
+            handleNameComponent(component->u.s_binary.right, args);
+            m_templateParams.insert(currentIndex, join(args, ", "));
+            const QByteArray fullTemplate = nameParts.last() + "<" + join(args, ", ") + ">";
+            if (m_inTemplateArgList) // we only want the template grouping on top-level
+                nameParts.removeLast();
+            nameParts.push_back(fullTemplate);
             break;
+        }
         case DEMANGLE_COMPONENT_TEMPLATE_PARAM:
+            nameParts.push_back(m_templateParams.value(component->u.s_number.number));
+            break;
         case DEMANGLE_COMPONENT_FUNCTION_PARAM:
             // ??? "This holds a number, which is the  parameter index."
             break;
@@ -227,6 +246,15 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
+        case DEMANGLE_COMPONENT_TEMPLATE_ARGLIST:
+        {
+            bool oldInTemplateArgList = m_inTemplateArgList;
+            m_inTemplateArgList = true;
+            handleOptionalNameComponent(component->u.s_binary.left, nameParts);
+            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
+            m_inTemplateArgList = oldInTemplateArgList;
+            break;
+        }
         case DEMANGLE_COMPONENT_OPERATOR:
             nameParts.push_back(QByteArray("operator") + QByteArray(component->u.s_operator.op->name, component->u.s_operator.op->len));
             break;

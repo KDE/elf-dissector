@@ -19,6 +19,7 @@
 #define DEMANGLER_H
 
 #include <QByteArray>
+#include <QHash>
 #include <QVector>
 
 struct demangle_component;
@@ -35,8 +36,13 @@ public:
     QVector<QByteArray> demangle(const char* name);
 
 private:
+    void reset();
     void handleNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
     void handleOptionalNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
+
+    int m_templateParamIndex = 0;
+    QHash<int, QByteArray> m_templateParams;
+    bool m_inTemplateArgList = false;
 
     // TODO shared value caching
 };
