@@ -247,6 +247,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.last().append(" const");
             break;
+        case DEMANGLE_COMPONENT_VENDOR_TYPE_QUAL:
+        {
+            QVector<QByteArray> parts;
+            handleNameComponent(component->u.s_binary.left, parts);
+            handleNameComponent(component->u.s_binary.right, parts);
+            nameParts.push_back(parts.first() + " " + parts.last());
+            break;
+        }
         case DEMANGLE_COMPONENT_POINTER:
         {
             StateResetter<bool> resetter(m_pendingPointer);
