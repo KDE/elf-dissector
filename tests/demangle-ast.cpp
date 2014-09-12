@@ -349,7 +349,8 @@ static int handleNameComponent(demangle_component* component)
             break;
         case DEMANGLE_COMPONENT_LAMBDA:
             writeNode("LAMBDA");
-            // TODO what's in here??
+            // TODO what's in here?? left seems to be the arguments, but where is the id?
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
         case DEMANGLE_COMPONENT_DEFAULT_ARG:
             writeNode("DEFAULT_ARG");

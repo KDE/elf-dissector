@@ -102,6 +102,12 @@ static QByteArray join(const QVector<QByteArray> &v, const QByteArray &sep)
     return res;
 }
 
+#define PUSH_TEMPLATE_PARAM_STATE \
+    StateResetter<int> indexRestter(m_templateParamIndex); \
+    StateResetter<QHash<int, QByteArray> > paramsResetter(m_templateParams); \
+    m_templateParamIndex = 0; \
+    m_templateParams.clear();
+
 void Demangler::handleNameComponent(demangle_component* component, QVector< QByteArray >& nameParts)
 {
     // TODO: complete the component types
@@ -112,13 +118,26 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_QUAL_NAME:
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, nameParts);
+            if (m_inArgList) {
+                const QByteArray name = nameParts.takeLast();
+                const QByteArray ns = nameParts.takeLast();
+                nameParts.push_back(ns + "::" + name);
+            }
             break;
         case DEMANGLE_COMPONENT_LOCAL_NAME:
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, nameParts);
+            if (m_inArgList) {
+                const QByteArray name = nameParts.takeLast();
+                const QByteArray ns = nameParts.takeLast();
+                nameParts.push_back(ns + "::" + name);
+            }
             break;
         case DEMANGLE_COMPONENT_TYPED_NAME:
         {
+            // template parameters are indexed per enclosing type name, so push that on the stack here
+            PUSH_TEMPLATE_PARAM_STATE
+
             // left is the name of the function, right is the return type (ignored here) and arguments
             handleNameComponent(component->u.s_binary.left, nameParts);
             QVector<QByteArray> args;
@@ -128,11 +147,9 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_TEMPLATE:
         {
-            const int currentIndex = m_templateParamIndex++;
             handleNameComponent(component->u.s_binary.left, nameParts);
             QVector<QByteArray> args;
             handleNameComponent(component->u.s_binary.right, args);
-            m_templateParams.insert(currentIndex, join(args, ", "));
             const QByteArray fullTemplate = nameParts.last() + "<" + join(args, ", ") + ">";
             if (m_inArgList) // we only want the template grouping on top-level
                 nameParts.removeLast();
@@ -268,7 +285,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             QVector<QByteArray> args;
             handleOptionalNameComponent(component->u.s_binary.right, args);
             QByteArray fullName;
-            if (m_inArgList)
+            if (m_inArgList && !returnType.isEmpty())
                 fullName.prepend(returnType.last() + " ");
             if (previousPendingPointer) { // function pointer
                 fullName.append("(*)");
@@ -305,11 +322,27 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_ARGLIST:
-        case DEMANGLE_COMPONENT_TEMPLATE_ARGLIST:
         {
             StateResetter<bool> resetter(m_inArgList);
             m_inArgList = true;
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
+            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
+            break;
+        }
+        case DEMANGLE_COMPONENT_TEMPLATE_ARGLIST:
+        {
+            const int currentIndex = m_templateParamIndex++;
+            StateResetter<bool> resetter(m_inArgList);
+            m_inArgList = true;
+
+            if (component->u.s_binary.left) {
+                {
+                    PUSH_TEMPLATE_PARAM_STATE // ignore nested argument lists
+                    handleNameComponent(component->u.s_binary.left, nameParts);
+                }
+                m_templateParams.insert(currentIndex, nameParts.last());
+            }
+
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
         }
@@ -328,9 +361,12 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_LAMBDA:
-            // TODO what's in here??
-            nameParts.push_back("lambda");
+        {
+            QVector<QByteArray> args;
+            handleNameComponent(component->u.s_binary.left, args);
+            nameParts.push_back("{lambda(" + join(args, ", ") + ")#1}"); // TODO the #1 probably should depend on something?
             break;
+        }
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
             // TODO what's in here?
             nameParts.push_back("unnamed");

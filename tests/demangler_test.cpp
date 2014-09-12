@@ -30,6 +30,8 @@ private slots:
         QTest::newRow("template func 2") << "_ZN23QXmlStreamWriterPrivate5writeILi4EEEvRAT__Kc" << (VB << "QXmlStreamWriterPrivate" << "write" << "write<4>(char const (&) [4])");
 
         QTest::newRow("function pointer template") << "_ZN20QGlobalStaticDeleterI5QListIPFP7QObjectvEEED1Ev" << (VB << "QGlobalStaticDeleter" << "QGlobalStaticDeleter<QList<QObject* (*)()>>" << "~QGlobalStaticDeleter()");
+
+        QTest::newRow("lambda 1") << "_ZSt7find_ifIPKSt10shared_ptrI7ElfFileEZN10ElfFileSet7addFileERK7QStringEUlRS3_E_ET_SB_SB_T0_" << (VB << "std" << "find_if" << "find_if<std::shared_ptr<ElfFile> const*, ElfFileSet::addFile(QString const&)::{lambda(std::shared_ptr<ElfFile> const&)#1}>(ElfFileSet::addFile(QString const&)::{lambda(std::shared_ptr<ElfFile> const&)#1}, ElfFileSet::addFile(QString const&)::{lambda(std::shared_ptr<ElfFile> const&)#1}, ElfFileSet::addFile(QString const&)::{lambda(std::shared_ptr<ElfFile> const&)#1})");
     }
 
     void testDemangler()
@@ -39,8 +41,10 @@ private slots:
 
         Demangler d;
         auto actualDemangled = d.demangle(mangled.toLatin1());
-        if (actualDemangled != expectedDemangled)
-            qDebug() << actualDemangled << expectedDemangled;
+        if (actualDemangled != expectedDemangled) {
+            qDebug() << actualDemangled;
+            qDebug() << expectedDemangled;
+        }
         QCOMPARE(actualDemangled, expectedDemangled);
     }
 };
