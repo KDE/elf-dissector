@@ -370,7 +370,8 @@ static int handleNameComponent(demangle_component* component)
             break;
         case DEMANGLE_COMPONENT_PACK_EXPANSION:
             writeNode("PACK_EXPANSION");
-            // ??
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
         case DEMANGLE_COMPONENT_CLONE:
             writeNode("COMPONENT_CLONE");

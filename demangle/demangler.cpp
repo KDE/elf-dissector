@@ -391,9 +391,18 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_LITERAL:
+        {
             // left is type, right is value
-            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
+            QVector<QByteArray> type;
+            handleNameComponent(component->u.s_binary.left, type);
+            QByteArray typeSuffix;
+            if (type.first() == "unsigned long")
+                typeSuffix = "ul";
+            // TODO add all types
+            handleNameComponent(component->u.s_binary.right, type);
+            nameParts.push_back(type.last() + typeSuffix);
             break;
+        }
         case DEMANGLE_COMPONENT_LAMBDA:
         {
             QVector<QByteArray> args;
@@ -404,6 +413,10 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
             // TODO what's in here?
             nameParts.push_back("unnamed");
+            break;
+        case DEMANGLE_COMPONENT_PACK_EXPANSION:
+            handleOptionalNameComponent(component->u.s_binary.left, nameParts);
+            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
         default:
             relevant = true;
