@@ -102,12 +102,6 @@ static QByteArray join(const QVector<QByteArray> &v, const QByteArray &sep)
     return res;
 }
 
-#define PUSH_TEMPLATE_PARAM_STATE \
-    StateResetter<int> indexRestter(m_templateParamIndex); \
-    StateResetter<QHash<int, QByteArray> > paramsResetter(m_templateParams); \
-    m_templateParamIndex = 0; \
-    m_templateParams.clear();
-
 void Demangler::handleNameComponent(demangle_component* component, QVector< QByteArray >& nameParts)
 {
     // TODO: complete the component types
@@ -136,7 +130,12 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_TYPED_NAME:
         {
             // template parameters are indexed per enclosing type name, so push that on the stack here
-            PUSH_TEMPLATE_PARAM_STATE
+            StateResetter<int> indexRestter(m_templateParamIndex);
+            StateResetter<QHash<int, QByteArray> > paramsResetter(m_templateParams);
+            StateResetter<bool> shouldIndexResetter(m_indexTemplateArgs);
+            m_templateParamIndex = 0;
+            m_templateParams.clear();
+            m_indexTemplateArgs = true;
 
             // left is the name of the function, right is the return type (ignored here) and arguments
             handleNameComponent(component->u.s_binary.left, nameParts);
@@ -331,16 +330,22 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_TEMPLATE_ARGLIST:
         {
-            const int currentIndex = m_templateParamIndex++;
             StateResetter<bool> resetter(m_inArgList);
             m_inArgList = true;
 
             if (component->u.s_binary.left) {
+                int currentIndex = -1;
+                if (m_indexTemplateArgs)
+                    currentIndex = m_templateParamIndex++;
                 {
-                    PUSH_TEMPLATE_PARAM_STATE // ignore nested argument lists
+                    StateResetter<bool> resetter(m_indexTemplateArgs);
+                    m_indexTemplateArgs = false;
                     handleNameComponent(component->u.s_binary.left, nameParts);
                 }
-                m_templateParams.insert(currentIndex, nameParts.last());
+                if (m_indexTemplateArgs) {
+                    Q_ASSERT(currentIndex >= 0);
+                    m_templateParams.insert(currentIndex, nameParts.last());
+                }
             }
 
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
@@ -355,6 +360,35 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_CAST:
             // TODO we probably want to mention this is a cast?
             handleNameComponent(component->u.s_binary.left, nameParts);
+            break;
+        case DEMANGLE_COMPONENT_NULLARY:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            break;
+        case DEMANGLE_COMPONENT_UNARY:
+        {
+            handleOperatorComponent(component->u.s_binary.left, nameParts);
+            handleNameComponent(component->u.s_binary.right, nameParts);
+            const QByteArray arg = nameParts.takeLast();
+            const QByteArray op = nameParts.takeLast();
+            nameParts.push_back(op + arg);
+            break;
+        }
+        case DEMANGLE_COMPONENT_BINARY:
+        {
+            handleOperatorComponent(component->u.s_binary.left, nameParts);
+            handleNameComponent(component->u.s_binary.right, nameParts);
+            const QByteArray arg2 = nameParts.takeLast();
+            const QByteArray arg1 = nameParts.takeLast();
+            const QByteArray op = nameParts.takeLast();
+            nameParts.push_back(arg1 + op + arg2);
+            break;
+        }
+        case DEMANGLE_COMPONENT_BINARY_ARGS:
+        case DEMANGLE_COMPONENT_TRINARY:
+        case DEMANGLE_COMPONENT_TRINARY_ARG1:
+        case DEMANGLE_COMPONENT_TRINARY_ARG2:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            handleNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_LITERAL:
             // left is type, right is value
@@ -372,6 +406,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back("unnamed");
             break;
         default:
+            relevant = true;
             qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type;
     }
 }
@@ -380,5 +415,14 @@ void Demangler::handleOptionalNameComponent(demangle_component* component, QVect
 {
     if (!component)
         return;
+    handleNameComponent(component, nameParts);
+}
+
+void Demangler::handleOperatorComponent(demangle_component* component, QVector< QByteArray >& nameParts)
+{
+    if (component->type == DEMANGLE_COMPONENT_OPERATOR) {
+        nameParts.push_back(QByteArray(component->u.s_operator.op->name, component->u.s_operator.op->len));
+        return;
+    }
     handleNameComponent(component, nameParts);
 }

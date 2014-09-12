@@ -39,12 +39,14 @@ private:
     void reset();
     void handleNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
     void handleOptionalNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
+    void handleOperatorComponent(demangle_component *component, QVector<QByteArray> &nameParts);
 
     int m_templateParamIndex = 0;
     QHash<int, QByteArray> m_templateParams;
     bool m_inArgList = false;
     bool m_pendingPointer = false;
     bool m_pendingReference = false;
+    bool m_indexTemplateArgs = false;
 
     // TODO shared value caching
 };
