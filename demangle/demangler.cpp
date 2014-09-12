@@ -328,6 +328,15 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, nameParts);
             break;
+        case DEMANGLE_COMPONENT_VECTOR_TYPE:
+        {
+            QVector<QByteArray> parts;
+            // left is size, right is type
+            handleNameComponent(component->u.s_binary.left, parts);
+            handleNameComponent(component->u.s_binary.right, parts);
+            nameParts.push_back(parts.last() + " __vector(" + parts.first() + ")");
+            break;
+        }
         case DEMANGLE_COMPONENT_ARGLIST:
         {
             StateResetter<bool> resetter(m_inArgList);
@@ -411,6 +420,9 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back(type.last() + typeSuffix);
             break;
         }
+        case DEMANGLE_COMPONENT_NUMBER:
+            nameParts.push_back(QByteArray::number((int)component->u.s_number.number));
+            break;
         case DEMANGLE_COMPONENT_LAMBDA:
         {
             QVector<QByteArray> args;

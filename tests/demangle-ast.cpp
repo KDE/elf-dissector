@@ -332,8 +332,7 @@ static int handleNameComponent(demangle_component* component)
             // TODO: content?
             break;
         case DEMANGLE_COMPONENT_NUMBER:
-            writeNode("NUMBER");
-            // TODO: content?
+            writeNode(QByteArray("NUMBER: ") + QByteArray::number((int)component->u.s_number.number));
             break;
         case DEMANGLE_COMPONENT_DECLTYPE:
             writeNode("DECLTYPE");
