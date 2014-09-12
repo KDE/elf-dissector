@@ -336,6 +336,8 @@ static int handleNameComponent(demangle_component* component)
             break;
         case DEMANGLE_COMPONENT_DECLTYPE:
             writeNode("DECLTYPE");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             // TODO: content?
             break;
         case DEMANGLE_COMPONENT_GLOBAL_CONSTRUCTORS:
