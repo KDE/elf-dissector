@@ -162,9 +162,7 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
         case DEMANGLE_COMPONENT_SUB_STD:
-            writeNode("SUB_STD");
-            // TODO
-//             nameParts.push_back(QByteArray(component->u.s_name.s, component->u.s_name.len));
+            writeNode(QByteArray("SUB_STD: ") + QByteArray(component->u.s_name.s, component->u.s_name.len));
             break;
         case DEMANGLE_COMPONENT_RESTRICT:
             writeNode("RESTRICT");
