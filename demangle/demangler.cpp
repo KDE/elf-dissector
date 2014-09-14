@@ -438,11 +438,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.right, nameParts);
             break;
         case DEMANGLE_COMPONENT_LITERAL:
+        case DEMANGLE_COMPONENT_LITERAL_NEG:
         {
             // left is type, right is value
             QVector<QByteArray> type;
             handleNameComponent(component->u.s_binary.left, type);
             handleNameComponent(component->u.s_binary.right, type);
+            if (component->type == DEMANGLE_COMPONENT_LITERAL_NEG)
+                type.last().prepend("-");
             QByteArray typeStr;
             // TODO add: unsigned, long, long long, unsigned long long
             if (type.first() == "bool") {
