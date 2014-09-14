@@ -430,12 +430,19 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             // left is type, right is value
             QVector<QByteArray> type;
             handleNameComponent(component->u.s_binary.left, type);
-            QByteArray typeSuffix;
-            if (type.first() == "unsigned long")
-                typeSuffix = "ul";
-            // TODO add all types
             handleNameComponent(component->u.s_binary.right, type);
-            nameParts.push_back(type.last() + typeSuffix);
+            QByteArray typeStr;
+            // TODO add: unsigned, long, long long, unsigned long long
+            if (type.first() == "bool") {
+                typeStr = type.last() == "0" ? "false" : "true";
+            } else if (type.first() == "int") {
+                typeStr = type.last();
+            } else if (type.first() == "unsigned long") {
+                typeStr = type.last() + "ul";
+            } else { // custom type
+                typeStr = "(" + type.first() + ")" + type.last();
+            }
+            nameParts.push_back(typeStr);
             break;
         }
         case DEMANGLE_COMPONENT_NUMBER:

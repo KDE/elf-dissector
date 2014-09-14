@@ -61,6 +61,9 @@ private slots:
         QTest::newRow("guard variable") << "_ZGVZN12_GLOBAL__N_119Q_QGS_s_parsingData13innerFunctionEvE6holder" << (VB << "(anonymous namespace)" << "Q_QGS_s_parsingData" << "innerFunction()" << "holder" << "guard variable");
         QTest::newRow("reference temporary") << "_ZGRZNK16KateHighlighting10canBreakAtE5QChariE2sq0" << (VB << "KateHighlighting" << "canBreakAt(QChar, int) const" << "sq" << "reference temporary #0");
         QTest::newRow("unnamed type") << "_ZN24QVariantAnimationPrivateUt_D1Ev" << (VB << "QVariantAnimationPrivate" <<  "{unnamed type#1}" << "~QVariantAnimationPrivate()");
+
+        QTest::newRow("literal bool") << "_ZNSt10_Iter_baseIPN3QV45ValueELb0EE7_S_baseES2_" << (VB << "std" << "_Iter_base" << "_Iter_base<QV4::Value*, false>" << "_S_base(QV4::Value*)");
+        QTest::newRow("literal custom") << "_ZSt10_ConstructIN3JSC4Yarr13YarrGeneratorILNS1_18YarrJITCompileModeE0EE6YarrOpEIS5_EEvPT_DpOT0_" << (VB << "std" << "_Construct" << "_Construct<JSC::Yarr::YarrGenerator<(JSC::Yarr::YarrJITCompileMode)0>::YarrOp, JSC::Yarr::YarrGenerator<(JSC::Yarr::YarrJITCompileMode)0>::YarrOp>(JSC::Yarr::YarrGenerator<(JSC::Yarr::YarrJITCompileMode)0>::YarrOp*, JSC::Yarr::YarrGenerator<(JSC::Yarr::YarrJITCompileMode)0>::YarrOp&&)");
     }
 
     void testDemangler()
