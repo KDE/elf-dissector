@@ -133,15 +133,17 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             StateResetter<int> indexRestter(m_templateParamIndex);
             StateResetter<QHash<int, QByteArray> > paramsResetter(m_templateParams);
             StateResetter<bool> shouldIndexResetter(m_indexTemplateArgs);
+            StateResetter<QByteArray> modifierResetter(m_modifiers);
             m_templateParamIndex = 0;
             m_templateParams.clear();
             m_indexTemplateArgs = true;
+            m_modifiers.clear();
 
             // left is the name of the function, right is the return type (ignored here) and arguments
             handleNameComponent(component->u.s_binary.left, nameParts);
             QVector<QByteArray> args;
             handleNameComponent(component->u.s_binary.right, args);
-            nameParts.last().append(args.last());
+            nameParts.last().append(args.last() + m_modifiers);
             break;
         }
         case DEMANGLE_COMPONENT_TEMPLATE:
@@ -238,15 +240,15 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         case DEMANGLE_COMPONENT_RESTRICT_THIS:
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.last().append(" restrict");
+            m_modifiers.append(" restrict");
             break;
         case DEMANGLE_COMPONENT_VOLATILE_THIS:
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.last().append(" volatile");
+            m_modifiers.append(" volatile");
             break;
         case DEMANGLE_COMPONENT_CONST_THIS:
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.last().append(" const");
+            m_modifiers.append(" const");
             break;
         case DEMANGLE_COMPONENT_VENDOR_TYPE_QUAL:
         {
