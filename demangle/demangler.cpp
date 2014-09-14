@@ -376,14 +376,19 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
                 int currentIndex = -1;
                 if (m_indexTemplateArgs)
                     currentIndex = m_templateParamIndex++;
+                QVector<QByteArray> left;
                 {
                     StateResetter<bool> resetter(m_indexTemplateArgs);
                     m_indexTemplateArgs = false;
-                    handleNameComponent(component->u.s_binary.left, nameParts);
+                    handleNameComponent(component->u.s_binary.left, left);
                 }
+                nameParts += left;
                 if (m_indexTemplateArgs) {
                     Q_ASSERT(currentIndex >= 0);
-                    m_templateParams.insert(currentIndex, nameParts.last());
+                    if (left.isEmpty())
+                        m_templateParams.insert(currentIndex, QByteArray()); // empty template arg, might be referenced from elsewhere...
+                    else
+                        m_templateParams.insert(currentIndex, nameParts.last());
                 }
             }
 
