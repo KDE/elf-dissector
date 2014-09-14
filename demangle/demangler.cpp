@@ -300,6 +300,8 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
                 fullName.prepend(returnType.last() + " ");
             if (previousPendingPointer) { // function pointer
                 fullName.append("(*)");
+            } else if (!m_ptrmemType.isEmpty()) {
+                fullName.append("(" + m_ptrmemType + "::*)");
             } else {
                 m_pendingPointer = previousPendingPointer;
             }
@@ -329,9 +331,15 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         }
         case DEMANGLE_COMPONENT_PTRMEM_TYPE:
-            handleNameComponent(component->u.s_binary.left, nameParts);
+        {
+            StateResetter<QByteArray> ptrmemTypeResetter(m_ptrmemType);
+            m_ptrmemType.clear();
+            QVector<QByteArray> tmp;
+            handleNameComponent(component->u.s_binary.left, tmp);
+            m_ptrmemType = tmp.last();
             handleNameComponent(component->u.s_binary.right, nameParts);
             break;
+        }
         case DEMANGLE_COMPONENT_VECTOR_TYPE:
         {
             QVector<QByteArray> parts;

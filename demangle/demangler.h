@@ -44,6 +44,7 @@ private:
     int m_templateParamIndex = 0;
     QHash<int, QByteArray> m_templateParams;
     QByteArray m_modifiers;
+    QByteArray m_ptrmemType;
     bool m_inArgList = false;
     bool m_pendingPointer = false;
     bool m_pendingReference = false;
