@@ -215,7 +215,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         case DEMANGLE_COMPONENT_GUARD:
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.push_back("guard");
+            nameParts.push_back("guard variable");
             break;
         case DEMANGLE_COMPONENT_REFTEMP:
             handleNameComponent(component->u.s_binary.left, nameParts);

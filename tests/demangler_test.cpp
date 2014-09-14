@@ -56,6 +56,8 @@ private slots:
         QTest::newRow("virtual thunk") << "_ZTv0_n24_N5Solid6Ifaces11OpticalDiscD1Ev" << (VB << "Solid" << "Ifaces" << "OpticalDisc" << "~OpticalDisc()" << "virtual thunk");
         QTest::newRow("vtt") << "_ZTTN5Solid6Ifaces13StorageVolumeE" << (VB << "Solid" << "Ifaces" << "StorageVolume" << "vtt");
         QTest::newRow("construction vtable") << "_ZTCN5Solid8Backends7UDisks211OpticalDiscE0_NS1_5BlockE" << (VB << "Solid" << "Backends" << "UDisks2" << "Block" << "construction vtable in Solid::Backends::UDisks2::OpticalDisc");
+
+        QTest::newRow("guard variable") << "_ZGVZN12_GLOBAL__N_119Q_QGS_s_parsingData13innerFunctionEvE6holder" << (VB << "(anonymous namespace)" << "Q_QGS_s_parsingData" << "innerFunction()" << "holder" << "guard variable");
     }
 
     void testDemangler()
