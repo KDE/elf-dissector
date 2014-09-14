@@ -211,7 +211,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         case DEMANGLE_COMPONENT_COVARIANT_THUNK:
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.push_back("covariant thunk");
+            nameParts.push_back("covariant return thunk");
             break;
         case DEMANGLE_COMPONENT_GUARD:
             handleNameComponent(component->u.s_binary.left, nameParts);
