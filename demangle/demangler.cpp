@@ -329,7 +329,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             // left is optional dimension, right is type
             handleNameComponent(component->u.s_binary.right, nameParts);
             QVector<QByteArray> dim;
-            handleNameComponent(component->u.s_binary.left, dim);
+            handleOptionalNameComponent(component->u.s_binary.left, dim);
             QByteArray suffix;
             if (prevRef) {
                 suffix += " (&)"; // array references are special...

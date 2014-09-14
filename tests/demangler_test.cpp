@@ -46,6 +46,7 @@ private slots:
 
         QTest::newRow("vendor 1") << "_ZL18mergeQuestionMarksU8__vectorx" << (VB << "mergeQuestionMarks(long long __vector)");
 
+        QTest::newRow("array no size") << "_ZN5boost6detail21sp_assert_convertibleIA_NS_18default_color_typeES3_EEvv" << (VB << "boost" << "detail" << "sp_assert_convertible" << "sp_assert_convertible<boost::default_color_type [], boost::default_color_type []>()");
         QTest::newRow("vector type") << "_ZN9QSimdSse25v_mulEDv4_fS0_" << (VB << "QSimdSse2" << "v_mul(float __vector(4), float __vector(4))");
 
         QTest::newRow("decltype in return") << "_ZNSt16allocator_traitsISaIiEE9constructIiJRKiEEEDTcl12_S_constructfp_fp0_spcl7forwardIT0_Efp1_EEERS0_PT_DpOS5_" << (VB << "std" << "allocator_traits" << "allocator_traits<std::allocator<int>>" << "construct" << "construct<int, int const&>(std::allocator<int>&, int*, int const&)");
