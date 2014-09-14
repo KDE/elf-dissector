@@ -53,6 +53,9 @@ private slots:
         QTest::newRow("typeinfo name") << "_ZTS26KRecursiveFilterProxyModel" << (VB << "KRecursiveFilterProxyModel" << "typeinfo name");
         QTest::newRow("vtable") << "_ZTV17ElfDynamicSection" << (VB << "ElfDynamicSection" << "vtable");
         QTest::newRow("thunk") << "_ZThn16_N13TreeMapWidgetD0Ev" << (VB << "TreeMapWidget" << "~TreeMapWidget()" << "thunk");
+        QTest::newRow("virtual thunk") << "_ZTv0_n24_N5Solid6Ifaces11OpticalDiscD1Ev" << (VB << "Solid" << "Ifaces" << "OpticalDisc" << "~OpticalDisc()" << "virtual thunk");
+        QTest::newRow("vtt") << "_ZTTN5Solid6Ifaces13StorageVolumeE" << (VB << "Solid" << "Ifaces" << "StorageVolume" << "vtt");
+        QTest::newRow("construction vtable") << "_ZTCN5Solid8Backends7UDisks211OpticalDiscE0_NS1_5BlockE" << (VB << "Solid" << "Backends" << "UDisks2" << "Block" << "construction vtable in Solid::Backends::UDisks2::OpticalDisc");
     }
 
     void testDemangler()

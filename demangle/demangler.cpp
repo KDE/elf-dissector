@@ -182,11 +182,13 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back("vtt"); // what's this?
             break;
         case DEMANGLE_COMPONENT_CONSTRUCTION_VTABLE:
-            nameParts.push_back("construction vtable for");
+        {
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.push_back("in");
-            handleNameComponent(component->u.s_binary.right, nameParts);
+            QVector<QByteArray> tmp;
+            handleNameComponent(component->u.s_binary.right, tmp);
+            nameParts.push_back("construction vtable in " + join(tmp, "::"));
             break;
+        }
         case DEMANGLE_COMPONENT_TYPEINFO:
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.push_back("typeinfo");
