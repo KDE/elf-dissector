@@ -288,7 +288,10 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_RVALUE_REFERENCE:
             handleNameComponent(component->u.s_binary.left, nameParts);
-            if (!nameParts.last().endsWith('&')) // primitive implementation of reference collapsing
+            // skip appending &&
+            // - in case of reference collapsing (TODO: this should be done on the tree, not the string)
+            // - if we have an empty template arg in a pack expansion
+            if (!nameParts.last().endsWith('&') && !nameParts.last().isEmpty())
                 nameParts.last().append("&&");
             break;
         case DEMANGLE_COMPONENT_BUILTIN_TYPE:
