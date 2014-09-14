@@ -378,8 +378,8 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_extended_operator.name, nameParts);
             break;
         case DEMANGLE_COMPONENT_CAST:
-            // TODO we probably want to mention this is a cast?
             handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().prepend("operator ");
             break;
         case DEMANGLE_COMPONENT_NULLARY:
             handleNameComponent(component->u.s_binary.left, nameParts);
