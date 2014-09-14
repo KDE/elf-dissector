@@ -454,8 +454,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         }
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
-            // TODO what's in here?
-            nameParts.push_back("unnamed");
+            nameParts.push_back(QByteArray("{unnamed type#") + QByteArray::number((int)component->u.s_number.number + 1) + "}");
             break;
         case DEMANGLE_COMPONENT_PACK_EXPANSION:
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);

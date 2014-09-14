@@ -60,6 +60,7 @@ private slots:
 
         QTest::newRow("guard variable") << "_ZGVZN12_GLOBAL__N_119Q_QGS_s_parsingData13innerFunctionEvE6holder" << (VB << "(anonymous namespace)" << "Q_QGS_s_parsingData" << "innerFunction()" << "holder" << "guard variable");
         QTest::newRow("reference temporary") << "_ZGRZNK16KateHighlighting10canBreakAtE5QChariE2sq0" << (VB << "KateHighlighting" << "canBreakAt(QChar, int) const" << "sq" << "reference temporary #0");
+        QTest::newRow("unnamed type") << "_ZN24QVariantAnimationPrivateUt_D1Ev" << (VB << "QVariantAnimationPrivate" <<  "{unnamed type#1}" << "~QVariantAnimationPrivate()");
     }
 
     void testDemangler()

@@ -356,8 +356,7 @@ static int handleNameComponent(demangle_component* component)
             // TODO
             break;
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
-            writeNode("UNNAMED_TYPE");
-            // TODO what's in here?
+            writeNode(QByteArray("UNNAMED_TYPE: ") + QByteArray::number((int)component->u.s_number.number));
             break;
         case DEMANGLE_COMPONENT_TRANSACTION_CLONE:
             writeNode("TRANSACTION_CLONE");
