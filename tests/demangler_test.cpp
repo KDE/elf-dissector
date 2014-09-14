@@ -24,11 +24,14 @@ private slots:
         QTest::newRow("copy ctor 2") << "_ZN10QByteArrayC2ERKS_" << (VB << "QByteArray" << "QByteArray(QByteArray const&)");
         QTest::newRow("dtor 1") << "_ZN10QByteArrayD1Ev" << (VB << "QByteArray" << "~QByteArray()");
         QTest::newRow("dtor 2") << "_ZN10QByteArrayD2Ev" << (VB << "QByteArray" << "~QByteArray()");
+
         QTest::newRow("operator 1") << "_ZN10QByteArraypLERKS_" << (VB << "QByteArray" << "operator+=(QByteArray const&)");
         QTest::newRow("operator 2") << "_ZNK10QByteArraycvPKcEv" << (VB << "QByteArray" << "operator char const*() const");
+        QTest::newRow("operator 3") << "_ZN7QStringaSEOS_" << (VB << "QString" << "operator=(QString&&)");
 
         QTest::newRow("template func 1") <<  "_Z13qGetPtrHelperI14QScopedPointerI11QObjectData21QScopedPointerDeleterIS1_EEENT_7pointerERKS5_" << (VB << "qGetPtrHelper" << "qGetPtrHelper<QScopedPointer<QObjectData, QScopedPointerDeleter<QObjectData>>>(QScopedPointer<QObjectData, QScopedPointerDeleter<QObjectData>> const&)");
         QTest::newRow("template func 2") << "_ZN23QXmlStreamWriterPrivate5writeILi4EEEvRAT__Kc" << (VB << "QXmlStreamWriterPrivate" << "write" << "write<4>(char const (&) [4])");
+        QTest::newRow("template func 3") << "_ZSt4moveIRP11TreeMapItemEONSt16remove_referenceIT_E4typeEOS4_" << (VB << "std" << "move" << "move<TreeMapItem*&>(TreeMapItem*&)");
 
         QTest::newRow("function pointer template") << "_ZN20QGlobalStaticDeleterI5QListIPFP7QObjectvEEED1Ev" << (VB << "QGlobalStaticDeleter" << "QGlobalStaticDeleter<QList<QObject* (*)()>>" << "~QGlobalStaticDeleter()");
 
@@ -44,6 +47,11 @@ private slots:
         QTest::newRow("vector type") << "_ZN9QSimdSse25v_mulEDv4_fS0_" << (VB << "QSimdSse2" << "v_mul(float __vector(4), float __vector(4))");
 
         QTest::newRow("decltype in return") << "_ZNSt16allocator_traitsISaIiEE9constructIiJRKiEEEDTcl12_S_constructfp_fp0_spcl7forwardIT0_Efp1_EEERS0_PT_DpOS5_" << (VB << "std" << "allocator_traits" << "allocator_traits<std::allocator<int>>" << "construct" << "construct<int, int const&>(std::allocator<int>&, int*, int const&)");
+
+        QTest::newRow("typeinfo") << "_ZTI14ElfNodeVisitorIiE" << (VB << "ElfNodeVisitor" << "ElfNodeVisitor<int>" << "typeinfo");
+        QTest::newRow("typeinfo name") << "_ZTS26KRecursiveFilterProxyModel" << (VB << "KRecursiveFilterProxyModel" << "typeinfo name");
+        QTest::newRow("vtable") << "_ZTV17ElfDynamicSection" << (VB << "ElfDynamicSection" << "vtable");
+        QTest::newRow("thunk") << "_ZThn16_N13TreeMapWidgetD0Ev" << (VB << "TreeMapWidget" << "~TreeMapWidget()" << "thunk");
     }
 
     void testDemangler()

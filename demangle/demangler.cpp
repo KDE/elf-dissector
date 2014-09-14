@@ -272,13 +272,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             StateResetter<bool> resetter(m_pendingReference);
             m_pendingReference = true;
             handleNameComponent(component->u.s_binary.left, nameParts);
-            if (m_pendingReference) // not consumed by the array type
+            if (m_pendingReference && !nameParts.last().endsWith('&')) // not consumed by the array type, and primitive reference collapsing
                 nameParts.last().append("&");
             break;
         }
         case DEMANGLE_COMPONENT_RVALUE_REFERENCE:
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.last().append("&&");
+            if (!nameParts.last().endsWith('&')) // primitive implementation of reference collapsing
+                nameParts.last().append("&&");
             break;
         case DEMANGLE_COMPONENT_BUILTIN_TYPE:
             nameParts.push_back(QByteArray(component->u.s_builtin.type->name, component->u.s_builtin.type->len));
