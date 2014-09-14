@@ -148,7 +148,11 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_TEMPLATE:
         {
-            handleNameComponent(component->u.s_binary.left, nameParts);
+            {
+                StateResetter<bool> indexRestter(m_indexTemplateArgs);
+                m_indexTemplateArgs = false;
+                handleNameComponent(component->u.s_binary.left, nameParts);
+            }
             QVector<QByteArray> args;
             handleNameComponent(component->u.s_binary.right, args);
             const QByteArray fullTemplate = nameParts.last() + "<" + join(args, ", ") + ">";
