@@ -156,6 +156,7 @@ static int handleNameComponent(demangle_component* component)
         case DEMANGLE_COMPONENT_REFTEMP:
             writeNode("REFTEMP");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
         case DEMANGLE_COMPONENT_HIDDEN_ALIAS:
             writeNode("HIDDEN_ALIAS");

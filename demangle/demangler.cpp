@@ -218,9 +218,13 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back("guard variable");
             break;
         case DEMANGLE_COMPONENT_REFTEMP:
+        {
             handleNameComponent(component->u.s_binary.left, nameParts);
-            nameParts.push_back("reference temporary");
+            QVector<QByteArray> tmp;
+            handleNameComponent(component->u.s_binary.right, tmp);
+            nameParts.push_back("reference temporary #" + tmp.last());
             break;
+        }
         case DEMANGLE_COMPONENT_HIDDEN_ALIAS:
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.push_back("hidden alias");

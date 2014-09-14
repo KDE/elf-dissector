@@ -59,6 +59,7 @@ private slots:
         QTest::newRow("construction vtable") << "_ZTCN5Solid8Backends7UDisks211OpticalDiscE0_NS1_5BlockE" << (VB << "Solid" << "Backends" << "UDisks2" << "Block" << "construction vtable in Solid::Backends::UDisks2::OpticalDisc");
 
         QTest::newRow("guard variable") << "_ZGVZN12_GLOBAL__N_119Q_QGS_s_parsingData13innerFunctionEvE6holder" << (VB << "(anonymous namespace)" << "Q_QGS_s_parsingData" << "innerFunction()" << "holder" << "guard variable");
+        QTest::newRow("reference temporary") << "_ZGRZNK16KateHighlighting10canBreakAtE5QChariE2sq0" << (VB << "KateHighlighting" << "canBreakAt(QChar, int) const" << "sq" << "reference temporary #0");
     }
 
     void testDemangler()
