@@ -79,6 +79,24 @@ static QString sectionTypeToString(uint32_t sectionType)
     return QString();
 }
 
+static QString sectionFlagsToString(uint64_t flags)
+{
+    QStringList s;
+    if (flags & SHF_WRITE) s.push_back(QObject::tr("writable"));
+    if (flags & SHF_ALLOC) s.push_back(QObject::tr("occupies memory during execution"));
+    if (flags & SHF_EXECINSTR) s.push_back(QObject::tr("executable"));
+    if (flags & SHF_MERGE) s.push_back(QObject::tr("might be merged"));
+    if (flags & SHF_STRINGS) s.push_back(QObject::tr("contains nul-terminated strings"));
+    if (flags & SHF_INFO_LINK) s.push_back(QObject::tr("sh_info contains SHT index"));
+    if (flags & SHF_LINK_ORDER) s.push_back(QObject::tr("preserve order after combining"));
+    if (flags & SHF_OS_NONCONFORMING) s.push_back(QObject::tr("non-standard OS specific handling required"));
+    if (flags & SHF_GROUP) s.push_back(QObject::tr("group member"));
+    if (flags & SHF_TLS) s.push_back(QObject::tr("holds thread-local data"));
+    if (s.isEmpty())
+        return QObject::tr("&lt;none&gt;");
+    return s.join(", ");
+}
+
 QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
 {
     switch (arg) {
@@ -93,6 +111,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             QString s;
             s += QStringLiteral("Name: ") + section->header()->name() + "<br/>";
             s += QStringLiteral("Size: ") + QString::number(section->header()->size()) + " bytes<br/>";
+            s += QStringLiteral("Flags: ") + sectionFlagsToString(section->header()->flags()) + "<br/>";
             s += QStringLiteral("Offset: 0x") + QString::number(section->header()->sectionOffset(), 16) + "<br/>";
             s += QStringLiteral("Virtual Address: 0x") + QString::number(section->header()->virtualAddress(), 16) + "<br/>";
             s += QStringLiteral("Type: ") + sectionTypeToString(section->header()->type()) + "<br/>";
