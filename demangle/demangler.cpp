@@ -434,8 +434,8 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_LAMBDA:
         {
             QVector<QByteArray> args;
-            handleNameComponent(component->u.s_binary.left, args);
-            nameParts.push_back("{lambda(" + join(args, ", ") + ")#1}"); // TODO the #1 probably should depend on something?
+            handleNameComponent(component->u.s_unary_num.sub, args);
+            nameParts.push_back("{lambda(" + join(args, ", ") + ")#" + QByteArray::number(component->u.s_unary_num.num + 1) + "}");
             break;
         }
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
