@@ -30,7 +30,9 @@
 ElfFile::ElfFile(const QString& fileName) : m_file(fileName), m_data(nullptr)
 {
     // TODO error handling
-    m_file.open(QFile::ReadOnly);
+    if (!m_file.open(QFile::ReadOnly)) {
+        qCritical() << m_file.errorString() << fileName;
+    }
     m_data = m_file.map(0, m_file.size());
     Q_ASSERT(m_data);
 
