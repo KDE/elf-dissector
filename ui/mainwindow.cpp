@@ -105,7 +105,11 @@ void MainWindow::restoreSettings()
     ui->actionColorizeSymbols->setChecked(settings.value("View/ColorizeSymbols", false).toBool());
     ui->actionReopenPreviousFile->setChecked(settings.value("Settings/ReloadPreviousFile", true).toBool());
     if (ui->actionReopenPreviousFile->isChecked()) {
-        m_currentFileName = settings.value("Recent/PreviousFile").toString();
+        const auto fileName = settings.value("Recent/PreviousFile").toString();
+        const QFileInfo fi(fileName);
+        if (!fi.isReadable() || !fi.isFile())
+            return;
+        m_currentFileName = std::move(fileName);
         loadFile(m_currentFileName);
     }
 }
