@@ -46,6 +46,8 @@ private slots:
         QTest::newRow("operator 2") << "_ZNK10QByteArraycvPKcEv" << (VB << "QByteArray" << "operator char const*() const");
         QTest::newRow("operator 3") << "_ZN7QStringaSEOS_" << (VB << "QString" << "operator=(QString&&)");
 
+        QTest::newRow("rvalue ref on this") << "_ZNO7QString11toLocal8BitEv" << (VB << "QString" << "toLocal8Bit() &&");
+
         QTest::newRow("template func 1") <<  "_Z13qGetPtrHelperI14QScopedPointerI11QObjectData21QScopedPointerDeleterIS1_EEENT_7pointerERKS5_" << (VB << "qGetPtrHelper" << "qGetPtrHelper<QScopedPointer<QObjectData, QScopedPointerDeleter<QObjectData>>>(QScopedPointer<QObjectData, QScopedPointerDeleter<QObjectData>> const&)");
         QTest::newRow("template func 2") << "_ZN23QXmlStreamWriterPrivate5writeILi4EEEvRAT__Kc" << (VB << "QXmlStreamWriterPrivate" << "write" << "write<4>(char const (&) [4])");
         QTest::newRow("template func 3") << "_ZSt4moveIRP11TreeMapItemEONSt16remove_referenceIT_E4typeEOS4_" << (VB << "std" << "move" << "move<TreeMapItem*&>(TreeMapItem*&)");

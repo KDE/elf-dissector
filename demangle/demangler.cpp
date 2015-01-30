@@ -260,6 +260,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             m_modifiers.append(" const");
             break;
+        case DEMANGLE_COMPONENT_REFERENCE_THIS:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            m_modifiers.append(" &");
+            break;
+        case DEMANGLE_COMPONENT_RVALUE_REFERENCE_THIS:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            m_modifiers.append(" &&");
+            break;
         case DEMANGLE_COMPONENT_VENDOR_TYPE_QUAL:
         {
             QVector<QByteArray> parts;
