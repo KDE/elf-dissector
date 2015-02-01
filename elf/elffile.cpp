@@ -22,6 +22,8 @@
 #include "elfsymboltablesection_impl.h"
 #include "elfdynamicsection_impl.h"
 
+#include <dwarf/dwarfinfo.h>
+
 #include <QDebug>
 
 #include <cassert>
@@ -41,6 +43,7 @@ ElfFile::ElfFile(const QString& fileName) : m_file(fileName), m_data(nullptr)
 
 ElfFile::~ElfFile()
 {
+    delete m_dwarfInfo;
     m_sectionHeaders.clear();
     m_sections.clear();
 }
@@ -83,6 +86,9 @@ void ElfFile::parse()
 {
     parseHeader();
     parseSections();
+
+    if (indexOfSection(".debug_info") >= 0)
+        m_dwarfInfo = new DwarfInfo(this);
 }
 
 void ElfFile::parseHeader()
@@ -163,4 +169,9 @@ ElfDynamicSection::Ptr ElfFile::dynamicSection() const
     }
 
     return ElfDynamicSection::Ptr();
+}
+
+DwarfInfo* ElfFile::dwarfInfo() const
+{
+    return m_dwarfInfo;
 }

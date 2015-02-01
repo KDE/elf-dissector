@@ -27,6 +27,7 @@
 
 #include <memory>
 
+class DwarfInfo;
 class ElfHeader;
 
 /** Represents a ELF file. */
@@ -68,6 +69,9 @@ public:
     /** Returns the dynamic section. */
     ElfDynamicSection::Ptr dynamicSection() const;
 
+    /** DWARF debug information, if present. */
+    DwarfInfo* dwarfInfo() const;
+
 private:
     void parse();
     void parseHeader();
@@ -79,6 +83,7 @@ private:
     std::unique_ptr<ElfHeader> m_header;
     QVector<ElfSectionHeader::Ptr> m_sectionHeaders;
     QVector<ElfSection::Ptr> m_sections;
+    DwarfInfo *m_dwarfInfo = nullptr;
 };
 
 #endif // ELFFILE_H
