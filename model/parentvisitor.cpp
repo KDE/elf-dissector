@@ -36,3 +36,13 @@ QPair<void*, int> ParentVisitor::doVisit(ElfSection* section, int) const
 {
     return qMakePair<void*, int>(section->file(), section->header()->sectionIndex());
 }
+
+QPair< void*, int > ParentVisitor::doVisit(DwarfInfo* info, int) const
+{
+    return qMakePair<void*, int>(info->elfFile(), info->elfFile()->indexOfSection(".debug_info"));
+}
+
+QPair< void*, int > ParentVisitor::doVisit(DwarfDie* die, int) const
+{
+    return qMakePair<void*, int>(die->dwarfInfo(), die->dwarfInfo()->compilationUnits().indexOf(die));
+}

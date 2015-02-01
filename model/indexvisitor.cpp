@@ -30,6 +30,7 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFileSet* fileSet, int row) const
 IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
 {
     ElfSection *section = file->section<ElfSection>(row).get();
+    void *internalPointer = section;
     ElfNodeVariant::Type type;
     switch (section->header()->type()) {
         case SHT_SYMTAB:
@@ -40,9 +41,14 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
             type = ElfNodeVariant::DynamicSection;
             break;
         default:
-            type = ElfNodeVariant::Section;
+            if (qstrcmp(section->header()->name(), ".debug_info") == 0) {
+                type = ElfNodeVariant::DwarfInfo;
+                internalPointer = file->dwarfInfo();
+            } else {
+                type = ElfNodeVariant::Section;
+            }
     }
-    return qMakePair<void*, ElfNodeVariant::Type>(section, type);
+    return qMakePair(internalPointer, type);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(ElfSymbolTableSection* symtab, int row) const
@@ -55,4 +61,10 @@ IndexVisitor::type IndexVisitor::doVisit(ElfDynamicSection* section, int row) co
 {
     const ElfDynamicEntry::Ptr entry = section->entry(row);
     return qMakePair<void*, ElfNodeVariant::Type>(entry.get(), ElfNodeVariant::DynamicEntry);
+}
+
+IndexVisitor::type IndexVisitor::doVisit(DwarfInfo* info, int row) const
+{
+    DwarfDie *cuDie = info->compilationUnits().at(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(cuDie, ElfNodeVariant::DwarfDie);
 }

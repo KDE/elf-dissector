@@ -226,3 +226,19 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
 
     return QVariant();
 }
+
+QVariant DataVisitor::doVisit(DwarfInfo* info, int arg) const
+{
+    const auto sectionIndex = info->elfFile()->indexOfSection(".debug_info");
+    const auto section = info->elfFile()->section<ElfSection>(sectionIndex);
+    return doVisit(section.get(), arg);
+}
+
+QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
+{
+    switch (arg) {
+        case Qt::DisplayRole:
+            return die->name();
+    }
+    return {};
+}

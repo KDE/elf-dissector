@@ -38,3 +38,13 @@ int RowCountVisitor::doVisit(ElfDynamicSection* section, int) const
 {
     return section->header()->entryCount();
 }
+
+int RowCountVisitor::doVisit(DwarfInfo* info, int) const
+{
+    return info->compilationUnits().size();
+}
+
+int RowCountVisitor::doVisit(DwarfDie*, int) const
+{
+    return 0; // TODO
+}

@@ -29,6 +29,8 @@ protected:
     QVariant doVisit(ElfSection* section, int arg) const override;
     QVariant doVisit(ElfSymbolTableEntry* entry, int arg) const override;
     QVariant doVisit(ElfDynamicEntry* entry, int arg) const override;
+    QVariant doVisit(DwarfInfo *info, int arg) const override;
+    QVariant doVisit(DwarfDie *die, int arg) const override;
 };
 
 #endif // DATAVISITOR_H

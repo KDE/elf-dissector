@@ -22,6 +22,9 @@
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfdynamicsection.h>
 
+#include <dwarf/dwarfdie.h>
+#include <dwarf/dwarfinfo.h>
+
 #include "elfnodevariant.h"
 
 #include <qglobal.h>
@@ -58,6 +61,10 @@ public:
                 return doVisit(node->value<ElfDynamicSection>(), arg);
             case ElfNodeVariant::DynamicEntry:
                 return doVisit(node->value<ElfDynamicEntry>(), arg);
+            case ElfNodeVariant::DwarfInfo:
+                return doVisit(node->value<DwarfInfo>(), arg);
+            case ElfNodeVariant::DwarfDie:
+                return doVisit(node->value<DwarfDie>(), arg);
         }
 
         assert(false);
@@ -100,6 +107,14 @@ protected:
     virtual T doVisit(ElfDynamicEntry*, int) const
     {
         return T();
+    }
+    virtual T doVisit(DwarfInfo*, int) const
+    {
+        return T();
+    }
+    virtual T doVisit(DwarfDie*, int) const
+    {
+       return T();
     }
 };
 

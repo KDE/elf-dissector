@@ -28,7 +28,9 @@ struct ElfNodeVariant
         SymbolTableSection,
         SymbolTableEntry,
         DynamicSection,
-        DynamicEntry
+        DynamicEntry,
+        DwarfInfo,
+        DwarfDie
     };
 
     template <typename T> T* value() const
