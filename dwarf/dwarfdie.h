@@ -36,6 +36,7 @@ public:
     DwarfDie* parentDIE() const;
 
     QString name() const;
+    Dwarf_Half tag() const;
     const char* tagName() const;
     QVector<QPair<QString, QVariant>> attributes() const;
 
@@ -48,6 +49,8 @@ private:
 
     void scanChildren() const;
 
+    const char* sourceFileForIndex(int i) const;
+
     Dwarf_Debug dwarfHandle() const;
 
     Dwarf_Die m_die = nullptr;
@@ -55,6 +58,8 @@ private:
     DwarfInfo *m_info = nullptr;
 
     mutable QVector<DwarfDie*> m_children;
+    mutable char** m_srcFiles = nullptr;
+    mutable Dwarf_Signed m_srcFileCount = 0;
 
     mutable bool m_childrenScanned = false;
 };

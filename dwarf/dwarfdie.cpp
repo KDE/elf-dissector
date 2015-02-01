@@ -37,6 +37,10 @@ DwarfDie::DwarfDie(Dwarf_Die die, DwarfInfo* info) :
 
 DwarfDie::~DwarfDie()
 {
+    for (int i = 0; i < m_srcFileCount; ++i) {
+        dwarf_dealloc(dwarfHandle(), m_srcFiles[i], DW_DLA_STRING);
+    }
+    dwarf_dealloc(dwarfHandle(), m_srcFiles, DW_DLA_LIST);
 }
 
 DwarfInfo* DwarfDie::dwarfInfo() const
@@ -65,15 +69,19 @@ QString DwarfDie::name() const
     return s;
 }
 
-const char* DwarfDie::tagName() const
+Dwarf_Half DwarfDie::tag() const
 {
     Dwarf_Half tagType;
-    auto res = dwarf_tag(m_die, &tagType, nullptr);
+    const auto res = dwarf_tag(m_die, &tagType, nullptr);
     if (res != DW_DLV_OK)
         return {};
+    return tagType;
+}
 
+const char* DwarfDie::tagName() const
+{
     const char* tagName;
-    res = dwarf_get_TAG_name(tagType, &tagName);
+    const auto res = dwarf_get_TAG_name(tag(), &tagName);
     if (res != DW_DLV_OK)
         return {};
     return tagName;
@@ -97,6 +105,21 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
         res = dwarf_get_AT_name(attrType, &attrName);
         if (res != DW_DLV_OK)
             continue;
+
+        // process well-known attributes that need more advanced interpretation of their values
+        switch (attrType) {
+            case DW_AT_decl_file:
+            case DW_AT_call_file:
+            {
+                Dwarf_Unsigned fileIndex;
+                res = dwarf_formudata(attrList[i], &fileIndex, nullptr);
+                // index 0 means not present, TODO handle that
+                attrs.push_back(qMakePair(QString::fromLocal8Bit(attrName), sourceFileForIndex(fileIndex -1)));
+                continue;
+            }
+            default:
+                break;
+        }
 
         Dwarf_Half formType;
         res = dwarf_whatform(attrList[i], &formType, nullptr);
@@ -170,4 +193,24 @@ void DwarfDie::scanChildren() const
 Dwarf_Debug DwarfDie::dwarfHandle() const
 {
     return dwarfInfo()->dwarfHandle();
+}
+
+const char* DwarfDie::sourceFileForIndex(int sourceIndex) const
+{
+    const auto tagType = tag();
+    if (tagType != DW_TAG_compile_unit && tagType != DW_TAG_partial_unit && tagType != DW_TAG_type_unit) {
+        if (parentDIE())
+            return parentDIE()->sourceFileForIndex(sourceIndex);
+        return nullptr;
+    }
+
+    if (!m_srcFiles) {
+        auto res = dwarf_srcfiles(m_die, &m_srcFiles, &m_srcFileCount, nullptr);
+        if (res != DW_DLV_OK)
+            return nullptr;
+    }
+
+    Q_ASSERT(sourceIndex >= 0);
+    Q_ASSERT(sourceIndex < m_srcFileCount);
+    return m_srcFiles[sourceIndex];
 }
