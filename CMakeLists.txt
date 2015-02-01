@@ -11,10 +11,12 @@ find_package(Qt5 COMPONENTS Widgets Test NO_MODULE REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -Wall -Wextra -pedantic")
 
 find_package(Iberty REQUIRED)
+find_package(Dwarf REQUIRED)
 
 
 include_directories(
     ${Iberty_INCLUDE_DIR}
+    ${Dwarf_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/3rdparty
 )
 
@@ -39,6 +41,9 @@ set(elf_dissector_srcs
 
     disassmbler/disassembler.cpp
 
+    dwarf/dwarfinfo.cpp
+    dwarf/dwarfdie.cpp
+
     model/elfmodel.cpp
     model/datavisitor.cpp
     model/indexvisitor.cpp
@@ -54,7 +59,7 @@ qt5_wrap_ui(elf_dissector_srcs
 )
 
 add_executable(elf-dissector ${elf_dissector_srcs})
-target_link_libraries(elf-dissector Qt5::Widgets ${Iberty_LIBRARY} opcodes)
+target_link_libraries(elf-dissector Qt5::Widgets ${Iberty_LIBRARY} opcodes ${Dwarf_LIBS})
 
 add_subdirectory(tests)
 
