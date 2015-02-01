@@ -239,6 +239,15 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
     switch (arg) {
         case Qt::DisplayRole:
             return die->name();
+        case ElfModel::DetailRole:
+        {
+            QString s;
+            // TODO DIE TAG
+            foreach (const auto &attr, die->attributes()) {
+                s += attr.first + ": " + attr.second.toString() + "<br/>";
+            }
+            return s;
+        }
     }
     return {};
 }

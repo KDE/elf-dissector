@@ -65,6 +65,59 @@ QString DwarfDie::name() const
     return s;
 }
 
+
+QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
+{
+    Dwarf_Attribute* attrList;
+    Dwarf_Signed attrCount;
+    auto res = dwarf_attrlist(m_die, &attrList, &attrCount, nullptr);
+    if (res != DW_DLV_OK)
+        return {};
+
+    QVector<QPair<QString, QVariant>> attrs;
+    for (int i = 0; i < attrCount; ++i) {
+        Dwarf_Half attrType;
+        res = dwarf_whatattr(attrList[i], &attrType, nullptr);
+        if (res != DW_DLV_OK)
+            continue;
+        const char* attrName;
+        res = dwarf_get_AT_name(attrType, &attrName);
+        if (res != DW_DLV_OK)
+            continue;
+
+        Dwarf_Half formType;
+        res = dwarf_whatform(attrList[i], &formType, nullptr);
+        if (res != DW_DLV_OK)
+            continue;
+
+        QVariant value;
+        switch (formType) {
+            case DW_FORM_string:
+            case DW_FORM_strp:
+            {
+                char *str;
+                res = dwarf_formstring(attrList[i], &str, nullptr);
+                value = QString::fromLocal8Bit(str);
+                break;
+            }
+            default:
+            {
+                const char* formName;
+                res = dwarf_get_FORM_name(formType, &formName);
+                if (res != DW_DLV_OK)
+                    continue;
+                value = QString("TODO: ") + QString::fromLocal8Bit(formName);
+                break;
+            }
+        }
+
+        attrs.push_back(qMakePair(QString::fromLocal8Bit(attrName), value));
+    }
+
+    dwarf_dealloc(dwarfHandle(), attrList, DW_DLA_LIST);
+    return attrs;
+}
+
 Dwarf_Debug DwarfDie::dwarfHandle() const
 {
     return dwarfInfo()->dwarfHandle();

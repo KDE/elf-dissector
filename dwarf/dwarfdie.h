@@ -18,6 +18,10 @@
 #ifndef DWARFDIE_H
 #define DWARFDIE_H
 
+#include <QPair>
+#include <QVariant>
+#include <QVector>
+
 #include <libdwarf/libdwarf.h>
 
 class DwarfInfo;
@@ -32,6 +36,7 @@ public:
     DwarfDie* parentDIE() const;
 
     QString name() const;
+    QVector<QPair<QString, QVariant>> attributes() const;
 
 private:
     friend class DwarfInfoPrivate;
