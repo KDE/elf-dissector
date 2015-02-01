@@ -113,6 +113,14 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
                 value = QString::fromLocal8Bit(str);
                 break;
             }
+            case DW_FORM_flag:
+            case DW_FORM_flag_present:
+            {
+                Dwarf_Bool b;
+                res = dwarf_formflag(attrList[i], &b, nullptr);
+                value = b;
+                break;
+            }
             default:
             {
                 const char* formName;
