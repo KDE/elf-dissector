@@ -238,7 +238,16 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
 {
     switch (arg) {
         case Qt::DisplayRole:
-            return die->name();
+        {
+            QString s = die->name();
+            const bool hasDieName = !s.isEmpty();
+            if (hasDieName)
+                s += " (";
+            s += QString::fromLocal8Bit(die->tagName());
+            if (hasDieName)
+                s += ")";
+            return s;
+        }
         case ElfModel::DetailRole:
         {
             QString s;
