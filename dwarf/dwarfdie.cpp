@@ -128,6 +128,16 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
 
         QVariant value;
         switch (formType) {
+            case DW_FORM_data1:
+            case DW_FORM_data2:
+            case DW_FORM_data4:
+            case DW_FORM_data8:
+            {
+                Dwarf_Unsigned n;
+                res = dwarf_formudata(attrList[i], &n, nullptr);
+                value = n;
+                break;
+            }
             case DW_FORM_string:
             case DW_FORM_strp:
             {
