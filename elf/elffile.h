@@ -62,6 +62,8 @@ public:
     {
         return std::dynamic_pointer_cast<T>(m_sections.at(index));
     }
+    /** Finds a section by name. */
+    int indexOfSection(const char* name) const;
 
     /** Returns the dynamic section. */
     ElfDynamicSection::Ptr dynamicSection() const;

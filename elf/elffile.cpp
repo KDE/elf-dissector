@@ -145,6 +145,16 @@ void ElfFile::parseSections()
     }
 }
 
+int ElfFile::indexOfSection(const char* name) const
+{
+    for (int i = 0; i < m_sectionHeaders.size(); ++i) {
+        const auto hdr = m_sectionHeaders.at(i);
+        if (qstrcmp(name, hdr->name()) == 0)
+            return i;
+    }
+    return -1;
+}
+
 ElfDynamicSection::Ptr ElfFile::dynamicSection() const
 {
     for (int i = 0; i < header()->sectionHeaderCount(); ++i) {
