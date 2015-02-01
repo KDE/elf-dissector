@@ -42,10 +42,10 @@ void ElfFileSet::addFile(const QString& fileName)
         return;
 
     // TODO: this is likely not exactly correct
-    for (const QByteArray &path : f->dynamicSection()->rpaths())
-        m_searchPaths.push_back(QString::fromLocal8Bit(path));
     for (const QByteArray &path : f->dynamicSection()->runpaths())
-        m_searchPaths.push_back(QString::fromLocal8Bit(path));
+        m_searchPaths.push_front(QString::fromLocal8Bit(path));
+    for (const QByteArray &path : f->dynamicSection()->rpaths())
+        m_searchPaths.push_front(QString::fromLocal8Bit(path));
 
     for (const QByteArray &lib : f->dynamicSection()->neededLibraries()) {
         if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](const ElfFile::Ptr &file){ return file->dynamicSection()->soName() == lib; }) != m_files.cend())
