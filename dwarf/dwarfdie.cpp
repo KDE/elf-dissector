@@ -87,6 +87,14 @@ const char* DwarfDie::tagName() const
     return tagName;
 }
 
+static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const char**))
+{
+    const auto i = value.value<Dwarf_Unsigned>();
+    const char* str;
+    auto res = get_name(i, &str);
+    value = QString::fromLocal8Bit(str);
+}
+
 QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
 {
     Dwarf_Attribute* attrList;
@@ -105,21 +113,6 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
         res = dwarf_get_AT_name(attrType, &attrName);
         if (res != DW_DLV_OK)
             continue;
-
-        // process well-known attributes that need more advanced interpretation of their values
-        switch (attrType) {
-            case DW_AT_decl_file:
-            case DW_AT_call_file:
-            {
-                Dwarf_Unsigned fileIndex;
-                res = dwarf_formudata(attrList[i], &fileIndex, nullptr);
-                // index 0 means not present, TODO handle that
-                attrs.push_back(qMakePair(QString::fromLocal8Bit(attrName), sourceFileForIndex(fileIndex -1)));
-                continue;
-            }
-            default:
-                break;
-        }
 
         Dwarf_Half formType;
         res = dwarf_whatform(attrList[i], &formType, nullptr);
@@ -163,6 +156,50 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
                 value = QString("TODO: ") + QString::fromLocal8Bit(formName);
                 break;
             }
+        }
+
+        // post-process some well-known types
+        switch (attrType) {
+            case DW_AT_decl_file:
+            case DW_AT_call_file:
+            {
+                const auto fileIndex = value.value<Dwarf_Unsigned>();
+                // index 0 means not present, TODO handle that
+                value = sourceFileForIndex(fileIndex -1);
+                break;
+            }
+            case DW_AT_accessibility:
+                stringifyEnum(value, &dwarf_get_ACCESS_name);
+                break;
+            case DW_AT_language:
+                stringifyEnum(value, &dwarf_get_LANG_name);
+                break;
+            case DW_AT_virtuality:
+                stringifyEnum(value, &dwarf_get_VIRTUALITY_name);
+                break;
+            case DW_AT_visibility:
+                stringifyEnum(value, &dwarf_get_VIS_name);
+                break;
+            case DW_AT_identifier_case:
+                stringifyEnum(value, &dwarf_get_ID_name);
+                break;
+            case DW_AT_inline:
+                stringifyEnum(value, &dwarf_get_INL_name);
+                break;
+            case DW_AT_encoding:
+                stringifyEnum(value, &dwarf_get_ATE_name);
+                break;
+            case DW_AT_ordering:
+                stringifyEnum(value, &dwarf_get_ORD_name);
+                break;
+            case DW_AT_calling_convention:
+                stringifyEnum(value, &dwarf_get_CC_name);
+                break;
+            case DW_AT_discr_list:
+                stringifyEnum(value, &dwarf_get_DSC_name);
+                break;
+            default:
+                break;
         }
 
         attrs.push_back(qMakePair(QString::fromLocal8Bit(attrName), value));
