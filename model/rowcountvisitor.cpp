@@ -44,7 +44,7 @@ int RowCountVisitor::doVisit(DwarfInfo* info, int) const
     return info->compilationUnits().size();
 }
 
-int RowCountVisitor::doVisit(DwarfDie*, int) const
+int RowCountVisitor::doVisit(DwarfDie *die, int) const
 {
-    return 0; // TODO
+    return die->children().size();
 }

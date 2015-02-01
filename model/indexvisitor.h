@@ -31,6 +31,7 @@ public:
     type doVisit(ElfSymbolTableSection* symtab, int row) const override;
     type doVisit(ElfDynamicSection* section, int row) const override;
     type doVisit(DwarfInfo* info, int row) const override;
+    type doVisit(DwarfDie* die, int row) const override;
 };
 
 #endif // INDEXVISITOR_H

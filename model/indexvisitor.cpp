@@ -68,3 +68,9 @@ IndexVisitor::type IndexVisitor::doVisit(DwarfInfo* info, int row) const
     DwarfDie *cuDie = info->compilationUnits().at(row);
     return qMakePair<void*, ElfNodeVariant::Type>(cuDie, ElfNodeVariant::DwarfDie);
 }
+
+QPair< void*, ElfNodeVariant::Type > IndexVisitor::doVisit(DwarfDie* die, int row) const
+{
+    DwarfDie *childDie = die->children().at(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(childDie, ElfNodeVariant::DwarfDie);
+}

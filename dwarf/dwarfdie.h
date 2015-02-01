@@ -39,16 +39,24 @@ public:
     const char* tagName() const;
     QVector<QPair<QString, QVariant>> attributes() const;
 
+    QVector<DwarfDie*> children() const;
+
 private:
     friend class DwarfInfoPrivate;
     DwarfDie(Dwarf_Die die, DwarfDie* parent);
     DwarfDie(Dwarf_Die die, DwarfInfo* info);
+
+    void scanChildren() const;
 
     Dwarf_Debug dwarfHandle() const;
 
     Dwarf_Die m_die = nullptr;
     DwarfDie *m_parent = nullptr;
     DwarfInfo *m_info = nullptr;
+
+    mutable QVector<DwarfDie*> m_children;
+
+    mutable bool m_childrenScanned = false;
 };
 
 #endif // DWARFDIE_H

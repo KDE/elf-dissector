@@ -131,6 +131,34 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
     return attrs;
 }
 
+QVector< DwarfDie* > DwarfDie::children() const
+{
+    if (!m_childrenScanned)
+        scanChildren();
+    return m_children;
+}
+
+void DwarfDie::scanChildren() const
+{
+    m_childrenScanned = true;
+
+    Dwarf_Die childDie;
+    auto res = dwarf_child(m_die, &childDie, nullptr);
+    if (res != DW_DLV_OK)
+        return;
+
+    forever {
+        m_children.push_back(new DwarfDie(childDie, const_cast<DwarfDie*>(this)));
+
+        Dwarf_Die siblingDie;
+        res = dwarf_siblingof(dwarfHandle(), childDie, &siblingDie, nullptr);
+        if (res != DW_DLV_OK)
+            return;
+
+        childDie = siblingDie;
+    }
+}
+
 Dwarf_Debug DwarfDie::dwarfHandle() const
 {
     return dwarfInfo()->dwarfHandle();
