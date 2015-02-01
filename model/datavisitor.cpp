@@ -242,7 +242,7 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
         case ElfModel::DetailRole:
         {
             QString s;
-            // TODO DIE TAG
+            s += "TAG: " + QString::fromLocal8Bit(die->tagName()) + "<br/>";
             foreach (const auto &attr, die->attributes()) {
                 s += attr.first + ": " + attr.second.toString() + "<br/>";
             }

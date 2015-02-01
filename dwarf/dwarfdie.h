@@ -36,6 +36,7 @@ public:
     DwarfDie* parentDIE() const;
 
     QString name() const;
+    const char* tagName() const;
     QVector<QPair<QString, QVariant>> attributes() const;
 
 private:

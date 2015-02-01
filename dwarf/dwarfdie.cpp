@@ -65,6 +65,19 @@ QString DwarfDie::name() const
     return s;
 }
 
+const char* DwarfDie::tagName() const
+{
+    Dwarf_Half tagType;
+    auto res = dwarf_tag(m_die, &tagType, nullptr);
+    if (res != DW_DLV_OK)
+        return {};
+
+    const char* tagName;
+    res = dwarf_get_TAG_name(tagType, &tagName);
+    if (res != DW_DLV_OK)
+        return {};
+    return tagName;
+}
 
 QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
 {
