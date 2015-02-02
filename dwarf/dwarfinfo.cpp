@@ -29,7 +29,7 @@ public:
     ~DwarfInfoPrivate();
 
     void scanCompilationUnits();
-    QString sourceLocationForMangledSymbolRecursive(const QByteArray &symbol, Dwarf_Die die) const;
+    QString sourceLocationForMangledSymbolRecursive(const QByteArray &symbol, DwarfDie *die) const;
 
     ElfFile *elfFile = nullptr;
     QVector<DwarfDie*> compilationUnits;
@@ -126,44 +126,14 @@ void DwarfInfoPrivate::scanCompilationUnits()
 }
 
 
-QString DwarfInfoPrivate::sourceLocationForMangledSymbolRecursive(const QByteArray& symbol, Dwarf_Die die) const
+QString DwarfInfoPrivate::sourceLocationForMangledSymbolRecursive(const QByteArray& symbol, DwarfDie *die) const
 {
-    // recurse into children and iterate over siblings
-    Dwarf_Die currentDie = die;
-    forever {
-        Dwarf_Bool hasLinkageAttr = false;
-        int res = dwarf_hasattr(die, DW_AT_linkage_name, &hasLinkageAttr, 0);
-        if (res == DW_DLV_OK && hasLinkageAttr) {
-            Dwarf_Attribute attr;
-            res = dwarf_attr(die, DW_AT_linkage_name, &attr, 0);
-            if (res != DW_DLV_OK)
-                return {};
-            char *string;
-            res = dwarf_formstring(attr, &string, 0);
-            if (res != DW_DLV_OK)
-                return {};
-            printf("found %s\n", string);
-            if (qstrcmp(string, symbol.constData()) == 0) {
-                // TODO find location
-            }
-            // TODO free attr?
-        }
-
-        Dwarf_Die child = 0;
-        res = dwarf_child(currentDie, &child, 0);
-        if(res == DW_DLV_OK) {
-            sourceLocationForMangledSymbolRecursive(symbol, child);
-        }
-
-        Dwarf_Die siblingDie = 0;
-        res = dwarf_siblingof(dbg, currentDie, &siblingDie, 0);
-        if(res != DW_DLV_OK)
-            break;
-
-        if(currentDie != die)
-            dwarf_dealloc(dbg, currentDie, DW_DLA_DIE);
-
-        currentDie = siblingDie;
+    if (die->attribute(DW_AT_linkage_name).toString() == symbol)
+        return die->attribute(DW_AT_decl_file).toString() + ":" + die->attribute(DW_AT_decl_line).toString();
+    for (auto childDie : die->children()) {
+        const auto loc = sourceLocationForMangledSymbolRecursive(symbol, childDie);
+        if (!loc.isEmpty())
+            return loc;
     }
     return {};
 }
@@ -218,21 +188,10 @@ DwarfDie* DwarfInfo::dieAtOffset(Dwarf_Off offset) const
 
 QString DwarfInfo::sourceLocationForMangledSymbol(const QByteArray& symbol) const
 {
-    Dwarf_Unsigned nextHeader = 0;
-    forever {
-        int res = DW_DLV_ERROR;
-        res = dwarf_next_cu_header(d->dbg, 0, 0, 0, 0, &nextHeader, 0);
-        if (res != DW_DLV_OK)
-            return {};
-
-        Dwarf_Die currentDie = 0;
-        res = dwarf_siblingof(d->dbg, 0, &currentDie, 0);
-        if(res != DW_DLV_OK)
-            return {};
-
-        d->sourceLocationForMangledSymbolRecursive(symbol, currentDie);
-        dwarf_dealloc(d->dbg, currentDie, DW_DLA_DIE);
+    for (auto die : compilationUnits()) {
+        const auto loc = d->sourceLocationForMangledSymbolRecursive(symbol, die);
+        if (!loc.isEmpty())
+            return loc;
     }
-
     return {};
 }

@@ -196,7 +196,11 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                 s += QStringLiteral("Data:<br/><tt>");
                 const unsigned char* data = entry->data();
                 s += QByteArray::fromRawData((const char*)data, entry->size()).toHex();
-                s += "</tt>";
+                s += "</tt><br/>";
+            }
+            auto *dwarf = entry->symbolTable()->file()->dwarfInfo();
+            if (dwarf) {
+                s += QStringLiteral("Source location: ") + dwarf->sourceLocationForMangledSymbol(entry->name()) + "<br/>";
             }
             return s;
         }
