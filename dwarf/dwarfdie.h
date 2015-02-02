@@ -42,6 +42,7 @@ public:
     QVector<QPair<QString, QVariant>> attributes() const;
 
     QVector<DwarfDie*> children() const;
+    DwarfDie* dieAtOffset(Dwarf_Off offset) const;
 
 private:
     friend class DwarfInfoPrivate;

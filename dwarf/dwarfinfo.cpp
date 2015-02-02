@@ -203,6 +203,19 @@ QVector< DwarfDie* > DwarfInfo::compilationUnits() const
     return d->compilationUnits;
 }
 
+DwarfDie* DwarfInfo::dieAtOffset(Dwarf_Off offset) const
+{
+    const auto cus = compilationUnits();
+    auto it = std::lower_bound(cus.begin(), cus.end(), offset, [](DwarfDie* lhs, Dwarf_Off rhs) { return lhs->offset() < rhs; });
+
+    if (it != cus.end() && (*it)->offset() == offset)
+        return *it;
+
+    Q_ASSERT(it != cus.begin());
+    --it;
+    return (*it)->dieAtOffset(offset);
+}
+
 QString DwarfInfo::sourceLocationForMangledSymbol(const QByteArray& symbol) const
 {
     Dwarf_Unsigned nextHeader = 0;

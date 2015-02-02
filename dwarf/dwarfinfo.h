@@ -40,6 +40,8 @@ public:
 
     QVector<DwarfDie*> compilationUnits() const;
 
+    DwarfDie* dieAtOffset(Dwarf_Off offset) const;
+
 private:
     DwarfInfoPrivate *d; // FIXME prevent copy or make this shared
 };

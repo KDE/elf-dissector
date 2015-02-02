@@ -161,7 +161,12 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
             {
                 Dwarf_Off offset;
                 res = dwarf_global_formref(attrList[i], &offset, nullptr);
-                value = offset;
+                const auto refDie = dwarfInfo()->dieAtOffset(offset);
+                const QString refName = refDie->name();
+                if (!refName.isEmpty())
+                    value = refName;
+                else
+                    value = QString::number(offset) + " (" + refDie->tagName() + ")";
                 break;
             }
             default:
@@ -231,6 +236,19 @@ QVector< DwarfDie* > DwarfDie::children() const
     if (!m_childrenScanned)
         scanChildren();
     return m_children;
+}
+
+DwarfDie* DwarfDie::dieAtOffset(Dwarf_Off offset) const
+{
+    const auto cus = children();
+    auto it = std::lower_bound(cus.begin(), cus.end(), offset, [](DwarfDie* lhs, Dwarf_Off rhs) { return lhs->offset() < rhs; });
+
+    if (it != cus.end() && (*it)->offset() == offset)
+        return *it;
+
+    Q_ASSERT(it != cus.begin());
+    --it;
+    return (*it)->dieAtOffset(offset);
 }
 
 void DwarfDie::scanChildren() const
