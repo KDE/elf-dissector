@@ -154,6 +154,16 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
                 value = b;
                 break;
             }
+            case DW_FORM_ref1:
+            case DW_FORM_ref2:
+            case DW_FORM_ref4:
+            case DW_FORM_ref8:
+            {
+                Dwarf_Off offset;
+                res = dwarf_global_formref(attrList[i], &offset, nullptr);
+                value = offset;
+                break;
+            }
             default:
             {
                 const char* formName;
