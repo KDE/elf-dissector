@@ -18,7 +18,6 @@
 #ifndef DWARFDIE_H
 #define DWARFDIE_H
 
-#include <QPair>
 #include <QVariant>
 #include <QVector>
 
@@ -39,7 +38,10 @@ public:
     Dwarf_Half tag() const;
     const char* tagName() const;
     Dwarf_Off offset() const;
-    QVector<QPair<QString, QVariant>> attributes() const;
+
+    QVector<Dwarf_Half> attributes() const;
+    const char* attributeName(Dwarf_Half attributeType) const;
+    QVariant attribute(Dwarf_Half attributeType) const;
 
     QVector<DwarfDie*> children() const;
     DwarfDie* dieAtOffset(Dwarf_Off offset) const;

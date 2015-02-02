@@ -104,7 +104,7 @@ static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const c
     value = QString::fromLocal8Bit(str);
 }
 
-QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
+QVector< Dwarf_Half > DwarfDie::attributes() const
 {
     Dwarf_Attribute* attrList;
     Dwarf_Signed attrCount;
@@ -112,133 +112,148 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
     if (res != DW_DLV_OK)
         return {};
 
-    QVector<QPair<QString, QVariant>> attrs;
+    QVector<Dwarf_Half> attrs;
+    attrs.reserve(attrCount);
     for (int i = 0; i < attrCount; ++i) {
         Dwarf_Half attrType;
         res = dwarf_whatattr(attrList[i], &attrType, nullptr);
         if (res != DW_DLV_OK)
             continue;
-        const char* attrName;
-        res = dwarf_get_AT_name(attrType, &attrName);
-        if (res != DW_DLV_OK)
-            continue;
-
-        Dwarf_Half formType;
-        res = dwarf_whatform(attrList[i], &formType, nullptr);
-        if (res != DW_DLV_OK)
-            continue;
-
-        QVariant value;
-        switch (formType) {
-            case DW_FORM_data1:
-            case DW_FORM_data2:
-            case DW_FORM_data4:
-            case DW_FORM_data8:
-            case DW_FORM_udata:
-            {
-                Dwarf_Unsigned n;
-                res = dwarf_formudata(attrList[i], &n, nullptr);
-                value = n;
-                break;
-            }
-            case DW_FORM_sdata:
-            {
-                Dwarf_Signed n;
-                res = dwarf_formsdata(attrList[i], &n, nullptr);
-                value = n;
-                break;
-            }
-            case DW_FORM_string:
-            case DW_FORM_strp:
-            {
-                char *str;
-                res = dwarf_formstring(attrList[i], &str, nullptr);
-                value = QString::fromLocal8Bit(str);
-                break;
-            }
-            case DW_FORM_flag:
-            case DW_FORM_flag_present:
-            {
-                Dwarf_Bool b;
-                res = dwarf_formflag(attrList[i], &b, nullptr);
-                value = b;
-                break;
-            }
-            case DW_FORM_ref1:
-            case DW_FORM_ref2:
-            case DW_FORM_ref4:
-            case DW_FORM_ref8:
-            {
-                Dwarf_Off offset;
-                res = dwarf_global_formref(attrList[i], &offset, nullptr);
-                const auto refDie = dwarfInfo()->dieAtOffset(offset);
-                const QString refName = refDie->name();
-                if (!refName.isEmpty())
-                    value = refName;
-                else
-                    value = QString::number(offset) + " (" + refDie->tagName() + ")";
-                break;
-            }
-            default:
-            {
-                const char* formName;
-                res = dwarf_get_FORM_name(formType, &formName);
-                if (res != DW_DLV_OK)
-                    continue;
-                value = QString("TODO: ") + QString::fromLocal8Bit(formName);
-                break;
-            }
-        }
-
-        // post-process some well-known types
-        switch (attrType) {
-            case DW_AT_decl_file:
-            case DW_AT_call_file:
-            {
-                const auto fileIndex = value.value<Dwarf_Unsigned>();
-                // index 0 means not present, TODO handle that
-                value = sourceFileForIndex(fileIndex -1);
-                break;
-            }
-            case DW_AT_accessibility:
-                stringifyEnum(value, &dwarf_get_ACCESS_name);
-                break;
-            case DW_AT_language:
-                stringifyEnum(value, &dwarf_get_LANG_name);
-                break;
-            case DW_AT_virtuality:
-                stringifyEnum(value, &dwarf_get_VIRTUALITY_name);
-                break;
-            case DW_AT_visibility:
-                stringifyEnum(value, &dwarf_get_VIS_name);
-                break;
-            case DW_AT_identifier_case:
-                stringifyEnum(value, &dwarf_get_ID_name);
-                break;
-            case DW_AT_inline:
-                stringifyEnum(value, &dwarf_get_INL_name);
-                break;
-            case DW_AT_encoding:
-                stringifyEnum(value, &dwarf_get_ATE_name);
-                break;
-            case DW_AT_ordering:
-                stringifyEnum(value, &dwarf_get_ORD_name);
-                break;
-            case DW_AT_calling_convention:
-                stringifyEnum(value, &dwarf_get_CC_name);
-                break;
-            case DW_AT_discr_list:
-                stringifyEnum(value, &dwarf_get_DSC_name);
-                break;
-            default:
-                break;
-        }
-
-        attrs.push_back(qMakePair(QString::fromLocal8Bit(attrName), value));
+        attrs.push_back(attrType);
     }
 
     dwarf_dealloc(dwarfHandle(), attrList, DW_DLA_LIST);
     return attrs;
+}
+
+const char* DwarfDie::attributeName(Dwarf_Half attributeType) const
+{
+    const char* attrName;
+    const auto res = dwarf_get_AT_name(attributeType, &attrName);
+    if (res != DW_DLV_OK)
+        return nullptr;
+    return attrName;
+}
+
+QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
+{
+    Dwarf_Attribute attr;
+    auto res = dwarf_attr(m_die, attributeType, &attr, nullptr);
+    if (res != DW_DLV_OK)
+        return {};
+
+    Dwarf_Half formType;
+    res = dwarf_whatform(attr, &formType, nullptr);
+    if (res != DW_DLV_OK)
+        return {};
+
+    QVariant value;
+    switch (formType) {
+        case DW_FORM_data1:
+        case DW_FORM_data2:
+        case DW_FORM_data4:
+        case DW_FORM_data8:
+        case DW_FORM_udata:
+        {
+            Dwarf_Unsigned n;
+            res = dwarf_formudata(attr, &n, nullptr);
+            value = n;
+            break;
+        }
+        case DW_FORM_sdata:
+        {
+            Dwarf_Signed n;
+            res = dwarf_formsdata(attr, &n, nullptr);
+            value = n;
+            break;
+        }
+        case DW_FORM_string:
+        case DW_FORM_strp:
+        {
+            char *str;
+            res = dwarf_formstring(attr, &str, nullptr);
+            value = QString::fromLocal8Bit(str);
+            break;
+        }
+        case DW_FORM_flag:
+        case DW_FORM_flag_present:
+        {
+            Dwarf_Bool b;
+            res = dwarf_formflag(attr, &b, nullptr);
+            value = b;
+            break;
+        }
+        case DW_FORM_ref1:
+        case DW_FORM_ref2:
+        case DW_FORM_ref4:
+        case DW_FORM_ref8:
+        {
+            Dwarf_Off offset;
+            res = dwarf_global_formref(attr, &offset, nullptr);
+            const auto refDie = dwarfInfo()->dieAtOffset(offset);
+            const QString refName = refDie->name();
+            if (!refName.isEmpty())
+                value = refName;
+            else
+                value = QString::number(offset) + " (" + refDie->tagName() + ")";
+            break;
+        }
+        default:
+        {
+            const char* formName;
+            res = dwarf_get_FORM_name(formType, &formName);
+            if (res != DW_DLV_OK)
+                return {};
+            value = QString("TODO: ") + QString::fromLocal8Bit(formName);
+            break;
+        }
+    }
+
+    // post-process some well-known types
+    switch (attributeType) {
+        case DW_AT_decl_file:
+        case DW_AT_call_file:
+        {
+            const auto fileIndex = value.value<Dwarf_Unsigned>();
+            // index 0 means not present, TODO handle that
+            value = sourceFileForIndex(fileIndex -1);
+            break;
+        }
+        case DW_AT_accessibility:
+            stringifyEnum(value, &dwarf_get_ACCESS_name);
+            break;
+        case DW_AT_language:
+            stringifyEnum(value, &dwarf_get_LANG_name);
+            break;
+        case DW_AT_virtuality:
+            stringifyEnum(value, &dwarf_get_VIRTUALITY_name);
+            break;
+        case DW_AT_visibility:
+            stringifyEnum(value, &dwarf_get_VIS_name);
+            break;
+        case DW_AT_identifier_case:
+            stringifyEnum(value, &dwarf_get_ID_name);
+            break;
+        case DW_AT_inline:
+            stringifyEnum(value, &dwarf_get_INL_name);
+            break;
+        case DW_AT_encoding:
+            stringifyEnum(value, &dwarf_get_ATE_name);
+            break;
+        case DW_AT_ordering:
+            stringifyEnum(value, &dwarf_get_ORD_name);
+            break;
+        case DW_AT_calling_convention:
+            stringifyEnum(value, &dwarf_get_CC_name);
+            break;
+        case DW_AT_discr_list:
+            stringifyEnum(value, &dwarf_get_DSC_name);
+            break;
+        default:
+            break;
+    }
+
+    return value;
 }
 
 QVector< DwarfDie* > DwarfDie::children() const

@@ -253,8 +253,8 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
             QString s;
             s += "TAG: " + QString::fromLocal8Bit(die->tagName()) + "<br/>";
             s += "Offset: " + QString::number(die->offset()) + "<br/>";
-            foreach (const auto &attr, die->attributes()) {
-                s += attr.first + ": " + attr.second.toString() + "<br/>";
+            foreach (const auto &attrType, die->attributes()) {
+                s += QString::fromLocal8Bit(die->attributeName(attrType)) + ": " + die->attribute(attrType).toString() + "<br/>";
             }
             return s;
         }
