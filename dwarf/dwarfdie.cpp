@@ -98,7 +98,9 @@ static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const c
 {
     const auto i = value.value<Dwarf_Unsigned>();
     const char* str;
-    auto res = get_name(i, &str);
+    const auto res = get_name(i, &str);
+    if (res != DW_DLV_OK)
+        return;
     value = QString::fromLocal8Bit(str);
 }
 
