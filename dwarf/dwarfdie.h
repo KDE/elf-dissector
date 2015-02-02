@@ -38,6 +38,7 @@ public:
     QString name() const;
     Dwarf_Half tag() const;
     const char* tagName() const;
+    Dwarf_Off offset() const;
     QVector<QPair<QString, QVariant>> attributes() const;
 
     QVector<DwarfDie*> children() const;

@@ -87,6 +87,13 @@ const char* DwarfDie::tagName() const
     return tagName;
 }
 
+Dwarf_Off DwarfDie::offset() const
+{
+    Dwarf_Off offset;
+    const auto res = dwarf_dieoffset(m_die, &offset, nullptr);
+    return offset;
+}
+
 static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const char**))
 {
     const auto i = value.value<Dwarf_Unsigned>();
