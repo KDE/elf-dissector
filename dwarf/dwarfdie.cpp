@@ -134,9 +134,17 @@ QVector< QPair< QString, QVariant > > DwarfDie::attributes() const
             case DW_FORM_data2:
             case DW_FORM_data4:
             case DW_FORM_data8:
+            case DW_FORM_udata:
             {
                 Dwarf_Unsigned n;
                 res = dwarf_formudata(attrList[i], &n, nullptr);
+                value = n;
+                break;
+            }
+            case DW_FORM_sdata:
+            {
+                Dwarf_Signed n;
+                res = dwarf_formsdata(attrList[i], &n, nullptr);
                 value = n;
                 break;
             }
