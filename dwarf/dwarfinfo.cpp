@@ -128,7 +128,7 @@ void DwarfInfoPrivate::scanCompilationUnits()
 
 QString DwarfInfoPrivate::sourceLocationForMangledSymbolRecursive(const QByteArray& symbol, DwarfDie *die) const
 {
-    if (die->attribute(DW_AT_linkage_name).toString() == symbol)
+    if (die->attribute(DW_AT_linkage_name).toByteArray() == symbol)
         return die->attribute(DW_AT_decl_file).toString() + ":" + die->attribute(DW_AT_decl_line).toString();
     for (auto childDie : die->children()) {
         const auto loc = sourceLocationForMangledSymbolRecursive(symbol, childDie);

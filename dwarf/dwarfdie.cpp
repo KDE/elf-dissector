@@ -172,7 +172,7 @@ QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
         {
             char *str;
             res = dwarf_formstring(attr, &str, nullptr);
-            value = QString::fromLocal8Bit(str);
+            value = QByteArray(str);
             break;
         }
         case DW_FORM_flag:
