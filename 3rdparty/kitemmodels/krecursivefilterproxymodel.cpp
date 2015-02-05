@@ -19,6 +19,8 @@
 
 #include "krecursivefilterproxymodel.h"
 
+#include <QMetaMethod>
+
 // Maintainability note:
 // This class invokes some Q_PRIVATE_SLOTs in QSortFilterProxyModel which are
 // private API and could be renamed or removed at any time.
@@ -43,14 +45,38 @@ public:
         qRegisterMetaType<QModelIndex>("QModelIndex");
     }
 
+    inline QMetaMethod findMethod(const char* signature) const
+    {
+        Q_Q(const KRecursiveFilterProxyModel);
+        const int idx = q->metaObject()->indexOfMethod(signature);
+        Q_ASSERT(idx != -1);
+        return q->metaObject()->method(idx);
+    }
+
     // Convenience methods for invoking the QSFPM Q_SLOTS. Those slots must be invoked with invokeMethod
     // because they are Q_PRIVATE_SLOTs
-    inline void invokeDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+    inline void invokeDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>())
     {
         Q_Q(KRecursiveFilterProxyModel);
-        bool success = QMetaObject::invokeMethod(q, "_q_sourceDataChanged", Qt::DirectConnection,
-                       Q_ARG(QModelIndex, topLeft),
-                       Q_ARG(QModelIndex, bottomRight));
+        // runtime check to ensure a KF5 built against Qt < 5.5 keeps working when Qt is updated to 5.5 and above but KF5 is not rebuild
+        // TODO: remove once Qt 5.5 or above is required for frameworks
+        static const bool passRoles = QT_VERSION >= 0x050500 // no runtime check required when we built against Qt 5.5 or higher
+            || KRecursiveFilterProxyModel::staticMetaObject.indexOfMethod("_q_sourceDataChanged(QModelIndex,QModelIndex,QVector<int>)") != -1;
+        bool success = false;
+        if (passRoles) {
+            // required for Qt 5.5 and upwards, see commit f96baeb75fc in qtbase
+            static const QMetaMethod m = findMethod("_q_sourceDataChanged(QModelIndex,QModelIndex,QVector<int>)");
+            success = m.invoke(q, Qt::DirectConnection,
+                        Q_ARG(QModelIndex, topLeft),
+                        Q_ARG(QModelIndex, bottomRight),
+                        Q_ARG(QVector<int>, roles));
+        } else {
+            // backwards compatibility
+            static const QMetaMethod m = findMethod("_q_sourceDataChanged(QModelIndex,QModelIndex)");
+            success = m.invoke(q, Qt::DirectConnection,
+                        Q_ARG(QModelIndex, topLeft),
+                        Q_ARG(QModelIndex, bottomRight));
+        }
         Q_UNUSED(success);
         Q_ASSERT(success);
     }
@@ -58,7 +84,8 @@ public:
     inline void invokeRowsInserted(const QModelIndex &source_parent, int start, int end)
     {
         Q_Q(KRecursiveFilterProxyModel);
-        bool success = QMetaObject::invokeMethod(q, "_q_sourceRowsInserted", Qt::DirectConnection,
+        static const QMetaMethod m = findMethod("_q_sourceRowsInserted(QModelIndex,int,int)");
+        bool success = m.invoke(q, Qt::DirectConnection,
                        Q_ARG(QModelIndex, source_parent),
                        Q_ARG(int, start),
                        Q_ARG(int, end));
@@ -69,7 +96,8 @@ public:
     inline void invokeRowsAboutToBeInserted(const QModelIndex &source_parent, int start, int end)
     {
         Q_Q(KRecursiveFilterProxyModel);
-        bool success = QMetaObject::invokeMethod(q, "_q_sourceRowsAboutToBeInserted", Qt::DirectConnection,
+        static const QMetaMethod m = findMethod("_q_sourceRowsAboutToBeInserted(QModelIndex,int,int)");
+        bool success = m.invoke(q, Qt::DirectConnection,
                        Q_ARG(QModelIndex, source_parent),
                        Q_ARG(int, start),
                        Q_ARG(int, end));
@@ -80,7 +108,8 @@ public:
     inline void invokeRowsRemoved(const QModelIndex &source_parent, int start, int end)
     {
         Q_Q(KRecursiveFilterProxyModel);
-        bool success = QMetaObject::invokeMethod(q, "_q_sourceRowsRemoved", Qt::DirectConnection,
+        static const QMetaMethod m = findMethod("_q_sourceRowsRemoved(QModelIndex,int,int)");
+        bool success = m.invoke(q, Qt::DirectConnection,
                        Q_ARG(QModelIndex, source_parent),
                        Q_ARG(int, start),
                        Q_ARG(int, end));
@@ -91,7 +120,8 @@ public:
     inline void invokeRowsAboutToBeRemoved(const QModelIndex &source_parent, int start, int end)
     {
         Q_Q(KRecursiveFilterProxyModel);
-        bool success = QMetaObject::invokeMethod(q, "_q_sourceRowsAboutToBeRemoved", Qt::DirectConnection,
+        static const QMetaMethod m = findMethod("_q_sourceRowsAboutToBeRemoved(QModelIndex,int,int)");
+        bool success = m.invoke(q, Qt::DirectConnection,
                        Q_ARG(QModelIndex, source_parent),
                        Q_ARG(int, start),
                        Q_ARG(int, end));
@@ -99,7 +129,7 @@ public:
         Q_ASSERT(success);
     }
 
-    void sourceDataChanged(const QModelIndex &source_top_left, const QModelIndex &source_bottom_right);
+    void sourceDataChanged(const QModelIndex &source_top_left, const QModelIndex &source_bottom_right, const QVector<int> &roles);
     void sourceRowsAboutToBeInserted(const QModelIndex &source_parent, int start, int end);
     void sourceRowsInserted(const QModelIndex &source_parent, int start, int end);
     void sourceRowsAboutToBeRemoved(const QModelIndex &source_parent, int start, int end);
@@ -118,14 +148,14 @@ public:
     bool completeRemove;
 };
 
-void KRecursiveFilterProxyModelPrivate::sourceDataChanged(const QModelIndex &source_top_left, const QModelIndex &source_bottom_right)
+void KRecursiveFilterProxyModelPrivate::sourceDataChanged(const QModelIndex &source_top_left, const QModelIndex &source_bottom_right, const QVector<int> &roles)
 {
     Q_Q(KRecursiveFilterProxyModel);
 
     QModelIndex source_parent = source_top_left.parent();
 
     if (!source_parent.isValid() || q->filterAcceptsRow(source_parent.row(), source_parent.parent())) {
-        invokeDataChanged(source_top_left, source_bottom_right);
+        invokeDataChanged(source_top_left, source_bottom_right, roles);
         return;
     }
 
@@ -308,8 +338,8 @@ bool KRecursiveFilterProxyModel::acceptRow(int sourceRow, const QModelIndex &sou
 void KRecursiveFilterProxyModel::setSourceModel(QAbstractItemModel *model)
 {
     // Standard disconnect.
-    disconnect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-               this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
+    disconnect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)),
+               this, SLOT(sourceDataChanged(QModelIndex,QModelIndex,QVector<int>)));
 
     disconnect(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)),
                this, SLOT(sourceRowsAboutToBeInserted(QModelIndex,int,int)));
@@ -389,8 +419,8 @@ void KRecursiveFilterProxyModel::setSourceModel(QAbstractItemModel *model)
     // to see if H matches the filter (which it now does as L now exists).
     // That is done in refreshAscendantMapping.
 
-    disconnect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-               this, SLOT(_q_sourceDataChanged(QModelIndex,QModelIndex)));
+    disconnect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)),
+               this, SLOT(_q_sourceDataChanged(QModelIndex,QModelIndex,QVector<int>)));
 
     disconnect(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)),
                this, SLOT(_q_sourceRowsAboutToBeInserted(QModelIndex,int,int)));
@@ -405,8 +435,8 @@ void KRecursiveFilterProxyModel::setSourceModel(QAbstractItemModel *model)
                this, SLOT(_q_sourceRowsRemoved(QModelIndex,int,int)));
 
     // Slots for manual invoking of QSortFilterProxyModel methods.
-    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)),
+            this, SLOT(sourceDataChanged(QModelIndex,QModelIndex,QVector<int>)));
 
     connect(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)),
             this, SLOT(sourceRowsAboutToBeInserted(QModelIndex,int,int)));
