@@ -35,6 +35,9 @@ public:
     /** Demange the given name and return the name splitted in namespace(s)/class/method. */
     QVector<QByteArray> demangle(const char* name);
 
+    /** Demangle the given name into a single string. */
+    QByteArray demangleFull(const char* name) const;
+
 private:
     void reset();
     void handleNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);

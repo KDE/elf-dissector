@@ -50,19 +50,23 @@ QVector<QByteArray> Demangler::demangle(const char* name)
 
     reset();
     handleNameComponent(component, result);
-    if (!result.isEmpty()) {
-        free(memory);
-        return result;
-    }
-
-    qDebug() << name << component << memory << component->type;
-    size_t size;
-    char * fullName = cplus_demangle_print(DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, component, strlen(name), &size);
-    result << fullName;
-    free(fullName);
-
     free(memory);
     return result;
+}
+
+QByteArray Demangler::demangleFull(const char* name) const
+{
+    void *memory = 0;
+    demangle_component *component = cplus_demangle_v3_components(name, DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, &memory);
+
+    size_t size;
+    char * fullName = cplus_demangle_print(DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, component, strlen(name), &size);
+    const QByteArray b(fullName, size);
+
+    free(fullName);
+    free(memory);
+
+    return b;
 }
 
 void Demangler::reset()
