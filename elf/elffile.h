@@ -52,6 +52,8 @@ public:
 
     /** ELF class type (32/64 bit). */
     int type() const;
+    /** Endianess. */
+    int byteOrder() const;
 
     /** Returns the ELF header. */
     ElfHeader* header() const;

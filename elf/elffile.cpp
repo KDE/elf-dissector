@@ -72,6 +72,13 @@ int ElfFile::type() const
     return m_data[EI_CLASS];
 }
 
+int ElfFile::byteOrder() const
+{
+    assert(m_data);
+    assert(m_file.size() > EI_DATA);
+    return m_data[EI_DATA];
+}
+
 ElfHeader* ElfFile::header() const
 {
     return m_header.get();

@@ -23,6 +23,8 @@
 #include <libdwarf/dwarf.h>
 #include <libdwarf/libdwarf.h>
 
+#include <elf.h>
+
 class DwarfInfoPrivate {
 public:
     DwarfInfoPrivate(DwarfInfo* qq);
@@ -44,8 +46,8 @@ public:
 
 static Dwarf_Endianness callback_get_byte_order(void *obj)
 {
-    qDebug();
-    return DW_OBJECT_LSB;
+    const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
+    return d->elfFile->byteOrder() == ELFDATA2LSB ? DW_OBJECT_LSB : DW_OBJECT_MSB;
 }
 
 static Dwarf_Small callback_get_length_size(void *obj)

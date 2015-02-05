@@ -25,6 +25,7 @@
 
 #include <cstdarg>
 #include <dis-asm.h>
+#include <elf.h>
 #include <stdio.h>
 
 static int qstring_printf(void *data, const char *format, ...)
@@ -51,7 +52,7 @@ QString Disassembler::disassemble(ElfSymbolTableEntry* entry) const
     info.flavour = bfd_target_elf_flavour;
     info.arch = bfd_arch_i386;
     info.mach = bfd_mach_x86_64;
-    info.endian = BFD_ENDIAN_LITTLE;
+    info.endian = entry->symbolTable()->file()->byteOrder() == ELFDATA2LSB ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
     disassemble_fn = print_insn_i386;
 
     info.buffer = const_cast<bfd_byte*>(entry->data());
