@@ -393,7 +393,8 @@ static int handleNameComponent(demangle_component* component)
             break;
         case DEMANGLE_COMPONENT_CLONE:
             writeNode("COMPONENT_CLONE");
-            // ??
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
     }
     return sourceNode;

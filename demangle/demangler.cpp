@@ -494,6 +494,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
+        case DEMANGLE_COMPONENT_CLONE:
+        {
+            QVector<QByteArray> args;
+            handleNameComponent(component->u.s_binary.left, args);
+            handleNameComponent(component->u.s_binary.right, args);
+            nameParts.push_back(args.first() + " [clone " + args.last() + "]");
+            break;
+        }
         default:
             relevant = true;
             qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type;
