@@ -82,13 +82,13 @@ Dwarf_Half DwarfDie::tag() const
     return tagType;
 }
 
-const char* DwarfDie::tagName() const
+QByteArray DwarfDie::tagName() const
 {
     const char* tagName;
     const auto res = dwarf_get_TAG_name(tag(), &tagName);
     if (res != DW_DLV_OK)
-        return {};
-    return tagName;
+        return QByteArray("Unknown tag ") + QByteArray::number(tag());
+    return QByteArray::fromRawData(tagName, strlen(tagName));
 }
 
 Dwarf_Off DwarfDie::offset() const
@@ -130,13 +130,13 @@ QVector< Dwarf_Half > DwarfDie::attributes() const
     return attrs;
 }
 
-const char* DwarfDie::attributeName(Dwarf_Half attributeType) const
+QByteArray DwarfDie::attributeName(Dwarf_Half attributeType) const
 {
     const char* attrName;
     const auto res = dwarf_get_AT_name(attributeType, &attrName);
     if (res != DW_DLV_OK)
-        return nullptr;
-    return attrName;
+        return QByteArray("Unknown attribute ") + QByteArray::number(attributeType);
+    return QByteArray::fromRawData(attrName, strlen(attrName));
 }
 
 QVariant DwarfDie::attribute(Dwarf_Half attributeType) const

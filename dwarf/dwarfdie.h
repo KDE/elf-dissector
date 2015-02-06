@@ -39,11 +39,11 @@ public:
 
     QString name() const;
     Dwarf_Half tag() const;
-    const char* tagName() const;
+    QByteArray tagName() const;
     Dwarf_Off offset() const;
 
     QVector<Dwarf_Half> attributes() const;
-    const char* attributeName(Dwarf_Half attributeType) const;
+    QByteArray attributeName(Dwarf_Half attributeType) const;
     QVariant attribute(Dwarf_Half attributeType) const;
 
     QVector<DwarfDie*> children() const;
