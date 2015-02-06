@@ -29,7 +29,10 @@ class QString;
 class DwarfDie
 {
 public:
-    ~DwarfDie(); // TODO dealloc m_die
+    DwarfDie(const DwarfDie&) = delete;
+    ~DwarfDie();
+
+    DwarfDie& operator=(const DwarfDie&) = delete;
 
     DwarfInfo* dwarfInfo() const;
     DwarfDie* parentDIE() const;

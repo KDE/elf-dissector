@@ -37,10 +37,14 @@ DwarfDie::DwarfDie(Dwarf_Die die, DwarfInfo* info) :
 
 DwarfDie::~DwarfDie()
 {
+    qDeleteAll(m_children);
+
     for (int i = 0; i < m_srcFileCount; ++i) {
         dwarf_dealloc(dwarfHandle(), m_srcFiles[i], DW_DLA_STRING);
     }
     dwarf_dealloc(dwarfHandle(), m_srcFiles, DW_DLA_LIST);
+
+    dwarf_dealloc(dwarfHandle(), m_die, DW_DLA_DIE);
 }
 
 DwarfInfo* DwarfDie::dwarfInfo() const
