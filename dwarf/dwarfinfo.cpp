@@ -52,14 +52,14 @@ static Dwarf_Endianness callback_get_byte_order(void *obj)
 
 static Dwarf_Small callback_get_length_size(void *obj)
 {
-    qDebug();
-    return 8;
+    const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
+    return d->elfFile->type() == ELFCLASS64 ? 8 : 4;
 }
 
 static Dwarf_Small callback_get_pointer_size(void *obj)
 {
-    qDebug();
-    return 8;
+    const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
+    return d->elfFile->type() == ELFCLASS64 ? 8 : 4;
 }
 
 static Dwarf_Unsigned callback_get_section_count(void *obj)
