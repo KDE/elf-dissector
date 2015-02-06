@@ -121,8 +121,17 @@ void ElfFile::parseSections()
 
     // pass 1: create sections
     for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
-        // TODO 32/64 detection
-        ElfSectionHeader::Ptr shdr(new ElfSectionHeaderImpl<Elf64_Shdr>(this, i));
+        ElfSectionHeader::Ptr shdr;
+        switch(type()) {
+            case ELFCLASS32:
+                shdr.reset(new ElfSectionHeaderImpl<Elf32_Shdr>(this, i));
+                break;
+            case ELFCLASS64:
+                shdr.reset(new ElfSectionHeaderImpl<Elf64_Shdr>(this, i));
+                break;
+            default:
+                assert(false);
+        }
         m_sectionHeaders.push_back(shdr);
 
         ElfSection::Ptr section;
