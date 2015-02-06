@@ -106,6 +106,7 @@ DwarfInfoPrivate::DwarfInfoPrivate(DwarfInfo *qq) :
 DwarfInfoPrivate::~DwarfInfoPrivate()
 {
     qDeleteAll(compilationUnits);
+    dwarf_object_finish(dbg, 0);
 }
 
 void DwarfInfoPrivate::scanCompilationUnits()
@@ -151,9 +152,6 @@ DwarfInfo::DwarfInfo(ElfFile* elfFile) :
 
 DwarfInfo::~DwarfInfo()
 {
-    dwarf_object_finish(d->dbg, 0);
-
-    delete d;
 }
 
 ElfFile* DwarfInfo::elfFile() const

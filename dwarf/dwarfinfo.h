@@ -22,6 +22,8 @@
 
 #include <libdwarf/libdwarf.h>
 
+#include <memory>
+
 class DwarfDie;
 class DwarfInfoPrivate;
 
@@ -29,7 +31,10 @@ class DwarfInfo
 {
 public:
     explicit DwarfInfo(ElfFile* elfFile);
+    DwarfInfo(const DwarfInfo&) = delete;
     ~DwarfInfo();
+
+    DwarfInfo& operator=(const DwarfInfo&) = delete;
 
     /** The ELF file this DWARF information belong to. */
     ElfFile* elfFile() const;
@@ -43,7 +48,7 @@ public:
     DwarfDie* dieAtOffset(Dwarf_Off offset) const;
 
 private:
-    DwarfInfoPrivate *d; // FIXME prevent copy or make this shared
+    std::unique_ptr<DwarfInfoPrivate> d;
 };
 
 #endif // DWARFDEBUG_H
