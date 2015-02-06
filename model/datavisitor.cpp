@@ -27,6 +27,21 @@
 #include <QObject>
 #include <QStringBuilder>
 
+static QString machineToString(uint16_t machineType)
+{
+#define M(x) case EM_ ## x: return QStringLiteral("" #x);
+    switch (machineType) {
+        M(NONE)
+        M(386)
+        M(ARM)
+        M(X86_64)
+        M(AVR)
+        M(AARCH64)
+    }
+    return QStringLiteral("Unknown machine type: " ) + QString::number(machineType);
+#undef M
+}
+
 QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
 {
     switch (arg) {
@@ -40,6 +55,7 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             s += "File name: " + file->displayName() + "<br/>";
             s += QStringLiteral("Address size: ") + (file->type() == ELFCLASS32 ? "32 bit" : "64 bit") + "<br/>";
             s += QStringLiteral("Byte order: ") + (file->byteOrder() == ELFDATA2LSB ? "little endian" : "big endian") + "<br/>";
+            s += QStringLiteral("Machine: ") + machineToString(file->header()->machine()) + "<br/>";
             return s;
         }
     }
