@@ -20,9 +20,12 @@
 #include <elf/elfsymboltableentry.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elffile.h>
+#include <elf/elfheader.h>
 
+#include <QDebug>
 #include <QString>
 
+#include <cassert>
 #include <cstdarg>
 #include <dis-asm.h>
 #include <elf.h>
@@ -48,12 +51,33 @@ QString Disassembler::disassemble(ElfSymbolTableEntry* entry) const
     disassemble_info info;
     INIT_DISASSEMBLE_INFO(info, &result, qstring_printf);
 
-    // TODO: read correctly from entry->section->file->header
     info.flavour = bfd_target_elf_flavour;
-    info.arch = bfd_arch_i386;
-    info.mach = bfd_mach_x86_64;
     info.endian = entry->symbolTable()->file()->byteOrder() == ELFDATA2LSB ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
-    disassemble_fn = print_insn_i386;
+    switch (entry->symbolTable()->file()->header()->machine()) {
+        case EM_386:
+            info.arch = bfd_arch_i386;
+            info.mach = bfd_mach_i386_i386;
+            disassemble_fn = print_insn_i386;
+            break;
+        case EM_X86_64:
+            info.arch = bfd_arch_i386;
+            info.mach = bfd_mach_x86_64;
+            disassemble_fn = print_insn_i386;
+            break;
+#if 0 // TODO this would need an ARM binutils library, ie. we need to build this against a cross-compile toolchain...
+        case EM_ARM:
+            info.arch = bfd_arch_arm;
+            info.mach = bfd_mach_arm_unknown;
+            if (info.endian == BFD_ENDIAN_LITTLE)
+                disassemble_fn = print_insn_little_arm;
+            else
+                disassemble_fn = print_insn_big_arm;
+            break;
+#endif
+        default:
+            qWarning() << "Unsupported architecture!";
+            return {};
+    }
 
     info.buffer = const_cast<bfd_byte*>(entry->data());
     info.buffer_length = entry->size();
