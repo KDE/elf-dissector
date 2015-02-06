@@ -202,6 +202,13 @@ QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
                 value = QString::number(offset) + " (" + refDie->tagName() + ")";
             break;
         }
+        case DW_FORM_sec_offset:
+        {
+            Dwarf_Off offset;
+            res = dwarf_global_formref(attr, &offset, nullptr);
+            value = offset;
+            break;
+        }
         case DW_FORM_addr:
         {
             Dwarf_Addr addr;
