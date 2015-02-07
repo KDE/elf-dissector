@@ -99,6 +99,30 @@ Dwarf_Off DwarfDie::offset() const
     return offset;
 }
 
+static int arraySize(const DwarfDie *die)
+{
+    for (const auto *child : die->children()) {
+        if (child->tag() != DW_TAG_subrange_type)
+            continue;
+        const auto attr = child->attribute(DW_AT_upper_bound);
+        if (attr.isNull())
+            return 0;
+        return attr.toInt();
+    }
+    return -1;
+}
+
+static QStringList argumentList(const DwarfDie *die)
+{
+    QStringList args;
+    for (const auto *child : die->children()) {
+        if (child->tag() == DW_TAG_formal_parameter) {
+            args.push_back(child->typeName());
+        }
+    }
+    return args;
+}
+
 QString DwarfDie::typeName() const
 {
     const auto n = name();
@@ -140,20 +164,25 @@ QString DwarfDie::typeName() const
         case DW_TAG_const_type:
             return typeName + " const";
         case DW_TAG_array_type:
+        {
+            const auto s = arraySize(this);
+            if (s >= 0)
+                return typeName + "[" + QString::number(s) + "]";
             return typeName + "[]";
+        }
         case DW_TAG_restrict_type:
             return typeName + " restrcit";
         case DW_TAG_volatile_type:
             return typeName + " volatile";
         case DW_TAG_subroutine_type:
-            return typeName + " (*)(TODO: args)";
+            return typeName + " (*)(" + argumentList(this).join(", ") + ")";
         case DW_TAG_ptr_to_member_type:
         {
             const auto classDie = attribute(DW_AT_containing_type).value<DwarfDie*>();
             QString className;
             if (classDie)
                 className = classDie->typeName();
-            return typeName + "(" + className + "::*)(TODO args)";
+            return typeName + " (" + className + "::*)(" + argumentList(this).join(", ") + ")";
         }
     }
     return typeName;
