@@ -18,6 +18,7 @@
 #include "dwarfdie.h"
 #include "dwarfinfo.h"
 
+#include <QDebug>
 #include <QString>
 
 #include <libdwarf/dwarf.h>
@@ -96,6 +97,86 @@ Dwarf_Off DwarfDie::offset() const
     Dwarf_Off offset;
     const auto res = dwarf_dieoffset(m_die, &offset, nullptr);
     return offset;
+}
+
+QString DwarfDie::typeName() const
+{
+    const auto n = name();
+    if (!n.isEmpty())
+        return n;
+
+    const auto typeDie = attribute(DW_AT_type).value<DwarfDie*>();
+    QString typeName;
+    if (!typeDie) {
+        switch (tag()) {
+            case DW_TAG_array_type:
+            case DW_TAG_base_type:
+            case DW_TAG_const_type:
+            case DW_TAG_pointer_type:
+            case DW_TAG_ptr_to_member_type:
+            case DW_TAG_reference_type:
+            case DW_TAG_restrict_type:
+            case DW_TAG_rvalue_reference_type:
+            case DW_TAG_subroutine_type:
+            case DW_TAG_typedef:
+                typeName = "void";
+                break;
+            default:
+                return {};
+        }
+    } else {
+        typeName = typeDie->typeName();
+    }
+
+    // TODO: function pointers and pointer to members
+    // TODO: array size
+    switch (tag()) {
+        case DW_TAG_pointer_type:
+            return typeName + "*";
+        case DW_TAG_reference_type:
+            return typeName + "&";
+        case DW_TAG_rvalue_reference_type:
+            return typeName + "&&";
+        case DW_TAG_const_type:
+            return typeName + " const";
+        case DW_TAG_array_type:
+            return typeName + "[]";
+        case DW_TAG_restrict_type:
+            return typeName + " restrcit";
+        case DW_TAG_volatile_type:
+            return typeName + " volatile";
+        case DW_TAG_subroutine_type:
+            return typeName + " (*)(TODO: args)";
+        case DW_TAG_ptr_to_member_type:
+        {
+            const auto classDie = attribute(DW_AT_containing_type).value<DwarfDie*>();
+            QString className;
+            if (classDie)
+                className = classDie->typeName();
+            return typeName + "(" + className + "::*)(TODO args)";
+        }
+    }
+    return typeName;
+}
+
+QString DwarfDie::displayName() const
+{
+    QString n = name();
+
+    if (n.isEmpty())
+        n = typeName();
+
+    if (n.isEmpty()) {
+        n = tagName();
+        n += " (offset ";
+    } else {
+        n += " (";
+        n += tagName();
+        n += ", offset ";
+    }
+    n += QString::number(offset());
+    n += ")";
+    return n;
 }
 
 static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const char**))
@@ -194,12 +275,7 @@ QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
         {
             Dwarf_Off offset;
             res = dwarf_global_formref(attr, &offset, nullptr);
-            const auto refDie = dwarfInfo()->dieAtOffset(offset);
-            const QString refName = refDie->name();
-            if (!refName.isEmpty())
-                value = refName;
-            else
-                value = QString::number(offset) + " (" + refDie->tagName() + ")";
+            value = QVariant::fromValue(dwarfInfo()->dieAtOffset(offset));
             break;
         }
         case DW_FORM_sec_offset:

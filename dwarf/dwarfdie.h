@@ -37,10 +37,16 @@ public:
     DwarfInfo* dwarfInfo() const;
     DwarfDie* parentDIE() const;
 
+    /** Content of the name attribute. */
     QString name() const;
     Dwarf_Half tag() const;
     QByteArray tagName() const;
     Dwarf_Off offset() const;
+
+    /** If this DIE represents a type, this is the full type name. */
+    QString typeName() const;
+    /** Best effort human readable distplay string. */
+    QString displayName() const;
 
     QVector<Dwarf_Half> attributes() const;
     QByteArray attributeName(Dwarf_Half attributeType) const;
@@ -70,5 +76,7 @@ private:
 
     mutable bool m_childrenScanned = false;
 };
+
+Q_DECLARE_METATYPE(DwarfDie*)
 
 #endif // DWARFDIE_H

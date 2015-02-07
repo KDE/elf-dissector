@@ -24,6 +24,7 @@
 #include <disassmbler/disassembler.h>
 #include <demangle/demangler.h>
 
+#include <QDebug>
 #include <QObject>
 #include <QStringBuilder>
 
@@ -262,23 +263,20 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
 {
     switch (arg) {
         case Qt::DisplayRole:
-        {
-            QString s = die->name();
-            const bool hasDieName = !s.isEmpty();
-            if (hasDieName)
-                s += " (";
-            s += QString::fromLocal8Bit(die->tagName());
-            if (hasDieName)
-                s += ")";
-            return s;
-        }
+            return die->displayName();
         case ElfModel::DetailRole:
         {
             QString s;
             s += "TAG: " + QString::fromLocal8Bit(die->tagName()) + "<br/>";
             s += "Offset: " + QString::number(die->offset()) + "<br/>";
             foreach (const auto &attrType, die->attributes()) {
-                s += QString::fromLocal8Bit(die->attributeName(attrType)) + ": " + die->attribute(attrType).toString() + "<br/>";
+                const QVariant attrValue = die->attribute(attrType);
+                QString attrValueStr;
+                if (DwarfDie *die = attrValue.value<DwarfDie*>())
+                    attrValueStr = die->displayName();
+                else
+                    attrValueStr = attrValue.toString();
+                s += QString::fromLocal8Bit(die->attributeName(attrType)) + ": " + attrValueStr + "<br/>";
             }
             return s;
         }
