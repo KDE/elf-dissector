@@ -157,12 +157,12 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
             s << ':' << bitSize;
         }
 
-        s << "; // member offset: " << memberLocation << " size: ";
+        s << "; // member offset: " << memberLocation << ", size: ";
         s << memberTypeDie->typeSize();
 
         if (bitSize > 0) {
             const auto bitOffset = memberDie->attribute(DW_AT_bit_offset).toInt();
-            s << " bit offset: " << bitOffset;
+            s << ", bit offset: " << bitOffset;
         }
 
         s << "\n";
