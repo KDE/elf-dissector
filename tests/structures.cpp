@@ -76,6 +76,13 @@ struct StaticMembers {
     static const int m1 = 42;
 };
 
+struct EmptyInheritance : PackedNumbers {
+};
+
+struct NonEmptyInheritance : PackedNumbers {
+    short m1;
+};
+
 int main (int, char**)
 {
     // make sure the structures aren't optimized away by the compiler
@@ -93,6 +100,8 @@ int main (int, char**)
     USED(Unions)
     USED(ConstMembers)
     USED(StaticMembers)
+    USED(EmptyInheritance)
+    USED(NonEmptyInheritance)
 
     return dummy;
 }
