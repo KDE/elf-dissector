@@ -146,6 +146,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
     s << " // location: " << sourceLocation(structDie);
     s << "\n{\n";
 
+    bool skipPadding = false; // TODO this should not be needed, look outside of the current CU for the real DIE?
     int nextMemberLocation = 0;
     for (DwarfDie *memberDie : memberDies) {
         s << "    ";
@@ -157,7 +158,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
         assert(memberTypeDie);
 
         const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
-        if (memberLocation > nextMemberLocation) {
+        if (memberLocation > nextMemberLocation && !skipPadding) {
             s << "// " << (memberLocation - nextMemberLocation) << " byte(s) padding\n";
             s << "    ";
         }
@@ -172,7 +173,14 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
         }
 
         s << "; // member offset: " << memberLocation;
-        s << ", size: " << memberTypeDie->typeSize();
+
+        if (memberTypeDie->typeSize() == 0) {
+            s << ", unknown size";
+            skipPadding = true;
+        } else {
+            s << ", size: " << memberTypeDie->typeSize();
+            skipPadding = false;
+        }
         s << ", alignment: " << memberTypeDie->typeAlignment();
 
         if (bitSize > 0) {
@@ -185,7 +193,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
         nextMemberLocation = memberLocation + memberTypeDie->typeSize();
     }
 
-    if (nextMemberLocation < structDie->typeSize())
+    if (nextMemberLocation < structDie->typeSize() && !skipPadding)
         s << "    // " << (structDie->typeSize() - nextMemberLocation) << " byte(s) padding\n";
 
     s << "}; // size: " << structDie->typeSize();
@@ -202,6 +210,7 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
 
     // TODO: lots of stuff missing to compute optimal bit field layout
     int prevMemberLocation = -1;
+    bool guessSize = false; // TODO see above, this probably needs better lookup for external types
     for (DwarfDie* memberDie : memberDies) {
         if (prevMemberLocation == memberDie->attribute(DW_AT_data_member_location))
             continue; // skip bit fields for now
@@ -209,11 +218,19 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
         const auto memberTypeDie = memberDie->attribute(DW_AT_type).value<DwarfDie*>();
         assert(memberTypeDie);
 
+        const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
+        if (guessSize)
+            sizes.push_back(memberLocation - prevMemberLocation);
+
+        guessSize = memberTypeDie->typeSize() == 0;
         sizes.push_back(memberTypeDie->typeSize());
         alignment = std::max(alignment, memberTypeDie->typeAlignment());
 
-        prevMemberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
+        prevMemberLocation = memberLocation;
     }
+
+    if (guessSize)
+        sizes.push_back(structDie->typeSize() - prevMemberLocation);
 
     // TODO: sort by alignment and add padding
     for (const int s : sizes)
