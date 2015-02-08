@@ -81,6 +81,11 @@ static int countBits(const QBitArray &bits)
     return count;
 }
 
+static QString sourceLocation(DwarfDie *die)
+{
+    return die->attribute(DW_AT_decl_file).toString() + ':' + QString::number(die->attribute(DW_AT_decl_line).toInt());
+}
+
 void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies)
 {
     const auto structSize = structDie->typeSize();
@@ -112,9 +117,13 @@ void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< D
     const auto optimalSize = optimalStructureSize(structDie, memberDies);
 
     if ((usedBytes != structSize || usedBits != structSize * 8) && optimalSize != structSize) {
+        const QString loc = sourceLocation(structDie);
+        if (m_duplicateCheck.contains(loc))
+            return;
         qDebug() << "Struct" << structDie->displayName() << " is sub-optimally packed: " << usedBytes << "/" << structSize << ", " << usedBits << "/" << (structSize * 8);
         qDebug() << "optimal size is: " << optimalSize;
         qDebug() << printStructure(structDie, memberDies);
+        m_duplicateCheck.insert(loc);
     }
 }
 
@@ -134,7 +143,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
 
     s << (structDie->tag() == DW_TAG_class_type ? "class " : "struct ");
     s << fullyQualifiedName(structDie);
-    s << " // location: " << structDie->attribute(DW_AT_decl_file).toString() << ":" << structDie->attribute(DW_AT_decl_line).toInt();
+    s << " // location: " << sourceLocation(structDie);
     s << "\n{\n";
 
     int nextMemberLocation = 0;

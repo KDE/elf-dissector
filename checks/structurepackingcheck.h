@@ -18,6 +18,8 @@
 #ifndef STRUCTUREPACKINGCHECK_H
 #define STRUCTUREPACKINGCHECK_H
 
+#include <QSet>
+
 class DwarfInfo;
 class DwarfDie;
 
@@ -34,6 +36,8 @@ private:
     void checkStructure(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies);
     QString printStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies);
     int optimalStructureSize(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies);
+
+    QSet<QString> m_duplicateCheck;
 };
 
 #endif // STRUCTUREPACKINGCHECK_H
