@@ -51,6 +51,10 @@ struct Arrays {
     char m2[4];
 };
 
+struct MultiDimArrays {
+    double m1[2][3];
+};
+
 struct NonPackedArrays {
     char m1[3];
     int m2[3];
@@ -96,6 +100,7 @@ int main (int, char**)
     USED(BitFields)
     USED(NonPackedBitFields)
     USED(Arrays)
+    USED(MultiDimArrays)
     USED(NonPackedArrays)
     USED(Unions)
     USED(ConstMembers)

@@ -101,17 +101,19 @@ Dwarf_Off DwarfDie::offset() const
     return offset;
 }
 
-static int arraySize(const DwarfDie *die)
+static QVector<int> arrayDimensions(const DwarfDie *die)
 {
+    QVector<int> dims;
     for (const auto *child : die->children()) {
         if (child->tag() != DW_TAG_subrange_type)
             continue;
         const auto attr = child->attribute(DW_AT_upper_bound);
         if (attr.isNull())
-            return 0;
-        return attr.toInt();
+            dims.push_back(0);
+        // DW_AT_upper_bound is the highest allowed index, not the size
+        dims.push_back(attr.toInt() + 1);
     }
-    return -1;
+    return dims;
 }
 
 static QStringList argumentList(const DwarfDie *die)
@@ -155,7 +157,6 @@ QString DwarfDie::typeName() const
     }
 
     // TODO: function pointers and pointer to members
-    // TODO: array size
     switch (tag()) {
         case DW_TAG_pointer_type:
             return typeName + "*";
@@ -167,11 +168,11 @@ QString DwarfDie::typeName() const
             return typeName + " const";
         case DW_TAG_array_type:
         {
-            // DW_AT_upper_bound is the highest allowed index, not the size
-            const auto s = arraySize(this);
-            if (s >= 0)
-                return typeName + "[" + QString::number(s + 1) + "]";
-            return typeName + "[]";
+            const auto dims = arrayDimensions(this);
+            QString n = typeName;
+            for (int d : dims)
+                n += "[" + QString::number(d) + "]";
+            return n;
         }
         case DW_TAG_restrict_type:
             return typeName + " restrcit";
@@ -217,8 +218,10 @@ int DwarfDie::typeSize() const
         {
             const auto typeDie = attribute(DW_AT_type).value<DwarfDie*>();
             assert(typeDie);
-            const auto size = arraySize(this);
-            return typeDie->typeSize() * (size + 1); // DW_AT_upper_bound is the highest allowed index, not the size!
+            int s = typeDie->typeSize();
+            for (int d : arrayDimensions(this))
+                s *= d;
+            return s;
         }
     }
 
