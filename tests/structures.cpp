@@ -87,6 +87,11 @@ struct NonEmptyInheritance : PackedNumbers {
     short m1;
 };
 
+struct EmptyBaseClassOptimization : Empty {
+    int m1;
+    short m2;
+};
+
 int main (int, char**)
 {
     // make sure the structures aren't optimized away by the compiler
@@ -107,6 +112,7 @@ int main (int, char**)
     USED(StaticMembers)
     USED(EmptyInheritance)
     USED(NonEmptyInheritance)
+    USED(EmptyBaseClassOptimization)
 
     return dummy;
 }

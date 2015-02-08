@@ -202,6 +202,24 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
     return str;
 }
 
+static bool isEmptyBaseClass(DwarfDie* inheritanceDie)
+{
+    assert(inheritanceDie->tag() == DW_TAG_inheritance);
+    const auto baseTypeDie = inheritanceDie->attribute(DW_AT_type).value<DwarfDie*>();
+    if (baseTypeDie->typeSize() != 1)
+        return false;
+
+    for (DwarfDie *d : baseTypeDie->children()) {
+        if (d->tag() == DW_TAG_member)
+            return false;
+        if (d->tag() != DW_TAG_inheritance)
+            continue;
+        if (!isEmptyBaseClass(d))
+            return false;
+    }
+    return true;
+}
+
 int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies)
 {
     int size = 0;
@@ -212,6 +230,10 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
     int prevMemberLocation = -1;
     bool guessSize = false; // TODO see above, this probably needs better lookup for external types
     for (DwarfDie* memberDie : memberDies) {
+        // consider empty base class optimization, they don't count, unless we are entirely empty, which is handled at the very end
+        if (memberDie->tag() == DW_TAG_inheritance && isEmptyBaseClass(memberDie))
+            continue;
+
         if (prevMemberLocation == memberDie->attribute(DW_AT_data_member_location))
             continue; // skip bit fields for now
 
