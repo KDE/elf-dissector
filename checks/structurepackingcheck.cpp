@@ -120,7 +120,7 @@ void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< D
     const auto usedBytes = countBytes(memUsage);
     const auto usedBits = countBits(memUsage);
 
-    if (usedBytes != structSize || usedBits != structSize * 8) {
+    if ((usedBytes != structSize || usedBits != structSize * 8) && !(structSize == 1 && memberDies.isEmpty())) {
         qDebug() << "Struct" << structDie->displayName() << " is sub-optimally packed: " << usedBytes << "/" << structSize << ", " << usedBits << "/" << (structSize * 8);
         qDebug() << printStructure(structDie, memberDies);
     }
