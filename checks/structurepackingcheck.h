@@ -33,6 +33,7 @@ public:
 private:
     void checkStructure(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies);
     QString printStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies);
+    int optimalStructureSize(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies);
 };
 
 #endif // STRUCTUREPACKINGCHECK_H

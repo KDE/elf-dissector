@@ -119,9 +119,11 @@ void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< D
 
     const auto usedBytes = countBytes(memUsage);
     const auto usedBits = countBits(memUsage);
+    const auto optimalSize = optimalStructureSize(structDie, memberDies);
 
-    if ((usedBytes != structSize || usedBits != structSize * 8) && !(structSize == 1 && memberDies.isEmpty())) {
+    if ((usedBytes != structSize || usedBits != structSize * 8) && optimalSize != structSize) {
         qDebug() << "Struct" << structDie->displayName() << " is sub-optimally packed: " << usedBytes << "/" << structSize << ", " << usedBits << "/" << (structSize * 8);
+        qDebug() << "optimal size is: " << optimalSize;
         qDebug() << printStructure(structDie, memberDies);
     }
 }
@@ -175,4 +177,37 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
 
     s << "}; // size: " << structDie->typeSize() << "\n";
     return str;
+}
+
+int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies)
+{
+    int size = 0;
+    int alignment = 1;
+    QVector<int> sizes;
+
+    // TODO: lots of stuff missing to compute optimal bit field layout
+    int prevMemberLocation = -1;
+    for (DwarfDie* memberDie : memberDies) {
+        if (prevMemberLocation == memberDie->attribute(DW_AT_data_member_location))
+            continue; // skip bit fields for now
+
+        const auto memberTypeDie = memberDie->attribute(DW_AT_type).value<DwarfDie*>();
+        assert(memberTypeDie);
+
+        sizes.push_back(memberTypeDie->typeSize());
+        alignment = std::max(alignment, std::min(memberTypeDie->typeSize(), 8)); // TODO: alignment for arrays is alignment of the entry type!
+
+        prevMemberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
+    }
+
+    // TODO: sort by alignment and add padding
+    for (const int s : sizes)
+        size += s;
+
+    // align the entire struct to maximum member alignment
+    if (size % alignment)
+        size += alignment - (size % alignment);
+
+    // structs are always at least 1 byte
+    return std::max(1, size);
 }
