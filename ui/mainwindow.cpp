@@ -26,6 +26,8 @@
 
 #include <demangle/demangler.h>
 
+#include <checks/structurepackingcheck.h>
+
 #include <model/elfmodel.h>
 
 #include <treemap/treemap.h>
@@ -54,6 +56,12 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionColorizeSections, &QAction::triggered, this, &MainWindow::colorizationChanged);
     connect(ui->actionColorizeSymbols, &QAction::triggered, this, &MainWindow::colorizationChanged);
     connect(ui->actionReopenPreviousFile, &QAction::triggered, this, &MainWindow::reloadFileOnStartup);
+
+    // ### temporary
+    connect(ui->actionCheckStructurePacking, &QAction::triggered, this, [this]() {
+        StructurePackingCheck checker;
+        checker.checkAll(m_fileSet->file(0)->dwarfInfo());
+    });
 
     connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &MainWindow::selectionChanged);

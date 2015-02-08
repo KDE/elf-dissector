@@ -108,7 +108,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -134,8 +134,15 @@
     </property>
     <addaction name="actionReopenPreviousFile"/>
    </widget>
+   <widget class="QMenu" name="menu_Checks">
+    <property name="title">
+     <string>&amp;Checks</string>
+    </property>
+    <addaction name="actionCheckStructurePacking"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_View"/>
+   <addaction name="menu_Checks"/>
    <addaction name="menu_Settings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -205,6 +212,11 @@
    </property>
    <property name="text">
     <string>Colorize S&amp;ymbols</string>
+   </property>
+  </action>
+  <action name="actionCheckStructurePacking">
+   <property name="text">
+    <string>&amp;Structure Packing</string>
    </property>
   </action>
  </widget>

@@ -44,6 +44,8 @@ set(elf_dissector_srcs
     dwarf/dwarfinfo.cpp
     dwarf/dwarfdie.cpp
 
+    checks/structurepackingcheck.cpp
+
     model/elfmodel.cpp
     model/datavisitor.cpp
     model/indexvisitor.cpp
