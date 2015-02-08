@@ -165,9 +165,10 @@ QString DwarfDie::typeName() const
             return typeName + " const";
         case DW_TAG_array_type:
         {
+            // DW_AT_upper_bound is the highest allowed index, not the size
             const auto s = arraySize(this);
             if (s >= 0)
-                return typeName + "[" + QString::number(s) + "]";
+                return typeName + "[" + QString::number(s + 1) + "]";
             return typeName + "[]";
         }
         case DW_TAG_restrict_type:
