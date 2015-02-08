@@ -118,13 +118,23 @@ void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< D
     }
 }
 
+static QString fullyQualifiedName(DwarfDie* structDie)
+{
+    QString baseName;
+    DwarfDie* parentDie = structDie->parentDIE();
+    if (parentDie->tag() == DW_TAG_class_type || parentDie->tag() == DW_TAG_structure_type || parentDie->tag() == DW_TAG_namespace)
+        baseName = fullyQualifiedName(parentDie) + "::";
+    return baseName + structDie->name();
+}
+
 QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector<DwarfDie*>& memberDies)
 {
     QString str;
     QTextStream s(&str);
 
     s << (structDie->tag() == DW_TAG_class_type ? "class " : "struct ");
-    s << structDie->name();
+    s << fullyQualifiedName(structDie);
+    s << " // location: " << structDie->attribute(DW_AT_decl_file).toString() << ":" << structDie->attribute(DW_AT_decl_line).toInt();
     s << "\n{\n";
 
     int nextMemberLocation = 0;
