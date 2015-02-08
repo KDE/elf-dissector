@@ -57,6 +57,8 @@ void StructurePackingCheck::checkDie(DwarfDie* die)
         for (DwarfDie* child : die->children()) {
             if (child->tag() == DW_TAG_member && !isStaticMember(child))
                 members.push_back(child);
+            else if (child->tag() == DW_TAG_inheritance)
+                members.push_back(child);
             else
                 checkDie(child);
         }
@@ -140,6 +142,9 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
     int nextMemberLocation = 0;
     for (DwarfDie *memberDie : memberDies) {
         s << "    ";
+
+        if (memberDie->tag() == DW_TAG_inheritance)
+            s << "inherits ";
 
         const auto memberTypeDie = memberDie->attribute(DW_AT_type).value<DwarfDie*>();
         assert(memberTypeDie);
