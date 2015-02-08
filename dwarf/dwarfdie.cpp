@@ -225,6 +225,59 @@ int DwarfDie::typeSize() const
     return 0;
 }
 
+int DwarfDie::typeAlignment() const
+{
+    switch (tag()) {
+        case DW_TAG_base_type:
+        case DW_TAG_enumeration_type:
+            return std::min(typeSize(), 8); // TODO: 32bit support
+        case DW_TAG_array_type:
+        case DW_TAG_const_type:
+        case DW_TAG_restrict_type:
+        case DW_TAG_typedef:
+        case DW_TAG_volatile_type:
+        {
+            const auto typeDie = attribute(DW_AT_type).value<DwarfDie*>();
+            assert(typeDie);
+            return typeDie->typeAlignment();
+        }
+        case DW_TAG_pointer_type:
+        case DW_TAG_reference_type:
+        case DW_TAG_rvalue_reference_type:
+            return 8; // TODO: 32bit support
+        case DW_TAG_class_type:
+        case DW_TAG_structure_type:
+        case DW_TAG_union_type:
+        {
+            int align = 1;
+            for (const DwarfDie* child : children()) {
+                if (child->tag() != DW_TAG_member && child->tag() != DW_TAG_inheritance)
+                    continue;
+                if (child->isStaticMember())
+                    continue;
+                const auto typeDie = child->attribute(DW_AT_type).value<DwarfDie*>();
+                assert(typeDie);
+                align = std::max(align, typeDie->typeAlignment());
+            }
+            return align;
+        }
+    }
+
+    return 0;
+}
+
+bool DwarfDie::isStaticMember() const
+{
+    // TODO not entirely sure yet this is correct...
+    const auto memberLocationAttr = attribute(DW_AT_data_member_location);
+    if (!memberLocationAttr.isNull())
+        return false;
+
+    const auto externalAttr = attribute(DW_AT_external).toBool();
+    const auto declAttr = attribute(DW_AT_declaration).toBool();
+    return externalAttr || declAttr;
+}
+
 QString DwarfDie::displayName() const
 {
     QString n = name();

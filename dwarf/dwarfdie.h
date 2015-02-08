@@ -47,6 +47,11 @@ public:
     QString typeName() const;
     /** If this DIE represents a type, this is the size occupied by this type in bytes. */
     int typeSize() const;
+    /** If this DIE represents a type, this returns the alignment needed for it. */
+    int typeAlignment() const;
+
+    /** If this is a DW_TAG_member, check if this is a static member, or a non-static one. */
+    bool isStaticMember() const;
 
     /** Best effort human readable distplay string. */
     QString displayName() const;

@@ -38,24 +38,12 @@ void StructurePackingCheck::checkAll(DwarfInfo* info)
         checkDie(die);
 }
 
-static bool isStaticMember(DwarfDie *die)
-{
-    // TODO not entirely sure yet this is correct...
-    const auto memberLocationAttr = die->attribute(DW_AT_data_member_location);
-    if (!memberLocationAttr.isNull())
-        return false;
-
-    const auto externalAttr = die->attribute(DW_AT_external).toBool();
-    const auto declAttr = die->attribute(DW_AT_declaration).toBool();
-    return externalAttr || declAttr;
-}
-
 void StructurePackingCheck::checkDie(DwarfDie* die)
 {
     if (die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) {
         QVector<DwarfDie*> members;
         for (DwarfDie* child : die->children()) {
-            if (child->tag() == DW_TAG_member && !isStaticMember(child))
+            if (child->tag() == DW_TAG_member && !child->isStaticMember())
                 members.push_back(child);
             else if (child->tag() == DW_TAG_inheritance)
                 members.push_back(child);
@@ -164,8 +152,9 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
             s << ':' << bitSize;
         }
 
-        s << "; // member offset: " << memberLocation << ", size: ";
-        s << memberTypeDie->typeSize();
+        s << "; // member offset: " << memberLocation;
+        s << ", size: " << memberTypeDie->typeSize();
+        s << ", alignment: " << memberTypeDie->typeAlignment();
 
         if (bitSize > 0) {
             const auto bitOffset = memberDie->attribute(DW_AT_bit_offset).toInt();
@@ -180,7 +169,9 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
     if (nextMemberLocation < structDie->typeSize())
         s << "    // " << (structDie->typeSize() - nextMemberLocation) << " byte(s) padding\n";
 
-    s << "}; // size: " << structDie->typeSize() << "\n";
+    s << "}; // size: " << structDie->typeSize();
+    s << ", alignment: " << structDie->typeAlignment();
+    s << "\n";
     return str;
 }
 
@@ -200,7 +191,7 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
         assert(memberTypeDie);
 
         sizes.push_back(memberTypeDie->typeSize());
-        alignment = std::max(alignment, std::min(memberTypeDie->typeSize(), 8)); // TODO: alignment for arrays is alignment of the entry type!
+        alignment = std::max(alignment, memberTypeDie->typeAlignment());
 
         prevMemberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
     }
