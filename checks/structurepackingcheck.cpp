@@ -38,12 +38,24 @@ void StructurePackingCheck::checkAll(DwarfInfo* info)
         checkDie(die);
 }
 
+static bool isStaticMember(DwarfDie *die)
+{
+    // TODO not entirely sure yet this is correct...
+    const auto memberLocationAttr = die->attribute(DW_AT_data_member_location);
+    if (!memberLocationAttr.isNull())
+        return false;
+
+    const auto externalAttr = die->attribute(DW_AT_external).toBool();
+    const auto declAttr = die->attribute(DW_AT_declaration).toBool();
+    return externalAttr || declAttr;
+}
+
 void StructurePackingCheck::checkDie(DwarfDie* die)
 {
     if (die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) {
         QVector<DwarfDie*> members;
         for (DwarfDie* child : die->children()) {
-            if (child->tag() == DW_TAG_member)
+            if (child->tag() == DW_TAG_member && !isStaticMember(child))
                 members.push_back(child);
             else
                 checkDie(child);
@@ -82,6 +94,10 @@ static int countBits(const QBitArray &bits)
 void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies)
 {
     const auto structSize = structDie->typeSize();
+    if (structSize <= 0)
+        return;
+
+    assert(structSize > 0);
     QBitArray memUsage(structSize * 8);
 
     for (DwarfDie *memberDie : memberDies) {
@@ -93,8 +109,10 @@ void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< D
         const auto bitOffset = memberDie->attribute(DW_AT_bit_offset).toInt();
 
         if (bitSize <= 0) {
+            assert((structSize * 8) >= (memberLocation * 8 + memberTypeDie->typeSize() * 8));
             memUsage.fill(true, memberLocation * 8, memberLocation * 8 + memberTypeDie->typeSize() * 8);
         } else {
+            assert((structSize * 8) >= (memberLocation * 8 + bitOffset + bitSize));
             memUsage.fill(true, memberLocation * 8 + bitOffset, memberLocation * 8 + bitOffset + bitSize);
         }
     }
