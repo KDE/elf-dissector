@@ -45,6 +45,9 @@ public:
 
     /** If this DIE represents a type, this is the full type name. */
     QString typeName() const;
+    /** If this DIE represents a type, this is the size occupied by this type in bytes. */
+    int typeSize() const;
+
     /** Best effort human readable distplay string. */
     QString displayName() const;
 

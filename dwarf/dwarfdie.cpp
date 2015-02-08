@@ -24,6 +24,8 @@
 #include <libdwarf/dwarf.h>
 #include <libdwarf/libdwarf.h>
 
+#include <cassert>
+
 DwarfDie::DwarfDie(Dwarf_Die die, DwarfDie* parent) :
     m_die(die),
     m_parent(parent)
@@ -187,6 +189,40 @@ QString DwarfDie::typeName() const
         }
     }
     return typeName;
+}
+
+int DwarfDie::typeSize() const
+{
+    switch (tag()) {
+        case DW_TAG_base_type:
+        case DW_TAG_class_type:
+        case DW_TAG_enumeration_type:
+        case DW_TAG_structure_type:
+        case DW_TAG_union_type:
+            return attribute(DW_AT_byte_size).toInt();
+        case DW_TAG_pointer_type:
+        case DW_TAG_reference_type:
+        case DW_TAG_rvalue_reference_type:
+            return 8; // TODO: support 32bit!
+        case DW_TAG_const_type:
+        case DW_TAG_restrict_type:
+        case DW_TAG_typedef:
+        case DW_TAG_volatile_type:
+        {
+            const auto typeDie = attribute(DW_AT_type).value<DwarfDie*>();
+            assert(typeDie);
+            return typeDie->typeSize();
+        }
+        case DW_TAG_array_type:
+        {
+            const auto typeDie = attribute(DW_AT_type).value<DwarfDie*>();
+            assert(typeDie);
+            const auto size = arraySize(this);
+            return typeDie->typeSize() * (size + 1); // DW_AT_upper_bound is the highest allowed index, not the size!
+        }
+    }
+
+    return 0;
 }
 
 QString DwarfDie::displayName() const
