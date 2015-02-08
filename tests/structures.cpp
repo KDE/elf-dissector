@@ -68,6 +68,14 @@ struct Unions {
     } m2;
 };
 
+struct ConstMembers {
+    const int m1 = 42;
+};
+
+struct StaticMembers {
+    static const int m1 = 42;
+};
+
 int main (int, char**)
 {
     // make sure the structures aren't optimized away by the compiler
@@ -83,6 +91,8 @@ int main (int, char**)
     USED(Arrays)
     USED(NonPackedArrays)
     USED(Unions)
+    USED(ConstMembers)
+    USED(StaticMembers)
 
     return dummy;
 }
