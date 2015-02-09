@@ -17,6 +17,7 @@
 
 #include "structurepackingcheck.h"
 
+#include <elf/elffileset.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
 
@@ -29,6 +30,14 @@
 
 #include <cassert>
 
+StructurePackingCheck::StructurePackingCheck(ElfFileSet* fileSet) : m_fileSet(fileSet)
+{
+}
+
+StructurePackingCheck::~StructurePackingCheck()
+{
+}
+
 void StructurePackingCheck::checkAll(DwarfInfo* info)
 {
     if (!info)
@@ -36,6 +45,44 @@ void StructurePackingCheck::checkAll(DwarfInfo* info)
 
     for (DwarfDie* die : info->compilationUnits())
         checkDie(die);
+}
+
+QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
+{
+    assert(structDie->tag() == DW_TAG_class_type || structDie->tag() == DW_TAG_structure_type);
+
+    QVector<DwarfDie*> members;
+    for (DwarfDie* child : structDie->children()) {
+        if (child->tag() == DW_TAG_member && !child->isStaticMember())
+            members.push_back(child);
+        else if (child->tag() == DW_TAG_inheritance)
+            members.push_back(child);
+    }
+
+    const int structSize = structDie->typeSize();
+    int usedBytes;
+    int usedBits;
+    std::tie(usedBytes, usedBits) = computeStructureMemoryUsage(structDie, members);
+    const int optimalSize = optimalStructureSize(structDie, members);
+
+    QString s;
+    s += "Used bytes: " + QString::number(usedBytes) + "/" + QString::number(structSize);
+    s += " (" + QString::number(double(usedBytes*100) / double(structSize), 'g', 4) + "%)\n";
+    s += "Used bits: " + QString::number(usedBits) + "/" + QString::number(structSize*8);
+    s += " (" + QString::number(double(usedBits*100) / double(structSize*8), 'g', 4) + "%)\n";
+    if (optimalSize < structSize) {
+        s += "Optimal size: " + QString::number(optimalSize) + " bytes (";
+        const int saving = structSize - optimalSize;
+        s += QString::number(-saving) + " bytes, " + QString::number(double(saving*100) / double(structSize), 'g', 4) + "%)\n";
+    }
+    s += '\n';
+    s += printStructure(structDie, members);
+    return s;
+}
+
+static QString sourceLocation(DwarfDie *die)
+{
+    return die->attribute(DW_AT_decl_file).toString() + ':' + QString::number(die->attribute(DW_AT_decl_line).toInt());
 }
 
 void StructurePackingCheck::checkDie(DwarfDie* die)
@@ -50,7 +97,26 @@ void StructurePackingCheck::checkDie(DwarfDie* die)
             else
                 checkDie(child);
         }
-        checkStructure(die, members);
+
+        const int structSize = die->typeSize();
+        if (structSize <= 0)
+            return;
+
+        int usedBytes;
+        int usedBits;
+        std::tie(usedBytes, usedBits) = computeStructureMemoryUsage(die, members);
+        const int optimalSize = optimalStructureSize(die, members);
+
+        if ((usedBytes != structSize || usedBits != structSize * 8) && optimalSize != structSize) {
+            const QString loc = sourceLocation(die);
+            if (m_duplicateCheck.contains(loc))
+                return;
+            qDebug() << "Struct" << die->displayName() << " is sub-optimally packed: " << usedBytes << "/" << structSize << ", " << usedBits << "/" << (structSize * 8);
+            qDebug() << "optimal size is: " << optimalSize;
+            qDebug() << printStructure(die, members);
+            m_duplicateCheck.insert(loc);
+        }
+
     } else {
         for (DwarfDie* child : die->children())
             checkDie(child);
@@ -81,16 +147,11 @@ static int countBits(const QBitArray &bits)
     return count;
 }
 
-static QString sourceLocation(DwarfDie *die)
-{
-    return die->attribute(DW_AT_decl_file).toString() + ':' + QString::number(die->attribute(DW_AT_decl_line).toInt());
-}
-
-void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies)
+std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
 {
     const auto structSize = structDie->typeSize();
     if (structSize <= 0)
-        return;
+        return {};
 
     assert(structSize > 0);
     QBitArray memUsage(structSize * 8);
@@ -114,17 +175,7 @@ void StructurePackingCheck::checkStructure(DwarfDie* structDie, const QVector< D
 
     const auto usedBytes = countBytes(memUsage);
     const auto usedBits = countBits(memUsage);
-    const auto optimalSize = optimalStructureSize(structDie, memberDies);
-
-    if ((usedBytes != structSize || usedBits != structSize * 8) && optimalSize != structSize) {
-        const QString loc = sourceLocation(structDie);
-        if (m_duplicateCheck.contains(loc))
-            return;
-        qDebug() << "Struct" << structDie->displayName() << " is sub-optimally packed: " << usedBytes << "/" << structSize << ", " << usedBits << "/" << (structSize * 8);
-        qDebug() << "optimal size is: " << optimalSize;
-        qDebug() << printStructure(structDie, memberDies);
-        m_duplicateCheck.insert(loc);
-    }
+    return std::make_tuple(usedBytes, usedBits);
 }
 
 static QString fullyQualifiedName(DwarfDie* structDie)
@@ -136,7 +187,7 @@ static QString fullyQualifiedName(DwarfDie* structDie)
     return baseName + structDie->name();
 }
 
-QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector<DwarfDie*>& memberDies)
+QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector<DwarfDie*>& memberDies) const
 {
     QString str;
     QTextStream s(&str);
@@ -220,7 +271,7 @@ static bool isEmptyBaseClass(DwarfDie* inheritanceDie)
     return true;
 }
 
-int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies)
+int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
 {
     int size = 0;
     int alignment = 1;

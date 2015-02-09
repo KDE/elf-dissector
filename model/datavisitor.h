@@ -24,6 +24,9 @@
 
 class DataVisitor : public ElfNodeVisitor<QVariant>
 {
+public:
+    explicit DataVisitor(ElfFileSet* fileSet);
+
 protected:
     QVariant doVisit(ElfFile* file, int arg) const override;
     QVariant doVisit(ElfSection* section, int arg) const override;
@@ -31,6 +34,9 @@ protected:
     QVariant doVisit(ElfDynamicEntry* entry, int arg) const override;
     QVariant doVisit(DwarfInfo *info, int arg) const override;
     QVariant doVisit(DwarfDie *die, int arg) const override;
+
+private:
+    ElfFileSet *m_fileSet;
 };
 
 #endif // DATAVISITOR_H

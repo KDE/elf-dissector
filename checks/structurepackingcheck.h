@@ -20,6 +20,7 @@
 
 #include <QSet>
 
+class ElfFileSet;
 class DwarfInfo;
 class DwarfDie;
 
@@ -29,14 +30,19 @@ template<class T> class QVector;
 class StructurePackingCheck
 {
 public:
+    explicit StructurePackingCheck(ElfFileSet *fileSet);
+    ~StructurePackingCheck();
+
     void checkAll(DwarfInfo* info);
-    void checkDie(DwarfDie* die);
+    QString checkOneStructure(DwarfDie *structDie) const;
 
 private:
-    void checkStructure(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies);
-    QString printStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies);
-    int optimalStructureSize(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies);
+    void checkDie(DwarfDie* die);
+    std::tuple<int, int> computeStructureMemoryUsage(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies) const;
+    QString printStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const;
+    int optimalStructureSize(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies) const;
 
+    ElfFileSet *m_fileSet = nullptr;
     QSet<QString> m_duplicateCheck;
 };
 

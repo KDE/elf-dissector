@@ -23,10 +23,13 @@
 
 #include <disassmbler/disassembler.h>
 #include <demangle/demangler.h>
+#include <checks/structurepackingcheck.h>
 
 #include <QDebug>
 #include <QObject>
 #include <QStringBuilder>
+
+#include <libdwarf/dwarf.h>
 
 static QString machineToString(uint16_t machineType)
 {
@@ -41,6 +44,10 @@ static QString machineToString(uint16_t machineType)
     }
     return QStringLiteral("Unknown machine type: " ) + QString::number(machineType);
 #undef M
+}
+
+DataVisitor::DataVisitor(ElfFileSet* fileSet) : m_fileSet(fileSet)
+{
 }
 
 QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
@@ -278,6 +285,14 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
                     attrValueStr = attrValue.toString();
                 s += QString::fromLocal8Bit(die->attributeName(attrType)) + ": " + attrValueStr + "<br/>";
             }
+
+            if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {
+                s += "<tt><pre>";
+                StructurePackingCheck check(m_fileSet);
+                s += check.checkOneStructure(die).toHtmlEscaped();
+                s += "</pre></tt><br/>";
+            }
+
             return s;
         }
     }
