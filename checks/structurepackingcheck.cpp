@@ -157,7 +157,7 @@ std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie
     QBitArray memUsage(structSize * 8);
 
     for (DwarfDie *memberDie : memberDies) {
-        const auto memberTypeDie = memberDie->attribute(DW_AT_type).value<DwarfDie*>();
+        const auto memberTypeDie = findTypeDefinition(memberDie->attribute(DW_AT_type).value<DwarfDie*>());
         assert(memberTypeDie);
 
         const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
@@ -187,6 +187,12 @@ static QString fullyQualifiedName(DwarfDie* structDie)
     return baseName + structDie->name();
 }
 
+static bool hasUnknownSize(DwarfDie *typeDie)
+{
+    // 0-size elements can exist, see e.g. __flexarr in inotify.h
+    return typeDie->typeSize() == 0 && (typeDie->tag() == DW_TAG_class_type || typeDie->tag() == DW_TAG_structure_type);
+}
+
 QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector<DwarfDie*>& memberDies) const
 {
     QString str;
@@ -205,7 +211,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
         if (memberDie->tag() == DW_TAG_inheritance)
             s << "inherits ";
 
-        const auto memberTypeDie = memberDie->attribute(DW_AT_type).value<DwarfDie*>();
+        const auto memberTypeDie = findTypeDefinition(memberDie->attribute(DW_AT_type).value<DwarfDie*>());
         assert(memberTypeDie);
 
         const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
@@ -225,7 +231,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
 
         s << "; // member offset: " << memberLocation;
 
-        if (memberTypeDie->typeSize() == 0) {
+        if (hasUnknownSize(memberTypeDie)) {
             s << ", unknown size";
             skipPadding = true;
         } else {
@@ -288,14 +294,14 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
         if (prevMemberLocation == memberDie->attribute(DW_AT_data_member_location))
             continue; // skip bit fields for now
 
-        const auto memberTypeDie = memberDie->attribute(DW_AT_type).value<DwarfDie*>();
+        const auto memberTypeDie = findTypeDefinition(memberDie->attribute(DW_AT_type).value<DwarfDie*>());
         assert(memberTypeDie);
 
         const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
         if (guessSize)
             sizes.push_back(memberLocation - prevMemberLocation);
 
-        guessSize = memberTypeDie->typeSize() == 0;
+        guessSize = hasUnknownSize(memberTypeDie);
         sizes.push_back(memberTypeDie->typeSize());
         alignment = std::max(alignment, memberTypeDie->typeAlignment());
 
@@ -315,4 +321,57 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
 
     // structs are always at least 1 byte
     return std::max(1, size);
+}
+
+static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QStringList &fullId)
+{
+    // TODO filter to namespace/class/struct tags?
+    if (die->name() != fullId.first())
+        return nullptr;
+    if (fullId.size() == 1)
+        return die;
+
+    QStringList partialId = fullId;
+    partialId.pop_front();
+    for (DwarfDie* child : die->children()) {
+        DwarfDie *found = findTypeDefinitionRecursive(child, partialId);
+        if (found)
+            return found;
+    }
+    return nullptr;
+}
+
+DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
+{
+    if (!hasUnknownSize(typeDie))
+        return typeDie;
+
+    // deterine the full identifier of the type
+    QStringList fullId;
+    DwarfDie *parentDie = typeDie;
+    do {
+        fullId.prepend(parentDie->name());
+        parentDie = parentDie->parentDIE();
+    } while (parentDie && parentDie->tag() != DW_TAG_compile_unit);
+
+    // sequential search in all CUs for a DIE with the same full id containing the full definition
+    for (int i = 0; i < m_fileSet->size(); ++i) {
+        const auto file = m_fileSet->file(i);
+        if (!file->dwarfInfo())
+            continue;
+
+        for (DwarfDie *cuDie : file->dwarfInfo()->compilationUnits()) {
+            for (DwarfDie *topDie : cuDie->children()) {
+                DwarfDie *die = findTypeDefinitionRecursive(topDie, fullId);
+                if (die && die->typeSize() > 0) {
+                    //qDebug() << "replacing" << typeDie->displayName() << "with" << die->displayName();
+                    return die;
+                }
+            }
+        }
+    }
+
+    // no luck
+    qDebug() << "didn't fine a full definition for" << typeDie->displayName();
+    return typeDie;
 }

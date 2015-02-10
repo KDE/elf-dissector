@@ -41,6 +41,8 @@ private:
     std::tuple<int, int> computeStructureMemoryUsage(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies) const;
     QString printStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const;
     int optimalStructureSize(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies) const;
+    /** Look for a better type DIE for the given external one (@p typeDie). */
+    DwarfDie* findTypeDefinition(DwarfDie *typeDie) const;
 
     ElfFileSet *m_fileSet = nullptr;
     QSet<QString> m_duplicateCheck;
