@@ -1,9 +1,10 @@
 project(elf-dissector)
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.0.2)
 include(FeatureSummary)
 set(CMAKE_INCLUDE_CURRENT_DIR on)
 set(CMAKE_AUTOMOC on)
+set(CMAKE_AUTOUIC on)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 enable_testing()
 
@@ -54,10 +55,6 @@ set(elf_dissector_srcs
 
     ui/mainwindow.cpp
     ui/colorizer.cpp
-)
-
-qt5_wrap_ui(elf_dissector_srcs
-    ui/mainwindow.ui
 )
 
 add_executable(elf-dissector ${elf_dissector_srcs})
