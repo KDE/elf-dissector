@@ -15,11 +15,7 @@ find_package(Iberty REQUIRED)
 find_package(Dwarf REQUIRED)
 
 
-include_directories(
-    ${Iberty_INCLUDE_DIR}
-    ${Dwarf_INCLUDE_DIR}
-    ${CMAKE_SOURCE_DIR}/3rdparty
-)
+include_directories(${CMAKE_SOURCE_DIR}/3rdparty)
 
 set(elf_dissector_srcs
     main.cpp
