@@ -54,8 +54,11 @@ QVector< QByteArray > ElfDynamicSection::stringList(int64_t tag) const
 {
     QVector<QByteArray> v;
     for (const ElfDynamicEntry::Ptr &entry : m_entries) {
-        if (entry->tag() == tag)
-            v.push_back(entry->stringValue());
+        if (entry->tag() == tag) {
+            const QByteArray s = entry->stringValue();
+            for (const QByteArray b : s.split(':'))
+                v.push_back(b);
+        }
     }
     return v;
 }
