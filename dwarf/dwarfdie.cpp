@@ -98,6 +98,7 @@ Dwarf_Off DwarfDie::offset() const
 {
     Dwarf_Off offset;
     const auto res = dwarf_dieoffset(m_die, &offset, nullptr);
+    assert(res == DW_DLV_OK);
     return offset;
 }
 
