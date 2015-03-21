@@ -220,7 +220,8 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
         if (memberDie->tag() == DW_TAG_inheritance)
             s << "inherits ";
 
-        const auto memberTypeDie = findTypeDefinition(memberDie->attribute(DW_AT_type).value<DwarfDie*>());
+        DwarfDie *unresolvedTypeDie = memberDie->attribute(DW_AT_type).value<DwarfDie*>();
+        const auto memberTypeDie = findTypeDefinition(unresolvedTypeDie);
         assert(memberTypeDie);
 
         const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
@@ -229,7 +230,8 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
             s << "    ";
         }
 
-        s << memberTypeDie->typeName(); // TODO this does not work for unions/structs/classes
+        // we use the unresolved DIE here to have the user-visible type name, e.g. of a typedef
+        s << unresolvedTypeDie->typeName(); // TODO this does not work for unions/structs/classes
         s << " ";
         s << memberDie->name();
 
@@ -352,6 +354,10 @@ static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QVector<QByteA
 
 DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
 {
+    // recurse into typedefs
+    if (typeDie->tag() == DW_TAG_typedef)
+        return findTypeDefinition(typeDie->attribute(DW_AT_type).value<DwarfDie*>());
+
     if (!hasUnknownSize(typeDie))
         return typeDie;
 
