@@ -63,7 +63,7 @@ DwarfDie* DwarfDie::parentDIE() const
     return m_parent;
 }
 
-QString DwarfDie::name() const
+QByteArray DwarfDie::name() const
 {
     Q_ASSERT(m_die);
 
@@ -71,7 +71,7 @@ QString DwarfDie::name() const
     const auto res = dwarf_diename(m_die, &dwarfStr, nullptr);
     if (res != DW_DLV_OK)
         return {};
-    const QString s = QString::fromLocal8Bit(dwarfStr);
+    const QByteArray s(dwarfStr);
     dwarf_dealloc(dwarfHandle(), dwarfStr, DW_DLA_STRING);
     return s;
 }

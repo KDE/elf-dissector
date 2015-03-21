@@ -38,7 +38,7 @@ public:
     DwarfDie* parentDIE() const;
 
     /** Content of the name attribute. */
-    QString name() const;
+    QByteArray name() const;
     Dwarf_Half tag() const;
     QByteArray tagName() const;
     Dwarf_Off offset() const;

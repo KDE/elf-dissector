@@ -187,9 +187,9 @@ std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie
     return std::make_tuple(usedBytes, usedBits);
 }
 
-static QString fullyQualifiedName(DwarfDie* structDie)
+static QByteArray fullyQualifiedName(DwarfDie* structDie)
 {
-    QString baseName;
+    QByteArray baseName;
     DwarfDie* parentDie = structDie->parentDIE();
     if (parentDie->tag() == DW_TAG_class_type || parentDie->tag() == DW_TAG_structure_type || parentDie->tag() == DW_TAG_namespace)
         baseName = fullyQualifiedName(parentDie) + "::";
@@ -332,7 +332,7 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
     return std::max(1, size);
 }
 
-static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QStringList &fullId)
+static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QVector<QByteArray> &fullId)
 {
     // TODO filter to namespace/class/struct tags?
     if (die->name() != fullId.first())
@@ -340,7 +340,7 @@ static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QStringList &f
     if (fullId.size() == 1)
         return die;
 
-    QStringList partialId = fullId;
+    QVector<QByteArray> partialId = fullId;
     partialId.pop_front();
     for (DwarfDie* child : die->children()) {
         DwarfDie *found = findTypeDefinitionRecursive(child, partialId);
@@ -356,7 +356,7 @@ DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
         return typeDie;
 
     // deterine the full identifier of the type
-    QStringList fullId;
+    QVector<QByteArray> fullId;
     DwarfDie *parentDie = typeDie;
     do {
         fullId.prepend(parentDie->name());
