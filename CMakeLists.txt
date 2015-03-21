@@ -46,8 +46,6 @@ set(INSTALL_TARGETS_DEFAULT_ARGS RUNTIME DESTINATION ${BIN_INSTALL_DIR} LIBRARY 
 include_directories(${CMAKE_SOURCE_DIR}/3rdparty)
 
 set(elf_dissector_srcs
-    main.cpp
-
     3rdparty/treemap/treemap.cpp
     3rdparty/kitemmodels/krecursivefilterproxymodel.cpp
 
@@ -77,6 +75,7 @@ set(elf_dissector_srcs
     model/parentvisitor.cpp
     model/rowcountvisitor.cpp
 
+    ui/main.cpp
     ui/mainwindow.cpp
     ui/colorizer.cpp
 )
