@@ -37,10 +37,11 @@ int main(int argc, char** argv)
     parser.addPositionalArgument("elf", "ELF library to open", "<elf>");
     parser.process(app);
 
+    StructurePackingCheck checker;
     for (const auto &fileName : parser.positionalArguments()) {
         ElfFileSet set;
         set.addFile(fileName);
-        StructurePackingCheck checker(&set);
+        checker.setElfFileSet(&set);
         checker.checkAll(set.file(0)->dwarfInfo());
     }
 

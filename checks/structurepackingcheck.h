@@ -30,8 +30,11 @@ template<class T> class QVector;
 class StructurePackingCheck
 {
 public:
-    explicit StructurePackingCheck(ElfFileSet *fileSet);
+    StructurePackingCheck() = default;
     ~StructurePackingCheck();
+
+    /** Set the ELF file set the checked DWARF info belongs to.*/
+    void setElfFileSet(ElfFileSet *fileSet);
 
     void checkAll(DwarfInfo* info);
     QString checkOneStructure(DwarfDie *structDie) const;

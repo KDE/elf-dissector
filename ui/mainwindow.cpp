@@ -59,7 +59,8 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
 
     // ### temporary
     connect(ui->actionCheckStructurePacking, &QAction::triggered, this, [this]() {
-        StructurePackingCheck checker(m_fileSet);
+        StructurePackingCheck checker;
+        checker.setElfFileSet(m_fileSet);
         checker.checkAll(m_fileSet->file(0)->dwarfInfo());
     });
 

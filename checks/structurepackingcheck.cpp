@@ -31,16 +31,18 @@
 #include <cassert>
 #include <iostream>
 
-StructurePackingCheck::StructurePackingCheck(ElfFileSet* fileSet) : m_fileSet(fileSet)
-{
-}
-
 StructurePackingCheck::~StructurePackingCheck()
 {
 }
 
+void StructurePackingCheck::setElfFileSet(ElfFileSet* fileSet)
+{
+    m_fileSet = fileSet;
+}
+
 void StructurePackingCheck::checkAll(DwarfInfo* info)
 {
+    assert(m_fileSet);
     if (!info)
         return;
 
