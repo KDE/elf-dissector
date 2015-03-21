@@ -45,10 +45,7 @@ set(INSTALL_TARGETS_DEFAULT_ARGS RUNTIME DESTINATION ${BIN_INSTALL_DIR} LIBRARY 
 # build things
 include_directories(${CMAKE_SOURCE_DIR}/3rdparty)
 
-set(elf_dissector_srcs
-    3rdparty/treemap/treemap.cpp
-    3rdparty/kitemmodels/krecursivefilterproxymodel.cpp
-
+set(libelfdisector_srcs
     elf/elfdynamicentry.cpp
     elf/elfdynamicsection.cpp
     elf/elffile.cpp
@@ -68,6 +65,22 @@ set(elf_dissector_srcs
     dwarf/dwarfdie.cpp
 
     checks/structurepackingcheck.cpp
+)
+
+add_library(libelfdissector STATIC ${libelfdisector_srcs})
+target_link_libraries(libelfdissector LINK_PUBLIC Qt5::Core LINK_PRIVATE Binutils::Iberty Binutils::Opcodes Dwarf::Dwarf)
+
+set(elfpackcheck_srcs
+    cli/main.cpp
+)
+
+add_executable(elf-packcheck ${elfpackcheck_srcs})
+target_link_libraries(elf-packcheck libelfdissector)
+install(TARGETS elf-packcheck ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+set(elf_dissector_srcs
+    3rdparty/treemap/treemap.cpp
+    3rdparty/kitemmodels/krecursivefilterproxymodel.cpp
 
     model/elfmodel.cpp
     model/datavisitor.cpp
@@ -81,7 +94,7 @@ set(elf_dissector_srcs
 )
 
 add_executable(elf-dissector ${elf_dissector_srcs})
-target_link_libraries(elf-dissector Qt5::Widgets Binutils::Iberty Binutils::Opcodes Dwarf::Dwarf)
+target_link_libraries(elf-dissector Qt5::Widgets libelfdissector)
 install(TARGETS elf-dissector ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 add_subdirectory(tests)
