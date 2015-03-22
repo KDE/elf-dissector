@@ -147,7 +147,6 @@ DwarfInfo::DwarfInfo(ElfFile* elfFile) :
     if (dwarf_object_init(&d->objAccessIface, 0, 0, &d->dbg, 0) != DW_DLV_OK) {
         qDebug() << "error loading dwarf data";
     }
-    qDebug() << "dwarf data loaded";
 }
 
 DwarfInfo::~DwarfInfo()
