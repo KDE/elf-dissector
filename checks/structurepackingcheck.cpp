@@ -23,6 +23,7 @@
 
 #include <QBitArray>
 #include <QDebug>
+#include <QFileInfo>
 #include <QString>
 #include <QTextStream>
 
@@ -91,7 +92,22 @@ QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
 
 static QString sourceLocation(DwarfDie *die)
 {
-    return die->attribute(DW_AT_decl_file).toString() + ':' + QString::number(die->attribute(DW_AT_decl_line).toInt());
+    auto filePath = die->attribute(DW_AT_decl_file).toString();
+    if (filePath.isEmpty())
+        return filePath;
+    QFileInfo fi(filePath);
+    if (fi.isRelative()) {
+        QString cuPath;
+        DwarfDie *parentDie = die;
+        while (parentDie && parentDie->tag() != DW_TAG_compile_unit)
+            parentDie = parentDie->parentDIE();
+        if (parentDie)
+            fi.setFile(parentDie->name() + "/" + filePath);
+    }
+    if (fi.exists())
+        filePath = fi.canonicalFilePath();
+
+    return  filePath + ':' + QString::number(die->attribute(DW_AT_decl_line).toInt());
 }
 
 void StructurePackingCheck::checkDie(DwarfDie* die)
