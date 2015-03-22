@@ -156,6 +156,37 @@ static int countBits(const QBitArray &bits)
     return count;
 }
 
+static int actualTypeSize(DwarfDie *die)
+{
+    switch (die->tag()) {
+        case DW_TAG_base_type:
+            if (die->name() == "bool")
+                return 1;
+            return die->typeSize() * 8;
+        case DW_TAG_enumeration_type:
+            return die->typeSize() * 8; // TODO compute how much space the enum actually needs
+        case DW_TAG_pointer_type:
+            return die->typeSize() * 8; // TODO pointer alignment can save a few bits
+        case DW_TAG_const_type:
+        case DW_TAG_restrict_type:
+        case DW_TAG_typedef:
+        case DW_TAG_volatile_type:
+        {
+            const auto typeDie = die->attribute(DW_AT_type).value<DwarfDie*>();
+            assert(typeDie);
+            return actualTypeSize(typeDie);
+        }
+        case DW_TAG_array_type:
+        {
+            return die->typeSize() * 8; // TODO the below is correct, but we need to distribute that over the memory bit array below, otherwise usedBytes is wrong
+/*            const auto typeDie = die->attribute(DW_AT_type).value<DwarfDie*>();
+            assert(typeDie);
+            return die->typeSize() / typeDie->typeSize() * actualTypeSize(typeDie);*/
+        }
+    }
+    return die->typeSize() * 8;
+}
+
 std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
 {
     const auto structSize = structDie->typeSize();
@@ -175,7 +206,7 @@ std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie
 
         if (bitSize <= 0) {
             assert((structSize * 8) >= (memberLocation * 8 + memberTypeDie->typeSize() * 8));
-            memUsage.fill(true, memberLocation * 8, memberLocation * 8 + memberTypeDie->typeSize() * 8);
+            memUsage.fill(true, memberLocation * 8, memberLocation * 8 + actualTypeSize(memberTypeDie));
         } else {
             assert((structSize * 8) >= (memberLocation * 8 + bitOffset + bitSize));
             memUsage.fill(true, memberLocation * 8 + bitOffset, memberLocation * 8 + bitOffset + bitSize);

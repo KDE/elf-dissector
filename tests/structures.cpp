@@ -92,6 +92,12 @@ struct EmptyBaseClassOptimization : Empty {
     short m2;
 };
 
+struct UnpackedBools {
+    bool m1;
+    bool m2[2];
+    bool m3[3][3];
+};
+
 int main (int, char**)
 {
     // make sure the structures aren't optimized away by the compiler
@@ -113,6 +119,7 @@ int main (int, char**)
     USED(EmptyInheritance)
     USED(NonEmptyInheritance)
     USED(EmptyBaseClassOptimization)
+    USED(UnpackedBools)
 
     return dummy;
 }
