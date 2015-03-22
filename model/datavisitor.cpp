@@ -288,7 +288,8 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
 
             if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {
                 s += "<tt><pre>";
-                StructurePackingCheck check(m_fileSet);
+                StructurePackingCheck check;
+                check.setElfFileSet(m_fileSet);
                 s += check.checkOneStructure(die).toHtmlEscaped();
                 s += "</pre></tt><br/>";
             }
