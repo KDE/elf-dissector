@@ -138,6 +138,14 @@ QString DwarfDie::typeName() const
     QString typeName;
     if (!typeDie) {
         switch (tag()) {
+            case DW_TAG_class_type:
+                return "<anon class>";
+            case DW_TAG_enumeration_type:
+                return "<anon enum>";
+            case DW_TAG_structure_type:
+                return "<anon struct>";
+            case DW_TAG_union_type:
+                return "<anon union>";
             case DW_TAG_array_type:
             case DW_TAG_base_type:
             case DW_TAG_const_type:
