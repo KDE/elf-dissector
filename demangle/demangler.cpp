@@ -503,7 +503,6 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         }
         default:
-            relevant = true;
             qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type;
     }
 }
