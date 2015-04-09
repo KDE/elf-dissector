@@ -22,7 +22,7 @@
 
 int usage()
 {
-    printf("Usage: ldbenchark-runner [RTLD_LAZY|RTLD_NOW] <files>\n");
+    fprintf(stderr, "Usage: ldbenchark-runner [RTLD_LAZY|RTLD_NOW] <files>\n");
     return 1;
 }
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 
     for (int i = 2; i < argc; ++i) {
         if (dlopen(argv[i], flags | RTLD_NOLOAD) != NULL) {
-            printf("%s is already loaded, check argument order!\n", argv[i]);
+            fprintf(stderr, "%s is already loaded, check argument order!\n", argv[i]);
             continue;
         }
 
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
         clock_gettime(CLOCK_REALTIME, &end);
 
         if (!result) {
-            printf("Loading %s failed: %s\n", argv[i], dlerror());
+            fprintf(stderr, "Loading %s failed: %s\n", argv[i], dlerror());
             return 1;
         }
 
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
             diff += end.tv_nsec;
             diff += 1000000000 - start.tv_nsec;
         }
-        printf("%s\t%.2f\n", argv[i], diff/1000.0);
+        fprintf(stdout, "%s\t%.2f\n", argv[i], diff/1000.0);
     }
 
     return 0;
