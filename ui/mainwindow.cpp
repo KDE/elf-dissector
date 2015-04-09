@@ -26,6 +26,7 @@
 
 #include <demangle/demangler.h>
 
+#include <checks/ldbenchmark.h>
 #include <checks/structurepackingcheck.h>
 
 #include <model/elfmodel.h>
@@ -62,6 +63,10 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
         StructurePackingCheck checker;
         checker.setElfFileSet(m_fileSet);
         checker.checkAll(m_fileSet->file(0)->dwarfInfo());
+    });
+    connect(ui->actionLDBenchmark, &QAction::triggered, this, [this]() {
+        LDBenchmark benchmark;
+        benchmark.measureFileSet(m_fileSet);
     });
 
     connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,

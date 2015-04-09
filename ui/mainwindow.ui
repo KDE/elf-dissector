@@ -139,6 +139,7 @@
      <string>&amp;Checks</string>
     </property>
     <addaction name="actionCheckStructurePacking"/>
+    <addaction name="actionLDBenchmark"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_View"/>
@@ -217,6 +218,11 @@
   <action name="actionCheckStructurePacking">
    <property name="text">
     <string>&amp;Structure Packing</string>
+   </property>
+  </action>
+  <action name="actionLDBenchmark">
+   <property name="text">
+    <string>LD Benchmark</string>
    </property>
   </action>
  </widget>

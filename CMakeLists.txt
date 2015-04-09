@@ -11,7 +11,8 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 enable_testing()
 
 # compiler setup
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -Wall -Wextra -pedantic")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -std=c11 -Wall -Wextra -pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic")
 if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME STREQUAL GNU)
   if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
@@ -64,6 +65,7 @@ set(libelfdisector_srcs
     dwarf/dwarfinfo.cpp
     dwarf/dwarfdie.cpp
 
+    checks/ldbenchmark.cpp
     checks/structurepackingcheck.cpp
 )
 
@@ -97,6 +99,7 @@ add_executable(elf-dissector ${elf_dissector_srcs})
 target_link_libraries(elf-dissector Qt5::Widgets libelfdissector)
 install(TARGETS elf-dissector ${INSTALL_TARGETS_DEFAULT_ARGS})
 
+add_subdirectory(checks)
 add_subdirectory(tests)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
