@@ -18,12 +18,33 @@
 #ifndef LDBENCHMARK_H
 #define LDBENCHMARK_H
 
+#include <QByteArray>
+#include <QVector>
+
+class QProcess;
+
 class ElfFileSet;
 
 class LDBenchmark
 {
 public:
     void measureFileSet(ElfFileSet *fileSet);
+
+private:
+    enum class LoadMode { Now, Lazy };
+
+    void readResults(QProcess *proc, LoadMode mode);
+    void dumpResults();
+
+    struct Result {
+        Result();
+        QByteArray fileName;
+        double lazyTotal;
+        double nowTotal;
+        int lazyCount;
+        int nowCount;
+    };
+    QVector<Result> m_results;
 };
 
 #endif // LDBENCHMARK_H
