@@ -497,9 +497,10 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_CLONE:
         {
             QVector<QByteArray> args;
-            handleNameComponent(component->u.s_binary.left, args);
+            handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, args);
-            nameParts.push_back(args.first() + " [clone " + args.last() + "]");
+            const auto n = nameParts.takeLast();
+            nameParts.push_back(n + " [clone " + args.last() + "]");
             break;
         }
         default:
