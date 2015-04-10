@@ -146,6 +146,7 @@ void MainWindow::loadFile(const QString& fileName)
     delete m_fileSet;
     m_fileSet = new ElfFileSet(this);
     m_fileSet->addFile(fileName);
+    m_fileSet->topologicalSort();
     m_elfModel->setFileSet(m_fileSet);
     ui->elfStructureView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 

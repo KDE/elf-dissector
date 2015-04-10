@@ -36,6 +36,7 @@ public:
 
     ElfFile::Ptr file(int index) const;
 
+    void topologicalSort();
 private:
     QString findLibrary(const QString &name) const;
 
