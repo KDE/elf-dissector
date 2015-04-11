@@ -61,15 +61,15 @@ public:
     QVector<ElfSectionHeader::Ptr> sectionHeaders();
     /** Returns the section at index @p index. */
     template <typename T>
-    inline std::shared_ptr<T> section(int index) const
+    inline T* section(int index) const
     {
-        return std::dynamic_pointer_cast<T>(m_sections.at(index));
+        return dynamic_cast<T*>(m_sections.at(index));
     }
     /** Finds a section by name. */
     int indexOfSection(const char* name) const;
 
     /** Returns the dynamic section. */
-    ElfDynamicSection::Ptr dynamicSection() const;
+    ElfDynamicSection* dynamicSection() const;
 
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;
@@ -84,7 +84,7 @@ private:
     uchar *m_data;
     std::unique_ptr<ElfHeader> m_header;
     QVector<ElfSectionHeader::Ptr> m_sectionHeaders;
-    QVector<ElfSection::Ptr> m_sections;
+    QVector<ElfSection*> m_sections;
     DwarfInfo *m_dwarfInfo = nullptr;
 };
 

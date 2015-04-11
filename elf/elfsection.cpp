@@ -22,7 +22,8 @@
 
 ElfSection::ElfSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr) :
     m_file(file),
-    m_sectionHeader(shdr)
+    m_sectionHeader(shdr),
+    m_linkedSection(nullptr)
 {
 }
 
@@ -30,7 +31,7 @@ ElfSection::~ElfSection()
 {
 }
 
-void ElfSection::setLinkedSection(const ElfSection::Ptr &linkedSection)
+void ElfSection::setLinkedSection(ElfSection* linkedSection)
 {
     m_linkedSection = linkedSection;
 }

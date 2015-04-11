@@ -62,6 +62,6 @@ uint8_t ElfSymbolTableEntry::visibility() const
 
 const unsigned char* ElfSymbolTableEntry::data() const
 {
-    ElfSection::Ptr targetSection = m_section->file()->section<ElfSection>(sectionIndex());
+    const auto targetSection = m_section->file()->section<ElfSection>(sectionIndex());
     return targetSection->rawData() + value() - targetSection->header()->virtualAddress();
 }

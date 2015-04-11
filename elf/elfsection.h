@@ -21,7 +21,6 @@
 #include "elfsectionheader.h"
 
 #include <cstdint>
-#include <memory>
 
 class ElfFile;
 
@@ -29,19 +28,17 @@ class ElfFile;
 class ElfSection
 {
 public:
-    typedef std::shared_ptr<ElfSection> Ptr;
-
     explicit ElfSection(ElfFile *file, const ElfSectionHeader::Ptr &shdr);
     ElfSection(const ElfSection &other) = delete;
     virtual ~ElfSection();
     ElfSection& operator=(const ElfSection &other) = delete;
 
     template <typename T>
-    inline std::shared_ptr<T> linkedSection() const
+    inline T* linkedSection() const
     {
-        return std::dynamic_pointer_cast<T>(m_linkedSection);
+        return dynamic_cast<T*>(m_linkedSection);
     }
-    void setLinkedSection(const ElfSection::Ptr &linkedSection);
+    void setLinkedSection(ElfSection* linkedSection);
 
     /** Size of the section. */
     uint64_t size() const;
@@ -56,7 +53,7 @@ public:
 protected:
     ElfFile *m_file;
     ElfSectionHeader::Ptr m_sectionHeader;
-    ElfSection::Ptr m_linkedSection;
+    ElfSection* m_linkedSection;
 };
 
 #endif // ELFSECTION_H

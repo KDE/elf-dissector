@@ -24,8 +24,6 @@
 class ElfDynamicSection : public ElfArraySection<ElfDynamicEntry>
 {
 public:
-    typedef std::shared_ptr<ElfDynamicSection> Ptr;
-
     explicit ElfDynamicSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr);
 
     /** SO name. */

@@ -45,7 +45,7 @@ ElfFile::~ElfFile()
 {
     delete m_dwarfInfo;
     m_sectionHeaders.clear();
-    m_sections.clear();
+    qDeleteAll(m_sections);
 }
 
 QString ElfFile::displayName() const
@@ -134,26 +134,26 @@ void ElfFile::parseSections()
         }
         m_sectionHeaders.push_back(shdr);
 
-        ElfSection::Ptr section;
+        ElfSection* section = nullptr;
         switch (shdr->type()) {
             case SHT_STRTAB:
-                section.reset(new ElfStringTableSection(this, shdr));
+                section = new ElfStringTableSection(this, shdr);
                 break;
             case SHT_SYMTAB:
             case SHT_DYNSYM:
                 if (type() == ELFCLASS32)
-                    section.reset(new ElfSymbolTableSectionImpl<Elf32_Sym>(this, shdr));
+                    section = new ElfSymbolTableSectionImpl<Elf32_Sym>(this, shdr);
                 else if (type() == ELFCLASS64)
-                    section.reset(new ElfSymbolTableSectionImpl<Elf64_Sym>(this, shdr));
+                    section = new ElfSymbolTableSectionImpl<Elf64_Sym>(this, shdr);
                 break;
             case SHT_DYNAMIC:
                 if (type() == ELFCLASS32)
-                    section.reset(new ElfDynamicSectionImpl<Elf32_Dyn>(this, shdr));
+                    section = new ElfDynamicSectionImpl<Elf32_Dyn>(this, shdr);
                 else if (type() == ELFCLASS64)
-                    section.reset(new ElfDynamicSectionImpl<Elf64_Dyn>(this, shdr));
+                    section = new ElfDynamicSectionImpl<Elf64_Dyn>(this, shdr);
                 break;
             default:
-                section.reset(new ElfSection(this, shdr));
+                section = new ElfSection(this, shdr);
                 break;
         }
         m_sections[i] = section;
@@ -177,14 +177,14 @@ int ElfFile::indexOfSection(const char* name) const
     return -1;
 }
 
-ElfDynamicSection::Ptr ElfFile::dynamicSection() const
+ElfDynamicSection* ElfFile::dynamicSection() const
 {
     for (int i = 0; i < header()->sectionHeaderCount(); ++i) {
         if (m_sections.at(i)->header()->type() == SHT_DYNAMIC)
             return section<ElfDynamicSection>(i);
     }
 
-    return ElfDynamicSection::Ptr();
+    return nullptr;
 }
 
 DwarfInfo* ElfFile::dwarfInfo() const

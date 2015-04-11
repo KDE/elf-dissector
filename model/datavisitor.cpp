@@ -326,7 +326,7 @@ QVariant DataVisitor::doVisit(DwarfInfo* info, int arg) const
 {
     const auto sectionIndex = info->elfFile()->indexOfSection(".debug_info");
     const auto section = info->elfFile()->section<ElfSection>(sectionIndex);
-    return doVisit(section.get(), arg);
+    return doVisit(section, arg);
 }
 
 QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const

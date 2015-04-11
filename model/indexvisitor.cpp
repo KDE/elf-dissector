@@ -29,7 +29,7 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFileSet* fileSet, int row) const
 
 IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
 {
-    ElfSection *section = file->section<ElfSection>(row).get();
+    ElfSection *section = file->section<ElfSection>(row);
     void *internalPointer = section;
     ElfNodeVariant::Type type;
     switch (section->header()->type()) {
