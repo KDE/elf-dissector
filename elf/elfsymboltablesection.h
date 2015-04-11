@@ -25,7 +25,7 @@
 class ElfSymbolTableSection : public ElfArraySection<ElfSymbolTableEntry>
 {
 public:
-    explicit ElfSymbolTableSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr);
+    explicit ElfSymbolTableSection(ElfFile* file, ElfSectionHeader *shdr);
 
     /** Number of exported entries. */
     int exportCount() const;

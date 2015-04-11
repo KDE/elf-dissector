@@ -184,7 +184,7 @@ void MainWindow::loadFile(const QString& fileName)
     sectionItems.resize(file->sectionHeaders().size());
 
     Colorizer sectionColorizer(96, 255);
-    for (const ElfSectionHeader::Ptr &shdr : file->sectionHeaders()) {
+    for (const auto shdr : file->sectionHeaders()) {
         if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation()) {
             baseItem->setSum(baseItem->sum() - shdr->size());
             continue;
@@ -201,7 +201,7 @@ void MainWindow::loadFile(const QString& fileName)
     Colorizer symbolColorizer;
     Demangler demangler;
 
-    for (const ElfSectionHeader::Ptr &shdr : file->sectionHeaders()) {
+    for (const auto shdr : file->sectionHeaders()) {
         if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation())
             continue;
         if (shdr->type() == SHT_SYMTAB) {

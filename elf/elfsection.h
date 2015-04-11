@@ -28,7 +28,7 @@ class ElfFile;
 class ElfSection
 {
 public:
-    explicit ElfSection(ElfFile *file, const ElfSectionHeader::Ptr &shdr);
+    explicit ElfSection(ElfFile *file, ElfSectionHeader *shdr);
     ElfSection(const ElfSection &other) = delete;
     virtual ~ElfSection();
     ElfSection& operator=(const ElfSection &other) = delete;
@@ -48,12 +48,12 @@ public:
     /** The file this section belongs to. */
     ElfFile* file() const;
     /** Returns the corresponding section header. */
-    ElfSectionHeader::Ptr header() const;
+    ElfSectionHeader* header() const;
 
 protected:
     ElfFile *m_file;
-    ElfSectionHeader::Ptr m_sectionHeader;
-    ElfSection* m_linkedSection;
+    ElfSectionHeader *m_sectionHeader;
+    ElfSection *m_linkedSection;
 };
 
 #endif // ELFSECTION_H

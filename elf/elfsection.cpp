@@ -20,7 +20,7 @@
 
 #include <cassert>
 
-ElfSection::ElfSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr) :
+ElfSection::ElfSection(ElfFile* file, ElfSectionHeader *shdr) :
     m_file(file),
     m_sectionHeader(shdr),
     m_linkedSection(nullptr)
@@ -52,7 +52,7 @@ ElfFile* ElfSection::file() const
     return m_file;
 }
 
-ElfSectionHeader::Ptr ElfSection::header() const
+ElfSectionHeader* ElfSection::header() const
 {
     return m_sectionHeader;
 }

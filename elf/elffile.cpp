@@ -44,7 +44,7 @@ ElfFile::ElfFile(const QString& fileName) : m_file(fileName), m_data(nullptr)
 ElfFile::~ElfFile()
 {
     delete m_dwarfInfo;
-    m_sectionHeaders.clear();
+    qDeleteAll(m_sectionHeaders);
     qDeleteAll(m_sections);
 }
 
@@ -84,7 +84,7 @@ ElfHeader* ElfFile::header() const
     return m_header.get();
 }
 
-QVector< ElfSectionHeader::Ptr > ElfFile::sectionHeaders()
+QVector<ElfSectionHeader*> ElfFile::sectionHeaders() const
 {
     return m_sectionHeaders;
 }
@@ -121,13 +121,13 @@ void ElfFile::parseSections()
 
     // pass 1: create sections
     for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
-        ElfSectionHeader::Ptr shdr;
+        ElfSectionHeader* shdr = nullptr;
         switch(type()) {
             case ELFCLASS32:
-                shdr.reset(new ElfSectionHeaderImpl<Elf32_Shdr>(this, i));
+                shdr = new ElfSectionHeaderImpl<Elf32_Shdr>(this, i);
                 break;
             case ELFCLASS64:
-                shdr.reset(new ElfSectionHeaderImpl<Elf64_Shdr>(this, i));
+                shdr = new ElfSectionHeaderImpl<Elf64_Shdr>(this, i);
                 break;
             default:
                 assert(false);
@@ -160,7 +160,7 @@ void ElfFile::parseSections()
     }
 
     // pass 2: set section links
-    for (const ElfSectionHeader::Ptr &shdr : m_sectionHeaders) {
+    for (const auto shdr : m_sectionHeaders) {
         if (shdr->link()) {
             m_sections[shdr->sectionIndex()]->setLinkedSection(m_sections[shdr->link()]);
         }

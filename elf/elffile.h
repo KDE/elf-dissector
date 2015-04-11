@@ -58,7 +58,7 @@ public:
     /** Returns the ELF header. */
     ElfHeader* header() const;
     /** Returns a list of all available section headers. */
-    QVector<ElfSectionHeader::Ptr> sectionHeaders();
+    QVector<ElfSectionHeader*> sectionHeaders() const;
     /** Returns the section at index @p index. */
     template <typename T>
     inline T* section(int index) const
@@ -83,7 +83,7 @@ private:
     QFile m_file;
     uchar *m_data;
     std::unique_ptr<ElfHeader> m_header;
-    QVector<ElfSectionHeader::Ptr> m_sectionHeaders;
+    QVector<ElfSectionHeader*> m_sectionHeaders;
     QVector<ElfSection*> m_sections;
     DwarfInfo *m_dwarfInfo = nullptr;
 };

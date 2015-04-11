@@ -24,7 +24,7 @@
 class ElfDynamicSection : public ElfArraySection<ElfDynamicEntry>
 {
 public:
-    explicit ElfDynamicSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr);
+    explicit ElfDynamicSection(ElfFile* file, ElfSectionHeader *shdr);
 
     /** SO name. */
     QByteArray soName() const;

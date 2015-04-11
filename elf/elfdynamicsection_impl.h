@@ -25,7 +25,7 @@ template <typename T>
 class ElfDynamicSectionImpl : public ElfDynamicSection
 {
 public:
-    explicit inline ElfDynamicSectionImpl(ElfFile *file, const ElfSectionHeader::Ptr &shdr) : ElfDynamicSection(file, shdr)
+    explicit inline ElfDynamicSectionImpl(ElfFile *file, ElfSectionHeader *shdr) : ElfDynamicSection(file, shdr)
     {
         parse();
     }

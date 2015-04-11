@@ -27,8 +27,6 @@ class ElfFile;
 class ElfSectionHeader
 {
 public:
-    typedef std::shared_ptr<ElfSectionHeader> Ptr;
-
     ElfSectionHeader(const ElfSectionHeader &other) = delete;
     ElfSectionHeader& operator=(const ElfSectionHeader &other) = delete;
 

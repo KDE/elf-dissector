@@ -20,7 +20,7 @@
 
 #include <elf.h>
 
-ElfSymbolTableSection::ElfSymbolTableSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr): ElfArraySection(file, shdr)
+ElfSymbolTableSection::ElfSymbolTableSection(ElfFile* file, ElfSectionHeader *shdr): ElfArraySection(file, shdr)
 {
 }
 

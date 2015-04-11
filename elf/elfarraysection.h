@@ -38,7 +38,7 @@ public:
     }
 
 protected:
-    explicit inline ElfArraySection(ElfFile *file, const typename ElfSectionHeader::Ptr &shdr) : ElfSection(file, shdr) {}
+    explicit inline ElfArraySection(ElfFile *file, ElfSectionHeader* &shdr) : ElfSection(file, shdr) {}
     virtual T* createEntry(uint32_t index) const = 0;
     /** Must be called from sub-class ctor. */
     inline void parse()

@@ -24,7 +24,7 @@
 class ElfStringTableSection : public ElfSection
 {
 public:
-    explicit ElfStringTableSection(ElfFile *file, const ElfSectionHeader::Ptr &shdr);
+    explicit ElfStringTableSection(ElfFile *file, ElfSectionHeader *shdr);
 
     /** Returns the string at @p index. */
     const char* string(uint32_t index) const;

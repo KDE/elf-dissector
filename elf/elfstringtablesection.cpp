@@ -19,7 +19,7 @@
 
 #include <cassert>
 
-ElfStringTableSection::ElfStringTableSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr): ElfSection(file, shdr)
+ElfStringTableSection::ElfStringTableSection(ElfFile* file, ElfSectionHeader *shdr): ElfSection(file, shdr)
 {
 }
 

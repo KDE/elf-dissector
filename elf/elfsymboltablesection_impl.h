@@ -25,7 +25,7 @@ template <typename T>
 class ElfSymbolTableSectionImpl : public ElfSymbolTableSection
 {
 public:
-    explicit inline ElfSymbolTableSectionImpl(ElfFile *file, const ElfSectionHeader::Ptr &shdr) : ElfSymbolTableSection(file, shdr)
+    explicit inline ElfSymbolTableSectionImpl(ElfFile *file, ElfSectionHeader *shdr) : ElfSymbolTableSection(file, shdr)
     {
         parse();
     }

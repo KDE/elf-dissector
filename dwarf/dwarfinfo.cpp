@@ -71,7 +71,7 @@ static Dwarf_Unsigned callback_get_section_count(void *obj)
 static int callback_get_section_info(void *obj, Dwarf_Half index, Dwarf_Obj_Access_Section *sectionInfo, int *error)
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
-    const ElfSectionHeader::Ptr sectionHeader = d->elfFile->sectionHeaders().at(index);
+    const auto sectionHeader = d->elfFile->sectionHeaders().at(index);
     sectionInfo->addr = (Dwarf_Addr)(d->elfFile->rawData() + sectionHeader->sectionOffset());
     sectionInfo->size = sectionHeader->size();
     sectionInfo->name = sectionHeader->name();
@@ -82,7 +82,7 @@ static int callback_get_section_info(void *obj, Dwarf_Half index, Dwarf_Obj_Acce
 static int callback_load_section(void *obj, Dwarf_Half index, Dwarf_Small **returnData, int *error)
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
-    const ElfSectionHeader::Ptr sectionHeader = d->elfFile->sectionHeaders().at(index);
+    const auto sectionHeader = d->elfFile->sectionHeaders().at(index);
     *returnData = const_cast<Dwarf_Small*>(d->elfFile->rawData() + sectionHeader->sectionOffset());
     *error = DW_DLV_OK;
     return DW_DLV_OK;
