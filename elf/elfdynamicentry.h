@@ -19,7 +19,6 @@
 #define ELFDYNAMICENTRY_H
 
 #include <cstdint>
-#include <memory>
 
 class ElfDynamicSection;
 

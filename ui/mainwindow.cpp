@@ -156,7 +156,7 @@ void MainWindow::loadFile(const QString& fileName)
     ui->elfStructureView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
 
-    ElfFile::Ptr file = m_fileSet->file(0);
+    auto file = m_fileSet->file(0);
     TreeMapItem *baseItem = new TreeMapItem;
     baseItem->setText(0, file->displayName());
     baseItem->setSum(file->size());

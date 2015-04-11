@@ -19,7 +19,6 @@
 #define ELFSECTIONHEADER_H
 
 #include <cstdint>
-#include <memory>
 
 class ElfFile;
 

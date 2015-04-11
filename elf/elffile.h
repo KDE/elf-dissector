@@ -34,8 +34,6 @@ class ElfHeader;
 class ElfFile
 {
 public:
-    typedef std::shared_ptr<ElfFile> Ptr;
-
     explicit ElfFile(const QString &fileName);
     ElfFile(const ElfFile &other) = delete;
     ~ElfFile();

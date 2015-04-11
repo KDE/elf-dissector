@@ -24,7 +24,7 @@
 
 IndexVisitor::type IndexVisitor::doVisit(ElfFileSet* fileSet, int row) const
 {
-    return qMakePair<void*, ElfNodeVariant::Type>(fileSet->file(row).get(), ElfNodeVariant::File);
+    return qMakePair<void*, ElfNodeVariant::Type>(fileSet->file(row), ElfNodeVariant::File);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const

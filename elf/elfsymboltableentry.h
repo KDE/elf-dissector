@@ -19,7 +19,6 @@
 #define ELFSYMBOLTABLEENTRY_H
 
 #include <cstdint>
-#include <memory>
 
 class ElfSymbolTableSection;
 class QByteArray;

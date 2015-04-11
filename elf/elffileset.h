@@ -34,13 +34,13 @@ public:
     int size() const;
     void addFile(const QString &fileName);
 
-    ElfFile::Ptr file(int index) const;
+    ElfFile* file(int index) const;
 
     void topologicalSort();
 private:
     QString findLibrary(const QString &name) const;
 
-    QVector<ElfFile::Ptr> m_files;
+    QVector<ElfFile*> m_files;
     QStringList m_searchPaths;
 };
 

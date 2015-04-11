@@ -29,12 +29,12 @@ ElfFileSet::ElfFileSet(QObject* parent) : QObject(parent)
 
 ElfFileSet::~ElfFileSet()
 {
-    m_files.clear();
+    qDeleteAll(m_files);
 }
 
 void ElfFileSet::addFile(const QString& fileName)
 {
-    ElfFile::Ptr f(new ElfFile(fileName));
+    ElfFile* f = new ElfFile(fileName);
     // TODO check if file is valid
     m_files.push_back(f);
 
@@ -48,7 +48,7 @@ void ElfFileSet::addFile(const QString& fileName)
         m_searchPaths.push_front(QString::fromLocal8Bit(path));
 
     for (const QByteArray &lib : f->dynamicSection()->neededLibraries()) {
-        if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](const ElfFile::Ptr &file){ return file->dynamicSection()->soName() == lib; }) != m_files.cend())
+        if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](ElfFile *file){ return file->dynamicSection()->soName() == lib; }) != m_files.cend())
             continue;
         const QString &libFile = findLibrary(QString::fromLocal8Bit(lib));
         qDebug() << Q_FUNC_INFO << libFile << lib;
@@ -62,7 +62,7 @@ int ElfFileSet::size() const
     return m_files.size();
 }
 
-ElfFile::Ptr ElfFileSet::file(int index) const
+ElfFile* ElfFileSet::file(int index) const
 {
     return m_files.at(index);
 }
@@ -78,13 +78,13 @@ QString ElfFileSet::findLibrary(const QString& name) const
     return QString();
 }
 
-static bool hasUnresolvedDependencies(const ElfFile::Ptr &file, const QVector<ElfFile::Ptr> &resolved, int startIndex)
+static bool hasUnresolvedDependencies(ElfFile *file, const QVector<ElfFile*> &resolved, int startIndex)
 {
     if (!file->dynamicSection())
         return false;
 
     for (const auto &lib : file->dynamicSection()->neededLibraries()) {
-        const auto it = std::find_if(resolved.constBegin() + startIndex, resolved.constEnd(), [lib](const ElfFile::Ptr &file){ return file->dynamicSection()->soName() == lib; });
+        const auto it = std::find_if(resolved.constBegin() + startIndex, resolved.constEnd(), [lib](ElfFile *file){ return file->dynamicSection()->soName() == lib; });
         if (it == resolved.constEnd()) {
             return true;
         }
@@ -94,10 +94,10 @@ static bool hasUnresolvedDependencies(const ElfFile::Ptr &file, const QVector<El
 
 void ElfFileSet::topologicalSort()
 {
-    QVector<ElfFile::Ptr> sorted;
+    QVector<ElfFile*> sorted;
     sorted.resize(m_files.size());
 
-    QVector<ElfFile::Ptr> remaining = m_files;
+    QVector<ElfFile*> remaining = m_files;
 
     for (int i = sorted.size() - 1; i >= 0; --i) {
         for (auto it = std::begin(remaining); it != std::end(remaining); ++it) {
@@ -112,13 +112,13 @@ void ElfFileSet::topologicalSort()
 
 #if 0
     qDebug() << "input";
-    foreach(const auto &f, m_files)
+    foreach(const auto f, m_files)
         qDebug() << f->displayName();
     qDebug() << "sorted";
-    foreach(const auto &f, sorted)
+    foreach(const auto f, sorted)
         qDebug() << f->displayName();
     qDebug() << "remaining";
-    foreach(const auto &f, remaining)
+    foreach(const auto f, remaining)
         qDebug() << f->displayName();
 #endif
 

@@ -26,7 +26,7 @@ QPair<void*, int> ParentVisitor::doVisit(ElfFile* file, int) const
 {
     int row = 0;
     for (; row < m_fileSet->size(); ++row) {
-        if (m_fileSet->file(row).get() == file)
+        if (m_fileSet->file(row) == file)
             break;
     }
     return qMakePair<void*, int>(m_fileSet, row);
