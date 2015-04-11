@@ -53,8 +53,6 @@ public:
 
     /** Mangled name from string table. */
     const char* name() const;
-    /** Demangled name for user display. */
-    QByteArray prettyName() const;
 
 protected:
     explicit ElfSymbolTableEntry(const ElfSymbolTableSection *section);

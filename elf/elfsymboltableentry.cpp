@@ -42,11 +42,6 @@ const char* ElfSymbolTableEntry::name() const
     return m_section->linkedSection<ElfStringTableSection>()->string(nameIndex());
 }
 
-QByteArray ElfSymbolTableEntry::prettyName() const
-{
-    return QByteArray(); // TODO
-}
-
 uint8_t ElfSymbolTableEntry::bindType() const
 {
     // same as 64
