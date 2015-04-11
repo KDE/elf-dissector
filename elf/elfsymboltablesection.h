@@ -26,6 +26,12 @@ class ElfSymbolTableSection : public ElfArraySection<ElfSymbolTableEntry>
 {
 public:
     explicit ElfSymbolTableSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr);
+
+    /** Number of exported entries. */
+    int exportCount() const;
+
+    /** Number of undefined symbols, ie. symbols needed to be provided from other libraries. */
+    int importCount() const;
 };
 
 #endif // ELFSYMBOLTABLESECTION_H

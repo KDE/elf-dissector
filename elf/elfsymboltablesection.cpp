@@ -18,6 +18,28 @@
 #include "elfsymboltablesection.h"
 #include "elfsectionheader.h"
 
+#include <elf.h>
+
 ElfSymbolTableSection::ElfSymbolTableSection(ElfFile* file, const ElfSectionHeader::Ptr& shdr): ElfArraySection(file, shdr)
 {
+}
+
+int ElfSymbolTableSection::exportCount() const
+{
+    int count = 0;
+    for (const auto entry : m_entries) {
+        if (entry->bindType() == STB_GLOBAL && entry->size() > 0)
+            ++count;
+    }
+    return count;
+}
+
+int ElfSymbolTableSection::importCount() const
+{
+    int count = 0;
+    for (const auto entry : m_entries) {
+        if (entry->bindType() == STB_GLOBAL && entry->size() == 0)
+            ++count;
+    }
+    return count;
 }

@@ -154,6 +154,19 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
     return QVariant();
 }
 
+QVariant DataVisitor::doVisit(ElfSymbolTableSection* symtab, int arg) const
+{
+    const auto base = doVisit(static_cast<ElfSection*>(symtab), arg);
+    if (arg != ElfModel::DetailRole)
+        return base;
+    QString s = base.toString();
+    s += "<br/>Exported symbols: " + QString::number(symtab->exportCount());
+    s += "<br/>Imported symbols: " + QString::number(symtab->importCount());
+    s += "<br/>";
+    return s;
+}
+
+
 static QString bindTypeToString(uint8_t bindType)
 {
     switch (bindType) {
