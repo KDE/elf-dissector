@@ -280,6 +280,11 @@ static QString dtFlags1ToString(uint64_t flags)
 
     DYN_FLAG(DF_1_NOW, "set RTLD_NOW for this object");
     DYN_FLAG(DF_1_GLOBAL, "set RTLD_GLOBAL for this object");
+    DYN_FLAG(DF_1_GROUP, "set RTLD_GROUP for this object");
+    DYN_FLAG(DF_1_NODELETE, "set RTLD_NODELETE for this object");
+    DYN_FLAG(DF_1_LOADFLTR, "trigger filtee loading at runtime");
+    DYN_FLAG(DF_1_INITFIRST, "set RTLD_INITFIRST for this object");
+    DYN_FLAG(DF_1_NOOPEN, "set RTLD_NOOPEN for this object");
 
     if (flags & ~handledFlags)
         l.push_back(QString("unhandled flags 0x%1").arg(flags & ~handledFlags, 16));
