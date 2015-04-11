@@ -28,8 +28,6 @@ class QByteArray;
 class ElfSymbolTableEntry
 {
 public:
-    typedef std::shared_ptr<ElfSymbolTableEntry> Ptr;
-
     ElfSymbolTableEntry(const ElfSymbolTableEntry &other) = delete;
     virtual ~ElfSymbolTableEntry();
     ElfSymbolTableEntry& operator=(const ElfSymbolTableEntry &other) = delete;

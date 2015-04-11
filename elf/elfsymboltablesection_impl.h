@@ -30,9 +30,9 @@ public:
         parse();
     }
 
-    inline ElfSymbolTableEntry::Ptr createEntry(uint32_t index) const override
+    inline ElfSymbolTableEntry* createEntry(uint32_t index) const override
     {
-        return ElfSymbolTableEntry::Ptr(new ElfSymbolTableEntryImpl<T>(this, index));
+        return new ElfSymbolTableEntryImpl<T>(this, index);
     }
 };
 

@@ -207,7 +207,7 @@ void MainWindow::loadFile(const QString& fileName)
         if (shdr->type() == SHT_SYMTAB) {
             auto symtab = file->section<ElfSymbolTableSection>(shdr->sectionIndex());
             for (unsigned int j = 0; j < (shdr->size() / shdr->entrySize()); ++j) {
-                ElfSymbolTableEntry::Ptr entry = symtab->entry(j);
+                const auto entry = symtab->entry(j);
                 if (entry->size() == 0 || !sectionItems.at(entry->sectionIndex()))
                     continue;
                 SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());

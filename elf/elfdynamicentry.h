@@ -29,8 +29,6 @@ class QString;
 class ElfDynamicEntry
 {
 public:
-    typedef std::shared_ptr<ElfDynamicEntry> Ptr;
-
     ElfDynamicEntry(const ElfDynamicEntry &other) = delete;
     virtual ~ElfDynamicEntry();
     ElfDynamicEntry& operator=(const ElfDynamicEntry &other) = delete;

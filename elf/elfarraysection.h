@@ -29,17 +29,17 @@ class ElfArraySection : public ElfSection
 public:
     inline ~ElfArraySection() override
     {
-        m_entries.clear();
+        qDeleteAll(m_entries);
     }
 
-    inline typename T::Ptr entry(uint32_t index) const
+    inline T* entry(uint32_t index) const
     {
         return m_entries.at(index);
     }
 
 protected:
     explicit inline ElfArraySection(ElfFile *file, const typename ElfSectionHeader::Ptr &shdr) : ElfSection(file, shdr) {}
-    virtual typename T::Ptr createEntry(uint32_t index) const = 0;
+    virtual T* createEntry(uint32_t index) const = 0;
     /** Must be called from sub-class ctor. */
     inline void parse()
     {
@@ -48,7 +48,7 @@ protected:
             m_entries.push_back(createEntry(index));
     }
 
-    QVector<typename T::Ptr> m_entries;
+    QVector<T*> m_entries;
 };
 
 #endif // ELFARRAYSECTION_H

@@ -30,9 +30,9 @@ public:
         parse();
     }
 
-    inline ElfDynamicEntry::Ptr createEntry(uint32_t index) const override
+    inline ElfDynamicEntry* createEntry(uint32_t index) const override
     {
-        return ElfDynamicEntry::Ptr(new ElfDynamicEntryImpl<T>(this, index));
+        return new ElfDynamicEntryImpl<T>(this, index);
     }
 };
 

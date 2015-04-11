@@ -53,14 +53,14 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
 
 IndexVisitor::type IndexVisitor::doVisit(ElfSymbolTableSection* symtab, int row) const
 {
-    const ElfSymbolTableEntry::Ptr entry = symtab->entry(row);
-    return qMakePair<void*, ElfNodeVariant::Type>(entry.get(), ElfNodeVariant::SymbolTableEntry);
+    const auto entry = symtab->entry(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::SymbolTableEntry);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(ElfDynamicSection* section, int row) const
 {
-    const ElfDynamicEntry::Ptr entry = section->entry(row);
-    return qMakePair<void*, ElfNodeVariant::Type>(entry.get(), ElfNodeVariant::DynamicEntry);
+    const auto entry = section->entry(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::DynamicEntry);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(DwarfInfo* info, int row) const

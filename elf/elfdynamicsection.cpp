@@ -28,7 +28,7 @@ ElfDynamicSection::ElfDynamicSection(ElfFile* file, const ElfSectionHeader::Ptr&
 
 QByteArray ElfDynamicSection::soName() const
 {
-    for (const ElfDynamicEntry::Ptr &entry : m_entries) {
+    for (const auto entry : m_entries) {
         if (entry->tag() == DT_SONAME)
             return entry->stringValue();
     }
@@ -53,7 +53,7 @@ QVector< QByteArray > ElfDynamicSection::runpaths() const
 QVector< QByteArray > ElfDynamicSection::stringList(int64_t tag) const
 {
     QVector<QByteArray> v;
-    for (const ElfDynamicEntry::Ptr &entry : m_entries) {
+    for (const auto entry : m_entries) {
         if (entry->tag() == tag) {
             const QByteArray s = entry->stringValue();
             for (const QByteArray b : s.split(':'))
