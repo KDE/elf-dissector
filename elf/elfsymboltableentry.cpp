@@ -56,7 +56,7 @@ uint8_t ElfSymbolTableEntry::type() const
 
 uint8_t ElfSymbolTableEntry::visibility() const
 {
-    // same as 65
+    // same as 64
     return ELF32_ST_VISIBILITY(other());
 }
 
