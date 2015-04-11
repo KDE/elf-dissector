@@ -76,7 +76,16 @@ QString ElfDynamicEntry::tagName() const
         case DT_SYMINSZ: return "Syminfo table size";
         case DT_SYMINENT: return "Syminfo table entry size";
         case DT_GNU_HASH: return "GNU hash table address";
+        case DT_TLSDESC_PLT: return "TLS description PLT";
+        case DT_TLSDESC_GOT: return "TLS description GOT";
+        case DT_GNU_CONFLICT: return "GNU conflict section";
+        case DT_GNU_LIBLIST: return "GNU library list";
         case DT_VERSYM: return "GNU version symbol";
+        case DT_RELACOUNT: return "Rela count";
+        case DT_RELCOUNT: return "Rel count";
+        case DT_FLAGS_1: return "State flags";
+        case DT_VERDEF: return "Address of version definition table";
+        case DT_VERDEFNUM: return "Number of version definitions";
         case DT_VERNEED: return "Needed versions table address";
         case DT_VERNEEDNUM: return "Number of needed versions";
         default:
