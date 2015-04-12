@@ -18,13 +18,18 @@
 #include "elffileset.h"
 
 #include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+
+#include <cassert>
 
 ElfFileSet::ElfFileSet(QObject* parent) : QObject(parent)
 {
-    m_searchPaths.push_back("/lib64");
-    m_searchPaths.push_back("/usr/lib64"); // TODO
+    // TODO: this should not be in the same search path list, as we need to handle this between RPATH and RUNPATH
     for (const QByteArray &path : qgetenv("LD_LIBRARY_PATH").split(':'))
         m_searchPaths.push_back(QString::fromLocal8Bit(path));
+
+    parseLdConf();
 }
 
 ElfFileSet::~ElfFileSet()
@@ -35,7 +40,10 @@ ElfFileSet::~ElfFileSet()
 void ElfFileSet::addFile(const QString& fileName)
 {
     ElfFile* f = new ElfFile(fileName);
-    // TODO check if file is valid
+    if (!f->isValid()) {
+        delete f;
+        return;
+    }
     m_files.push_back(f);
 
     if (!f->dynamicSection())
@@ -126,4 +134,48 @@ void ElfFileSet::topologicalSort()
     Q_ASSERT(sorted.first() == m_files.first());
 
     m_files = sorted;
+}
+
+void ElfFileSet::parseLdConf()
+{
+    parseLdConf("/etc/ld.so.conf");
+
+    // built-in defaults
+    m_searchPaths.push_back("/lib64");
+    m_searchPaths.push_back("/lib");
+    m_searchPaths.push_back("/usr/lib64");
+    m_searchPaths.push_back("/usr/lib");
+}
+
+void ElfFileSet::parseLdConf(const QString& fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)) {
+        qWarning() << file.errorString();
+        return;
+    }
+
+    while (!file.atEnd()) {
+        const auto line = file.readLine().trimmed();
+        if (line.startsWith('#'))
+            continue;
+        if (line.startsWith("include")) {
+            const auto fileGlob = line.mid(8);
+            if (QFileInfo::exists(fileGlob)) {
+                parseLdConf(fileGlob);
+            } else {
+                const auto idx = fileGlob.lastIndexOf('/');
+                assert(idx >= 0);
+                QDir dir(fileGlob.left(idx));
+                for (const auto &file : dir.entryList(QStringList() << fileGlob.mid(idx + 1)))
+                    parseLdConf(dir.absolutePath() + '/' + file);
+            }
+            continue;
+        }
+        if (QFileInfo::exists(line)) {
+            m_searchPaths.push_back(line);
+            continue;
+        }
+        qWarning() << "unable to handle ld.so.conf line:" << line;
+    }
 }

@@ -39,6 +39,8 @@ public:
     void topologicalSort();
 private:
     QString findLibrary(const QString &name) const;
+    void parseLdConf();
+    void parseLdConf(const QString &fileName);
 
     QVector<ElfFile*> m_files;
     QStringList m_searchPaths;

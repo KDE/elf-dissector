@@ -12,3 +12,7 @@ add_definitions(-DBINDIR="${CMAKE_BINARY_DIR}/bin/")
 add_executable(elffiletest elffiletest.cpp)
 target_link_libraries(elffiletest Qt5::Test libelfdissector)
 add_test(NAME elffiletest COMMAND elffiletest)
+
+add_executable(elffilesettest elffilesettest.cpp)
+target_link_libraries(elffilesettest Qt5::Test libelfdissector)
+add_test(NAME elffilesettest COMMAND elffilesettest)
