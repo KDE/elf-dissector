@@ -25,11 +25,9 @@
 
 ElfFileSet::ElfFileSet(QObject* parent) : QObject(parent)
 {
-    // TODO: this should not be in the same search path list, as we need to handle this between RPATH and RUNPATH
-    for (const QByteArray &path : qgetenv("LD_LIBRARY_PATH").split(':'))
-        m_searchPaths.push_back(QString::fromLocal8Bit(path));
-
     parseLdConf();
+    for (const auto &path : qgetenv("LD_LIBRARY_PATH").split(':'))
+        m_baseSearchPaths.push_back(path);
 }
 
 ElfFileSet::~ElfFileSet()
@@ -44,24 +42,39 @@ void ElfFileSet::addFile(const QString& fileName)
         delete f;
         return;
     }
-    m_files.push_back(f);
+    addFile(f);
+}
 
-    if (!f->dynamicSection())
+void ElfFileSet::addFile(ElfFile* file)
+{
+    assert(file);
+    assert(file->isValid());
+
+    m_files.push_back(file);
+
+    if (!file->dynamicSection())
         return;
 
-    // TODO: this is likely not exactly correct
-    for (const QByteArray &path : f->dynamicSection()->runpaths())
-        m_searchPaths.push_front(QString::fromLocal8Bit(path));
-    for (const QByteArray &path : f->dynamicSection()->rpaths())
-        m_searchPaths.push_front(QString::fromLocal8Bit(path));
+    const auto rpaths = file->dynamicSection()->rpaths();
+    const auto runpaths = file->dynamicSection()->runpaths();
+    QVector<QByteArray> searchPaths;
+    searchPaths.reserve(rpaths.size() + m_ldLibraryPaths.size() + runpaths.size() + m_baseSearchPaths.size());
+    searchPaths += rpaths;
+    searchPaths += m_ldLibraryPaths;
+    searchPaths += runpaths;
+    searchPaths += m_baseSearchPaths;
 
-    for (const QByteArray &lib : f->dynamicSection()->neededLibraries()) {
+    for (const auto &lib : file->dynamicSection()->neededLibraries()) {
         if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](ElfFile *file){ return file->dynamicSection()->soName() == lib; }) != m_files.cend())
             continue;
-        const QString &libFile = findLibrary(QString::fromLocal8Bit(lib));
-        qDebug() << Q_FUNC_INFO << libFile << lib;
-        if (!libFile.isEmpty())
-            addFile(libFile);
+        for (const auto &dir : searchPaths) {
+            const auto fullPath = dir + '/' + lib;
+            if (!QFile::exists(fullPath))
+                continue;
+            // TODO check for compatible type and architecture
+            addFile(fullPath);
+            break;
+        }
     }
 }
 
@@ -73,17 +86,6 @@ int ElfFileSet::size() const
 ElfFile* ElfFileSet::file(int index) const
 {
     return m_files.at(index);
-}
-
-QString ElfFileSet::findLibrary(const QString& name) const
-{
-    for (const QString &dir : m_searchPaths) {
-        const QString libPath = dir + "/" + name;
-        if (QFile::exists(libPath))
-            return libPath;
-    }
-
-    return QString();
 }
 
 static bool hasUnresolvedDependencies(ElfFile *file, const QVector<ElfFile*> &resolved, int startIndex)
@@ -141,10 +143,10 @@ void ElfFileSet::parseLdConf()
     parseLdConf("/etc/ld.so.conf");
 
     // built-in defaults
-    m_searchPaths.push_back("/lib64");
-    m_searchPaths.push_back("/lib");
-    m_searchPaths.push_back("/usr/lib64");
-    m_searchPaths.push_back("/usr/lib");
+    m_baseSearchPaths.push_back("/lib64");
+    m_baseSearchPaths.push_back("/lib");
+    m_baseSearchPaths.push_back("/usr/lib64");
+    m_baseSearchPaths.push_back("/usr/lib");
 }
 
 void ElfFileSet::parseLdConf(const QString& fileName)
@@ -173,7 +175,7 @@ void ElfFileSet::parseLdConf(const QString& fileName)
             continue;
         }
         if (QFileInfo::exists(line)) {
-            m_searchPaths.push_back(line);
+            m_baseSearchPaths.push_back(line);
             continue;
         }
         qWarning() << "unable to handle ld.so.conf line:" << line;

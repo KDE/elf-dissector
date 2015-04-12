@@ -38,12 +38,13 @@ public:
 
     void topologicalSort();
 private:
-    QString findLibrary(const QString &name) const;
+    void addFile(ElfFile* file);
     void parseLdConf();
     void parseLdConf(const QString &fileName);
 
     QVector<ElfFile*> m_files;
-    QStringList m_searchPaths;
+    QVector<QByteArray> m_baseSearchPaths;
+    QVector<QByteArray> m_ldLibraryPaths;
 };
 
 #endif // ELFFILESET_H
