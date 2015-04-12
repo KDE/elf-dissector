@@ -16,6 +16,7 @@
 */
 
 #include "elffileset.h"
+#include "elfheader.h"
 
 #include <QDebug>
 #include <QDir>
@@ -71,9 +72,12 @@ void ElfFileSet::addFile(ElfFile* file)
             const auto fullPath = dir + '/' + lib;
             if (!QFile::exists(fullPath))
                 continue;
-            // TODO check for compatible type and architecture
-            addFile(fullPath);
-            break;
+            ElfFile *dep = new ElfFile(fullPath);
+            if (dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
+                addFile(dep);
+                break;
+            }
+            delete dep;
         }
     }
 }
