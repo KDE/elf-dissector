@@ -40,6 +40,9 @@ public:
 
     ElfFile& operator=(const ElfFile &other) = delete;
 
+    /** Returns @c true if the file could be loaded and is parsed correctly. */
+    bool isValid() const;
+
     /** Returns a user readable label for this file. */
     QString displayName() const;
     /** Returns the size of the entire file. */
@@ -73,6 +76,8 @@ public:
     DwarfInfo* dwarfInfo() const;
 
 private:
+    void open(const QString& fileName);
+    void close();
     void parse();
     void parseHeader();
     void parseSections();

@@ -29,23 +29,21 @@
 #include <cassert>
 #include <elf.h>
 
-ElfFile::ElfFile(const QString& fileName) : m_file(fileName), m_data(nullptr)
-{
-    // TODO error handling
-    if (!m_file.open(QFile::ReadOnly)) {
-        qCritical() << m_file.errorString() << fileName;
-    }
-    m_data = m_file.map(0, m_file.size());
-    Q_ASSERT(m_data);
+struct ElfFileException {};
 
-    parse();
+ElfFile::ElfFile(const QString& fileName) : m_data(nullptr)
+{
+    open(fileName);
 }
 
 ElfFile::~ElfFile()
 {
-    delete m_dwarfInfo;
-    qDeleteAll(m_sectionHeaders);
-    qDeleteAll(m_sections);
+    close();
+}
+
+bool ElfFile::isValid() const
+{
+    return m_data;
 }
 
 QString ElfFile::displayName() const
@@ -65,17 +63,13 @@ const unsigned char* ElfFile::rawData() const
 
 int ElfFile::type() const
 {
-    // TODO throw exception
-    assert(m_data);
-    assert(m_file.size() > EI_CLASS);
-    assert(m_data[EI_CLASS] == ELFCLASS32 || m_data[EI_CLASS] == ELFCLASS64);
+    assert(isValid());
     return m_data[EI_CLASS];
 }
 
 int ElfFile::byteOrder() const
 {
-    assert(m_data);
-    assert(m_file.size() > EI_DATA);
+    assert(isValid());
     return m_data[EI_DATA];
 }
 
@@ -89,8 +83,40 @@ QVector<ElfSectionHeader*> ElfFile::sectionHeaders() const
     return m_sectionHeaders;
 }
 
+void ElfFile::open(const QString &fileName)
+{
+    m_file.setFileName(fileName);
+    if (!m_file.open(QFile::ReadOnly)) {
+        qCritical() << m_file.errorString() << fileName;
+        return;
+    }
+    m_data = m_file.map(0, m_file.size());
+    if (!m_data) {
+        close();
+        return;
+    }
+
+    try {
+        parse();
+    } catch (const ElfFileException&) {
+        close();
+    }
+}
+
+void ElfFile::close()
+{
+    delete m_dwarfInfo;
+    qDeleteAll(m_sectionHeaders);
+    qDeleteAll(m_sections);
+    m_file.close();
+    m_data = nullptr;
+}
+
 void ElfFile::parse()
 {
+    if (m_file.size() <= EI_NIDENT)
+        throw ElfFileException();
+
     parseHeader();
     parseSections();
 
@@ -108,7 +134,7 @@ void ElfFile::parseHeader()
             m_header.reset(new ElfHeaderImpl<Elf64_Ehdr>(m_data));
             break;
         default:
-            assert(false); // TODO throw exception
+            throw ElfFileException();
     }
 }
 
@@ -130,7 +156,7 @@ void ElfFile::parseSections()
                 shdr = new ElfSectionHeaderImpl<Elf64_Shdr>(this, i);
                 break;
             default:
-                assert(false);
+                throw ElfFileException();
         }
         m_sectionHeaders.push_back(shdr);
 

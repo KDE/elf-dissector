@@ -7,3 +7,8 @@ target_link_libraries(demangle-ast Qt5::Core ${Iberty_LIBRARY})
 add_executable(demangler_test demangler_test.cpp)
 target_link_libraries(demangler_test Qt5::Test ${Iberty_LIBRARY})
 add_test(NAME test-demangle COMMAND demangler_test)
+
+add_definitions(-DBINDIR="${CMAKE_BINARY_DIR}/bin/")
+add_executable(elffiletest elffiletest.cpp)
+target_link_libraries(elffiletest Qt5::Test libelfdissector)
+add_test(NAME elffiletest COMMAND elffiletest)

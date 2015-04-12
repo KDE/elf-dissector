@@ -44,7 +44,10 @@ endif()
 set(INSTALL_TARGETS_DEFAULT_ARGS RUNTIME DESTINATION ${BIN_INSTALL_DIR} LIBRARY DESTINATION ${LIB_INSTALL_DIR} ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT Devel)
 
 # build things
-include_directories(${CMAKE_SOURCE_DIR}/3rdparty)
+include_directories(
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/3rdparty
+)
 
 set(libelfdisector_srcs
     elf/elfdynamicentry.cpp
