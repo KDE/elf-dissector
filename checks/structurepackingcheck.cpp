@@ -23,7 +23,6 @@
 
 #include <QBitArray>
 #include <QDebug>
-#include <QFileInfo>
 #include <QString>
 #include <QTextStream>
 
@@ -90,26 +89,6 @@ QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
     return s;
 }
 
-static QString sourceLocation(DwarfDie *die)
-{
-    auto filePath = die->attribute(DW_AT_decl_file).toString();
-    if (filePath.isEmpty())
-        return filePath;
-    QFileInfo fi(filePath);
-    if (fi.isRelative()) {
-        QString cuPath;
-        DwarfDie *parentDie = die;
-        while (parentDie && parentDie->tag() != DW_TAG_compile_unit)
-            parentDie = parentDie->parentDIE();
-        if (parentDie)
-            fi.setFile(parentDie->name() + "/" + filePath);
-    }
-    if (fi.exists())
-        filePath = fi.canonicalFilePath();
-
-    return  filePath + ':' + QString::number(die->attribute(DW_AT_decl_line).toInt());
-}
-
 void StructurePackingCheck::checkDie(DwarfDie* die)
 {
     if (die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) {
@@ -133,7 +112,7 @@ void StructurePackingCheck::checkDie(DwarfDie* die)
         const int optimalSize = optimalStructureSize(die, members);
 
         if ((usedBytes != structSize || usedBits != structSize * 8) && optimalSize != structSize) {
-            const QString loc = sourceLocation(die);
+            const QString loc = die->sourceLocation();
             if (m_duplicateCheck.contains(loc))
                 return;
             std::cout << printSummary(structSize, usedBytes, usedBits, optimalSize).toLocal8Bit().constData();
@@ -256,7 +235,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
 
     s << (structDie->tag() == DW_TAG_class_type ? "class " : "struct ");
     s << fullyQualifiedName(structDie);
-    s << " // location: " << sourceLocation(structDie);
+    s << " // location: " << structDie->sourceLocation();
     s << "\n{\n";
 
     bool skipPadding = false; // TODO this should not be needed, look outside of the current CU for the real DIE?

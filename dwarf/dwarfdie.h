@@ -55,6 +55,8 @@ public:
 
     /** Best effort human readable distplay string. */
     QString displayName() const;
+    /** Source code location, best effort to find an absolute path, and line number if present. */
+    QString sourceLocation() const;
 
     QVector<Dwarf_Half> attributes() const;
     QByteArray attributeName(Dwarf_Half attributeType) const;

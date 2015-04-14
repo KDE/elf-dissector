@@ -19,6 +19,7 @@
 #include "dwarfinfo.h"
 
 #include <QDebug>
+#include <QFileInfo>
 #include <QString>
 
 #include <libdwarf/dwarf.h>
@@ -308,6 +309,26 @@ QString DwarfDie::displayName() const
     n += QString::number(offset());
     n += ")";
     return n;
+}
+
+QString DwarfDie::sourceLocation() const
+{
+    auto filePath = attribute(DW_AT_decl_file).toString();
+    if (filePath.isEmpty())
+        return filePath;
+    QFileInfo fi(filePath);
+    if (fi.isRelative()) {
+        QString cuPath;
+        DwarfDie const* parentDie = this;
+        while (parentDie && parentDie->tag() != DW_TAG_compile_unit)
+            parentDie = parentDie->parentDIE();
+        if (parentDie)
+            fi.setFile(parentDie->name() + "/" + filePath);
+    }
+    if (fi.exists())
+        filePath = fi.canonicalFilePath();
+
+    return  filePath + ':' + QString::number(attribute(DW_AT_decl_line).toInt());
 }
 
 static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const char**))
