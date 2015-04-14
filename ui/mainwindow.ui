@@ -140,6 +140,7 @@
     </property>
     <addaction name="actionCheckStructurePacking"/>
     <addaction name="actionLDBenchmark"/>
+    <addaction name="actionVirtualDestructors"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_View"/>
@@ -222,7 +223,12 @@
   </action>
   <action name="actionLDBenchmark">
    <property name="text">
-    <string>LD Benchmark</string>
+    <string>&amp;LD Benchmark</string>
+   </property>
+  </action>
+  <action name="actionVirtualDestructors">
+   <property name="text">
+    <string>Implicit Virtual Destructors</string>
    </property>
   </action>
  </widget>

@@ -70,6 +70,7 @@ set(libelfdisector_srcs
 
     checks/ldbenchmark.cpp
     checks/structurepackingcheck.cpp
+    checks/virtualdtorcheck.cpp
 )
 
 add_library(libelfdissector STATIC ${libelfdisector_srcs})

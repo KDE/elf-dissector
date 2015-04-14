@@ -28,6 +28,7 @@
 
 #include <checks/ldbenchmark.h>
 #include <checks/structurepackingcheck.h>
+#include <checks/virtualdtorcheck.h>
 
 #include <model/elfmodel.h>
 
@@ -67,6 +68,10 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionLDBenchmark, &QAction::triggered, this, [this]() {
         LDBenchmark benchmark;
         benchmark.measureFileSet(m_fileSet);
+    });
+    connect(ui->actionVirtualDestructors, &QAction::triggered, this, [this]() {
+        VirtualDtorCheck checker;
+        checker.findImplicitVirtualDtors(m_fileSet);
     });
 
     connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,
