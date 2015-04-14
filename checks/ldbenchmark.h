@@ -36,6 +36,8 @@ private:
     void readResults(QProcess *proc, LoadMode mode);
     void dumpResults();
 
+    ElfFileSet *m_fileSet = nullptr;
+
     struct Result {
         Result();
         QByteArray fileName;
@@ -43,6 +45,9 @@ private:
         double nowTotal;
         int lazyCount;
         int nowCount;
+
+        double averageLazy() const;
+        double averageNow() const;
     };
     QVector<Result> m_results;
 };

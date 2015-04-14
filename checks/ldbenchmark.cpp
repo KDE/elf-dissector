@@ -27,6 +27,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include <cassert>
+
 LDBenchmark::Result::Result() :
     lazyTotal(0.0),
     nowTotal(0.0),
@@ -35,13 +37,38 @@ LDBenchmark::Result::Result() :
 {
 }
 
+double LDBenchmark::Result::averageLazy() const
+{
+    if (lazyCount == 0)
+        return 0.0;
+    return lazyTotal / lazyCount;
+}
+
+double LDBenchmark::Result::averageNow() const
+{
+    if (nowCount == 0)
+        return 0.0;
+    return nowTotal / nowCount;
+}
+
+
 void LDBenchmark::measureFileSet(ElfFileSet* fileSet)
 {
+    m_fileSet = fileSet;
+
+    m_results.clear();
+    m_results.reserve(fileSet->size());
+
     QStringList args;
     args.reserve(fileSet->size() + 1);
     args.push_back("RTLD_LAZY");
+
     for (int i = fileSet->size() - 1; i >= 0; --i) {
-        args.push_back(fileSet->file(i)->displayName());
+        const auto fileName = fileSet->file(i)->displayName();
+        args.push_back(fileName);
+        Result r;
+        r.fileName = fileName.toUtf8();
+        m_results.push_back(r);
     }
 
     for (int i = 0; i < 5; ++i) {
@@ -74,12 +101,7 @@ void LDBenchmark::readResults(QProcess* proc, LoadMode mode)
         auto it = std::find_if(m_results.begin(), m_results.end(), [fileName](const Result &res) {
             return res.fileName == fileName;
         });
-        if (it == m_results.end()) {
-            Result r;
-            r.fileName = fileName;
-            m_results.push_back(r);
-            it = m_results.end() - 1;
-        }
+        assert(it != m_results.end());
 
         switch (mode) {
             case LoadMode::Lazy:
@@ -96,18 +118,14 @@ void LDBenchmark::readResults(QProcess* proc, LoadMode mode)
 
 void LDBenchmark::dumpResults()
 {
-    std::sort(m_results.begin(), m_results.end(), [](const Result &lhs, const Result &rhs) {
-        return lhs.lazyTotal > rhs.lazyTotal;
-    });
-
     double lazy = 0.0;
     double now = 0.0;
-    for (const auto &res : m_results) {
-        const auto avgLazy = res.lazyTotal / res.lazyCount;
-        const auto avgNow = res.nowTotal / res.nowCount;
-        printf("%s\t%.2f\t%.2f\n", res.fileName.constData(), avgLazy, avgNow);
-        lazy += avgLazy;
-        now += avgNow;
+    for (int i = 0; i < m_results.size(); ++i) {
+        const auto res = m_results.at(i);
+        const auto file = m_fileSet->file(m_results.size() - 1 - i);
+        printf("%s\t%.2f\t%.2f\n", res.fileName.constData(), res.averageLazy(), res.averageNow());
+        lazy += res.averageLazy();
+        now += res.averageNow();
     }
     printf("Lazy: %.2f µs, immediate: %.2f µs\n", lazy, now);
 }
