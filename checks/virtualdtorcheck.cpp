@@ -52,7 +52,7 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
         die->name().startsWith('~');
 
     if (isCandidate) {
-        const auto fullName = die->name(); // TODO generate fully qualified name here!
+        const auto fullName = die->fullyQualifiedName();
         const auto it = std::find_if(m_results.begin(), m_results.end(), [&fullName](const Result& res) {
             return res.fullName == fullName;
         });
