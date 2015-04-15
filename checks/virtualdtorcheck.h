@@ -18,6 +18,10 @@
 #ifndef VIRTUALDTORCHECK_H
 #define VIRTUALDTORCHECK_H
 
+#include <QByteArray>
+#include <QString>
+#include <QVector>
+
 class ElfFileSet;
 class DwarfDie;
 
@@ -29,6 +33,14 @@ public:
 
 private:
     void findImplicitVirtualDtors(DwarfDie* die);
+    void printResults();
+
+    struct Result {
+        QByteArray fullName;
+        QString sourceLocation;
+    };
+
+    QVector<Result> m_results;
 };
 
 #endif // VIRTUALDTORCHECK_H

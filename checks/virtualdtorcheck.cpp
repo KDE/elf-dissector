@@ -25,6 +25,9 @@
 
 #include <QDebug>
 
+#include <algorithm>
+#include <iostream>
+
 void VirtualDtorCheck::findImplicitVirtualDtors(ElfFileSet* fileSet)
 {
     for (int i = 0; i < fileSet->size(); ++i) {
@@ -34,6 +37,8 @@ void VirtualDtorCheck::findImplicitVirtualDtors(ElfFileSet* fileSet)
         for (const auto die : file->dwarfInfo()->compilationUnits())
             findImplicitVirtualDtors(die);
     }
+
+    printResults();
 }
 
 void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
@@ -47,13 +52,27 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
         die->name().startsWith('~');
 
     if (isCandidate) {
-        // TODO de-duplicate and identify location
-        DwarfDie *typeDie = die->attribute(DW_AT_containing_type).value<DwarfDie*>();
-        qDebug() << die->displayName() << (typeDie ? typeDie->sourceLocation() : QString());
+        const auto fullName = die->name(); // TODO generate fully qualified name here!
+        const auto it = std::find_if(m_results.begin(), m_results.end(), [&fullName](const Result& res) {
+            return res.fullName == fullName;
+        });
+        const auto *typeDie = die->attribute(DW_AT_containing_type).value<DwarfDie*>();
+        if (it == m_results.end()) {
+            const Result res = { fullName, typeDie ? typeDie->sourceLocation() : QString()};
+            m_results.push_back(res);
+        } else if ((*it).sourceLocation.isEmpty()) {
+            (*it).sourceLocation = typeDie ? typeDie->sourceLocation() : QString();
+        }
     }
 
     // TODO can we abort traversal earlier?
     for (const auto child : die->children()) {
         findImplicitVirtualDtors(child);
     }
+}
+
+void VirtualDtorCheck::printResults()
+{
+    for (const auto &res : m_results)
+        std::cout << res.fullName.constData() << " at " << qPrintable(res.sourceLocation) << std::endl;
 }
