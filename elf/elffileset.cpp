@@ -121,7 +121,11 @@ void ElfFileSet::topologicalSort()
                 break;
             }
         }
-        Q_ASSERT(sorted.at(i));
+
+        // we did not find one with unresolved dependencies, shouldn't happen, unless there's a cycle
+        // so just take one and see how far we get
+        if (sorted.at(i) == 0)
+            sorted[i] = remaining.takeFirst();
     }
 
 #if 0
