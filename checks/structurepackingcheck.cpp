@@ -151,6 +151,33 @@ static int countBits(const QBitArray &bits)
     return count;
 }
 
+static int bitsForEnum(DwarfDie *die)
+{
+    assert(die->tag() == DW_TAG_enumeration_type);
+
+    // approach 1: count all covered bits
+    QBitArray bits(die->typeSize() * 8, false);
+    // approach 2: count number of enum values
+    int enumCount = 0;
+
+    for (DwarfDie *child : die->children()) {
+        if (child->tag() != DW_TAG_enumerator)
+            continue;
+        ++enumCount;
+        const auto enumValue = child->attribute(DW_AT_const_value).toInt();
+        for (int i = 0; i < bits.size(); ++i) {
+            if ((1 << i) & enumValue)
+                bits[i] = true;
+        }
+    }
+    if (enumCount == 0) {
+        return die->typeSize() * 8; // incomplete information or something went wrong here...
+    }
+
+    // minimum of the above is our best guess
+    return std::min(enumCount - 1, countBits(bits));
+}
+
 static int actualTypeSize(DwarfDie *die)
 {
     switch (die->tag()) {
@@ -159,7 +186,7 @@ static int actualTypeSize(DwarfDie *die)
                 return 1;
             return die->typeSize() * 8;
         case DW_TAG_enumeration_type:
-            return die->typeSize() * 8; // TODO compute how much space the enum actually needs
+            return bitsForEnum(die);
         case DW_TAG_pointer_type:
             return die->typeSize() * 8; // TODO pointer alignment can save a few bits
         case DW_TAG_const_type:
@@ -274,6 +301,10 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
         } else {
             s << ", size: " << memberTypeDie->typeSize();
             skipPadding = false;
+
+            const auto actualSize = actualTypeSize(memberTypeDie);
+            if (actualSize != memberTypeDie->typeSize() * 8)
+                s << " (needed: " << actualSize << " bits)";
         }
         s << ", alignment: " << memberTypeDie->typeAlignment();
 

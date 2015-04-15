@@ -98,6 +98,17 @@ struct UnpackedBools {
     bool m3[3][3];
 };
 
+struct Enums {
+    enum SimpleEnum { e11, e12, e13, e14 }; // needs 2 bits
+    enum SimpleFlag { e21 = 0x0, e22 = 0x1, e23 = 0x2, e24 = 0x4, e25 = 0x8 }; // needs 4 bits
+    enum MixedEnum { e31 = 0x0, e32 = 0x1, e33 = 0x2, e34 = 0x3, e35 = 0x8 }; // needs 3 bits
+    enum WeirdEnum { e41 = 0x0, e42 = 0xffffffff, e43 = 0xffff, e44 = 0xff }; // needs 3 bits
+    SimpleEnum m1;
+    SimpleFlag m2;
+    MixedEnum m3;
+    WeirdEnum m4;
+};
+
 int main (int, char**)
 {
     // make sure the structures aren't optimized away by the compiler
@@ -120,6 +131,7 @@ int main (int, char**)
     USED(NonEmptyInheritance)
     USED(EmptyBaseClassOptimization)
     USED(UnpackedBools)
+    USED(Enums)
 
     return dummy;
 }
