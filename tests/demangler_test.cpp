@@ -69,6 +69,7 @@ private slots:
         QTest::newRow("vector type") << "_ZN9QSimdSse25v_mulEDv4_fS0_" << (VB << "QSimdSse2" << "v_mul(float __vector(4), float __vector(4))");
 
         QTest::newRow("decltype in return") << "_ZNSt16allocator_traitsISaIiEE9constructIiJRKiEEEDTcl12_S_constructfp_fp0_spcl7forwardIT0_Efp1_EEERS0_PT_DpOS5_" << (VB << "std" << "allocator_traits" << "allocator_traits<std::allocator<int>>" << "construct" << "construct<int, int const&>(std::allocator<int>&, int*, int const&)");
+        QTest::newRow("decltype with binary op") << "_ZSt5beginI7QVectorIP7ElfFileEEDTcldtfp_5beginEERT_" << (VB << "std" << "begin" << "begin<QVector<ElfFile*>>(QVector<ElfFile*>&)");
 
         QTest::newRow("typeinfo") << "_ZTI14ElfNodeVisitorIiE" << (VB << "ElfNodeVisitor" << "ElfNodeVisitor<int>" << "typeinfo");
         QTest::newRow("typeinfo name") << "_ZTS26KRecursiveFilterProxyModel" << (VB << "KRecursiveFilterProxyModel" << "typeinfo name");

@@ -378,8 +378,12 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         {
             StateResetter<bool> resetter(m_inArgList);
             m_inArgList = true;
-            handleOptionalNameComponent(component->u.s_binary.left, nameParts);
-            handleOptionalNameComponent(component->u.s_binary.right, nameParts);
+            if (!component->u.s_binary.left && !component->u.s_binary.right) {
+                nameParts.push_back(QByteArray("")); // empty arg list
+            } else {
+                handleOptionalNameComponent(component->u.s_binary.left, nameParts);
+                handleOptionalNameComponent(component->u.s_binary.right, nameParts);
+            }
             break;
         }
         case DEMANGLE_COMPONENT_TEMPLATE_ARGLIST:
