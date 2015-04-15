@@ -240,15 +240,6 @@ std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie
     return std::make_tuple(usedBytes, usedBits);
 }
 
-static QByteArray fullyQualifiedName(DwarfDie* structDie)
-{
-    QByteArray baseName;
-    DwarfDie* parentDie = structDie->parentDIE();
-    if (parentDie->tag() == DW_TAG_class_type || parentDie->tag() == DW_TAG_structure_type || parentDie->tag() == DW_TAG_namespace)
-        baseName = fullyQualifiedName(parentDie) + "::";
-    return baseName + structDie->name();
-}
-
 static bool hasUnknownSize(DwarfDie *typeDie)
 {
     // 0-size elements can exist, see e.g. __flexarr in inotify.h
@@ -261,7 +252,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
     QTextStream s(&str);
 
     s << (structDie->tag() == DW_TAG_class_type ? "class " : "struct ");
-    s << fullyQualifiedName(structDie);
+    s << structDie->fullyQualifiedName();
     s << " // location: " << structDie->sourceLocation();
     s << "\n{\n";
 

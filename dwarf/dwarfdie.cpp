@@ -311,6 +311,15 @@ QString DwarfDie::displayName() const
     return n;
 }
 
+QByteArray DwarfDie::fullyQualifiedName() const
+{
+    QByteArray baseName;
+    auto parentDie = parentDIE();
+    if (parentDie->tag() == DW_TAG_class_type || parentDie->tag() == DW_TAG_structure_type || parentDie->tag() == DW_TAG_namespace)
+        baseName = parentDie->fullyQualifiedName() + "::";
+    return baseName + name();
+}
+
 QString DwarfDie::sourceLocation() const
 {
     auto filePath = attribute(DW_AT_decl_file).toString();

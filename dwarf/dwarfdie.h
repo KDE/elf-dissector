@@ -55,6 +55,8 @@ public:
 
     /** Best effort human readable distplay string. */
     QString displayName() const;
+    /** Fully qualified name (including class/namespaces etc). */
+    QByteArray fullyQualifiedName() const;
     /** Source code location, best effort to find an absolute path, and line number if present. */
     QString sourceLocation() const;
 
