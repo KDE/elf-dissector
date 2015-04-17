@@ -1,10 +1,26 @@
 # TODO turn this in a FindBinutils with components
+include(CheckCSourceCompiles)
 include(FindPackageHandleStandardArgs)
 
 find_path(Iberty_INCLUDE_DIR demangle.h)
 find_library(Iberty_LIBRARY NAMES iberty)
 
 find_package_handle_standard_args(Iberty DEFAULT_MSG Iberty_LIBRARY Iberty_INCLUDE_DIR)
+
+# TODO improve this version check
+set(Binutils_VERSION_MAJOR 2)
+set(Binutils_VERSION_MINOR 23)
+
+check_c_source_compiles("
+    #include <demangle.h>
+    int main(int argc, char **argv) {
+        return DEMANGLE_COMPONENT_REFERENCE_THIS;
+    }"
+    Binutils_HAVE_DEMANGLE_COMPONENT_REFERENCE_THIS
+)
+if(Binutils_HAVE_DEMANGLE_COMPONENT_REFERENCE_THIS)
+  set(Binutils_VERSION_MINOR 24)
+endif()
 
 if(IBERTY_FOUND AND NOT TARGET Binutils::Iberty)
     add_library(Binutils::Iberty UNKNOWN IMPORTED)
