@@ -43,10 +43,14 @@ endif()
 
 set(INSTALL_TARGETS_DEFAULT_ARGS RUNTIME DESTINATION ${BIN_INSTALL_DIR} LIBRARY DESTINATION ${LIB_INSTALL_DIR} ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT Devel)
 
+# config files
+configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector.h)
+
 # build things
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/3rdparty
+    ${CMAKE_BINARY_DIR}
 )
 
 set(libelfdisector_srcs

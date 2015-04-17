@@ -15,6 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <config-elf-dissector.h>
+
 // workarounds for conflicting declaration in libiberty.h
 #define HAVE_DECL_BASENAME 1
 #define HAVE_DECL_ASPRINTF 1
@@ -153,6 +155,7 @@ static int handleNameComponent(demangle_component* component)
             writeNode("GUARD");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
         case DEMANGLE_COMPONENT_TLS_INIT:
             writeNode("TLS_INIT");
             // content?
@@ -161,6 +164,7 @@ static int handleNameComponent(demangle_component* component)
             writeNode("TLS_WRAPPER");
             // content ??
             break;
+#endif
         case DEMANGLE_COMPONENT_REFTEMP:
             writeNode("REFTEMP");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
@@ -197,6 +201,7 @@ static int handleNameComponent(demangle_component* component)
             writeNode("CONST_THIS");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
         case DEMANGLE_COMPONENT_REFERENCE_THIS:
             writeNode("REFERENCE_THIS");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
@@ -205,6 +210,7 @@ static int handleNameComponent(demangle_component* component)
             writeNode("RVALUE_REFERENCE_THIS");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
+#endif
         case DEMANGLE_COMPONENT_VENDOR_TYPE_QUAL:
             writeNode("VENDOR_TYPE_QUAL");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
@@ -387,10 +393,12 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
         case DEMANGLE_COMPONENT_TAGGED_NAME:
             writeNode("TAGGED_NAME");
             // content??
             break;
+#endif
         case DEMANGLE_COMPONENT_CLONE:
             writeNode("COMPONENT_CLONE");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));

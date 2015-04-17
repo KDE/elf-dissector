@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <config-elf-dissector.h>
 #include "demangler.h"
 
 #include <QDebug>
@@ -264,6 +265,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             m_modifiers.append(" const");
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
         case DEMANGLE_COMPONENT_REFERENCE_THIS:
             handleNameComponent(component->u.s_binary.left, nameParts);
             m_modifiers.append(" &");
@@ -272,6 +274,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             m_modifiers.append(" &&");
             break;
+#endif
         case DEMANGLE_COMPONENT_VENDOR_TYPE_QUAL:
         {
             QVector<QByteArray> parts;
