@@ -44,7 +44,7 @@ public:
     Dwarf_Off offset() const;
 
     /** If this DIE represents a type, this is the full type name. */
-    QString typeName() const;
+    QByteArray typeName() const;
     /** If this DIE represents a type, this is the size occupied by this type in bytes. */
     int typeSize() const;
     /** If this DIE represents a type, this returns the alignment needed for it. */

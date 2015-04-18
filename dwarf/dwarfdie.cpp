@@ -118,9 +118,9 @@ static QVector<int> arrayDimensions(const DwarfDie *die)
     return dims;
 }
 
-static QStringList argumentList(const DwarfDie *die)
+static QByteArrayList argumentList(const DwarfDie *die)
 {
-    QStringList args;
+    QByteArrayList args;
     for (const auto *child : die->children()) {
         if (child->tag() == DW_TAG_formal_parameter) {
             args.push_back(child->typeName());
@@ -129,14 +129,14 @@ static QStringList argumentList(const DwarfDie *die)
     return args;
 }
 
-QString DwarfDie::typeName() const
+QByteArray DwarfDie::typeName() const
 {
     const auto n = name();
     if (!n.isEmpty())
         return n;
 
     const auto typeDie = attribute(DW_AT_type).value<DwarfDie*>();
-    QString typeName;
+    QByteArray typeName;
     if (!typeDie) {
         switch (tag()) {
             case DW_TAG_class_type:
@@ -179,7 +179,7 @@ QString DwarfDie::typeName() const
         case DW_TAG_array_type:
         {
             const auto dims = arrayDimensions(this);
-            QString n = typeName;
+            QByteArray n = typeName;
             for (int d : dims)
                 n += "[" + QString::number(d) + "]";
             return n;
@@ -193,7 +193,7 @@ QString DwarfDie::typeName() const
         case DW_TAG_ptr_to_member_type:
         {
             const auto classDie = attribute(DW_AT_containing_type).value<DwarfDie*>();
-            QString className;
+            QByteArray className;
             if (classDie)
                 className = classDie->typeName();
             return typeName + " (" + className + "::*)(" + argumentList(this).join(", ") + ")";
