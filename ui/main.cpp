@@ -15,6 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <config-elf-dissector-version.h>
+
 #include <ui/mainwindow.h>
 
 #include <QApplication>
@@ -23,9 +25,9 @@
 int main(int argc, char** argv)
 {
     QCoreApplication::setApplicationName("ELF Dissector");
-    QCoreApplication::setOrganizationName("KDAB");
-    QCoreApplication::setOrganizationDomain("kdab.com");
-    QCoreApplication::setApplicationVersion("0.0.1");
+    QCoreApplication::setOrganizationName("KDE");
+    QCoreApplication::setOrganizationDomain("kde.org");
+    QCoreApplication::setApplicationVersion(ELF_DISSECTOR_VERSION_STRING);
 
     QApplication app(argc, argv);
 

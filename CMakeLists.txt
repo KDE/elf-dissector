@@ -1,7 +1,7 @@
-project(elf-dissector)
-
 # CMake setup
 cmake_minimum_required(VERSION 3.0.2)
+cmake_policy(SET CMP0048 NEW)
+project(elf-dissector VERSION 0.0.1)
 include(FeatureSummary)
 set(CMAKE_INCLUDE_CURRENT_DIR on)
 set(CMAKE_AUTOMOC on)
@@ -9,6 +9,22 @@ set(CMAKE_AUTOUIC on)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 enable_testing()
+
+# version setup
+set(PROJECT_VERSION_STRING "${PROJECT_VERSION}")
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  find_package(Git)
+  set_package_properties(Git PROPERTIES TYPE OPTIONAL PURPOSE "Determine exact build version.")
+  if(GIT_FOUND)
+    execute_process(
+      COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+      OUTPUT_VARIABLE _git_revision
+    )
+    string(REGEX REPLACE "\n" "" _git_revision "${_git_revision}")
+    set(PROJECT_VERSION_STRING "${PROJECT_VERSION_STRING} (revision: ${_git_revision})")
+  endif()
+endif()
 
 # compiler setup
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -std=c11 -Wall -Wextra -pedantic")
@@ -45,6 +61,7 @@ set(INSTALL_TARGETS_DEFAULT_ARGS RUNTIME DESTINATION ${BIN_INSTALL_DIR} LIBRARY 
 
 # config files
 configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector.h)
+configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector-version.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector-version.h)
 
 # build things
 include_directories(
