@@ -275,7 +275,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
         }
 
         // we use the unresolved DIE here to have the user-visible type name, e.g. of a typedef
-        s << unresolvedTypeDie->typeName(); // TODO this does not work for unions/structs/classes
+        s << unresolvedTypeDie->fullyQualifiedName();
         s << " ";
         s << memberDie->name();
 
