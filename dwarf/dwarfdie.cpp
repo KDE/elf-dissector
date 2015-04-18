@@ -317,7 +317,7 @@ QByteArray DwarfDie::fullyQualifiedName() const
     auto parentDie = parentDIE();
     if (parentDie->tag() == DW_TAG_class_type || parentDie->tag() == DW_TAG_structure_type || parentDie->tag() == DW_TAG_namespace)
         baseName = parentDie->fullyQualifiedName() + "::";
-    return baseName + name();
+    return baseName + typeName();
 }
 
 QString DwarfDie::sourceLocation() const
