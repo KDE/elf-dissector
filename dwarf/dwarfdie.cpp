@@ -17,6 +17,7 @@
 
 #include "dwarfdie.h"
 #include "dwarfinfo.h"
+#include "dwarfexpression.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -451,6 +452,14 @@ QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
             Dwarf_Addr addr;
             res = dwarf_formaddr(attr, &addr, nullptr);
             value = addr;
+            break;
+        }
+        case DW_FORM_exprloc:
+        {
+            Dwarf_Unsigned len;
+            Dwarf_Ptr block;
+            res = dwarf_formexprloc(attr, &len, &block, nullptr);
+            value = QVariant::fromValue(DwarfExpression(block, len));
             break;
         }
         default:

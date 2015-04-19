@@ -19,6 +19,8 @@
 
 #include <ui/mainwindow.h>
 
+#include <dwarf/dwarfexpression.h>
+
 #include <QApplication>
 #include <QCommandLineParser>
 
@@ -28,6 +30,8 @@ int main(int argc, char** argv)
     QCoreApplication::setOrganizationName("KDE");
     QCoreApplication::setOrganizationDomain("kde.org");
     QCoreApplication::setApplicationVersion(ELF_DISSECTOR_VERSION_STRING);
+
+    QMetaType::registerConverter<DwarfExpression, QString>(&DwarfExpression::displayString);
 
     QApplication app(argc, argv);
 

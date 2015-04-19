@@ -10,3 +10,7 @@ add_test(NAME elffiletest COMMAND elffiletest)
 add_executable(elffilesettest elffilesettest.cpp)
 target_link_libraries(elffilesettest Qt5::Test libelfdissector)
 add_test(NAME elffilesettest COMMAND elffilesettest)
+
+add_executable(dwarfexpressiontest dwarfexpressiontest.cpp)
+target_link_libraries(dwarfexpressiontest Qt5::Test libelfdissector)
+add_test(NAME dwarfexpressiontest COMMAND dwarfexpressiontest)
