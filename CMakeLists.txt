@@ -99,14 +99,6 @@ set(libelfdisector_srcs
 add_library(libelfdissector STATIC ${libelfdisector_srcs})
 target_link_libraries(libelfdissector LINK_PUBLIC Qt5::Core LINK_PRIVATE Binutils::Iberty Binutils::Opcodes Dwarf::Dwarf)
 
-set(elfpackcheck_srcs
-    cli/main.cpp
-)
-
-add_executable(elf-packcheck ${elfpackcheck_srcs})
-target_link_libraries(elf-packcheck libelfdissector)
-install(TARGETS elf-packcheck ${INSTALL_TARGETS_DEFAULT_ARGS})
-
 set(elf_dissector_srcs
     3rdparty/treemap/treemap.cpp
     3rdparty/kitemmodels/krecursivefilterproxymodel.cpp
@@ -127,6 +119,7 @@ target_link_libraries(elf-dissector Qt5::Widgets libelfdissector)
 install(TARGETS elf-dissector ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 add_subdirectory(checks)
+add_subdirectory(cli)
 add_subdirectory(tests)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
