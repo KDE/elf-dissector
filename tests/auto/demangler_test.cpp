@@ -104,6 +104,33 @@ private slots:
         }
         QCOMPARE(actualDemangled, expectedDemangled);
     }
+
+    void testSymbolType_data()
+    {
+        QTest::addColumn<QByteArray>("symbol");
+        QTest::addColumn<Demangler::SymbolType>("type");
+
+        QTest::newRow("empty") << QByteArray("") << Demangler::SymbolType::Normal;
+        QTest::newRow("C") << QByteArray("malloc") << Demangler::SymbolType::Normal;
+        QTest::newRow("C++") << QByteArray("_ZN10QArrayData4dataEv") << Demangler::SymbolType::Normal;
+
+        QTest::newRow("vtable") << QByteArray("_ZTV17ElfDynamicSection") << Demangler::SymbolType::VTable;
+        QTest::newRow("typeinfo") << QByteArray("_ZTI14ElfNodeVisitorIiE") << Demangler::SymbolType::TypeInfo;
+        QTest::newRow("typeinfo name") << QByteArray("_ZTS26KRecursiveFilterProxyModel") << Demangler::SymbolType::TypeInfoName;
+//         QTest::newRow("thunk") << QByteArray("_ZThn16_N13TreeMapWidgetD0Ev") << Demangler::SymbolType::Thunk;
+//         QTest::newRow("virtual thunk") << QByteArray("_ZTv0_n24_N5Solid6Ifaces11OpticalDiscD1Ev") << Demangler::SymbolType::VirtualThunk;
+//         QTest::newRow("covariant thunk") << QByteArray("_ZTch0_h16_NK12ThreadWeaver15WeaverImplState6weaverEv") << Demangler::SymbolType::CovariantThunk;
+        QTest::newRow("vtt") << QByteArray("_ZTTN5Solid6Ifaces13StorageVolumeE") << Demangler::SymbolType::VTT;
+        QTest::newRow("construction vtable") << QByteArray("_ZTCN5Solid8Backends7UDisks211OpticalDiscE0_NS1_5BlockE") << Demangler::SymbolType::ConstructionVTable;
+    }
+
+    void testSymbolType()
+    {
+        QFETCH(QByteArray, symbol);
+        QFETCH(Demangler::SymbolType, type);
+
+        QCOMPARE(Demangler::symbolType(symbol), type);
+    }
 };
 
 QTEST_MAIN(DemanglerTest)

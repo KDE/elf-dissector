@@ -530,3 +530,21 @@ void Demangler::handleOperatorComponent(demangle_component* component, QVector< 
     }
     handleNameComponent(component, nameParts);
 }
+
+Demangler::SymbolType Demangler::symbolType(const char* name)
+{
+    if (strlen(name) < 4)
+        return SymbolType::Normal;
+    if (name[0] != '_' || name[1] != 'Z' || name[2] != 'T')
+        return SymbolType::Normal;
+
+    switch (name[3]) {
+        case 'V': return SymbolType::VTable;
+        case 'I': return SymbolType::TypeInfo;
+        case 'S': return SymbolType::TypeInfoName;
+        case 'T': return SymbolType::VTT;
+        case 'C': return SymbolType::ConstructionVTable;
+    }
+
+    return SymbolType::Normal;
+}

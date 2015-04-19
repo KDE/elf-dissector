@@ -20,6 +20,7 @@
 
 #include <QByteArray>
 #include <QHash>
+#include <QMetaType>
 #include <QVector>
 
 struct demangle_component;
@@ -38,6 +39,17 @@ public:
     /** Demangle the given name into a single string. */
     QByteArray demangleFull(const char* name) const;
 
+    enum class SymbolType {
+        Normal,
+        VTable,
+        TypeInfo,
+        TypeInfoName,
+        VTT,
+        ConstructionVTable
+    };
+    /** Determine type of C++ symbols. */
+    static SymbolType symbolType(const char* name);
+
 private:
     void reset();
     void handleNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
@@ -55,5 +67,7 @@ private:
 
     // TODO shared value caching
 };
+
+Q_DECLARE_METATYPE(Demangler::SymbolType)
 
 #endif // DEMANGLER_H
