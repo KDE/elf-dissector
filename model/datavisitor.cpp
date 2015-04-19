@@ -234,10 +234,17 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                 Disassembler da;
                 s += QStringLiteral("Code:<br/><tt>") + da.disassemble(entry) + "</tt>";
             } else if (entry->type() == STT_OBJECT && entry->size() > 0) {
-                s += QStringLiteral("Data:<br/><tt>");
-                const unsigned char* data = entry->data();
-                s += QByteArray::fromRawData((const char*)data, entry->size()).toHex();
-                s += "</tt><br/>";
+                switch (Demangler::symbolType(entry->name())) {
+                    case Demangler::SymbolType::TypeInfoName:
+                        s += "Type info name: " + QByteArray((const char*)entry->data()) + "<br/>";
+                        break;
+                    // TODO: add other symbol types
+                    default:
+                        s += QStringLiteral("Data:<br/><tt>");
+                        const unsigned char* data = entry->data();
+                        s += QByteArray::fromRawData((const char*)data, entry->size()).toHex();
+                        s += "</tt><br/>";
+                }
             }
             auto *dwarf = entry->symbolTable()->file()->dwarfInfo();
             if (dwarf) {
