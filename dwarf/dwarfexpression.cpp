@@ -16,15 +16,19 @@
 */
 
 #include "dwarfexpression.h"
+#include "dwarfleb128.h"
 
 #include <QDebug>
 #include <QString>
 
 #include <libdwarf/dwarf.h>
 
+static const int8_t ULEB128 = -1;
+static const int8_t SLEB128 = -2;
+
 struct opcode_t {
     uint8_t opCode;
-    uint8_t opSize;
+    int8_t opSize;
     const char* name;
 };
 
@@ -41,8 +45,8 @@ static const opcode_t opcodes[] {
     OP(const4s, 4),
     OP(const8u, 8),
     OP(const8s, 8),
-    OP(constu, 0), // TODO LEB128 encoded argument
-    OP(consts, 0),
+    OP(constu, ULEB128),
+    OP(consts, SLEB128),
     OP(dup, 0),
     OP(drop, 0),
     OP(over, 0),
@@ -60,7 +64,7 @@ static const opcode_t opcodes[] {
     OP(not, 0),
     OP(or, 0),
     OP(plus, 0),
-    OP(plus_uconst, 0), // TODO LEB128 encoded argument
+    OP(plus_uconst, ULEB128),
     OP(shl, 0),
     OP(shr, 0),
     OP(shra, 0),
@@ -233,10 +237,24 @@ QString DwarfExpression::displayString() const
         } else {
             s += op->name;
 
-            for (int j = 0; j < op->opSize && i + j + 1 < m_block.size(); ++j) {
-                s += " 0x" + QString::number(m_block.at(i + j + 1), 16);
+            if (op->opSize >= 0) {
+                // fixed size arguments
+                for (int j = 0; j < op->opSize && i + j + 1 < m_block.size(); ++j) {
+                    s += " 0x" + QString::number(m_block.at(i + j + 1), 16);
+                }
+                i += op->opSize;
+            } else {
+                // LEB128 encoded arguments
+                int size = 0;
+                if (op->opSize == ULEB128) {
+                    s += " 0x" + QString::number(DwarfLEB128::decodeUnsigned(m_block.constData() + i + 1, &size), 16);
+                } else if (op->opSize == SLEB128) {
+                    s += " 0x" + QString::number(DwarfLEB128::decodeSigned(m_block.constData() + i + 1, &size), 16);
+                } else {
+                    Q_UNREACHABLE();
+                }
+                i += size;
             }
-            i += op->opSize;
         }
         if (i < m_block.size() - 1)
             s += ' ';

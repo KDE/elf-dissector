@@ -33,6 +33,8 @@ private slots:
         QTest::newRow("empty") << QByteArray() << QString("<empty>");
         QTest::newRow("virtual inheritance 24") << QByteArray("\x12\x06\x48\x1c\x06\x22") << QString("DW_OP_dup DW_OP_deref DW_OP_lit24 DW_OP_minus DW_OP_deref DW_OP_plus");
         QTest::newRow("virtual inheritance 32") << QByteArray("\x12\x06\x08\x20\x1c\x06\x22") << QString("DW_OP_dup DW_OP_deref DW_OP_const1u 0x20 DW_OP_minus DW_OP_deref DW_OP_plus");
+        QTest::newRow("vtable elem offset 0") << QByteArray("\x10\x00") << QString("DW_OP_constu 0x0");
+        QTest::newRow("vtable elem offset 4") << QByteArray("\x10\x04") << QString("DW_OP_constu 0x4");
     }
 
     void testDisplayString()
