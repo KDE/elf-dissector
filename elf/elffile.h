@@ -53,6 +53,8 @@ public:
 
     /** ELF class type (32/64 bit). */
     int type() const;
+    /** Returns the numbers of bytes needed to store an address. */
+    int addressSize() const;
     /** Endianess. */
     int byteOrder() const;
 

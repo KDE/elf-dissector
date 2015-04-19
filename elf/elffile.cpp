@@ -67,6 +67,12 @@ int ElfFile::type() const
     return m_data[EI_CLASS];
 }
 
+int ElfFile::addressSize() const
+{
+    assert(isValid());
+    return type() == ELFCLASS32 ? 4 : 8;
+}
+
 int ElfFile::byteOrder() const
 {
     assert(isValid());
