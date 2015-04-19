@@ -351,7 +351,7 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
                     attrValueStr = die->displayName();
                 else
                     attrValueStr = attrValue.toString();
-                s += QString::fromLocal8Bit(die->attributeName(attrType)) + ": " + attrValueStr + "<br/>";
+                s += QString::fromLocal8Bit(die->attributeName(attrType)) + ": " + attrValueStr.toHtmlEscaped() + "<br/>";
             }
 
             if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {
