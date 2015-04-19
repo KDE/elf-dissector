@@ -235,6 +235,16 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                 s += QStringLiteral("Code:<br/><tt>") + da.disassemble(entry) + "</tt>";
             } else if (entry->type() == STT_OBJECT && entry->size() > 0) {
                 switch (Demangler::symbolType(entry->name())) {
+                    case Demangler::SymbolType::VTable:
+                    {
+                        s += "VTable:<br/><tt>";
+                        const auto addrSize = entry->symbolTable()->file()->addressSize();
+                        for (uint i = 0; i < entry->size() / addrSize; ++i) {
+                            s += QString::number(i) + ": " + QByteArray(reinterpret_cast<const char*>(entry->data() + i * addrSize), addrSize).toHex() + "<br/>";
+                        }
+                        s += "</tt><br/>";
+                        break;
+                    }
                     case Demangler::SymbolType::TypeInfoName:
                         s += "Type info name: " + QByteArray((const char*)entry->data()) + "<br/>";
                         break;
