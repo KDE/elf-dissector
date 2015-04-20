@@ -55,6 +55,9 @@ int main (int, char**)
     unsigned long long dummy = 0;
     #define USED(StructType) { StructType s; dummy += (unsigned long long)&s; }
 
+    USED(AlignedBase)
+    USED(AlignedIntermediateA)
+    USED(AlignedIntermediateB)
     USED(AlignedDereived)
     USED(UnalignedDerived)
 
