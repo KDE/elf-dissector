@@ -281,7 +281,9 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                         for (uint i = 0; i < entry->size() / addrSize; ++i) {
                             const uint64_t v = virtualTableEntry(entry, i);
                             s += QString::number(i) + ": 0x" + QString::number(v, 16);
-                            const auto ref = entry->symbolTable()->entryContainingValue(v);
+                            // vptrs point to one after the RTTI entry, which is the first virtual method, unless there is none in that
+                            // case we would point past the vtable here, and thus we wont find it, so better look for the RTTI spot.
+                            const auto ref = entry->symbolTable()->entryContainingValue(v - addrSize);
                             if (ref) {
                                 const auto offset = v - ref->value();
                                 s += QLatin1String(" entry ") + QString::number(offset / addrSize) + QLatin1String(" in ") + ref->name();
