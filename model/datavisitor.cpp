@@ -227,10 +227,16 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             s += QStringLiteral("Bind type: ") + bindTypeToString(entry->bindType()) + "<br/>";
             s += QStringLiteral("Symbol type: ") + symbolTypeToString(entry->type()) + "<br/>";
             s += QStringLiteral("Visibility: ") + visibilityToString(entry->visibility()) + "<br/>";
-            if (entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount())
+
+            const auto hasValidSectionIndex = entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount();
+            if (hasValidSectionIndex) {
                 s += QStringLiteral("Section: ") + entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->name() + "<br/>";
+            }
+
             // TODO: they way we interpret value() is wrong, seems to refer to program header vm addresses
-            if (entry->type() == STT_FUNC && entry->size() > 0) {
+            if (hasValidSectionIndex && entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->type() == SHT_NOBITS) {
+                // .bss, i.e. no content to display
+            } else if (entry->type() == STT_FUNC && entry->size() > 0) {
                 Disassembler da;
                 s += QStringLiteral("Code:<br/><tt>") + da.disassemble(entry) + "</tt>";
             } else if (entry->type() == STT_OBJECT && entry->size() > 0) {
