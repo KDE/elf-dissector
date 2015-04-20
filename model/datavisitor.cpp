@@ -263,7 +263,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                 }
             }
             auto *dwarf = entry->symbolTable()->file()->dwarfInfo();
-            if (dwarf) {
+            if (dwarf && entry->size()) {
                 s += QStringLiteral("Source location: ") + dwarf->sourceLocationForMangledSymbol(entry->name()) + "<br/>";
             }
             return s;
