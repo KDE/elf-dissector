@@ -237,7 +237,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             QString s;
             s += QStringLiteral("Mangled name: ") + entry->name() + "<br/>";
             Demangler demangler;
-            s += QStringLiteral("Demangled name: ") + demangler.demangleFull(entry->name()) + "<br/>";
+            s += QStringLiteral("Demangled name: ") + QString(demangler.demangleFull(entry->name())).toHtmlEscaped() + "<br/>";
             s += QStringLiteral("Size: ") + QString::number(entry->size()) + "<br/>";
             s += QStringLiteral("Value: 0x") + QString::number(entry->value(), 16) + "<br/>";
             s += QStringLiteral("Bind type: ") + bindTypeToString(entry->bindType()) + "<br/>";
