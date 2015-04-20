@@ -31,6 +31,8 @@
 
 #include <libdwarf/dwarf.h>
 
+#include <cassert>
+
 static QString machineToString(uint16_t machineType)
 {
 #define M(x) case EM_ ## x: return QStringLiteral("" #x);
@@ -207,6 +209,20 @@ static QString visibilityToString(uint8_t visibility)
     return QString();
 }
 
+static uint64_t virtualTableEntry(ElfSymbolTableEntry *entry, int index)
+{
+    const auto addrSize = entry->symbolTable()->file()->addressSize();
+    assert(entry->size() % addrSize == 0);
+
+    // TODO this assumes endianess equalness
+    if (addrSize == 8)
+        return *reinterpret_cast<const uint64_t*>(entry->data() + index * addrSize);
+    if (addrSize == 4)
+        return *reinterpret_cast<const uint32_t*>(entry->data() + index * addrSize);
+
+    Q_UNREACHABLE();
+}
+
 QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 {
     switch (arg) {
@@ -240,13 +256,37 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                 Disassembler da;
                 s += QStringLiteral("Code:<br/><tt>") + da.disassemble(entry) + "</tt>";
             } else if (entry->type() == STT_OBJECT && entry->size() > 0) {
-                switch (Demangler::symbolType(entry->name())) {
+                const auto addrSize = entry->symbolTable()->file()->addressSize();
+                const auto symbolType = Demangler::symbolType(entry->name());
+                switch (symbolType) {
                     case Demangler::SymbolType::VTable:
+                    case Demangler::SymbolType::ConstructionVTable:
                     {
-                        s += "VTable:<br/><tt>";
-                        const auto addrSize = entry->symbolTable()->file()->addressSize();
+                        s += symbolType == Demangler::SymbolType::ConstructionVTable ? "Construction VTable" : "VTable";
+                        s += ":<br/><tt>";
                         for (uint i = 0; i < entry->size() / addrSize; ++i) {
-                            s += QString::number(i) + ": " + QByteArray(reinterpret_cast<const char*>(entry->data() + i * addrSize), addrSize).toHex() + "<br/>";
+                            const uint64_t v = virtualTableEntry(entry, i);
+                            s += QString::number(i) + ": 0x" + QString::number(v, 16);
+                            const auto ref = entry->symbolTable()->entryWithValue(v);
+                            if (ref)
+                                s += QLatin1String(" ") + ref->name() + " (" + Demangler::demangleFull(ref->name()) + ")";
+                            s += "<br/>";
+                        }
+                        s += "</tt><br/>";
+                        break;
+                    }
+                    case Demangler::SymbolType::VTT:
+                    {
+                        s += "VTT:<br/><tt>";
+                        for (uint i = 0; i < entry->size() / addrSize; ++i) {
+                            const uint64_t v = virtualTableEntry(entry, i);
+                            s += QString::number(i) + ": 0x" + QString::number(v, 16);
+                            const auto ref = entry->symbolTable()->entryContainingValue(v);
+                            if (ref) {
+                                const auto offset = v - ref->value();
+                                s += QLatin1String(" entry ") + QString::number(offset / addrSize) + QLatin1String(" in ") + ref->name();
+                            }
+                            s += "<br/>";
                         }
                         s += "</tt><br/>";
                         break;
