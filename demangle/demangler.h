@@ -37,7 +37,7 @@ public:
     QVector<QByteArray> demangle(const char* name);
 
     /** Demangle the given name into a single string. */
-    QByteArray demangleFull(const char* name) const;
+    static QByteArray demangleFull(const char* name);
 
     enum class SymbolType {
         Normal,

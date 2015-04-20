@@ -55,7 +55,7 @@ QVector<QByteArray> Demangler::demangle(const char* name)
     return result;
 }
 
-QByteArray Demangler::demangleFull(const char* name) const
+QByteArray Demangler::demangleFull(const char* name)
 {
     void *memory = 0;
     demangle_component *component = cplus_demangle_v3_components(name, DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, &memory);
