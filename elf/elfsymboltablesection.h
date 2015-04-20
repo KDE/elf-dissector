@@ -32,6 +32,15 @@ public:
 
     /** Number of undefined symbols, ie. symbols needed to be provided from other libraries. */
     int importCount() const;
+
+    /** Finds the first symbol table entry with the given value.
+     *  @note: This does exhaustive search, and thus is expected to be slow.
+     *  @return @c 0 if there is no matching entry.
+     */
+    ElfSymbolTableEntry* entryWithValue(uint64_t value) const;
+
+    /** Similar as the above, but looks for entries containing @p value rather than matching it exactly .*/
+    ElfSymbolTableEntry* entryContainingValue(uint64_t value) const;
 };
 
 #endif // ELFSYMBOLTABLESECTION_H

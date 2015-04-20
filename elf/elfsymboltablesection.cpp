@@ -43,3 +43,29 @@ int ElfSymbolTableSection::importCount() const
     }
     return count;
 }
+
+ElfSymbolTableEntry* ElfSymbolTableSection::entryWithValue(uint64_t value) const
+{
+    if (value == 0)
+        return nullptr;
+
+    for (const auto entry : m_entries) {
+        if (entry->value() == value)
+            return entry;
+    }
+    return nullptr;
+}
+
+ElfSymbolTableEntry* ElfSymbolTableSection::entryContainingValue(uint64_t value) const
+{
+    if (value == 0)
+        return nullptr;
+
+    for (const auto entry : m_entries) {
+        if (entry->value() == 0 || entry->size() == 0)
+            continue;
+        if (entry->value() <= value && value < entry->value() + entry->size())
+            return entry;
+    }
+    return nullptr;
+}
