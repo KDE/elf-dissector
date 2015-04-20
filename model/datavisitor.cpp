@@ -287,6 +287,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                             if (ref) {
                                 const auto offset = v - ref->value();
                                 s += QLatin1String(" entry ") + QString::number(offset / addrSize) + QLatin1String(" in ") + ref->name();
+                                s += QLatin1String(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
                             }
                             s += "<br/>";
                         }
