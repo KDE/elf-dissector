@@ -393,6 +393,26 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
     return QVariant();
 }
 
+QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
+{
+    switch (arg) {
+        case Qt::DisplayRole:
+            return QString::number(entry->offset()); // TODO
+            break;
+        case ElfModel::DetailRole:
+        {
+            QString s;
+            s += "Offset: " + QString::number(entry->offset(), 16) + "<br/>";
+            s += "Type: " + QString::number(entry->type()) + "<br/>"; // TODO stringify
+            s += "Symbol: " + QString::number(entry->symbol()) + "<br/>"; // TODO symbol lookup
+            s += "Addend: " + QString::number(entry->addend());
+            return s;
+        }
+    }
+
+    return {};
+}
+
 QVariant DataVisitor::doVisit(DwarfInfo* info, int arg) const
 {
     const auto sectionIndex = info->elfFile()->indexOfSection(".debug_info");

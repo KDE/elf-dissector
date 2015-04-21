@@ -21,6 +21,8 @@
 #include <elf/elfheader.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfdynamicsection.h>
+#include <elf/elfrelocationsection.h>
+#include <elf/elfrelocationentry.h>
 
 #include <dwarf/dwarfdie.h>
 #include <dwarf/dwarfinfo.h>
@@ -61,6 +63,10 @@ public:
                 return doVisit(node->value<ElfDynamicSection>(), arg);
             case ElfNodeVariant::DynamicEntry:
                 return doVisit(node->value<ElfDynamicEntry>(), arg);
+            case ElfNodeVariant::RelocationSection:
+                return doVisit(node->value<ElfRelocationSection>(), arg);
+            case ElfNodeVariant::RelocationEntry:
+                return doVisit(node->value<ElfRelocationEntry>(), arg);
             case ElfNodeVariant::DwarfInfo:
                 return doVisit(node->value<DwarfInfo>(), arg);
             case ElfNodeVariant::DwarfDie:
@@ -105,6 +111,14 @@ protected:
         return doVisit(static_cast<ElfSection*>(section), arg);
     }
     virtual T doVisit(ElfDynamicEntry*, int) const
+    {
+        return T();
+    }
+    virtual T doVisit(ElfRelocationSection *section, int arg) const
+    {
+        return doVisit(static_cast<ElfSection*>(section), arg);
+    }
+    virtual T doVisit(ElfRelocationEntry*, int) const
     {
         return T();
     }

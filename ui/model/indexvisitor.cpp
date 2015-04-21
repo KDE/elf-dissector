@@ -40,6 +40,10 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
         case SHT_DYNAMIC:
             type = ElfNodeVariant::DynamicSection;
             break;
+        case SHT_REL:
+        case SHT_RELA:
+            type = ElfNodeVariant::RelocationSection;
+            break;
         default:
             if (qstrcmp(section->header()->name(), ".debug_info") == 0) {
                 type = ElfNodeVariant::DwarfInfo;
@@ -61,6 +65,12 @@ IndexVisitor::type IndexVisitor::doVisit(ElfDynamicSection* section, int row) co
 {
     const auto entry = section->entry(row);
     return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::DynamicEntry);
+}
+
+IndexVisitor::type IndexVisitor::doVisit(ElfRelocationSection* section, int row) const
+{
+    const auto entry = section->entry(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::RelocationEntry);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(DwarfInfo* info, int row) const
