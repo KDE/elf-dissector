@@ -407,7 +407,10 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
             QString s;
             s += "Offset: 0x" + QString::number(entry->offset(), 16) + "<br/>";
             s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
-            s += "Symbol: " + QString::number(entry->symbol()) + "<br/>"; // TODO symbol lookup
+            if (entry->symbol() > 0)
+                s += QString("Symbol: ") + entry->relocationTable()->linkedSection<ElfSymbolTableSection>()->entry(entry->symbol())->name() + "<br/>";
+            else
+                s += QString("Symbol: &lt;none&gt;<br/>");
             s += "Addend: " + QString::number(entry->addend());
             return s;
         }
