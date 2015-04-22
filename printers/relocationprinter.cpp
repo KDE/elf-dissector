@@ -35,6 +35,50 @@ struct RelocType
 
 #define RT(type, desc) { type, #type, desc }
 
+static const RelocType reloc_types_i386[] {
+    RT(R_386_NONE, "No reloc"),
+    RT(R_386_32, "Direct 32 bit"),
+    RT(R_386_PC32, "PC relative 32 bit"),
+    RT(R_386_GOT32, "32 bit GOT entry"),
+    RT(R_386_PLT32, "32 bit PLT address"),
+    RT(R_386_COPY, "Copy symbol at runtime"),
+    RT(R_386_GLOB_DAT, "Create GOT entry"),
+    RT(R_386_JMP_SLOT, "Create PLT entry"),
+    RT(R_386_RELATIVE, "Adjust by program base"),
+    RT(R_386_GOTOFF, "32 bit offset to GOT"),
+    RT(R_386_GOTPC, "32 bit PC relative offset to GOT"),
+    RT(R_386_32PLT, ""),
+    RT(R_386_TLS_TPOFF, "Offset in static TLS block"),
+    RT(R_386_TLS_IE, "Address of GOT entry for static TLS block offset"),
+    RT(R_386_TLS_GOTIE, "GOT entry for static TLS block offset"),
+    RT(R_386_TLS_LE, "Offset relative to static TLS block"),
+    RT(R_386_TLS_GD, "Direct 32 bit for GNU version of general dynamic thread local data"),
+    RT(R_386_TLS_LDM, "Direct 32 bit for GNU version of local dynamic thread local data in LE code"),
+    RT(R_386_16, ""),
+    RT(R_386_PC16, ""),
+    RT(R_386_8, ""),
+    RT(R_386_PC8, ""),
+    RT(R_386_TLS_GD_32, "Direct 32 bit for general dynamic thread local data"),
+    RT(R_386_TLS_GD_PUSH, "Tag for pushl in GD TLS code"),
+    RT(R_386_TLS_GD_CALL, "Relocation for call to __tls_get_addr()"),
+    RT(R_386_TLS_GD_POP, "Tag for popl in GD TLS code"),
+    RT(R_386_TLS_LDM_32, "Direct 32 bit for local dynamic thread local data in LE code"),
+    RT(R_386_TLS_LDM_PUSH, "Tag for pushl in LDM TLS code"),
+    RT(R_386_TLS_LDM_CALL, "Relocation for call to __tls_get_addr() in LDM code"),
+    RT(R_386_TLS_LDM_POP, "Tag for popl in LDM TLS code"),
+    RT(R_386_TLS_LDO_32, "Offset relative to TLS block"),
+    RT(R_386_TLS_IE_32, "GOT entry for negated static TLS block offset"),
+    RT(R_386_TLS_LE_32, "Negated offset relative to static TLS block"),
+    RT(R_386_TLS_DTPMOD32, "ID of module containing symbol"),
+    RT(R_386_TLS_DTPOFF32, "Offset in TLS block"),
+    RT(R_386_TLS_TPOFF32, "Negated offset in static TLS block"),
+    RT(R_386_SIZE32, "32-bit symbol size"),
+    RT(R_386_TLS_GOTDESC, "GOT offset for TLS descriptor."),
+    RT(R_386_TLS_DESC_CALL, "Marker of call through TLS descriptor for relaxation."),
+    RT(R_386_TLS_DESC, "TLS descriptor containing pointer to code and to argument, returning the TLS offset for the symbol."),
+    RT(R_386_IRELATIVE, "Adjust indirectly by program base")
+};
+
 static const RelocType reloc_types_x86_64[] {
     RT(R_X86_64_NONE, "No reloc"),
     RT(R_X86_64_64, "Direct 64 bit "),
@@ -87,6 +131,7 @@ struct RelocTypeRepository
 };
 
 static const RelocTypeRepository reloc_type_repository[] {
+    { EM_386, reloc_types_i386, sizeof(reloc_types_i386) / sizeof(RelocType) },
     { EM_X86_64, reloc_types_x86_64, sizeof(reloc_types_x86_64) / sizeof(RelocType) }
 };
 
