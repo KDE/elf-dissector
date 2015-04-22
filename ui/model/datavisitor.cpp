@@ -146,6 +146,8 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             s += QStringLiteral("Type: ") + sectionTypeToString(section->header()->type()) + "<br/>";
             if (section->header()->link())
                 s += QStringLiteral("Linked section: ") + section->linkedSection<ElfSection>()->header()->name() + "<br/>";
+            if (section->header()->flags() & SHF_INFO_LINK)
+                s += QString("Referenced section: ") + section->file()->sectionHeaders().at(section->header()->info())->name() + "<br/>";
             if (section->header()->entrySize()) {
                 s += QStringLiteral("Entries: ") + QString::number(section->header()->entryCount())
                   + " x " + QString::number(section->header()->entrySize()) + " byte<br/>";
