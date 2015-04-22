@@ -24,6 +24,7 @@
 #include <disassmbler/disassembler.h>
 #include <demangle/demangler.h>
 #include <checks/structurepackingcheck.h>
+#include <printers/relocationprinter.h>
 
 #include <QDebug>
 #include <QObject>
@@ -397,13 +398,13 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
 {
     switch (arg) {
         case Qt::DisplayRole:
-            return QString::number(entry->offset()); // TODO
+            return RelocationPrinter::label(entry) + " 0x" + QString::number(entry->offset(), 16);
             break;
         case ElfModel::DetailRole:
         {
             QString s;
-            s += "Offset: " + QString::number(entry->offset(), 16) + "<br/>";
-            s += "Type: " + QString::number(entry->type()) + "<br/>"; // TODO stringify
+            s += "Offset: 0x" + QString::number(entry->offset(), 16) + "<br/>";
+            s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
             s += "Symbol: " + QString::number(entry->symbol()) + "<br/>"; // TODO symbol lookup
             s += "Addend: " + QString::number(entry->addend());
             return s;
