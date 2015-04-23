@@ -361,7 +361,12 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
         case ElfModel::DetailRole:
         {
             QString s;
-            s += "Offset: 0x" + QString::number(entry->offset(), 16) + "<br/>";
+            s += "Offset: 0x" + QString::number(entry->offset(), 16);
+            const auto sym = entry->relocationTable()->file()->symbolTable()->entryContainingValue(entry->offset());
+            if (sym) {
+                s += QString(" (") + sym->name() + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
+            }
+            s += "<br/>";
             s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
             if (entry->symbol() > 0)
                 s += QString("Symbol: ") + entry->relocationTable()->linkedSection<ElfSymbolTableSection>()->entry(entry->symbol())->name() + "<br/>";
