@@ -204,6 +204,15 @@ void ElfFile::parseSections()
     }
 }
 
+int ElfFile::indexOfSection(uint32_t type) const
+{
+    for (int i = 0; i < m_sectionHeaders.size(); ++i) {
+        if (m_sectionHeaders.at(i)->type() == type)
+            return i;
+    }
+    return -1;
+}
+
 int ElfFile::indexOfSection(const char* name) const
 {
     for (int i = 0; i < m_sectionHeaders.size(); ++i) {
@@ -216,12 +225,20 @@ int ElfFile::indexOfSection(const char* name) const
 
 ElfDynamicSection* ElfFile::dynamicSection() const
 {
-    for (int i = 0; i < header()->sectionHeaderCount(); ++i) {
-        if (m_sections.at(i)->header()->type() == SHT_DYNAMIC)
-            return section<ElfDynamicSection>(i);
-    }
+    const auto index = indexOfSection(SHT_DYNAMIC);
+    if (index < 0)
+        return nullptr;
+    return section<ElfDynamicSection>(index);
+}
 
-    return nullptr;
+ElfSymbolTableSection* ElfFile::symbolTable() const
+{
+    auto index = indexOfSection(SHT_SYMTAB);
+    if (index < 0)
+        index = indexOfSection(SHT_DYNSYM);
+    if (index < 0)
+        return nullptr;
+    return section<ElfSymbolTableSection>(index);
 }
 
 DwarfInfo* ElfFile::dwarfInfo() const

@@ -29,6 +29,7 @@
 
 class DwarfInfo;
 class ElfHeader;
+class ElfSymbolTableSection;
 
 /** Represents a ELF file. */
 class ElfFile
@@ -68,11 +69,15 @@ public:
     {
         return dynamic_cast<T*>(m_sections.at(index));
     }
+    /** Finds a section by type. */
+    int indexOfSection(uint32_t type) const;
     /** Finds a section by name. */
     int indexOfSection(const char* name) const;
 
     /** Returns the dynamic section. */
     ElfDynamicSection* dynamicSection() const;
+    /** Returns .symtab if present, .dynsym otherwise. */
+    ElfSymbolTableSection* symbolTable() const;
 
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;

@@ -16,6 +16,7 @@
 */
 
 #include <elf/elffile.h>
+#include <elf/elfsymboltablesection.h>
 
 #include <QtTest/qtest.h>
 #include <QObject>
@@ -44,6 +45,11 @@ private slots:
         QVERIFY(f.size() > 0);
         QVERIFY(f.indexOfSection(".dynsym") >= 0);
         QCOMPARE(f.indexOfSection(".doesnotexist"), -1);
+
+        QVERIFY(f.dynamicSection());
+        QVERIFY(f.dynamicSection()->size() > 0);
+        QVERIFY(f.symbolTable());
+        QVERIFY(f.symbolTable()->size() > 0);
     }
 
     void testFailedLoad_data()
