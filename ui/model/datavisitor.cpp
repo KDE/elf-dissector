@@ -365,6 +365,13 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
             const auto sym = entry->relocationTable()->file()->symbolTable()->entryContainingValue(entry->offset());
             if (sym) {
                 s += QString(" (") + sym->name() + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
+            } else {
+                for (const auto &shdr : entry->relocationTable()->file()->sectionHeaders()) {
+                    if (shdr->virtualAddress() <= entry->offset() && entry->offset() < shdr->virtualAddress() + shdr->size()) {
+                        s += QString(" (") + shdr->name() + " + 0x" + QString::number(entry->offset() - shdr->virtualAddress(), 16) + ')';
+                        break;
+                    }
+                }
             }
             s += "<br/>";
             s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
@@ -372,7 +379,7 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
                 s += QString("Symbol: ") + entry->relocationTable()->linkedSection<ElfSymbolTableSection>()->entry(entry->symbol())->name() + "<br/>";
             else
                 s += QString("Symbol: &lt;none&gt;<br/>");
-            s += "Addend: " + QString::number(entry->addend());
+            s += "Addend: 0x" + QString::number(entry->addend(), 16);
             return s;
         }
     }
