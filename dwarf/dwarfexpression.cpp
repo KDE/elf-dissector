@@ -25,6 +25,7 @@
 
 static const int8_t ULEB128 = -1;
 static const int8_t SLEB128 = -2;
+static const int8_t ADDRSIZE = -3;
 
 struct opcode_t {
     uint8_t opCode;
@@ -35,7 +36,7 @@ struct opcode_t {
 #define OP(code, argCount) { DW_OP_ ## code, argCount, "DW_OP_" #code }
 
 static const opcode_t opcodes[] {
-    OP(addr, 0),
+    OP(addr, ADDRSIZE),
     OP(deref, 0),
     OP(const1u, 1),
     OP(const1s, 1),
@@ -215,7 +216,8 @@ DwarfExpression::DwarfExpression()
 {
 }
 
-DwarfExpression::DwarfExpression(Dwarf_Ptr block, Dwarf_Unsigned len)
+DwarfExpression::DwarfExpression(Dwarf_Ptr block, Dwarf_Unsigned len, uint8_t addrSize) :
+    m_addrSize(addrSize)
 {
     m_block = QByteArray::fromRawData(static_cast<const char*>(block), len);
 }
@@ -250,6 +252,12 @@ QString DwarfExpression::displayString() const
                     s += " 0x" + QString::number(DwarfLEB128::decodeUnsigned(m_block.constData() + i + 1, &size), 16);
                 } else if (op->opSize == SLEB128) {
                     s += " 0x" + QString::number(DwarfLEB128::decodeSigned(m_block.constData() + i + 1, &size), 16);
+                } else if (op->opSize == ADDRSIZE) {
+                    uint64_t addr = 0;
+                    // TODO: endianess conversion
+                    memcpy(&addr, m_block.constData() + i + 1, m_addrSize);
+                    s += " 0x" + QByteArray::number(qulonglong(addr), 16);
+                    size = m_addrSize;
                 } else {
                     Q_UNREACHABLE();
                 }

@@ -30,12 +30,13 @@ class DwarfExpression
 {
 public:
     DwarfExpression();
-    explicit DwarfExpression(Dwarf_Ptr block, Dwarf_Unsigned len);
+    explicit DwarfExpression(Dwarf_Ptr block, Dwarf_Unsigned len, uint8_t addrSize);
     ~DwarfExpression();
 
     QString displayString() const;
 private:
     QByteArray m_block;
+    uint8_t m_addrSize;
 };
 
 Q_DECLARE_METATYPE(DwarfExpression)

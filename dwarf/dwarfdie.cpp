@@ -459,7 +459,7 @@ QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
             Dwarf_Unsigned len;
             Dwarf_Ptr block;
             res = dwarf_formexprloc(attr, &len, &block, nullptr);
-            value = QVariant::fromValue(DwarfExpression(block, len));
+            value = QVariant::fromValue(DwarfExpression(block, len, dwarfInfo()->elfFile()->addressSize()));
             break;
         }
         default:

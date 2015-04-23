@@ -35,6 +35,7 @@ private slots:
         QTest::newRow("virtual inheritance 32") << QByteArray("\x12\x06\x08\x20\x1c\x06\x22") << QString("DW_OP_dup DW_OP_deref DW_OP_const1u 0x20 DW_OP_minus DW_OP_deref DW_OP_plus");
         QTest::newRow("vtable elem offset 0") << QByteArray("\x10\x00") << QString("DW_OP_constu 0x0");
         QTest::newRow("vtable elem offset 4") << QByteArray("\x10\x04") << QString("DW_OP_constu 0x4");
+        QTest::newRow("address") << QByteArray("\x03\x34\x08\x40\x00\x00\x00\x00\x00", 9) << QString("DW_OP_addr 0x400834");
     }
 
     void testDisplayString()
@@ -42,7 +43,7 @@ private slots:
         QFETCH(QByteArray, block);
         QFETCH(QString, display);
 
-        DwarfExpression exp((void*)block.constData(), block.size());
+        DwarfExpression exp((void*)block.constData(), block.size(), 8);
         QCOMPARE(exp.displayString(), display);
     }
 };
