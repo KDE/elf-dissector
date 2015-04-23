@@ -24,6 +24,8 @@
 #include <disassmbler/disassembler.h>
 #include <demangle/demangler.h>
 #include <checks/structurepackingcheck.h>
+
+#include <printers/dynamicsectionprinter.h>
 #include <printers/relocationprinter.h>
 
 #include <QDebug>
@@ -319,52 +321,6 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
     return QVariant();
 }
 
-#define DYN_FLAG(flag, name) \
-    if (flags & flag) l.push_back(name); \
-    handledFlags |= flag
-
-static QString dtFlagsToString(uint64_t flags)
-{
-    QStringList l;
-    uint64_t handledFlags = 0;
-
-    DYN_FLAG(DF_ORIGIN, "object may use DF_ORIGIN");
-    DYN_FLAG(DF_SYMBOLIC, "symbol resolutions starts here");
-    DYN_FLAG(DF_TEXTREL, "objects contains text relocations");
-    DYN_FLAG(DF_BIND_NOW, "bind now");
-    DYN_FLAG(DF_STATIC_TLS, "module uses the static TLS model");
-
-    if (flags & ~handledFlags)
-        l.push_back(QString("unhandled flags 0x%1").arg(flags & ~handledFlags, 16));
-
-    if (l.isEmpty())
-        return "<none>";
-    return l.join(", ");
-}
-
-static QString dtFlags1ToString(uint64_t flags)
-{
-    QStringList l;
-    uint64_t handledFlags = 0;
-
-    DYN_FLAG(DF_1_NOW, "set RTLD_NOW for this object");
-    DYN_FLAG(DF_1_GLOBAL, "set RTLD_GLOBAL for this object");
-    DYN_FLAG(DF_1_GROUP, "set RTLD_GROUP for this object");
-    DYN_FLAG(DF_1_NODELETE, "set RTLD_NODELETE for this object");
-    DYN_FLAG(DF_1_LOADFLTR, "trigger filtee loading at runtime");
-    DYN_FLAG(DF_1_INITFIRST, "set RTLD_INITFIRST for this object");
-    DYN_FLAG(DF_1_NOOPEN, "set RTLD_NOOPEN for this object");
-
-    if (flags & ~handledFlags)
-        l.push_back(QString("unhandled flags 0x%1").arg(flags & ~handledFlags, 16));
-
-    if (l.isEmpty())
-        return "<none>";
-    return l.join(", ");
-}
-
-#undef DYN_FLAG
-
 QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
 {
     switch (arg) {
@@ -377,10 +333,10 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
             s += QStringLiteral("Value: ");
             switch (entry->tag()) {
                 case DT_FLAGS:
-                    s += dtFlagsToString(entry->value());
+                    s += DynamicSectionPrinter::flagsToDescriptions(entry->value());
                     break;
                 case DT_FLAGS_1:
-                    s += dtFlags1ToString(entry->value());
+                    s += DynamicSectionPrinter::flags1ToDescriptions(entry->value());
                     break;
                 default:
                     if (entry->isStringValue())

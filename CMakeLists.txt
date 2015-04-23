@@ -99,6 +99,7 @@ set(libelfdisector_srcs
     checks/structurepackingcheck.cpp
     checks/virtualdtorcheck.cpp
 
+    printers/dynamicsectionprinter.cpp
     printers/relocationprinter.cpp
 )
 
