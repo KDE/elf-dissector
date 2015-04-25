@@ -109,3 +109,26 @@ const char* ElfDynamicEntry::stringValue() const
     assert(isStringValue());
     return dynamicSection()->linkedSection<ElfStringTableSection>()->string(value());
 }
+
+bool ElfDynamicEntry::isAddress() const
+{
+    switch (tag()) {
+        case DT_HASH:
+        case DT_STRTAB:
+        case DT_SYMTAB:
+        case DT_RELA:
+        case DT_INIT:
+        case DT_FINI:
+        case DT_REL:
+        case DT_JMPREL:
+        case DT_INIT_ARRAY:
+        case DT_FINI_ARRAY:
+        case DT_PREINIT_ARRAY:
+        case DT_VERSYM:
+        case DT_VERDEF:
+        case DT_VERNEED:
+            return true;
+    }
+
+    return tag() >= DT_ADDRRNGLO && tag() <= DT_ADDRRNGHI;
+}

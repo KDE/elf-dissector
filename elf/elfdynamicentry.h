@@ -43,6 +43,9 @@ public:
     /** Returns the string value for this entry. */
     const char* stringValue() const;
 
+    /** Returns whether the value of this entry is an address (ie. pointer() returns something valid). */
+    bool isAddress() const;
+
     virtual int64_t tag() const = 0;
     virtual uint64_t value() const = 0;
     virtual uint64_t pointer() const = 0;
