@@ -89,6 +89,8 @@ private slots:
         QTest::newRow("literal neg int") << "_ZNK7WebCore17CSSPrimitiveValue15convertToLengthILin1EEENS_6LengthEPKNS_11RenderStyleES5_db" << (VB << "WebCore" << "CSSPrimitiveValue" << "convertToLength" << "convertToLength<-1>(WebCore::RenderStyle const*, WebCore::RenderStyle const*, double, bool) const");
 
         QTest::newRow("cloned component") << "_ZN7QVectorIjE16defaultConstructEPjS1_.isra.2" << (VB << "QVector" << "QVector<unsigned int>" << "defaultConstruct(unsigned int*, unsigned int*) [clone .isra.2]");
+
+        QTest::newRow("nested types") << "_ZN7QVectorIPZN10MainWindow8loadFileERK7QStringE10SymbolNodeE4dataEv" << (VB << "QVector" << "QVector<MainWindow::loadFile(QString const&)::SymbolNode*>" << "data()");
     }
 
     void testDemangler()
@@ -102,6 +104,7 @@ private slots:
             qDebug() << actualDemangled;
             qDebug() << expectedDemangled;
         }
+        QEXPECT_FAIL("nested types", "bug in pointer handling", Continue);
         QCOMPARE(actualDemangled, expectedDemangled);
     }
 
