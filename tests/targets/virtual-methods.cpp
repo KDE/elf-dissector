@@ -26,6 +26,15 @@ struct Derived : public Base {
     void overridden() override {};
 };
 
+struct BaseWithoutVirtuals {
+    void *m_b;
+};
+
+struct DerivedFromBaseWithoutVTable : BaseWithoutVirtuals {
+    virtual void function() {};
+    void *m_d;
+};
+
 int main (int, char**)
 {
     // make sure the structures aren't optimized away by the compiler
@@ -33,6 +42,7 @@ int main (int, char**)
     #define USED(StructType) { StructType s; dummy += (unsigned long long)&s; }
 
     USED(Derived);
+    USED(DerivedFromBaseWithoutVTable);
 
     return dummy;
 }
