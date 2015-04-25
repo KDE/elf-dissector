@@ -341,6 +341,8 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
                 default:
                     if (entry->isStringValue())
                         s+= entry->stringValue();
+                    else if (entry->isAddress())
+                        s += QString("0x") + QString::number(entry->pointer(), 16);
                     else
                         s += QString::number(entry->value());
             }
