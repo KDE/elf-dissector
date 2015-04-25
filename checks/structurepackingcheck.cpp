@@ -20,6 +20,7 @@
 #include <elf/elffileset.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
+#include <dwarf/dwarfexpression.h>
 
 #include <QBitArray>
 #include <QDebug>
@@ -209,6 +210,15 @@ static int actualTypeSize(DwarfDie *die)
     return die->typeSize() * 8;
 }
 
+static int dataMemberLocation(DwarfDie *die)
+{
+    const auto attr = die->attribute(DW_AT_data_member_location);
+    if (attr.canConvert(QVariant::Int))
+        return attr.toInt();
+    qWarning() << "Cannot convert location of" << die->displayName() << ":" << attr.value<DwarfExpression>().displayString();
+    return 0;
+}
+
 std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
 {
     const auto structSize = structDie->typeSize();
@@ -222,7 +232,7 @@ std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie
         const auto memberTypeDie = findTypeDefinition(memberDie->attribute(DW_AT_type).value<DwarfDie*>());
         assert(memberTypeDie);
 
-        const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
+        const auto memberLocation = dataMemberLocation(memberDie);
         const auto bitSize = memberDie->attribute(DW_AT_bit_size).toInt();
         const auto bitOffset = memberDie->attribute(DW_AT_bit_offset).toInt();
 
@@ -268,7 +278,7 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
         const auto memberTypeDie = findTypeDefinition(unresolvedTypeDie);
         assert(memberTypeDie);
 
-        const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
+        const auto memberLocation = dataMemberLocation(memberDie);
         if (memberLocation > nextMemberLocation && !skipPadding) {
             s << "// " << (memberLocation - nextMemberLocation) << " byte(s) padding\n";
             s << "    ";
@@ -350,13 +360,13 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
         if (memberDie->tag() == DW_TAG_inheritance && isEmptyBaseClass(memberDie))
             continue;
 
-        if (prevMemberLocation == memberDie->attribute(DW_AT_data_member_location))
+        if (prevMemberLocation == dataMemberLocation(memberDie))
             continue; // skip bit fields for now
 
         const auto memberTypeDie = findTypeDefinition(memberDie->attribute(DW_AT_type).value<DwarfDie*>());
         assert(memberTypeDie);
 
-        const auto memberLocation = memberDie->attribute(DW_AT_data_member_location).toInt();
+        const auto memberLocation = dataMemberLocation(memberDie);
         if (guessSize)
             sizes.push_back(memberLocation - prevMemberLocation);
 
