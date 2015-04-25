@@ -249,9 +249,9 @@ QString DwarfExpression::displayString() const
                 // LEB128 encoded arguments
                 int size = 0;
                 if (op->opSize == ULEB128) {
-                    s += " 0x" + QString::number(DwarfLEB128::decodeUnsigned(m_block.constData() + i + 1, &size), 16);
+                    s += ' ' + QString::number(DwarfLEB128::decodeUnsigned(m_block.constData() + i + 1, &size));
                 } else if (op->opSize == SLEB128) {
-                    s += " 0x" + QString::number(DwarfLEB128::decodeSigned(m_block.constData() + i + 1, &size), 16);
+                    s += ' ' + QString::number(DwarfLEB128::decodeSigned(m_block.constData() + i + 1, &size));
                 } else if (op->opSize == ADDRSIZE) {
                     uint64_t addr = 0;
                     // TODO: endianess conversion
