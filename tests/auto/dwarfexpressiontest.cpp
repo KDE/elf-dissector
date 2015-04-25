@@ -55,6 +55,33 @@ private slots:
         DwarfExpression exp((void*)block.constData(), block.size(), 8);
         QCOMPARE(exp.displayString(), display);
     }
+
+    void testSimpleEval_data()
+    {
+        QTest::addColumn<QByteArray>("block");
+        QTest::addColumn<int>("result");
+
+        QTest::newRow("OP_addr") << QByteArray("\x03\x34\x08\x40\x00\x00\x00\x00\x00", 9) << 0x400834;
+        QTest::newRow("OP_const1s") << QByteArray("\x09\xfe") << -2;
+        QTest::newRow("OP_const2u") << QByteArray("\x0a\x2a\x00", 3) << 42;
+        QTest::newRow("OP_const4s") << QByteArray("\x0d\xfd\xff\xff\xff") << -3;
+        QTest::newRow("OP_const8u") << QByteArray("\x0e\x34\x08\x40\x00\x00\x00\x00\x00", 9) << 4196404;
+        QTest::newRow("OP_constu") << QByteArray("\x10\x00", 2) << 0;
+        QTest::newRow("OP_constu") << QByteArray("\x10\x04") << 4;
+
+        QTest::newRow("OP_lit23 OP_dup OP_plus") << QByteArray("\x47\x12\x22") << 46;
+        QTest::newRow("OP_const1s 42 OP_lit20 OP_minus") << QByteArray("\x09\x2a\x44\x1c") << 22;
+    }
+
+    void testSimpleEval()
+    {
+        QFETCH(QByteArray, block);
+        QFETCH(int, result);
+
+        DwarfExpression exp((void*)block.constData(), block.size(), 8);
+        QVERIFY(exp.evaluateSimple());
+        QCOMPARE(exp.top(), (uint64_t)result);
+    }
 };
 
 QTEST_MAIN(DwarfExpressionTest)

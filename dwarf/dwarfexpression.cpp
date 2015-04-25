@@ -262,7 +262,7 @@ QString DwarfExpression::displayString() const
             {\
                 size = sizeof(type); \
                 assert(m_block.size() > i + size); \
-                const auto value = qFromLittleEndian<type>(reinterpret_cast<const unsigned char*>(m_block.constData() + i + 1)); \
+                const auto value = readNumber<type>(i + 1); \
                 s += ' ' + QString::number(value); \
                 break; \
             }
@@ -329,4 +329,111 @@ QString DwarfExpression::displayString() const
     }
 
     return s;
+}
+
+void DwarfExpression::push(uint64_t value)
+{
+    m_stack.push(value);
+}
+
+uint64_t DwarfExpression::top() const
+{
+    return m_stack.top();
+}
+
+uint64_t DwarfExpression::pop()
+{
+    return m_stack.pop();
+}
+
+bool DwarfExpression::evaluateSimple()
+{
+    for (int i = 0; i < m_block.size();++i) {
+        const auto consumed = evaluateOne(i);
+        if (consumed < 0)
+            return false;
+        i += consumed;
+    }
+    return !m_stack.isEmpty();
+}
+
+template <typename T> T DwarfExpression::readNumber(int index) const
+{
+    return qFromLittleEndian<T>(reinterpret_cast<const unsigned char*>(m_block.constData() + index));
+}
+
+int DwarfExpression::evaluateOne(int i)
+{
+    const uint8_t code = m_block.at(i);
+    switch (code) {
+        case DW_OP_addr:
+            if (m_addrSize == 4)
+                push(readNumber<uint32_t>(i + 1));
+            else
+                push(readNumber<quint64>(i + 1));
+            return m_addrSize;
+        case DW_OP_const1u:
+            push(readNumber<uint8_t>(i + 1));
+            return 1;
+        case DW_OP_const1s:
+            push(readNumber<int8_t>(i + 1));
+            return 1;
+        case DW_OP_const2u:
+            push(readNumber<uint16_t>(i + 1));
+            return 2;
+        case DW_OP_const2s:
+            push(readNumber<int16_t>(i + 1));
+            return 2;
+        case DW_OP_const4u:
+            push(readNumber<uint32_t>(i + 1));
+            return 4;
+        case DW_OP_const4s:
+            push(readNumber<int32_t>(i + 1));
+            return 4;
+        case DW_OP_const8u:
+        case DW_OP_const8s: // signed vs. unsigned doesn't matter here, we copy everything anyway
+            push(readNumber<quint64>(i + 1));
+            return 8;
+        case DW_OP_constu:
+        {
+            int size = 0;
+            push(DwarfLEB128::decodeUnsigned(m_block.constData() + i +  1, &size));
+            return size;
+        }
+        case DW_OP_consts:
+        {
+            int size = 0;
+            push(DwarfLEB128::decodeSigned(m_block.constData() + i +  1, &size));
+            return size;
+        }
+
+        case DW_OP_dup:
+            push(top());
+            return 0;
+
+        case DW_OP_minus:
+        {
+            const auto o1 = pop();
+            const auto o2 = pop();
+            push(o2 - o1);
+            return 0;
+        }
+        case DW_OP_plus:
+            push(pop() + pop());
+            return 0;
+    }
+
+    if (code >= DW_OP_lit0 && code <= DW_OP_lit31) {
+        push(code - DW_OP_lit0);
+        return 0;
+    }
+
+    const auto op = opcode(code);
+    if (!op) {
+        qWarning() << "unknown opcode: " << code;
+    } else {
+        qWarning() << "opcode" << op->name << "not yet implemented";
+    }
+
+    return -1;
 }
