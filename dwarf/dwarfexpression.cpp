@@ -20,128 +20,145 @@
 
 #include <QDebug>
 #include <QString>
+#include <QtEndian>
 
 #include <libdwarf/dwarf.h>
 
-static const int8_t ULEB128 = -1;
-static const int8_t SLEB128 = -2;
-static const int8_t ADDRSIZE = -3;
+#include <cassert>
+
+enum class OperandType : int8_t {
+    NONE,
+    U1,
+    S1,
+    U2,
+    S2,
+    U4,
+    S4,
+    U8,
+    S8,
+    ADDR,
+    ULEB128,
+    SLEB128,
+    ULEB128ULEB128,
+    ULEB128SLEB128,
+    ULEB128BLOCK
+};
 
 struct opcode_t {
     uint8_t opCode;
-    int8_t opSize;
+    OperandType opType;
     const char* name;
 };
 
-#define OP(code, argCount) { DW_OP_ ## code, argCount, "DW_OP_" #code }
+#define OP(code, opType) { DW_OP_ ## code, OperandType:: opType, "DW_OP_" #code }
 
 static const opcode_t opcodes[] {
-    OP(addr, ADDRSIZE),
-    OP(deref, 0),
-    OP(const1u, 1),
-    OP(const1s, 1),
-    OP(const2u, 2),
-    OP(const2s, 2),
-    OP(const4u, 4),
-    OP(const4s, 4),
-    OP(const8u, 8),
-    OP(const8s, 8),
+    OP(addr, ADDR),
+    OP(deref, NONE),
+    OP(const1u, U1),
+    OP(const1s, S1),
+    OP(const2u, U2),
+    OP(const2s, S2),
+    OP(const4u, U4),
+    OP(const4s, S4),
+    OP(const8u, U8),
+    OP(const8s, S8),
     OP(constu, ULEB128),
     OP(consts, SLEB128),
-    OP(dup, 0),
-    OP(drop, 0),
-    OP(over, 0),
-    OP(pick, 1),
-    OP(swap, 0),
-    OP(rot, 0),
-    OP(xderef, 0),
-    OP(abs, 0),
-    OP(and, 0),
-    OP(div, 0),
-    OP(minus, 0),
-    OP(mod, 0),
-    OP(mul, 0),
-    OP(neg, 0),
-    OP(not, 0),
-    OP(or, 0),
-    OP(plus, 0),
+    OP(dup, NONE),
+    OP(drop, NONE),
+    OP(over, NONE),
+    OP(pick, U1),
+    OP(swap, NONE),
+    OP(rot, NONE),
+    OP(xderef, NONE),
+    OP(abs, NONE),
+    OP(and, NONE),
+    OP(div, NONE),
+    OP(minus, NONE),
+    OP(mod, NONE),
+    OP(mul, NONE),
+    OP(neg, NONE),
+    OP(not, NONE),
+    OP(or, NONE),
+    OP(plus, NONE),
     OP(plus_uconst, ULEB128),
-    OP(shl, 0),
-    OP(shr, 0),
-    OP(shra, 0),
-    OP(xor, 0),
-    OP(bra, 2),
-    OP(eq, 0),
-    OP(ge, 0),
-    OP(gt, 0),
-    OP(le, 0),
-    OP(lt, 0),
-    OP(ne, 0),
-    OP(skip, 2),
-    OP(lit0, 0),
-    OP(lit1, 0),
-    OP(lit2, 0),
-    OP(lit3, 0),
-    OP(lit4, 0),
-    OP(lit5, 0),
-    OP(lit6, 0),
-    OP(lit7, 0),
-    OP(lit8, 0),
-    OP(lit9, 0),
-    OP(lit10, 0),
-    OP(lit11, 0),
-    OP(lit12, 0),
-    OP(lit13, 0),
-    OP(lit14, 0),
-    OP(lit15, 0),
-    OP(lit16, 0),
-    OP(lit17, 0),
-    OP(lit18, 0),
-    OP(lit19, 0),
-    OP(lit20, 0),
-    OP(lit21, 0),
-    OP(lit22, 0),
-    OP(lit23, 0),
-    OP(lit24, 0),
-    OP(lit25, 0),
-    OP(lit26, 0),
-    OP(lit27, 0),
-    OP(lit28, 0),
-    OP(lit29, 0),
-    OP(lit30, 0),
-    OP(lit31, 0),
-    OP(reg0, 0),
-    OP(reg1, 0),
-    OP(reg2, 0),
-    OP(reg3, 0),
-    OP(reg4, 0),
-    OP(reg5, 0),
-    OP(reg6, 0),
-    OP(reg7, 0),
-    OP(reg8, 0),
-    OP(reg9, 0),
-    OP(reg10, 0),
-    OP(reg11, 0),
-    OP(reg12, 0),
-    OP(reg13, 0),
-    OP(reg14, 0),
-    OP(reg15, 0),
-    OP(reg16, 0),
-    OP(reg17, 0),
-    OP(reg18, 0),
-    OP(reg19, 0),
-    OP(reg20, 0),
-    OP(reg21, 0),
-    OP(reg22, 0),
-    OP(reg23, 0),
-    OP(reg24, 0),
-    OP(reg25, 0),
-    OP(reg26, 0),
-    OP(reg27, 0),
-    OP(reg28, 0),
-    OP(reg29, 0),
-    OP(reg30, 0),
-    OP(reg31, 0),
+    OP(shl, NONE),
+    OP(shr, NONE),
+    OP(shra, NONE),
+    OP(xor, NONE),
+    OP(bra, S2),
+    OP(eq, NONE),
+    OP(ge, NONE),
+    OP(gt, NONE),
+    OP(le, NONE),
+    OP(lt, NONE),
+    OP(ne, NONE),
+    OP(skip, S2),
+    OP(lit0, NONE),
+    OP(lit1, NONE),
+    OP(lit2, NONE),
+    OP(lit3, NONE),
+    OP(lit4, NONE),
+    OP(lit5, NONE),
+    OP(lit6, NONE),
+    OP(lit7, NONE),
+    OP(lit8, NONE),
+    OP(lit9, NONE),
+    OP(lit10, NONE),
+    OP(lit11, NONE),
+    OP(lit12, NONE),
+    OP(lit13, NONE),
+    OP(lit14, NONE),
+    OP(lit15, NONE),
+    OP(lit16, NONE),
+    OP(lit17, NONE),
+    OP(lit18, NONE),
+    OP(lit19, NONE),
+    OP(lit20, NONE),
+    OP(lit21, NONE),
+    OP(lit22, NONE),
+    OP(lit23, NONE),
+    OP(lit24, NONE),
+    OP(lit25, NONE),
+    OP(lit26, NONE),
+    OP(lit27, NONE),
+    OP(lit28, NONE),
+    OP(lit29, NONE),
+    OP(lit30, NONE),
+    OP(lit31, NONE),
+    OP(reg0, NONE),
+    OP(reg1, NONE),
+    OP(reg2, NONE),
+    OP(reg3, NONE),
+    OP(reg4, NONE),
+    OP(reg5, NONE),
+    OP(reg6, NONE),
+    OP(reg7, NONE),
+    OP(reg8, NONE),
+    OP(reg9, NONE),
+    OP(reg10, NONE),
+    OP(reg11, NONE),
+    OP(reg12, NONE),
+    OP(reg13, NONE),
+    OP(reg14, NONE),
+    OP(reg15, NONE),
+    OP(reg16, NONE),
+    OP(reg17, NONE),
+    OP(reg18, NONE),
+    OP(reg19, NONE),
+    OP(reg20, NONE),
+    OP(reg21, NONE),
+    OP(reg22, NONE),
+    OP(reg23, NONE),
+    OP(reg24, NONE),
+    OP(reg25, NONE),
+    OP(reg26, NONE),
+    OP(reg27, NONE),
+    OP(reg28, NONE),
+    OP(reg29, NONE),
+    OP(reg30, NONE),
+    OP(reg31, NONE),
     OP(breg0, SLEB128),
     OP(breg1, SLEB128),
     OP(breg2, SLEB128),
@@ -176,25 +193,25 @@ static const opcode_t opcodes[] {
     OP(breg31, SLEB128),
     OP(regx, ULEB128),
     OP(fbreg, SLEB128),
-    OP(bregx, 0), // TODO urgh, ULEB128 followed by SLEB128
+    OP(bregx, ULEB128SLEB128),
     OP(piece, ULEB128),
-    OP(deref_size, 1),
-    OP(xderef_size, 1),
-    OP(nop, 0),
-    OP(push_object_address, 0),
-    OP(call2, 2),
-    OP(call4, 4),
-    OP(call_ref, ADDRSIZE),
-    OP(form_tls_address, 0),
-    OP(call_frame_cfa, 0),
-    OP(bit_piece, 0), // TODO 2x ULEB128
-    OP(implicit_value, 0), // TODO ULEB128 size + data
-    OP(stack_value, 0),
-    OP(GNU_push_tls_address, 0),
-    OP(GNU_uninit, 0),
-    OP(GNU_encoded_addr, 0),
-    OP(GNU_implicit_pointer, 0),
-    OP(GNU_entry_value, 0)
+    OP(deref_size, U1),
+    OP(xderef_size, U1),
+    OP(nop, NONE),
+    OP(push_object_address, NONE),
+    OP(call2, U2),
+    OP(call4, U4),
+    OP(call_ref, ADDR),
+    OP(form_tls_address, NONE),
+    OP(call_frame_cfa, NONE),
+    OP(bit_piece, ULEB128ULEB128),
+    OP(implicit_value, ULEB128BLOCK),
+    OP(stack_value, NONE),
+    OP(GNU_push_tls_address, NONE),
+    OP(GNU_uninit, NONE),
+    OP(GNU_encoded_addr, NONE),
+    OP(GNU_implicit_pointer, NONE),
+    OP(GNU_entry_value, NONE)
 };
 
 #undef OP
@@ -211,7 +228,6 @@ static const opcode_t* opcode(uint8_t code)
     return nullptr;
 }
 
-
 DwarfExpression::DwarfExpression()
 {
 }
@@ -219,6 +235,7 @@ DwarfExpression::DwarfExpression()
 DwarfExpression::DwarfExpression(Dwarf_Ptr block, Dwarf_Unsigned len, uint8_t addrSize) :
     m_addrSize(addrSize)
 {
+    assert(m_addrSize == 4 || m_addrSize == 8);
     m_block = QByteArray::fromRawData(static_cast<const char*>(block), len);
 }
 
@@ -235,34 +252,77 @@ QString DwarfExpression::displayString() const
     for (int i = 0; i < m_block.size(); ++i) {
         const auto op = opcode(m_block.at(i));
         if (!op) {
-            s += "unknown<0x" + QString::number(m_block.at(i), 16) + ">";
+            s += "unknown<0x" + QString::number((uint8_t)m_block.at(i), 16) + ">";
         } else {
             s += op->name;
+            int size = 0;
 
-            if (op->opSize >= 0) {
-                // fixed size arguments
-                for (int j = 0; j < op->opSize && i + j + 1 < m_block.size(); ++j) {
-                    s += " 0x" + QString::number(m_block.at(i + j + 1), 16);
-                }
-                i += op->opSize;
-            } else {
-                // LEB128 encoded arguments
-                int size = 0;
-                if (op->opSize == ULEB128) {
-                    s += ' ' + QString::number(DwarfLEB128::decodeUnsigned(m_block.constData() + i + 1, &size));
-                } else if (op->opSize == SLEB128) {
-                    s += ' ' + QString::number(DwarfLEB128::decodeSigned(m_block.constData() + i + 1, &size));
-                } else if (op->opSize == ADDRSIZE) {
+            // TODO correct endianess conversion
+            #define NUM2STR(type) \
+            {\
+                size = sizeof(type); \
+                assert(m_block.size() > i + size); \
+                const auto value = qFromLittleEndian<type>(reinterpret_cast<const unsigned char*>(m_block.constData() + i + 1)); \
+                s += ' ' + QString::number(value); \
+                break; \
+            }
+
+            switch (op->opType) {
+                case OperandType::NONE:
+                    break;
+
+                case OperandType::U1:
+                    NUM2STR(uint8_t)
+                case OperandType::U2:
+                    NUM2STR(uint16_t)
+                case OperandType::U4:
+                    NUM2STR(uint32_t)
+                case OperandType::U8:
+                    NUM2STR(quint64) // uint64_t != quint64...
+
+                case OperandType::S1:
+                    NUM2STR(int8_t)
+                case OperandType::S2:
+                    NUM2STR(int16_t)
+                case OperandType::S4:
+                    NUM2STR(int32_t)
+                case OperandType::S8:
+                    NUM2STR(quint64)
+
+                case OperandType::ADDR:
+                {
                     uint64_t addr = 0;
                     // TODO: endianess conversion
                     memcpy(&addr, m_block.constData() + i + 1, m_addrSize);
                     s += " 0x" + QByteArray::number(qulonglong(addr), 16);
                     size = m_addrSize;
-                } else {
-                    Q_UNREACHABLE();
+                    break;
                 }
-                i += size;
+
+                case OperandType::ULEB128:
+                    s += ' ' + QString::number(DwarfLEB128::decodeUnsigned(m_block.constData() + i + 1, &size));
+                    break;
+                case OperandType::SLEB128:
+                    s += ' ' + QString::number(DwarfLEB128::decodeSigned(m_block.constData() + i + 1, &size));
+                    break;
+                case OperandType::ULEB128ULEB128:
+                {
+                    // TODO
+                    assert(!"not implemented yet");
+                    break;
+                }
+                case OperandType::ULEB128SLEB128:
+                    // TODO
+                    assert(!"not implemented yet");
+                    break;
+                case OperandType::ULEB128BLOCK:
+                    // TODO
+                    assert(!"not implemented yet");
+                    break;
             }
+
+            #undef NUM2STR
+            i += size;
         }
         if (i < m_block.size() - 1)
             s += ' ';
