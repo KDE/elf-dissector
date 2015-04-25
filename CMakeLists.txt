@@ -78,6 +78,8 @@ set(libelfdisector_srcs
     elf/elffile.cpp
     elf/elffileset.cpp
     elf/elfheader.cpp
+    elf/elfnoteentry.cpp
+    elf/elfnotesection.cpp
     elf/elfrelocationentry.cpp
     elf/elfrelocationsection.cpp
     elf/elfsectionheader.cpp

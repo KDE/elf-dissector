@@ -21,6 +21,7 @@
 #include "elfstringtablesection.h"
 #include "elfsymboltablesection_impl.h"
 #include "elfdynamicsection_impl.h"
+#include "elfnotesection.h"
 #include "elfrelocationsection.h"
 
 #include <dwarf/dwarfinfo.h>
@@ -188,6 +189,9 @@ void ElfFile::parseSections()
             case SHT_REL:
             case SHT_RELA:
                 section = new ElfRelocationSection(this, shdr);
+                break;
+            case SHT_NOTE:
+                section = new ElfNoteSection(this, shdr);
                 break;
             default:
                 section = new ElfSection(this, shdr);
