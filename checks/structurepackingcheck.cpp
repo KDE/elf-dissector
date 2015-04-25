@@ -66,6 +66,25 @@ static QString printSummary(int structSize, int usedBytes, int usedBits, int opt
     return s;
 }
 
+static int dataMemberLocation(DwarfDie *die)
+{
+    const auto attr = die->attribute(DW_AT_data_member_location);
+    if (attr.canConvert(QVariant::Int))
+        return attr.toInt();
+    qWarning() << "Cannot convert location of" << die->displayName() << ":" << attr.value<DwarfExpression>().displayString();
+    return 0;
+}
+
+static bool compareMemberDiesByLocation(DwarfDie *lhs, DwarfDie *rhs)
+{
+    const auto lhsLoc = dataMemberLocation(lhs);
+    const auto rhsLoc = dataMemberLocation(rhs);
+    if (lhsLoc == rhsLoc) {
+        return lhs->attribute(DW_AT_bit_offset) > rhs->attribute(DW_AT_bit_offset);
+    }
+    return lhsLoc < rhsLoc;
+}
+
 QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
 {
     assert(structDie->tag() == DW_TAG_class_type || structDie->tag() == DW_TAG_structure_type);
@@ -77,6 +96,7 @@ QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
         else if (child->tag() == DW_TAG_inheritance)
             members.push_back(child);
     }
+    std::sort(members.begin(), members.end(), compareMemberDiesByLocation);
 
     const int structSize = structDie->typeSize();
     int usedBytes;
@@ -102,6 +122,7 @@ void StructurePackingCheck::checkDie(DwarfDie* die)
             else
                 checkDie(child);
         }
+        std::sort(members.begin(), members.end(), compareMemberDiesByLocation);
 
         const int structSize = die->typeSize();
         if (structSize <= 0)
@@ -208,15 +229,6 @@ static int actualTypeSize(DwarfDie *die)
         }
     }
     return die->typeSize() * 8;
-}
-
-static int dataMemberLocation(DwarfDie *die)
-{
-    const auto attr = die->attribute(DW_AT_data_member_location);
-    if (attr.canConvert(QVariant::Int))
-        return attr.toInt();
-    qWarning() << "Cannot convert location of" << die->displayName() << ":" << attr.value<DwarfExpression>().displayString();
-    return 0;
 }
 
 std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
