@@ -106,7 +106,7 @@ QModelIndex ElfModel::parent(const QModelIndex& child) const
 
 QModelIndex ElfModel::index(int row, int column, const QModelIndex& parent) const
 {
-    if (!m_fileSet)
+    if (!m_fileSet || !hasIndex(row, column, parent))
         return QModelIndex();
 
     if (!parent.isValid())
