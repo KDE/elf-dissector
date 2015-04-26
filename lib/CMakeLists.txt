@@ -1,0 +1,38 @@
+set(libelfdisector_srcs
+    elf/elfdynamicentry.cpp
+    elf/elfdynamicsection.cpp
+    elf/elffile.cpp
+    elf/elffileset.cpp
+    elf/elfheader.cpp
+    elf/elfnoteentry.cpp
+    elf/elfnotesection.cpp
+    elf/elfrelocationentry.cpp
+    elf/elfrelocationsection.cpp
+    elf/elfsectionheader.cpp
+    elf/elfsection.cpp
+    elf/elfstringtablesection.cpp
+    elf/elfsymboltableentry.cpp
+    elf/elfsymboltablesection.cpp
+
+    demangle/demangler.cpp
+
+    disassmbler/disassembler.cpp
+
+    dwarf/dwarfinfo.cpp
+    dwarf/dwarfdie.cpp
+    dwarf/dwarfexpression.cpp
+    dwarf/dwarfleb128.cpp
+
+    checks/ldbenchmark.cpp
+    checks/structurepackingcheck.cpp
+    checks/virtualdtorcheck.cpp
+
+    printers/dynamicsectionprinter.cpp
+    printers/notesectionprinter.cpp
+    printers/relocationprinter.cpp
+)
+
+add_library(libelfdissector STATIC ${libelfdisector_srcs})
+target_link_libraries(libelfdissector LINK_PUBLIC Qt5::Core LINK_PRIVATE Binutils::Iberty Binutils::Opcodes Dwarf::Dwarf)
+
+add_subdirectory(checks)

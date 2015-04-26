@@ -17,8 +17,9 @@
 
 #include <QtTest/qtest.h>
 #include <QObject>
+#include <QDebug>
 
-#include "../demangle/demangler.cpp"
+#include <demangle/demangler.h>
 
 #define VB QVector<QByteArray>()
 

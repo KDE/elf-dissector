@@ -1,5 +1,5 @@
 add_executable(demangler_test demangler_test.cpp)
-target_link_libraries(demangler_test Qt5::Test Binutils::Iberty)
+target_link_libraries(demangler_test Qt5::Test libelfdissector)
 add_test(NAME test-demangle COMMAND demangler_test)
 
 add_definitions(-DBINDIR="${CMAKE_BINARY_DIR}/bin/")
