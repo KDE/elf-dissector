@@ -61,6 +61,11 @@ public:
         return m_symbol->st_size;
     }
 
+    inline uint32_t index() const override
+    {
+        return (reinterpret_cast<const unsigned char*>(m_symbol) - symbolTable()->rawData()) / symbolTable()->header()->entrySize();
+    }
+
 private:
     const T* m_symbol = 0;
 };

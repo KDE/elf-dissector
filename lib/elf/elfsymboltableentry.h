@@ -51,6 +51,9 @@ public:
     /** Mangled name from string table. */
     const char* name() const;
 
+    /** Index in the symbol table. */
+    virtual uint32_t index() const = 0;
+
 protected:
     explicit ElfSymbolTableEntry(const ElfSymbolTableSection *section);
     virtual uint8_t info() const = 0;
