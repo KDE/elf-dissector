@@ -85,6 +85,16 @@ MainWindow::~MainWindow()
 {
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QSettings settings;
+    settings.beginGroup("MainWindow");
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
+    settings.endGroup();
+    QMainWindow::closeEvent(event);
+}
+
 void MainWindow::fileOpen()
 {
     const QString fileName = QFileDialog::getOpenFileName(this, tr("Open ELF Object"));
@@ -131,6 +141,11 @@ void MainWindow::restoreSettings()
         m_currentFileName = std::move(fileName);
         loadFile(m_currentFileName);
     }
+
+    settings.beginGroup("MainWindow");
+    restoreGeometry(settings.value("geometry").toByteArray());
+    restoreState(settings.value("windowState").toByteArray());
+    settings.endGroup();
 }
 
 void MainWindow::treeMapContextMenu(const QPoint& pos)

@@ -42,6 +42,9 @@ public:
 
     void loadFile(const QString &fileName);
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void fileOpen();
     void hideDebugInformation();
