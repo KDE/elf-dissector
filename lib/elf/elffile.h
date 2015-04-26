@@ -23,6 +23,7 @@
 #include "elfdynamicsection.h"
 
 #include <QFile>
+#include <QMetaType>
 #include <QVector>
 
 #include <memory>
@@ -97,5 +98,7 @@ private:
     QVector<ElfSection*> m_sections;
     DwarfInfo *m_dwarfInfo = nullptr;
 };
+
+Q_DECLARE_METATYPE(ElfFile*)
 
 #endif // ELFFILE_H

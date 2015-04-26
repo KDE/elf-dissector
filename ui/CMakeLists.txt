@@ -8,6 +8,7 @@ set(libelfdissectorui_srcs
     model/indexvisitor.cpp
     model/parentvisitor.cpp
     model/rowcountvisitor.cpp
+    model/sectionproxymodel.cpp
 
     mainwindow.cpp
     colorizer.cpp

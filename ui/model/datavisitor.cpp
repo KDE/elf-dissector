@@ -73,6 +73,8 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             s += QStringLiteral("Machine: ") + machineToString(file->header()->machine()) + "<br/>";
             return s;
         }
+        case ElfModel::FileRole:
+            return QVariant::fromValue(file);
     }
     return QVariant();
 }
@@ -158,6 +160,8 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             }
             return s;
         }
+        case ElfModel::SectionRole:
+            return QVariant::fromValue(section);
     }
 
     return QVariant();

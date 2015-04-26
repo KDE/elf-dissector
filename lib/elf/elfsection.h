@@ -20,6 +20,8 @@
 
 #include "elfsectionheader.h"
 
+#include <QMetaType>
+
 #include <cstdint>
 
 class ElfFile;
@@ -55,5 +57,7 @@ protected:
     ElfSectionHeader *m_sectionHeader;
     ElfSection *m_linkedSection;
 };
+
+Q_DECLARE_METATYPE(ElfSection*)
 
 #endif // ELFSECTION_H

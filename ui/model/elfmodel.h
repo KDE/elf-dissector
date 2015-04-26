@@ -34,7 +34,9 @@ class ElfModel : public QAbstractItemModel
 public:
     enum Role {
         SizeRole = Qt::UserRole + 1,
-        DetailRole
+        DetailRole,
+        FileRole,
+        SectionRole,
     };
 
     explicit ElfModel(QObject* parent = nullptr);
