@@ -19,6 +19,7 @@
 #include "elfmodel.h"
 
 #include <elf/elffile.h>
+#include <elf/elfnoteentry.h>
 #include <elf.h>
 
 #include <disassmbler/disassembler.h>
@@ -26,6 +27,7 @@
 #include <checks/structurepackingcheck.h>
 
 #include <printers/dynamicsectionprinter.h>
+#include <printers/notesectionprinter.h>
 #include <printers/relocationprinter.h>
 
 #include <QDebug>
@@ -347,6 +349,31 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
                         s += QString::number(entry->value());
             }
             s += "<br/>";
+            return s;
+        }
+    }
+
+    return QVariant();
+}
+
+QVariant DataVisitor::doVisit(ElfNoteEntry* entry, int role) const
+{
+    switch (role) {
+        case Qt::DisplayRole:
+            return NoteSectionPrinter::typeDisplayString(entry);
+        case ElfModel::SizeRole:
+            return QVariant::fromValue<quint64>(entry->size());
+        case ElfModel::DetailRole:
+        {
+            QString s("Name: ");
+            s += entry->name() + QString("<br/>Description: ");
+            if (entry->isGNUVendorNote() && entry->type() == NT_GNU_ABI_TAG) {
+                s += NoteSectionPrinter::abi(entry);
+            } else if (entry->isGNUVendorNote() && entry->type() == NT_GNU_GOLD_VERSION) {
+                s += QByteArray(entry->descriptionData(), entry->descriptionSize());
+            } else {
+                s += QByteArray(entry->descriptionData(), entry->descriptionSize()).toHex();
+            }
             return s;
         }
     }
