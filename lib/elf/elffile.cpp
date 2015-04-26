@@ -21,6 +21,7 @@
 #include "elfstringtablesection.h"
 #include "elfsymboltablesection_impl.h"
 #include "elfdynamicsection_impl.h"
+#include "elfgnusymbolversiontable.h"
 #include "elfnotesection.h"
 #include "elfrelocationsection.h"
 
@@ -192,6 +193,9 @@ void ElfFile::parseSections()
                 break;
             case SHT_NOTE:
                 section = new ElfNoteSection(this, shdr);
+                break;
+            case SHT_GNU_versym:
+                section = new ElfGNUSymbolVersionTable(this, shdr);
                 break;
             default:
                 section = new ElfSection(this, shdr);
