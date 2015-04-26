@@ -83,7 +83,7 @@ int ElfModel::columnCount(const QModelIndex& parent) const
 
 int ElfModel::rowCount(const QModelIndex& parent) const
 {
-    if (!m_fileSet)
+    if (!m_fileSet || (parent.isValid() && parent.column() != 0))
         return 0;
 
     RowCountVisitor v;
