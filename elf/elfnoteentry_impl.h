@@ -45,15 +45,20 @@ public:
         return reinterpret_cast<const char*>(m_note) + sizeof(T);
     }
 
+    uint64_t descriptionSize() const final
+    {
+        return m_note->n_descsz;
+    }
+
+    const char* descriptionData() const final
+    {
+        return reinterpret_cast<const char*>(m_note) + sizeof(T) + alignTo(nameSize(), sizeof(T::n_namesz));
+    }
+
 protected:
     uint64_t nameSize() const final
     {
         return m_note->n_namesz;
-    }
-
-    uint64_t descriptionSize() const final
-    {
-        return m_note->n_descsz;
     }
 
 private:

@@ -47,6 +47,7 @@ private slots:
         QCOMPARE(entry->size(), section->size());
         QCOMPARE(entry->type(), (uint64_t)NT_GNU_ABI_TAG);
         QCOMPARE(entry->name(), "GNU");
+        QVERIFY(entry->isGNUVendorNote());
         QCOMPARE(entry->descriptionSize(), (uint64_t)16);
     }
 };

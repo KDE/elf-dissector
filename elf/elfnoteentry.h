@@ -41,6 +41,11 @@ public:
 
     /** Size of the description field. */
     virtual uint64_t descriptionSize() const = 0;
+    /** Data of the desciprition field. */
+    virtual const char* descriptionData() const = 0;
+
+    /** Check if this is a GNU vendor note. */
+    bool isGNUVendorNote() const;
 
 protected:
     virtual uint64_t nameSize() const = 0;
