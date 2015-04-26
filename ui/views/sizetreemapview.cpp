@@ -86,6 +86,9 @@ void SizeTreeMapView::reloadTreeMap()
 
     const auto idx = selection.first();
     auto file = idx.data(ElfModel::FileRole).value<ElfFile*>();
+    const auto section = idx.data(ElfModel::SectionRole).value<ElfSection*>();
+    if (!file && section)
+        file = section->file();
     if (!file)
         return;
 
@@ -127,19 +130,28 @@ void SizeTreeMapView::reloadTreeMap()
     QVector<SymbolNode*> sectionItems;
     sectionItems.resize(file->sectionHeaders().size());
 
-    Colorizer sectionColorizer(96, 255);
-    for (const auto shdr : file->sectionHeaders()) {
-        if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation()) {
-            baseItem->setSum(baseItem->sum() - shdr->size());
-            continue;
+    if (!section) {
+        Colorizer sectionColorizer(96, 255);
+        for (const auto shdr : file->sectionHeaders()) {
+            if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation()) {
+                baseItem->setSum(baseItem->sum() - shdr->size());
+                continue;
+            }
+            auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
+            item->setSum(shdr->size());
+            item->setSorting(-2, true); // sort by value
+            if (ui->actionColorizeSections->isChecked())
+                item->setBackColor(sectionColorizer.nextColor());
+            sectionItems[shdr->sectionIndex()] = new SymbolNode;
+            sectionItems[shdr->sectionIndex()]->item = item;
         }
-        auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
-        item->setSum(shdr->size());
+    } else {
+        baseItem->setSum(section->header()->size());
+        auto item = new TreeMapItem(baseItem, section->header()->size(), section->header()->name(), QString::number(section->header()->size()));
+        item->setSum(section->header()->size());
         item->setSorting(-2, true); // sort by value
-        if (ui->actionColorizeSections->isChecked())
-            item->setBackColor(sectionColorizer.nextColor());
-        sectionItems[shdr->sectionIndex()] = new SymbolNode;
-        sectionItems[shdr->sectionIndex()]->item = item;
+        sectionItems[section->header()->sectionIndex()] = new SymbolNode;
+        sectionItems[section->header()->sectionIndex()]->item = item;
     }
 
     Colorizer symbolColorizer;
