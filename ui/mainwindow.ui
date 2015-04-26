@@ -34,7 +34,7 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="structureView">
        <attribute name="title">
         <string>&amp;ELF Structure</string>
        </attribute>
@@ -79,24 +79,10 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="SizeTreeMapView" name="sizeTreeMapView">
        <attribute name="title">
-        <string>&amp;Size Tree Map</string>
+        <string>Size Tree Map</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-       </layout>
       </widget>
      </widget>
     </item>
@@ -119,14 +105,10 @@
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menu_View">
+   <widget class="QMenu" name="menuView">
     <property name="title">
      <string>&amp;View</string>
     </property>
-    <addaction name="actionHideDebugInformation"/>
-    <addaction name="separator"/>
-    <addaction name="actionColorizeSections"/>
-    <addaction name="actionColorizeSymbols"/>
    </widget>
    <widget class="QMenu" name="menu_Settings">
     <property name="title">
@@ -143,7 +125,7 @@
     <addaction name="actionVirtualDestructors"/>
    </widget>
    <addaction name="menu_File"/>
-   <addaction name="menu_View"/>
+   <addaction name="menuView"/>
    <addaction name="menu_Checks"/>
    <addaction name="menu_Settings"/>
   </widget>
@@ -174,19 +156,6 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="actionHideDebugInformation">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset theme="package_development_debugger">
-     <normaloff/>
-    </iconset>
-   </property>
-   <property name="text">
-    <string>Hide &amp;Debug Information</string>
-   </property>
-  </action>
   <action name="actionReopenPreviousFile">
    <property name="checkable">
     <bool>true</bool>
@@ -198,22 +167,6 @@
    </property>
    <property name="text">
     <string>Reopen &amp;Previously Loaded Files</string>
-   </property>
-  </action>
-  <action name="actionColorizeSections">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Colorize &amp;Sections</string>
-   </property>
-  </action>
-  <action name="actionColorizeSymbols">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Colorize S&amp;ymbols</string>
    </property>
   </action>
   <action name="actionCheckStructurePacking">
@@ -228,10 +181,18 @@
   </action>
   <action name="actionVirtualDestructors">
    <property name="text">
-    <string>Implicit Virtual Destructors</string>
+    <string>&amp;Implicit Virtual Destructors</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SizeTreeMapView</class>
+   <extends>QWidget</extends>
+   <header>views/sizetreemapview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

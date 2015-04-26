@@ -10,6 +10,8 @@ set(libelfdissectorui_srcs
     model/rowcountvisitor.cpp
     model/sectionproxymodel.cpp
 
+    views/sizetreemapview.cpp
+
     mainwindow.cpp
     colorizer.cpp
 )

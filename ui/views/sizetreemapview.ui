@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SizeTreeMapView</class>
+ <widget class="QWidget" name="SizeTreeMapView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="layoutWidget">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLineEdit" name="seachLineEdit">
+         <property name="placeholderText">
+          <string>Search</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTreeView" name="sectionView">
+         <property name="uniformRowHeights">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+  <action name="actionHideDebugInformation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="package_development_debugger"/>
+   </property>
+   <property name="text">
+    <string>Hide &amp;Debug Information</string>
+   </property>
+   <property name="toolTip">
+    <string>Do not show sections containing debug information.</string>
+   </property>
+  </action>
+  <action name="actionColorizeSections">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="fill-color"/>
+   </property>
+   <property name="text">
+    <string>Colorize &amp;Sections</string>
+   </property>
+   <property name="toolTip">
+    <string>Vary color of sections in the size tree map.</string>
+   </property>
+  </action>
+  <action name="actionColorizeSymbols">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="fill-color"/>
+   </property>
+   <property name="text">
+    <string>Colorize S&amp;ymbols</string>
+   </property>
+   <property name="toolTip">
+    <string>Vary the color of symbols in the size tree map.</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

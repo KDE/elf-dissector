@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2013-2014 Volker Krause <vkrause@kde.org>
+    Copyright (C) 2015 Volker Krause <vkrause@kde.org>
 
     This program is free software; you can redistribute it and/or modify it
     under the terms of the GNU Library General Public License as published by
@@ -15,51 +15,41 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SIZETREEMAPVIEW_H
+#define SIZETREEMAPVIEW_H
 
-#include <QMainWindow>
+#include <QWidget>
 
 #include <memory>
 
-class ElfFileSet;
-class ElfModel;
-class TreeMapWidget;
-
-class QItemSelection;
-
-namespace Ui
-{
-class MainWindow;
+namespace Ui {
+class SizeTreeMapView;
 }
 
-class MainWindow : public QMainWindow
+class TreeMapWidget;
+
+class QAbstractItemModel;
+class QAbstractProxyModel;
+class QItemSelection;
+
+class SizeTreeMapView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget* parent = 0);
-    ~MainWindow();
+    explicit SizeTreeMapView(QWidget *parent = nullptr);
+    ~SizeTreeMapView();
 
-    void loadFile(const QString &fileName);
-
-protected:
-    void closeEvent(QCloseEvent *event) override;
-
-private slots:
-    void fileOpen();
-    void reloadFileOnStartup();
-    void tabChanged();
-    void selectionChanged(const QItemSelection &selection);
-
-private:
+    void setModel(QAbstractItemModel *model);
     void restoreSettings();
 
+private slots:
+    void reloadTreeMap();
+    void treeMapContextMenu(const QPoint &pos);
+
 private:
-    std::unique_ptr<Ui::MainWindow> ui;
-    TreeMapWidget *m_treeMap = 0;
-    QString m_currentFileName;
-    ElfModel *m_elfModel = 0;
-    ElfFileSet *m_fileSet = 0;
+    std::unique_ptr<Ui::SizeTreeMapView> ui;
+    QAbstractProxyModel *m_sectionProxy;
+    TreeMapWidget *m_treeMap = nullptr;
 };
 
-#endif // MAINWINDOW_H
+#endif // SIZETREEMAPVIEW_H
