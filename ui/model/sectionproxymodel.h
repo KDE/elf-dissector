@@ -18,10 +18,10 @@
 #ifndef SECTIONPROXYMODEL_H
 #define SECTIONPROXYMODEL_H
 
-#include <QSortFilterProxyModel>
+#include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
 
 /** Restrict the structure model to just files and sections. */
-class SectionProxyModel : public QSortFilterProxyModel
+class SectionProxyModel : public KRecursiveFilterProxyModel
 {
 public:
     explicit SectionProxyModel(QObject* parent = 0);

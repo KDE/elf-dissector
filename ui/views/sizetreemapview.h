@@ -29,8 +29,8 @@ class SizeTreeMapView;
 class TreeMapWidget;
 
 class QAbstractItemModel;
-class QAbstractProxyModel;
 class QItemSelection;
+class QSortFilterProxyModel;
 
 class SizeTreeMapView : public QWidget
 {
@@ -48,7 +48,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::SizeTreeMapView> ui;
-    QAbstractProxyModel *m_sectionProxy;
+    QSortFilterProxyModel *m_sectionProxy;
     TreeMapWidget *m_treeMap = nullptr;
 };
 

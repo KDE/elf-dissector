@@ -41,6 +41,9 @@ SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
     ui->setupUi(this);
 
     ui->sectionView->setModel(m_sectionProxy);
+    connect(ui->searchLineEdit, &QLineEdit::textChanged, this, [this](const QString &text) {
+        m_sectionProxy->setFilterFixedString(text);
+    });
 
     connect(ui->actionHideDebugInformation, &QAction::triggered, this, [this]{
         QSettings settings;

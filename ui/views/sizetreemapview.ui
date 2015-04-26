@@ -37,7 +37,7 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLineEdit" name="seachLineEdit">
+        <widget class="QLineEdit" name="searchLineEdit">
          <property name="placeholderText">
           <string>Search</string>
          </property>

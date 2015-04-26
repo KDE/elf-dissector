@@ -18,7 +18,7 @@
 #include "sectionproxymodel.h"
 #include "elfmodel.h"
 
-SectionProxyModel::SectionProxyModel(QObject* parent): QSortFilterProxyModel(parent)
+SectionProxyModel::SectionProxyModel(QObject* parent): KRecursiveFilterProxyModel(parent)
 {
 }
 
@@ -31,5 +31,5 @@ bool SectionProxyModel::filterAcceptsRow(int source_row, const QModelIndex& sour
     const auto secData = sourceModel()->data(sourceIndex, ElfModel::SectionRole);
     if (fileData.isNull() && secData.isNull())
         return false;
-    return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+    return KRecursiveFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 }
