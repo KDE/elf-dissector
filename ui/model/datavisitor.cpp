@@ -20,6 +20,7 @@
 
 #include <elf/elffile.h>
 #include <elf/elfnoteentry.h>
+#include <elf/elfgnusymbolversiontable.h>
 #include <elf.h>
 
 #include <disassmbler/disassembler.h>
@@ -234,6 +235,33 @@ static uint64_t virtualTableEntry(ElfSymbolTableEntry *entry, int index)
     Q_UNREACHABLE();
 }
 
+static QString printVerSymInfo(ElfSymbolTableEntry *entry)
+{
+    if (entry->symbolTable()->header()->type() != SHT_DYNSYM)
+        return {};
+    const ElfFile *file = entry->symbolTable()->file();
+    const auto verSymIdx = file->indexOfSection(SHT_GNU_versym);
+    if (verSymIdx < 0)
+        return {};
+    const auto verSymTab = file->section<ElfGNUSymbolVersionTable>(verSymIdx);
+    const auto versionIndex = verSymTab->versionIndex(entry->index());
+
+    QString s("GNU version: ");
+    switch (versionIndex) {
+        case VER_NDX_LOCAL:
+            s += "&lt;local&gt;";
+            break;
+        case VER_NDX_GLOBAL:
+            s += "&lt;global&gt;";
+            break;
+        default:
+            // TODO
+            s += QString::number(versionIndex);
+    };
+    s += "<br/>";
+    return s;
+}
+
 QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 {
     switch (arg) {
@@ -254,6 +282,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             s += QStringLiteral("Bind type: ") + bindTypeToString(entry->bindType()) + "<br/>";
             s += QStringLiteral("Symbol type: ") + symbolTypeToString(entry->type()) + "<br/>";
             s += QStringLiteral("Visibility: ") + visibilityToString(entry->visibility()) + "<br/>";
+            s += printVerSymInfo(entry);
 
             const auto hasValidSectionIndex = entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount();
             if (hasValidSectionIndex) {
