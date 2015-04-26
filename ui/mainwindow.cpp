@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     ui->elfStructureView->setModel(filter);
 
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::fileOpen);
-    connect(ui->actionQuit, &QAction::triggered, &QCoreApplication::quit);
+    connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
     connect(ui->actionHideDebugInformation, &QAction::triggered, this, &MainWindow::hideDebugInformation);
     connect(ui->actionColorizeSections, &QAction::triggered, this, &MainWindow::colorizationChanged);
     connect(ui->actionColorizeSymbols, &QAction::triggered, this, &MainWindow::colorizationChanged);
