@@ -37,7 +37,7 @@ public:
         DetailRole
     };
 
-    explicit ElfModel(QObject* parent);
+    explicit ElfModel(QObject* parent = nullptr);
     ~ElfModel();
 
     void setFileSet(ElfFileSet* fileSet);
