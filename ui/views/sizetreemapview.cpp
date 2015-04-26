@@ -179,7 +179,7 @@ void SizeTreeMapView::treeMapContextMenu(const QPoint& pos)
 {
     QMenu menu;
     m_treeMap->addSplitDirectionItems(&menu);
-    menu.exec(mapToGlobal(pos));
+    menu.exec(m_treeMap->mapToGlobal(pos));
 
     QSettings settings;
     settings.setValue("TreeMap/SplitMode", m_treeMap->splitModeString());
