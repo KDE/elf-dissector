@@ -102,6 +102,7 @@ set(libelfdisector_srcs
     checks/virtualdtorcheck.cpp
 
     printers/dynamicsectionprinter.cpp
+    printers/notesectionprinter.cpp
     printers/relocationprinter.cpp
 )
 
