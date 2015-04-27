@@ -25,6 +25,7 @@ ElfSection::ElfSection(ElfFile* file, ElfSectionHeader *shdr) :
     m_sectionHeader(shdr),
     m_linkedSection(nullptr)
 {
+    assert(m_file->size() > m_sectionHeader->size());
 }
 
 ElfSection::~ElfSection()
@@ -43,7 +44,6 @@ uint64_t ElfSection::size() const
 
 const unsigned char* ElfSection::rawData() const
 {
-    assert(m_file->size() > m_sectionHeader->size());
     return m_file->rawData() + m_sectionHeader->sectionOffset();
 }
 
