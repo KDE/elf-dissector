@@ -29,8 +29,10 @@ ElfDynamicSection::ElfDynamicSection(ElfFile* file, ElfSectionHeader *shdr): Elf
 QByteArray ElfDynamicSection::soName() const
 {
     for (const auto entry : m_entries) {
-        if (entry->tag() == DT_SONAME)
-            return entry->stringValue();
+        if (entry->tag() == DT_SONAME) {
+            const auto str = entry->stringValue();
+            return QByteArray::fromRawData(str, strlen(str));
+        }
     }
     return QByteArray();
 }
