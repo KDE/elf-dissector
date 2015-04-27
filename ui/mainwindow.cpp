@@ -134,7 +134,7 @@ void MainWindow::restoreSettings()
 
 void MainWindow::loadFile(const QString& fileName)
 {
-    if (fileName.isEmpty())
+    if (fileName.isEmpty() || windowFilePath() == fileName)
         return;
     setWindowFilePath(fileName);
 
