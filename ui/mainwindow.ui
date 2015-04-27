@@ -81,7 +81,12 @@
       </widget>
       <widget class="SizeTreeMapView" name="sizeTreeMapView">
        <attribute name="title">
-        <string>Size Tree Map</string>
+        <string>&amp;Size Tree Map</string>
+       </attribute>
+      </widget>
+      <widget class="DependencyView" name="dependencyView">
+       <attribute name="title">
+        <string>&amp;Dependencies</string>
        </attribute>
       </widget>
      </widget>
@@ -190,6 +195,12 @@
    <class>SizeTreeMapView</class>
    <extends>QWidget</extends>
    <header>views/sizetreemapview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DependencyView</class>
+   <extends>QWidget</extends>
+   <header>views/dependencyview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

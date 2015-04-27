@@ -144,6 +144,7 @@ void MainWindow::loadFile(const QString& fileName)
     m_fileSet->topologicalSort();
     m_elfModel->setFileSet(m_fileSet);
     ui->elfStructureView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->dependencyView->setFileSet(m_fileSet);
 
     QSettings settings;
     settings.setValue("Recent/PreviousFile", fileName);
