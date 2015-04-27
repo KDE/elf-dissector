@@ -43,9 +43,17 @@ DependencyView::~DependencyView() = default;
 void DependencyView::setFileSet(ElfFileSet* fileSet)
 {
     m_model->clear();
+    m_fileIndex.clear();
     m_fileSet = fileSet;
     if (!fileSet || fileSet->size() == 0)
         return;
+
+    for (int i = 0; i < m_fileSet->size(); ++i) {
+        const auto file = m_fileSet->file(i);
+        const auto soName = file->dynamicSection()->soName();
+        if (!soName.isEmpty())
+            m_fileIndex.insert(soName, file);
+    }
 
     auto file = fileSet->file(0);
     auto root = new QStandardItem(file->displayName()); // TODO soName vs. fileName for non-SOs
@@ -76,11 +84,10 @@ void DependencyView::buildTree(QStandardItem* parent, ElfFile* file)
 
 ElfFile* DependencyView::findFile(const QByteArray& soName) const
 {
-    for (int i = 0; i < m_fileSet->size(); ++i) {
-        if (m_fileSet->file(i)->dynamicSection()->soName() == soName)
-            return m_fileSet->file(i);
-    }
-    return nullptr;
+    const auto it = m_fileIndex.constFind(soName);
+    if (it == m_fileIndex.constEnd())
+        return nullptr;
+    return it.value();
 }
 
 bool DependencyView::hasCycle(QStandardItem* item, const QByteArray& soName) const

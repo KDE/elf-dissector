@@ -49,6 +49,7 @@ private:
     std::unique_ptr<Ui::DependencyView> ui;
     ElfFileSet *m_fileSet;
     QStandardItemModel *m_model;
+    QHash<QByteArray, ElfFile*> m_fileIndex;
 };
 
 #endif // DEPENDENCYVIEW_H
