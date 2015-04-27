@@ -22,6 +22,7 @@
 #include <elf/elffile.h>
 
 #include <QDebug>
+#include <QShowEvent>
 #include <QStandardItemModel>
 
 DependencyView::DependencyView(QWidget* parent):
@@ -45,7 +46,12 @@ void DependencyView::setFileSet(ElfFileSet* fileSet)
     m_model->clear();
     m_fileIndex.clear();
     m_fileSet = fileSet;
-    if (!fileSet || fileSet->size() == 0)
+    buildTree();
+}
+
+void DependencyView::buildTree()
+{
+    if (!m_fileSet || m_fileSet->size() == 0 || !isVisible() || m_model->rowCount())
         return;
 
     for (int i = 0; i < m_fileSet->size(); ++i) {
@@ -55,11 +61,11 @@ void DependencyView::setFileSet(ElfFileSet* fileSet)
             m_fileIndex.insert(soName, file);
     }
 
-    auto file = fileSet->file(0);
+    auto file = m_fileSet->file(0);
     auto root = new QStandardItem(file->displayName()); // TODO soName vs. fileName for non-SOs
 //     root->setToolTip(file->displayName());
     m_model->appendRow(root);
-    buildTree(root, fileSet->file(0));
+    buildTree(root, m_fileSet->file(0));
 }
 
 void DependencyView::buildTree(QStandardItem* parent, ElfFile* file)
@@ -97,4 +103,10 @@ bool DependencyView::hasCycle(QStandardItem* item, const QByteArray& soName) con
             return true;
     }
     return false;
+}
+
+void DependencyView::showEvent(QShowEvent* event)
+{
+    buildTree();
+    QWidget::showEvent(event);
 }

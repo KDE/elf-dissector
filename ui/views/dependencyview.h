@@ -41,7 +41,11 @@ public:
 
     void setFileSet(ElfFileSet *fileSet);
 
+protected:
+    void showEvent(QShowEvent* event) override;
+
 private:
+    void buildTree();
     void buildTree(QStandardItem *parent, ElfFile *file);
     ElfFile* findFile(const QByteArray &soName) const;
     bool hasCycle(QStandardItem* item, const QByteArray &soName) const;
