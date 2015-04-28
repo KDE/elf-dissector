@@ -389,6 +389,28 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
     return QVariant();
 }
 
+QVariant DataVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int role) const
+{
+    switch (role) {
+        case Qt::DisplayRole:
+            return "version definition";
+        case ElfModel::SizeRole:
+            return verDef->size();
+        case ElfModel::DetailRole:
+        {
+            QString s;
+            s += "Flags: " + QString::number(verDef->flags()) + "<br/>";
+            s += "Index: " + QString::number(verDef->versionIndex()) + "<br/>";
+            s += "Aux count: " + QString::number(verDef->auxSize()) + "<br/>";
+            s += "Hash: " + QString::number(verDef->hash()) + "<br/>";
+            s += "Aux offset: " + QString::number(verDef->auxOffset()) + "<br/>";
+            s += "Next offset: " + QString::number(verDef->nextOffset()) + "<br/>";
+            return s;
+        }
+    }
+    return {};
+}
+
 QVariant DataVisitor::doVisit(ElfNoteEntry* entry, int role) const
 {
     switch (role) {

@@ -47,6 +47,9 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
         case SHT_RELA:
             type = ElfNodeVariant::RelocationSection;
             break;
+        case SHT_GNU_verdef:
+            type = ElfNodeVariant::VersionDefinitionSection;
+            break;
         default:
             if (qstrcmp(section->header()->name(), ".debug_info") == 0) {
                 type = ElfNodeVariant::DwarfInfo;
@@ -68,6 +71,12 @@ IndexVisitor::type IndexVisitor::doVisit(ElfDynamicSection* section, int row) co
 {
     const auto entry = section->entry(row);
     return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::DynamicEntry);
+}
+
+IndexVisitor::type IndexVisitor::doVisit(ElfGNUSymbolVersionDefinitionsSection *section, int row) const
+{
+    const auto entry = section->definition(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::VersionDefinitionEntry);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(ElfNoteSection *section, int row) const

@@ -39,6 +39,11 @@ int RowCountVisitor::doVisit(ElfDynamicSection* section, int) const
     return section->header()->entryCount();
 }
 
+int RowCountVisitor::doVisit(ElfGNUSymbolVersionDefinitionsSection* section, int) const
+{
+    return section->entryCount();
+}
+
 int RowCountVisitor::doVisit(ElfNoteSection* section, int) const
 {
     return section->entryCount();

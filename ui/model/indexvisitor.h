@@ -30,7 +30,8 @@ public:
     type doVisit(ElfFile* file, int row) const override;
     type doVisit(ElfSymbolTableSection* symtab, int row) const override;
     type doVisit(ElfDynamicSection* section, int row) const override;
-    type doVisit(ElfNoteSection* section, int row) const;
+    type doVisit(ElfGNUSymbolVersionDefinitionsSection *section, int row) const override;
+    type doVisit(ElfNoteSection* section, int row) const override;
     type doVisit(ElfRelocationSection *section, int row) const override;
     type doVisit(DwarfInfo* info, int row) const override;
     type doVisit(DwarfDie* die, int row) const override;

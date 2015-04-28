@@ -28,6 +28,7 @@ protected:
     int doVisit(ElfFile* file, int) const override;
     int doVisit(ElfSymbolTableSection* symtab, int) const override;
     int doVisit(ElfDynamicSection* section, int arg) const override;
+    int doVisit(ElfGNUSymbolVersionDefinitionsSection* section, int arg) const override;
     int doVisit(ElfNoteSection* section, int arg) const override;
     int doVisit(ElfRelocationSection* section, int arg) const override;
     int doVisit(DwarfInfo* info, int arg) const override;

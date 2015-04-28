@@ -21,6 +21,8 @@
 #include <elf/elfheader.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfdynamicsection.h>
+#include <elf/elfgnusymbolversiondefinition.h>
+#include <elf/elfgnusymbolversiondefinitionssection.h>
 #include <elf/elfnotesection.h>
 #include <elf/elfnotesection.h>
 #include <elf/elfrelocationsection.h>
@@ -73,6 +75,10 @@ public:
                 return doVisit(node->value<ElfRelocationSection>(), arg);
             case ElfNodeVariant::RelocationEntry:
                 return doVisit(node->value<ElfRelocationEntry>(), arg);
+            case ElfNodeVariant::VersionDefinitionSection:
+                return doVisit(node->value<ElfGNUSymbolVersionDefinitionsSection>(), arg);
+            case ElfNodeVariant::VersionDefinitionEntry:
+                return doVisit(node->value<ElfGNUSymbolVersionDefinition>(), arg);
             case ElfNodeVariant::DwarfInfo:
                 return doVisit(node->value<DwarfInfo>(), arg);
             case ElfNodeVariant::DwarfDie:
@@ -117,6 +123,14 @@ protected:
         return doVisit(static_cast<ElfSection*>(section), arg);
     }
     virtual T doVisit(ElfDynamicEntry*, int) const
+    {
+        return T();
+    }
+    virtual T doVisit(ElfGNUSymbolVersionDefinitionsSection *section, int arg) const
+    {
+        return doVisit(static_cast<ElfSection*>(section), arg);
+    }
+    virtual T doVisit(ElfGNUSymbolVersionDefinition*, int) const
     {
         return T();
     }
