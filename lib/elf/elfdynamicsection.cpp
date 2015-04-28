@@ -64,3 +64,12 @@ QVector< QByteArray > ElfDynamicSection::stringList(int64_t tag) const
     }
     return v;
 }
+
+ElfDynamicEntry* ElfDynamicSection::entryWithTag(int64_t type) const
+{
+    for (const auto entry : m_entries) {
+        if (entry->tag() == type)
+            return entry;
+    }
+    return nullptr;
+}

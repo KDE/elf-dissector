@@ -34,6 +34,8 @@ public:
     QVector<QByteArray> runpaths() const;
     /** Needed libraries. */
     QVector<QByteArray> neededLibraries() const;
+    /** First entry of the given tag. @c nullptr if no such entry exists. */
+    ElfDynamicEntry* entryWithTag(int64_t type) const;
 
 private:
     QVector<QByteArray> stringList(int64_t tag) const;
