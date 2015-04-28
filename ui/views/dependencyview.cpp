@@ -98,7 +98,8 @@ ElfFile* DependencyView::findFile(const QByteArray& soName) const
 
 bool DependencyView::hasCycle(QStandardItem* item, const QByteArray& soName) const
 {
-    while (QStandardItem *parent = item->parent()) {
+    auto parent = item;
+    while ((parent = parent->parent())) {
         if (parent->text() == soName)
             return true;
     }
