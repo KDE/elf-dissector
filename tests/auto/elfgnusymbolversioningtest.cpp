@@ -16,8 +16,10 @@
 */
 
 #include <elf/elffile.h>
+#include <elf/elffileset.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfgnusymbolversiontable.h>
+#include <elf/elfgnusymbolversiondefinitionssection.h>
 
 #include <QtTest/qtest.h>
 #include <QObject>
@@ -30,14 +32,33 @@ class ElfGNUSymbolVersioningTest: public QObject
 private slots:
     void testSymbolVersioning()
     {
-        ElfFile f(BINDIR "single-executable");
-        QCOMPARE(f.isValid(), true);
+        ElfFileSet set;
+        set.addFile(BINDIR "elf-dissector");
+        QVERIFY(set.size() > 1);
 
-        const auto symVerIndex = f.indexOfSection(".gnu.version");
+        // we need a full library for this, not just an executable
+        ElfFile *f = nullptr;
+        for (int i = 0; i < set.size(); ++i) {
+            if (set.file(i)->dynamicSection()->soName() == "libQt5Core.so.5")
+                f = set.file(i);
+        }
+        QVERIFY(f);
+
+        const auto symVerIndex = f->indexOfSection(".gnu.version");
         QVERIFY(symVerIndex > 0);
-        const auto symbolVersionTable = f.section<ElfGNUSymbolVersionTable>(symVerIndex);
+        QCOMPARE(symVerIndex, f->indexOfSection(SHT_GNU_versym));
+        const auto symbolVersionTable = f->section<ElfGNUSymbolVersionTable>(symVerIndex);
         QVERIFY(symbolVersionTable);
-        QCOMPARE(symbolVersionTable->header()->entryCount(), f.section<ElfSymbolTableSection>(f.indexOfSection(".dynsym"))->header()->entryCount());
+        QCOMPARE(symbolVersionTable->header()->entryCount(), f->section<ElfSymbolTableSection>(f->indexOfSection(".dynsym"))->header()->entryCount());
+
+        const auto symDefIndex = f->indexOfSection(".gnu.version_d");
+        QVERIFY(symDefIndex > 0);
+        QCOMPARE(symDefIndex, f->indexOfSection(SHT_GNU_verdef));
+        const auto symbolVersionDefs = f->section<ElfGNUSymbolVersionDefinitionsSection>(symDefIndex);
+        QVERIFY(symbolVersionDefs);
+
+        QCOMPARE(f->dynamicSection()->entryWithTag(DT_VERDEFNUM)->value(), (uint64_t)symbolVersionDefs->entryCount());
+        QVERIFY(symbolVersionDefs->entryCount() > 0);
     }
 };
 

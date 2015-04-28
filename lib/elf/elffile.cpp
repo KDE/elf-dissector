@@ -22,6 +22,7 @@
 #include "elfsymboltablesection_impl.h"
 #include "elfdynamicsection_impl.h"
 #include "elfgnusymbolversiontable.h"
+#include "elfgnusymbolversiondefinitionssection.h"
 #include "elfnotesection.h"
 #include "elfrelocationsection.h"
 
@@ -197,6 +198,9 @@ void ElfFile::parseSections()
             case SHT_GNU_versym:
                 section = new ElfGNUSymbolVersionTable(this, shdr);
                 break;
+            case SHT_GNU_verdef:
+                section = new ElfGNUSymbolVersionDefinitionsSection(this, shdr);
+                break;
             default:
                 section = new ElfSection(this, shdr);
                 break;
@@ -208,6 +212,16 @@ void ElfFile::parseSections()
     for (const auto shdr : m_sectionHeaders) {
         if (shdr->link()) {
             m_sections[shdr->sectionIndex()]->setLinkedSection(m_sections[shdr->link()]);
+        }
+    }
+
+    // pass 3: stuff that requires the full setup for parsing
+    // TODO can probably be done more efficient with on-demand parsing in those places
+    for (auto section : m_sections) {
+        switch (section->header()->type()) {
+            case SHT_GNU_verdef:
+                dynamic_cast<ElfGNUSymbolVersionDefinitionsSection*>(section)->parse();
+                continue;
         }
     }
 }

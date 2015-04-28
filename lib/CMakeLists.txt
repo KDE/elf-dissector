@@ -4,6 +4,8 @@ set(libelfdisector_srcs
     elf/elffile.cpp
     elf/elffileset.cpp
     elf/elfgnusymbolversiontable.cpp
+    elf/elfgnusymbolversiondefinition.cpp
+    elf/elfgnusymbolversiondefinitionssection.cpp
     elf/elfheader.cpp
     elf/elfnoteentry.cpp
     elf/elfnotesection.cpp
