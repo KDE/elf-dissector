@@ -32,9 +32,9 @@ public:
 
     uint16_t flags() const;
     uint16_t versionIndex() const;
-    uint16_t auxSize() const;
+    uint16_t auxiliarySize() const;
     uint32_t hash() const;
-    uint32_t auxOffset() const;
+    uint32_t auxiliaryOffset() const;
     uint32_t nextOffset() const;
 
     /** Size of this entry including its aux entries. Next one follows right afterwards. */

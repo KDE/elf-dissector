@@ -401,9 +401,9 @@ QVariant DataVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int role) c
             QString s;
             s += "Flags: " + QString::number(verDef->flags()) + "<br/>";
             s += "Index: " + QString::number(verDef->versionIndex()) + "<br/>";
-            s += "Aux count: " + QString::number(verDef->auxSize()) + "<br/>";
+            s += "Aux count: " + QString::number(verDef->auxiliarySize()) + "<br/>";
             s += "Hash: " + QString::number(verDef->hash()) + "<br/>";
-            s += "Aux offset: " + QString::number(verDef->auxOffset()) + "<br/>";
+            s += "Aux offset: " + QString::number(verDef->auxiliaryOffset()) + "<br/>";
             s += "Next offset: " + QString::number(verDef->nextOffset()) + "<br/>";
             return s;
         }

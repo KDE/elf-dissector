@@ -49,7 +49,7 @@ uint16_t ElfGNUSymbolVersionDefinition::versionIndex() const
     return m_verDef->vd_ndx;
 }
 
-uint16_t ElfGNUSymbolVersionDefinition::auxSize() const
+uint16_t ElfGNUSymbolVersionDefinition::auxiliarySize() const
 {
     return m_verDef->vd_cnt;
 }
@@ -59,7 +59,7 @@ uint32_t ElfGNUSymbolVersionDefinition::hash() const
     return m_verDef->vd_hash;
 }
 
-uint32_t ElfGNUSymbolVersionDefinition::auxOffset() const
+uint32_t ElfGNUSymbolVersionDefinition::auxiliaryOffset() const
 {
     return m_verDef->vd_aux;
 }
