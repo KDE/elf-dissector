@@ -46,6 +46,7 @@ void ElfGNUSymbolVersionDefinitionsSection::parse()
         return;
 
     uint32_t offset = 0;
+    m_versionDefinitions.reserve(verDefNum->value());
     for (uint i = 0; i < verDefNum->value(); ++i) {
         const auto entry = new ElfGNUSymbolVersionDefinition(this, offset);
         m_versionDefinitions.push_back(entry);
