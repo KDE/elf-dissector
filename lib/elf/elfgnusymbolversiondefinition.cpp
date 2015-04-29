@@ -16,6 +16,7 @@
 */
 
 #include "elfgnusymbolversiondefinition.h"
+#include "elfgnusymbolversiondefinitionauxiliaryentry.h"
 
 #include <elf.h>
 
@@ -30,6 +31,16 @@ ElfGNUSymbolVersionDefinition::ElfGNUSymbolVersionDefinition(ElfGNUSymbolVersion
 
     assert(m_verDef->vd_version == 1);
     static_assert(VER_DEF_CURRENT == 1, "SHT_GNU_verdef format changed!");
+
+    uint32_t auxOffset = 0;
+    m_auxEntries.reserve(auxiliarySize());
+    for (int i = 0; i < auxiliarySize(); ++i) {
+        const auto auxEntry = new ElfGNUSymbolVersionDefinitionAuxiliaryEntry(this, auxOffset);
+        m_auxEntries.push_back(auxEntry);
+        auxOffset += auxEntry->nextAuxiliaryEntryOffset();
+    }
+
+    assert(auxiliarySize() == m_auxEntries.size());
 }
 
 ElfGNUSymbolVersionDefinition::~ElfGNUSymbolVersionDefinition() = default;
@@ -74,6 +85,11 @@ uint32_t ElfGNUSymbolVersionDefinition::size() const
     if (nextOffset())
         return nextOffset();
     return section()->size() - (reinterpret_cast<const unsigned char*>(m_verDef) - section()->rawData());
+}
+
+ElfGNUSymbolVersionDefinitionAuxiliaryEntry* ElfGNUSymbolVersionDefinition::auxiliaryEntry(uint32_t index) const
+{
+    return m_auxEntries.at(index);
 }
 
 const unsigned char* ElfGNUSymbolVersionDefinition::rawData() const

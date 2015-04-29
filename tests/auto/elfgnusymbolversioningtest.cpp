@@ -20,6 +20,7 @@
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfgnusymbolversiontable.h>
 #include <elf/elfgnusymbolversiondefinitionssection.h>
+#include <elf/elfgnusymbolversiondefinition.h>
 
 #include <QtTest/qtest.h>
 #include <QObject>
@@ -59,6 +60,13 @@ private slots:
 
         QCOMPARE(f->dynamicSection()->entryWithTag(DT_VERDEFNUM)->value(), (uint64_t)symbolVersionDefs->entryCount());
         QVERIFY(symbolVersionDefs->entryCount() > 0);
+
+        const auto verDef = symbolVersionDefs->definition(0);
+        QVERIFY(verDef);
+        QVERIFY(verDef->auxiliarySize() > 0);
+
+        const auto verDefAux = verDef->auxiliaryEntry(0);
+        QVERIFY(verDefAux);
     }
 };
 

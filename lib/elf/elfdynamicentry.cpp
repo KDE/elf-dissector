@@ -73,6 +73,17 @@ QString ElfDynamicEntry::tagName() const
         case DT_FLAGS: return "Flags";
         case DT_PREINIT_ARRAY: return "Preinit function address array";
         case DT_PREINIT_ARRAYSZ: return "Preinit function address array size";
+#if 0
+        #define DT_GNU_PRELINKED 0x6ffffdf5     /* Prelinking timestamp */
+        #define DT_GNU_CONFLICTSZ 0x6ffffdf6    /* Size of conflict section */
+        #define DT_GNU_LIBLISTSZ 0x6ffffdf7     /* Size of library list */
+        #define DT_CHECKSUM     0x6ffffdf8
+        #define DT_PLTPADSZ     0x6ffffdf9
+        #define DT_MOVEENT      0x6ffffdfa
+        #define DT_MOVESZ       0x6ffffdfb
+        #define DT_FEATURE_1    0x6ffffdfc      /* Feature selection (DTF_*).  */
+        #define DT_POSFLAG_1    0x6ffffdfd      /* Flags for DT_* entries, effecting the following DT_* entry.  */
+#endif
         case DT_SYMINSZ: return "Syminfo table size";
         case DT_SYMINENT: return "Syminfo table entry size";
         case DT_GNU_HASH: return "GNU hash table address";
@@ -80,6 +91,14 @@ QString ElfDynamicEntry::tagName() const
         case DT_TLSDESC_GOT: return "TLS description GOT";
         case DT_GNU_CONFLICT: return "GNU conflict section";
         case DT_GNU_LIBLIST: return "GNU library list";
+#if 0
+        #define DT_CONFIG       0x6ffffefa      /* Configuration information.  */
+        #define DT_DEPAUDIT     0x6ffffefb      /* Dependency auditing.  */
+        #define DT_AUDIT        0x6ffffefc      /* Object auditing.  */
+        #define DT_PLTPAD       0x6ffffefd      /* PLT padding.  */
+        #define DT_MOVETAB      0x6ffffefe      /* Move table.  */
+        #define DT_SYMINFO      0x6ffffeff      /* Syminfo table.  */
+#endif
         case DT_VERSYM: return "GNU version symbol";
         case DT_RELACOUNT: return "Rela count";
         case DT_RELCOUNT: return "Rel count";

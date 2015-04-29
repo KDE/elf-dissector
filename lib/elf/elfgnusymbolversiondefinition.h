@@ -22,6 +22,8 @@
 
 #include <elf.h>
 
+class ElfGNUSymbolVersionDefinitionAuxiliaryEntry;
+
 class ElfGNUSymbolVersionDefinition
 {
 public:
@@ -40,11 +42,14 @@ public:
     /** Size of this entry including its aux entries. Next one follows right afterwards. */
     uint32_t size() const;
 
+    ElfGNUSymbolVersionDefinitionAuxiliaryEntry* auxiliaryEntry(uint32_t index) const;
+
     const unsigned char* rawData() const;
 
 private:
     ElfGNUSymbolVersionDefinitionsSection *m_section;
     const Elf64_Verdef* const m_verDef;
+    QVector<ElfGNUSymbolVersionDefinitionAuxiliaryEntry*> m_auxEntries;
 };
 
 #endif // ELFGNUSYMBOLVERSIONDEFINITION_H
