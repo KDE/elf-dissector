@@ -17,6 +17,13 @@
 
 #include "parentvisitor.h"
 #include <elf/elffileset.h>
+#include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
+
+#include <QDebug>
+
+#include <elf.h>
+
+#include <cassert>
 
 ParentVisitor::ParentVisitor(ElfFileSet* parent) : m_fileSet(parent)
 {
@@ -35,6 +42,19 @@ QPair<void*, int> ParentVisitor::doVisit(ElfFile* file, int) const
 QPair<void*, int> ParentVisitor::doVisit(ElfSection* section, int) const
 {
     return qMakePair<void*, int>(section->file(), section->header()->sectionIndex());
+}
+
+QPair< void*, int > ParentVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int) const
+{
+    int row = -1;
+    for (uint i = 0; i < verDef->section()->entryCount(); ++i) {
+        if (verDef->section()->definition(i) == verDef) {
+            row = i;
+            break;
+        }
+    }
+    assert(row >= 0);
+    return qMakePair<void*, int>(verDef->section(), row);
 }
 
 QPair< void*, int > ParentVisitor::doVisit(DwarfInfo* info, int) const

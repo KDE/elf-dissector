@@ -21,6 +21,7 @@
 #include <elf/elffile.h>
 #include <elf/elfnoteentry.h>
 #include <elf/elfgnusymbolversiontable.h>
+#include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
 #include <elf.h>
 
 #include <disassmbler/disassembler.h>
@@ -405,6 +406,24 @@ QVariant DataVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int role) c
             s += "Hash: " + QString::number(verDef->hash()) + "<br/>";
             s += "Aux offset: " + QString::number(verDef->auxiliaryOffset()) + "<br/>";
             s += "Next offset: " + QString::number(verDef->nextOffset()) + "<br/>";
+            return s;
+        }
+    }
+    return {};
+}
+
+QVariant DataVisitor::doVisit(ElfGNUSymbolVersionDefinitionAuxiliaryEntry* auxEntry, int role) const
+{
+    switch (role) {
+        case Qt::DisplayRole:
+            return auxEntry->name();
+        case ElfModel::SizeRole:
+            return (int)sizeof(Elf64_Verdaux);
+        case ElfModel::DetailRole:
+        {
+            QString s;
+            s += QString("Name: ") + auxEntry->name() + "<br/>";
+            s += "Next: " + QString::number(auxEntry->nextAuxiliaryEntryOffset()) + "<br/>";
             return s;
         }
     }

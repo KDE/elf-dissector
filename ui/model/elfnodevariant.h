@@ -35,6 +35,7 @@ struct ElfNodeVariant
         RelocationEntry,
         VersionDefinitionSection,
         VersionDefinitionEntry,
+        VersionDefinitionAuxiliaryEntry,
         DwarfInfo,
         DwarfDie
     };

@@ -79,6 +79,8 @@ public:
                 return doVisit(node->value<ElfGNUSymbolVersionDefinitionsSection>(), arg);
             case ElfNodeVariant::VersionDefinitionEntry:
                 return doVisit(node->value<ElfGNUSymbolVersionDefinition>(), arg);
+            case ElfNodeVariant::VersionDefinitionAuxiliaryEntry:
+                return doVisit(node->value<ElfGNUSymbolVersionDefinitionAuxiliaryEntry>(), arg);
             case ElfNodeVariant::DwarfInfo:
                 return doVisit(node->value<DwarfInfo>(), arg);
             case ElfNodeVariant::DwarfDie:
@@ -131,6 +133,10 @@ protected:
         return doVisit(static_cast<ElfSection*>(section), arg);
     }
     virtual T doVisit(ElfGNUSymbolVersionDefinition*, int) const
+    {
+        return T();
+    }
+    virtual T doVisit(ElfGNUSymbolVersionDefinitionAuxiliaryEntry*, int) const
     {
         return T();
     }

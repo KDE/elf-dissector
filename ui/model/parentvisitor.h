@@ -30,6 +30,7 @@ public:
 protected:
     type doVisit(ElfFile* file, int) const override;
     type doVisit(ElfSection* section, int) const override;
+    type doVisit(ElfGNUSymbolVersionDefinition* verDef, int) const override;
     type doVisit(DwarfInfo* info, int) const override;
     type doVisit(DwarfDie* die, int) const override;
 

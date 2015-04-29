@@ -79,6 +79,12 @@ IndexVisitor::type IndexVisitor::doVisit(ElfGNUSymbolVersionDefinitionsSection *
     return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::VersionDefinitionEntry);
 }
 
+IndexVisitor::type IndexVisitor::doVisit(ElfGNUSymbolVersionDefinition *verDef, int row) const
+{
+    const auto auxEntry = verDef->auxiliaryEntry(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(auxEntry, ElfNodeVariant::VersionDefinitionAuxiliaryEntry);
+}
+
 IndexVisitor::type IndexVisitor::doVisit(ElfNoteSection *section, int row) const
 {
     const auto entry = section->entry(row);
