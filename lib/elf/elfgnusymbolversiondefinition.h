@@ -40,6 +40,8 @@ public:
     /** Size of this entry including its aux entries. Next one follows right afterwards. */
     uint32_t size() const;
 
+    const unsigned char* rawData() const;
+
 private:
     ElfGNUSymbolVersionDefinitionsSection *m_section;
     const Elf64_Verdef* const m_verDef;

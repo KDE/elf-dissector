@@ -75,3 +75,8 @@ uint32_t ElfGNUSymbolVersionDefinition::size() const
         return nextOffset();
     return section()->size() - (reinterpret_cast<const unsigned char*>(m_verDef) - section()->rawData());
 }
+
+const unsigned char* ElfGNUSymbolVersionDefinition::rawData() const
+{
+    return reinterpret_cast<const unsigned char*>(m_verDef);
+}
