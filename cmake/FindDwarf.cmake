@@ -40,7 +40,7 @@ if(DWARF_FOUND AND NOT TARGET Dwarf::Dwarf)
         INTERFACE_INCLUDE_DIRECTORIES "${Dwarf_INCLUDE_DIR}"
     )
     if(DWARF_NEEDS_LIBELF)
-        set_target_properties(Dwarf::Dwaarf PROPERTIES INTERFACE_LIBRARIES elf)
+        set_target_properties(Dwarf::Dwarf PROPERTIES INTERFACE_LINK_LIBRARIES elf)
     endif()
 endif()
 
