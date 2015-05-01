@@ -19,6 +19,7 @@
 #define LDBENCHMARK_H
 
 #include <QByteArray>
+#include <QStringList>
 #include <QVector>
 
 class QProcess;
@@ -34,8 +35,9 @@ public:
     void writeCSV(const QString &fileName);
 
 private:
-    enum class LoadMode { Now, Lazy };
+    enum class LoadMode { None, Now, Lazy };
 
+    void measure(LoadMode mode, int iterations);
     void readResults(QProcess *proc, LoadMode mode);
     void dumpResults();
 
@@ -53,6 +55,7 @@ private:
         double averageNow() const;
     };
     QVector<Result> m_results;
+    QStringList m_args;
 };
 
 #endif // LDBENCHMARK_H

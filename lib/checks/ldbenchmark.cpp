@@ -59,36 +59,34 @@ void LDBenchmark::measureFileSet(ElfFileSet* fileSet)
     m_results.clear();
     m_results.reserve(fileSet->size());
 
-    QStringList args;
-    args.reserve(fileSet->size() + 1);
-    args.push_back("RTLD_LAZY");
+    m_args.reserve(fileSet->size() + 1);
+    m_args.push_back(QString()); // placeholder for mode argument
 
     for (int i = fileSet->size() - 1; i >= 0; --i) {
         const auto fileName = fileSet->file(i)->displayName();
-        args.push_back(fileName);
+        m_args.push_back(fileName);
         Result r;
         r.fileName = fileName.toUtf8();
         m_results.push_back(r);
     }
 
-    for (int i = 0; i < 5; ++i) {
+    measure(LoadMode::None, 1); // avoid cold cache skewing the results
+    measure(LoadMode::Lazy, 5);
+    measure(LoadMode::Now, 5);
+
+    //dumpResults();
+}
+
+void LDBenchmark::measure(LDBenchmark::LoadMode mode, int iterations)
+{
+    m_args[0] = mode == LoadMode::Lazy ? "RTLD_LAZY" : "RTLD_NOW";
+    for (int i = 0; i < iterations; ++i) {
         QProcess proc;
         proc.setProcessChannelMode(QProcess::QProcess::ForwardedErrorChannel);
-        proc.start("ldbenchmark-runner", args); // TODO find in libexec
+        proc.start("ldbenchmark-runner", m_args); // TODO find in libexec
         proc.waitForFinished();
-        readResults(&proc, LoadMode::Lazy);
+        readResults(&proc, mode);
     }
-
-    args[0] = "RTLD_NOW";
-    for (int i = 0; i < 5; ++i) {
-        QProcess proc;
-        proc.setProcessChannelMode(QProcess::QProcess::ForwardedErrorChannel);
-        proc.start("ldbenchmark-runner", args); // TODO find in libexec
-        proc.waitForFinished();
-        readResults(&proc, LoadMode::Now);
-    }
-
-    dumpResults();
 }
 
 void LDBenchmark::readResults(QProcess* proc, LoadMode mode)
@@ -112,6 +110,8 @@ void LDBenchmark::readResults(QProcess* proc, LoadMode mode)
                 (*it).nowTotal += cost;
                 (*it).nowCount++;
                 break;
+            case LoadMode::None:
+                return;
         }
     }
 }
