@@ -13,6 +13,7 @@ set(libelfdissectorui_srcs
     dependencymodel/dependencymodel.cpp
 
     views/dependencyview.cpp
+    views/elfstructureview.cpp
     views/sizetreemapview.cpp
 
     mainwindow.cpp

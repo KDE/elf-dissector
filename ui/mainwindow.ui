@@ -34,50 +34,10 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="structureView">
+      <widget class="ElfStructureView" name="elfStructureView">
        <attribute name="title">
         <string>&amp;ELF Structure</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QSplitter" name="splitter">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <widget class="QWidget" name="layoutWidget">
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <widget class="QLineEdit" name="elfStructureSearchLine">
-              <property name="placeholderText">
-               <string>Search</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTreeView" name="elfStructureView">
-              <property name="uniformRowHeights">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QTextBrowser" name="elfDetailView"/>
-         </widget>
-        </item>
-       </layout>
       </widget>
       <widget class="SizeTreeMapView" name="sizeTreeMapView">
        <attribute name="title">
@@ -201,6 +161,12 @@
    <class>DependencyView</class>
    <extends>QWidget</extends>
    <header>views/dependencyview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ElfStructureView</class>
+   <extends>QWidget</extends>
+   <header>views/elfstructureview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

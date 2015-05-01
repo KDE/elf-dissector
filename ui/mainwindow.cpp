@@ -16,25 +16,15 @@
 */
 
 #include "mainwindow.h"
-#include "colorizer.h"
 #include "ui_mainwindow.h"
 
-#include <elf/elffile.h>
-#include <elf/elfsymboltablesection.h>
-#include <elf/elfstringtablesection.h>
 #include <elf/elffileset.h>
-
-#include <demangle/demangler.h>
 
 #include <checks/ldbenchmark.h>
 #include <checks/structurepackingcheck.h>
 #include <checks/virtualdtorcheck.h>
 
 #include <model/elfmodel.h>
-
-#include <treemap/treemap.h>
-
-#include <kitemmodels/krecursivefilterproxymodel.h>
 
 #include <QApplication>
 #include <QDebug>
@@ -48,9 +38,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
 {
     ui->setupUi(this);
 
-    auto *filter = new KRecursiveFilterProxyModel(this);
-    filter->setSourceModel(m_elfModel);
-    ui->elfStructureView->setModel(filter);
+    ui->elfStructureView->setModel(m_elfModel);
     ui->sizeTreeMapView->setModel(m_elfModel);
 
     connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabChanged);
@@ -73,10 +61,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
         VirtualDtorCheck checker;
         checker.findImplicitVirtualDtors(m_fileSet);
     });
-
-    connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, &MainWindow::selectionChanged);
-    connect(ui->elfStructureSearchLine, &QLineEdit::textChanged, this, [filter](const QString &text) { filter->setFilterFixedString(text); });
 
     restoreSettings();
     tabChanged();
@@ -143,7 +127,6 @@ void MainWindow::loadFile(const QString& fileName)
     m_fileSet->addFile(fileName);
     m_fileSet->topologicalSort();
     m_elfModel->setFileSet(m_fileSet);
-    ui->elfStructureView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->dependencyView->setFileSet(m_fileSet);
 
     QSettings settings;
@@ -157,13 +140,4 @@ void MainWindow::tabChanged()
     ui->menuView->clear();
     ui->menuView->addActions(ui->tabWidget->currentWidget()->actions());
     ui->menuView->setEnabled(!ui->menuView->isEmpty());
-}
-
-void MainWindow::selectionChanged(const QItemSelection& selection)
-{
-    if (selection.isEmpty())
-        ui->elfDetailView->clear();
-
-    const QModelIndex index = selection.first().topLeft();
-    ui->elfDetailView->setHtml(index.data(ElfModel::DetailRole).toString());
 }

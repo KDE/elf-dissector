@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2013-2014 Volker Krause <vkrause@kde.org>
+    Copyright (C) 2015 Volker Krause <vkrause@kde.org>
 
     This program is free software; you can redistribute it and/or modify it
     under the terms of the GNU Library General Public License as published by
@@ -15,46 +15,36 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef ELFSTRUCTUREVIEW_H
+#define ELFSTRUCTUREVIEW_H
 
-#include <QMainWindow>
+#include <QWidget>
 
 #include <memory>
 
-class ElfFileSet;
-class ElfModel;
-
-namespace Ui
-{
-class MainWindow;
+namespace Ui {
+class ElfStructureView;
 }
 
-class MainWindow : public QMainWindow
+class QAbstractItemModel;
+class QItemSelection;
+class QSortFilterProxyModel;
+
+class ElfStructureView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget* parent = 0);
-    ~MainWindow();
+    explicit ElfStructureView(QWidget* parent = 0);
+    ~ElfStructureView();
 
-    void loadFile(const QString &fileName);
-
-protected:
-    void closeEvent(QCloseEvent *event) override;
+    void setModel(QAbstractItemModel* model);
 
 private slots:
-    void fileOpen();
-    void reloadFileOnStartup();
-    void tabChanged();
+    void selectionChanged(const QItemSelection& selection);
 
 private:
-    void restoreSettings();
-
-private:
-    std::unique_ptr<Ui::MainWindow> ui;
-    QString m_currentFileName;
-    ElfModel *m_elfModel = 0;
-    ElfFileSet *m_fileSet = 0;
+    std::unique_ptr<Ui::ElfStructureView> ui;
+    QSortFilterProxyModel* m_proxy;
 };
 
-#endif // MAINWINDOW_H
+#endif // ELFSTRUCTUREVIEW_H
