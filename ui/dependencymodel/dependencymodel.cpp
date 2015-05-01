@@ -193,6 +193,16 @@ QModelIndex DependencyModel::index(int row, int column, const QModelIndex& paren
     return createIndex(row, column, children.at(row));
 }
 
+QVariant DependencyModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
+        switch (section) {
+            case 0: return tr("Library");
+        }
+    }
+    return QAbstractItemModel::headerData(section, orientation, role);
+}
+
 uint64_t DependencyModel::makeId(uint32_t id, int32_t fileIndex) const
 {
     uint64_t f = (uint32_t)fileIndex;

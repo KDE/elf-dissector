@@ -40,6 +40,7 @@ public:
     int rowCount(const QModelIndex& parent = QModelIndex()) const final;
     QModelIndex parent(const QModelIndex& child) const final;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const final;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const final;
 
 private:
     // we use an sequential int for the unique node index, the second have of the QMI internalId is the index of the file
