@@ -116,6 +116,25 @@ void LDBenchmark::readResults(QProcess* proc, LoadMode mode)
     }
 }
 
+void LDBenchmark::writeCSV(const QString& fileName)
+{
+    QFile f(fileName);
+    if (!f.open(QFile::WriteOnly | QFile::Truncate)) {
+        qWarning() << "Failed to open" << fileName;
+        return;
+    }
+
+    for (int i = 0; i < m_results.size(); ++i) {
+        const auto res = m_results.at(i);
+        f.write(res.fileName.constData());
+        f.write("\t");
+        f.write(QByteArray::number(res.averageLazy()));
+        f.write("\t");
+        f.write(QByteArray::number(res.averageNow()));
+        f.write("\n");
+    }
+}
+
 void LDBenchmark::dumpResults()
 {
     double lazy = 0.0;

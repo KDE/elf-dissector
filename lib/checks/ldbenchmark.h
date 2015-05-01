@@ -25,10 +25,13 @@ class QProcess;
 
 class ElfFileSet;
 
+/** Load all libraries in dependency order one by one and measure the needed time. */
 class LDBenchmark
 {
 public:
     void measureFileSet(ElfFileSet *fileSet);
+
+    void writeCSV(const QString &fileName);
 
 private:
     enum class LoadMode { Now, Lazy };
