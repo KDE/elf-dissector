@@ -31,6 +31,7 @@ int main(int argc, char** argv)
     QCoreApplication::setOrganizationDomain("kde.org");
     QCoreApplication::setApplicationVersion(ELF_DISSECTOR_VERSION_STRING);
 
+    Q_INIT_RESOURCE(plotter);
     QMetaType::registerConverter<DwarfExpression, QString>(&DwarfExpression::displayString);
 
     QApplication app(argc, argv);

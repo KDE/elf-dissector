@@ -12,6 +12,9 @@ set(libelfdissectorui_srcs
 
     dependencymodel/dependencymodel.cpp
 
+    plotter/gnuplotter.cpp
+    plotter/plotter.qrc
+
     views/dependencyview.cpp
     views/elfstructureview.cpp
     views/sizetreemapview.cpp
