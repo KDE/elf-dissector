@@ -98,8 +98,12 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
         case Qt::DecorationRole:
             if (file == InvalidFile)
                 return QIcon::fromTheme("dialog-error");
+            if (hasCycle(index))
+                return QIcon::fromTheme("dialog-warning");
             break;
         case Qt::ToolTipRole:
+            if (hasCycle(index))
+                return tr("Cyclic dependency!");
             if (file != InvalidFile)
                 return m_fileSet->file(file)->displayName(); // TODO full path
             else
@@ -131,7 +135,7 @@ int DependencyModel::rowCount(const QModelIndex& parent) const
     }
 
     const auto file = fileIndex(parent.internalId());
-    if (file == InvalidFile)
+    if (file == InvalidFile || hasCycle(parent))
         return 0;
 
     const auto needed = m_fileSet->file(file)->dynamicSection()->neededLibraries();
@@ -213,3 +217,18 @@ uint32_t DependencyModel::nodeId(uint64_t qmiId) const
     return qmiId;
 }
 
+bool DependencyModel::hasCycle(const QModelIndex& index) const
+{
+    const auto file = fileIndex(index.internalId());
+
+    QModelIndex parentIndex(index);
+    forever {
+        parentIndex = parent(parentIndex);
+        if (!parentIndex.isValid())
+            return false;
+        const auto parentFile = fileIndex(parentIndex.internalId());
+        if (parentFile == file)
+            return true;
+    }
+    Q_UNREACHABLE();
+}

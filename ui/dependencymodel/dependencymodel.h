@@ -47,6 +47,7 @@ private:
     int32_t fileIndex(uint64_t qmiId) const;
     int32_t fileIndex(const QByteArray &needed) const;
     uint32_t nodeId(uint64_t qmiId) const;
+    bool hasCycle(const QModelIndex &index) const;
 
     ElfFileSet *m_fileSet = nullptr;
     QHash<QByteArray, int32_t> m_fileIndex;
