@@ -72,7 +72,7 @@ void LDBenchmark::measureFileSet(ElfFileSet* fileSet)
     m_args.push_back(QString()); // placeholder for mode argument
 
     for (int i = fileSet->size() - 1; i >= 0; --i) {
-        const auto fileName = fileSet->file(i)->displayName();
+        const auto fileName = fileSet->file(i)->fileName();
         m_args.push_back(fileName);
         Result r;
         r.fileName = fileName.toUtf8();
@@ -133,7 +133,8 @@ void LDBenchmark::writeCSV(const QString& fileName)
 
     for (int i = 0; i < m_results.size(); ++i) {
         const auto res = m_results.at(i);
-        f.write(res.fileName.constData());
+        const auto file = m_fileSet->file(m_results.size() - 1 - i);
+        f.write(file->displayName().toUtf8());
         f.write("\t");
         f.write(QByteArray::number(median(res.lazy)));
         f.write("\t");

@@ -29,6 +29,7 @@
 #include <dwarf/dwarfinfo.h>
 
 #include <QDebug>
+#include <QFileInfo>
 
 #include <cassert>
 #include <elf.h>
@@ -51,6 +52,13 @@ bool ElfFile::isValid() const
 }
 
 QString ElfFile::displayName() const
+{
+    if (dynamicSection() && !dynamicSection()->soName().isEmpty())
+        return dynamicSection()->soName();
+    return QFileInfo(m_file.fileName()).fileName();
+}
+
+QString ElfFile::fileName() const
 {
     return m_file.fileName();
 }

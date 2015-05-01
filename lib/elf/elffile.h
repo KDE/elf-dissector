@@ -47,6 +47,8 @@ public:
 
     /** Returns a user readable label for this file. */
     QString displayName() const;
+    /** Returns the full path of this file. */
+    QString fileName() const;
     /** Returns the size of the entire file. */
     uint64_t size() const;
 

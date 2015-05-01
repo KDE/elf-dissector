@@ -64,12 +64,14 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
     switch (arg) {
         case Qt::DisplayRole:
             return file->displayName();
+        case Qt::ToolTipRole:
+            return file->fileName();
         case ElfModel::SizeRole:
             return QVariant::fromValue<uint64_t>(file->size());
         case ElfModel::DetailRole:
         {
             QString s;
-            s += "File name: " + file->displayName() + "<br/>";
+            s += "File name: " + file->fileName() + "<br/>";
             s += QStringLiteral("Address size: ") + (file->type() == ELFCLASS32 ? "32 bit" : "64 bit") + "<br/>";
             s += QStringLiteral("Byte order: ") + (file->byteOrder() == ELFDATA2LSB ? "little endian" : "big endian") + "<br/>";
             s += QStringLiteral("Machine: ") + machineToString(file->header()->machine()) + "<br/>";

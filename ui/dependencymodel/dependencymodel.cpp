@@ -90,7 +90,7 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
         case Qt::DisplayRole:
         {
             if (file != InvalidFile)
-                return m_fileSet->file(file)->displayName(); // TODO just file name / SONAME
+                return m_fileSet->file(file)->displayName();
             const auto parentIdx = parent(index);
             const auto parentFile = fileIndex(parentIdx.internalId());
             return m_fileSet->file(parentFile)->dynamicSection()->neededLibraries().at(index.row());
@@ -105,7 +105,7 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
             if (hasCycle(index))
                 return tr("Cyclic dependency!");
             if (file != InvalidFile)
-                return m_fileSet->file(file)->displayName(); // TODO full path
+                return m_fileSet->file(file)->fileName();
             else
                 return tr("Dependency not found!");
     }
