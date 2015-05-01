@@ -28,6 +28,8 @@ DependencyView::DependencyView(QWidget* parent):
 {
     ui->setupUi(this);
     ui->dependencyView->setModel(m_dependencyModel);
+
+    connect(ui->searchLine, &QLineEdit::textChanged, this, &DependencyView::search);
 }
 
 DependencyView::~DependencyView() = default;
@@ -35,4 +37,17 @@ DependencyView::~DependencyView() = default;
 void DependencyView::setFileSet(ElfFileSet* fileSet)
 {
     m_dependencyModel->setFileSet(fileSet);
+}
+
+void DependencyView::search(const QString& text)
+{
+    if (text.isEmpty())
+        return;
+
+    const auto result = m_dependencyModel->match(m_dependencyModel->index(0, 0), Qt::DisplayRole, text, 1, Qt::MatchContains | Qt::MatchRecursive);
+    if (result.isEmpty())
+        return;
+    const auto index = result.first();
+    ui->dependencyView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    ui->dependencyView->scrollTo(index);
 }

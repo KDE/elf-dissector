@@ -38,6 +38,9 @@ public:
 
     void setFileSet(ElfFileSet *fileSet);
 
+private slots:
+    void search(const QString &text);
+
 private:
     std::unique_ptr<Ui::DependencyView> ui;
     DependencyModel *m_dependencyModel;
