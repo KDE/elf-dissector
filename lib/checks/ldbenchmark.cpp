@@ -46,6 +46,20 @@ static double median(QVector<double> data)
     return data.at(data.size() / 2);
 }
 
+static double min(const QVector<double> &data)
+{
+    if (data.size() == 0)
+        return 0.0;
+    return *std::min_element(data.constBegin(), data.constEnd());
+}
+
+static double max(const QVector<double> &data)
+{
+    if (data.size() == 0)
+        return 0.0;
+    return *std::max_element(data.constBegin(), data.constEnd());
+}
+
 
 void LDBenchmark::measureFileSet(ElfFileSet* fileSet)
 {
@@ -123,7 +137,15 @@ void LDBenchmark::writeCSV(const QString& fileName)
         f.write("\t");
         f.write(QByteArray::number(median(res.lazy)));
         f.write("\t");
+        f.write(QByteArray::number(min(res.lazy)));
+        f.write("\t");
+        f.write(QByteArray::number(max(res.lazy)));
+        f.write("\t");
         f.write(QByteArray::number(median(res.now)));
+        f.write("\t");
+        f.write(QByteArray::number(min(res.now)));
+        f.write("\t");
+        f.write(QByteArray::number(max(res.now)));
         f.write("\n");
     }
 }
