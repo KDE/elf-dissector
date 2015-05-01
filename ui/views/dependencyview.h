@@ -26,11 +26,8 @@ namespace Ui {
 class DependencyView;
 }
 
-class ElfFile;
 class ElfFileSet;
-
-class QStandardItem;
-class QStandardItemModel;
+class DependencyModel;
 
 class DependencyView : public QWidget
 {
@@ -41,19 +38,9 @@ public:
 
     void setFileSet(ElfFileSet *fileSet);
 
-protected:
-    void showEvent(QShowEvent* event) override;
-
 private:
-    void buildTree();
-    void buildTree(QStandardItem *parent, ElfFile *file);
-    ElfFile* findFile(const QByteArray &soName) const;
-    bool hasCycle(QStandardItem* item, const QByteArray &soName) const;
-
     std::unique_ptr<Ui::DependencyView> ui;
-    ElfFileSet *m_fileSet;
-    QStandardItemModel *m_model;
-    QHash<QByteArray, ElfFile*> m_fileIndex;
+    DependencyModel *m_dependencyModel;
 };
 
 #endif // DEPENDENCYVIEW_H

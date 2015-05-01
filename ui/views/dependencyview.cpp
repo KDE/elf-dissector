@@ -17,21 +17,17 @@
 
 #include "dependencyview.h"
 #include "ui_dependencyview.h"
-
-#include <elf/elffileset.h>
-#include <elf/elffile.h>
+#include "dependencymodel/dependencymodel.h"
 
 #include <QDebug>
-#include <QShowEvent>
-#include <QStandardItemModel>
 
 DependencyView::DependencyView(QWidget* parent):
     QWidget(parent),
     ui(new Ui::DependencyView),
-    m_model(new QStandardItemModel(this))
+    m_dependencyModel(new DependencyModel(this))
 {
     ui->setupUi(this);
-    ui->dependencyView->setModel(m_model);
+    ui->dependencyView->setModel(m_dependencyModel);
 
     addActions({
         ui->actionExpandAll,
@@ -43,71 +39,5 @@ DependencyView::~DependencyView() = default;
 
 void DependencyView::setFileSet(ElfFileSet* fileSet)
 {
-    m_model->clear();
-    m_fileIndex.clear();
-    m_fileSet = fileSet;
-    buildTree();
-}
-
-void DependencyView::buildTree()
-{
-    if (!m_fileSet || m_fileSet->size() == 0 || !isVisible() || m_model->rowCount())
-        return;
-
-    for (int i = 0; i < m_fileSet->size(); ++i) {
-        const auto file = m_fileSet->file(i);
-        const auto soName = file->dynamicSection()->soName();
-        if (!soName.isEmpty())
-            m_fileIndex.insert(soName, file);
-    }
-
-    auto file = m_fileSet->file(0);
-    auto root = new QStandardItem(file->displayName()); // TODO soName vs. fileName for non-SOs
-//     root->setToolTip(file->displayName());
-    m_model->appendRow(root);
-    buildTree(root, m_fileSet->file(0));
-}
-
-void DependencyView::buildTree(QStandardItem* parent, ElfFile* file)
-{
-    for (const auto &needed : file->dynamicSection()->neededLibraries()) {
-        const auto depFile = findFile(needed);
-        auto item = new QStandardItem(QString::fromUtf8(needed));
-        if (depFile) {
-            item->setToolTip(depFile->displayName());
-            if (!hasCycle(item, needed)) {
-                buildTree(item, depFile);
-            } else {
-                item->setIcon(QIcon::fromTheme("dialog-warning")); // cycle, TODO: better warning and message
-            }
-        } else {
-            // dependency not found
-            item->setIcon(QIcon::fromTheme("dialog-error"));
-        }
-        parent->appendRow(item);
-    }
-}
-
-ElfFile* DependencyView::findFile(const QByteArray& soName) const
-{
-    const auto it = m_fileIndex.constFind(soName);
-    if (it == m_fileIndex.constEnd())
-        return nullptr;
-    return it.value();
-}
-
-bool DependencyView::hasCycle(QStandardItem* item, const QByteArray& soName) const
-{
-    auto parent = item;
-    while ((parent = parent->parent())) {
-        if (parent->text() == soName)
-            return true;
-    }
-    return false;
-}
-
-void DependencyView::showEvent(QShowEvent* event)
-{
-    buildTree();
-    QWidget::showEvent(event);
+    m_dependencyModel->setFileSet(fileSet);
 }
