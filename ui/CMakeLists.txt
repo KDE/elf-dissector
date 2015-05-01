@@ -15,6 +15,8 @@ set(libelfdissectorui_srcs
     plotter/gnuplotter.cpp
     plotter/plotter.qrc
 
+    widgets/gnuplotwidget.cpp
+
     views/dependencyview.cpp
     views/elfstructureview.cpp
     views/sizetreemapview.cpp
