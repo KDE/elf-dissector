@@ -30,3 +30,7 @@ add_test(NAME dwarfleb128test COMMAND dwarfleb128test)
 add_executable(elfmodeltest elfmodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
 target_link_libraries(elfmodeltest Qt5::Test libelfdissectorui)
 add_test(NAME elfmodeltest COMMAND elfmodeltest)
+
+add_executable(dependencymodeltest dependencymodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
+target_link_libraries(dependencymodeltest Qt5::Test libelfdissectorui)
+add_test(NAME dependencymodeltest COMMAND dependencymodeltest)

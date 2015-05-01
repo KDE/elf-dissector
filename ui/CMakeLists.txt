@@ -10,6 +10,8 @@ set(libelfdissectorui_srcs
     model/rowcountvisitor.cpp
     model/sectionproxymodel.cpp
 
+    dependencymodel/dependencymodel.cpp
+
     views/dependencyview.cpp
     views/sizetreemapview.cpp
 
