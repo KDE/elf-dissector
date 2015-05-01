@@ -44,15 +44,9 @@ private:
     ElfFileSet *m_fileSet = nullptr;
 
     struct Result {
-        Result();
         QByteArray fileName;
-        double lazyTotal;
-        double nowTotal;
-        int lazyCount;
-        int nowCount;
-
-        double averageLazy() const;
-        double averageNow() const;
+        QVector<double> lazy;
+        QVector<double> now;
     };
     QVector<Result> m_results;
     QStringList m_args;

@@ -29,26 +29,21 @@
 
 #include <cassert>
 
-LDBenchmark::Result::Result() :
-    lazyTotal(0.0),
-    nowTotal(0.0),
-    lazyCount(0),
-    nowCount(0)
+static double average(const QVector<double> &data)
 {
+    if (data.size() == 0)
+        return 0.0;
+    const double sum = std::accumulate(data.constBegin(), data.constEnd(), 0.0);
+    qDebug() << sum << data << data.size() << (sum / data.size());
+    return sum / data.size();
 }
 
-double LDBenchmark::Result::averageLazy() const
+static double median(QVector<double> data)
 {
-    if (lazyCount == 0)
+    if (data.size() == 0)
         return 0.0;
-    return lazyTotal / lazyCount;
-}
-
-double LDBenchmark::Result::averageNow() const
-{
-    if (nowCount == 0)
-        return 0.0;
-    return nowTotal / nowCount;
+    std::sort(data.begin(), data.end());
+    return data.at(data.size() / 2);
 }
 
 
@@ -74,7 +69,7 @@ void LDBenchmark::measureFileSet(ElfFileSet* fileSet)
     measure(LoadMode::Lazy, 5);
     measure(LoadMode::Now, 5);
 
-    //dumpResults();
+//     dumpResults();
 }
 
 void LDBenchmark::measure(LDBenchmark::LoadMode mode, int iterations)
@@ -103,12 +98,10 @@ void LDBenchmark::readResults(QProcess* proc, LoadMode mode)
 
         switch (mode) {
             case LoadMode::Lazy:
-                (*it).lazyTotal += cost;
-                (*it).lazyCount++;
+                (*it).lazy.push_back(cost);
                 break;
             case LoadMode::Now:
-                (*it).nowTotal += cost;
-                (*it).nowCount++;
+                (*it).now.push_back(cost);
                 break;
             case LoadMode::None:
                 return;
@@ -128,9 +121,9 @@ void LDBenchmark::writeCSV(const QString& fileName)
         const auto res = m_results.at(i);
         f.write(res.fileName.constData());
         f.write("\t");
-        f.write(QByteArray::number(res.averageLazy()));
+        f.write(QByteArray::number(median(res.lazy)));
         f.write("\t");
-        f.write(QByteArray::number(res.averageNow()));
+        f.write(QByteArray::number(median(res.now)));
         f.write("\n");
     }
 }
@@ -142,9 +135,9 @@ void LDBenchmark::dumpResults()
     for (int i = 0; i < m_results.size(); ++i) {
         const auto res = m_results.at(i);
         const auto file = m_fileSet->file(m_results.size() - 1 - i);
-        printf("%s\t%.2f\t%.2f\n", res.fileName.constData(), res.averageLazy(), res.averageNow());
-        lazy += res.averageLazy();
-        now += res.averageNow();
+        printf("%s\t%.2f\t%.2f\n", res.fileName.constData(), average(res.lazy), average(res.now));
+        lazy += average(res.lazy);
+        now += average(res.now);
     }
     printf("Lazy: %.2f µs, immediate: %.2f µs\n", lazy, now);
 }
