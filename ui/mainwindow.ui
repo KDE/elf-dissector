@@ -49,6 +49,11 @@
         <string>&amp;Dependencies</string>
        </attribute>
       </widget>
+      <widget class="LoadBenchmarkView" name="loadTimeView">
+       <attribute name="title">
+        <string>&amp;Load Time</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -86,7 +91,6 @@
      <string>&amp;Checks</string>
     </property>
     <addaction name="actionCheckStructurePacking"/>
-    <addaction name="actionLDBenchmark"/>
     <addaction name="actionVirtualDestructors"/>
    </widget>
    <addaction name="menu_File"/>
@@ -139,11 +143,6 @@
     <string>&amp;Structure Packing</string>
    </property>
   </action>
-  <action name="actionLDBenchmark">
-   <property name="text">
-    <string>&amp;LD Benchmark</string>
-   </property>
-  </action>
   <action name="actionVirtualDestructors">
    <property name="text">
     <string>&amp;Implicit Virtual Destructors</string>
@@ -167,6 +166,12 @@
    <class>ElfStructureView</class>
    <extends>QWidget</extends>
    <header>views/elfstructureview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LoadBenchmarkView</class>
+   <extends>QWidget</extends>
+   <header>views/loadbenchmarkview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

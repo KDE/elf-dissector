@@ -19,6 +19,7 @@ set(libelfdissectorui_srcs
 
     views/dependencyview.cpp
     views/elfstructureview.cpp
+    views/loadbenchmarkview.cpp
     views/sizetreemapview.cpp
 
     mainwindow.cpp

@@ -20,7 +20,6 @@
 
 #include <elf/elffileset.h>
 
-#include <checks/ldbenchmark.h>
 #include <checks/structurepackingcheck.h>
 #include <checks/virtualdtorcheck.h>
 
@@ -52,10 +51,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
         StructurePackingCheck checker;
         checker.setElfFileSet(m_fileSet);
         checker.checkAll(m_fileSet->file(0)->dwarfInfo());
-    });
-    connect(ui->actionLDBenchmark, &QAction::triggered, this, [this]() {
-        LDBenchmark benchmark;
-        benchmark.measureFileSet(m_fileSet);
     });
     connect(ui->actionVirtualDestructors, &QAction::triggered, this, [this]() {
         VirtualDtorCheck checker;
@@ -130,6 +125,7 @@ void MainWindow::loadFile(const QString& fileName)
     m_fileSet->topologicalSort();
     m_elfModel->setFileSet(m_fileSet);
     ui->dependencyView->setFileSet(m_fileSet);
+    ui->loadTimeView->setFileSet(m_fileSet);
 
     QSettings settings;
     settings.setValue("Recent/PreviousFile", fileName);
