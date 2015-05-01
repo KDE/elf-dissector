@@ -76,6 +76,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.beginGroup("MainWindow");
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
+    settings.setValue("currentTab", ui->tabWidget->currentIndex());
     settings.endGroup();
     QMainWindow::closeEvent(event);
 }
@@ -113,6 +114,7 @@ void MainWindow::restoreSettings()
     settings.beginGroup("MainWindow");
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
+    ui->tabWidget->setCurrentIndex(settings.value("currentTab", 0).toInt());
     settings.endGroup();
 }
 
