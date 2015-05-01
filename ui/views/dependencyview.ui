@@ -41,16 +41,6 @@
     </widget>
    </item>
   </layout>
-  <action name="actionExpandAll">
-   <property name="text">
-    <string>&amp;Expand All</string>
-   </property>
-  </action>
-  <action name="actionCollapseAll">
-   <property name="text">
-    <string>&amp;Collapse All</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

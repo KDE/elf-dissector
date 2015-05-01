@@ -28,11 +28,6 @@ DependencyView::DependencyView(QWidget* parent):
 {
     ui->setupUi(this);
     ui->dependencyView->setModel(m_dependencyModel);
-
-    addActions({
-        ui->actionExpandAll,
-        ui->actionCollapseAll
-    });
 }
 
 DependencyView::~DependencyView() = default;
