@@ -50,38 +50,37 @@ QByteArray ElfPrinter::machine(uint16_t machineType)
     return QByteArray("Unknown machine type (" ) + QByteArray::number(machineType) + ')';
 }
 
+static const LookupTableEntry<uint32_t> section_type_table[] {
+    { SHT_NULL, "null" },
+    { SHT_PROGBITS, "program data" },
+    { SHT_SYMTAB, "symbol table" },
+    { SHT_STRTAB, "string table" },
+    { SHT_RELA, "relocation entries with addends" },
+    { SHT_HASH, "symbol hash table" },
+    { SHT_DYNAMIC, "dynamic linking information" },
+    { SHT_NOTE, "notes" },
+    { SHT_NOBITS, "bss" },
+    { SHT_REL, "relocation entries, no addends" },
+    { SHT_SHLIB, "reserved" },
+    { SHT_DYNSYM, "dynamic linker symbol table" },
+    { SHT_INIT_ARRAY, "array of constructors" },
+    { SHT_FINI_ARRAY, "array of destructors" },
+    { SHT_PREINIT_ARRAY, "array of preconstructors" },
+    { SHT_GROUP, "section group" },
+    { SHT_SYMTAB_SHNDX, "extended section indices" },
+
+    { SHT_GNU_ATTRIBUTES, "GNU object attributes" },
+    { SHT_GNU_HASH, "GNU-style hash table" },
+    { SHT_GNU_LIBLIST, "GNU prelink library list" },
+    { SHT_CHECKSUM, "checksum for DSO conent" },
+    { SHT_GNU_verdef, "GNU version definition" },
+    { SHT_GNU_verneed, "GNU version needs" },
+    { SHT_GNU_versym, "GNU version symbol table" }
+};
+
 QByteArray ElfPrinter::sectionType(uint32_t sectionType)
 {
-    switch (sectionType) {
-        case SHT_NULL: return "null";
-        case SHT_PROGBITS: return "program data";
-        case SHT_SYMTAB: return "symbol table";
-        case SHT_STRTAB: return "string table";
-        case SHT_RELA: return "relocation entries with addends";
-        case SHT_HASH: return "symbol hash table";
-        case SHT_DYNAMIC: return "dynamic linking information";
-        case SHT_NOTE: return "notes";
-        case SHT_NOBITS: return "bss";
-        case SHT_REL: return "relocation entries, no addends";
-        case SHT_SHLIB: return "reserved";
-        case SHT_DYNSYM: return "dynamic linker symbol table";
-        case SHT_INIT_ARRAY: return "array of constructors";
-        case SHT_FINI_ARRAY: return "array of destructors";
-        case SHT_PREINIT_ARRAY: return "array of preconstructors";
-        case SHT_GROUP: return "section group";
-        case SHT_SYMTAB_SHNDX: return "extended section indices";
-
-        case SHT_GNU_ATTRIBUTES: return "GNU object attributes";
-        case SHT_GNU_HASH: return "GNU-style hash table";
-        case SHT_GNU_LIBLIST: return "GNU prelink library list";
-        case SHT_CHECKSUM: return "checksum for DSO conent";
-        case SHT_GNU_verdef: return "GNU version definition";
-        case SHT_GNU_verneed: return "GNU version needs";
-        case SHT_GNU_versym: return "GNU version symbol table";
-
-    }
-
-    return QByteArray("unknown section type (") + QByteArray::number(sectionType) + ')';
+    return lookupLabel(sectionType, section_type_table);
 }
 
 QByteArray ElfPrinter::sectionFlags(uint64_t flags)
