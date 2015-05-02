@@ -329,7 +329,6 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                 s += QStringLiteral("Section: ") + entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->name() + "<br/>";
             }
 
-            // TODO: they way we interpret value() is wrong, seems to refer to program header vm addresses
             if (hasValidSectionIndex && entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->type() == SHT_NOBITS) {
                 // .bss, i.e. no content to display
             } else if (entry->type() == STT_FUNC && entry->size() > 0) {
