@@ -17,7 +17,12 @@
 
 const char roData[] = "HELLO WORLD!";
 
-int main (int argc, char**)
+int function(int i)
 {
-    return argc + 42 + roData[2];
+    return i + 42;
+}
+
+int main (int argc, char **argv)
+{
+    return argc + function(0) + roData[2];
 }
