@@ -192,11 +192,3 @@ DwarfDie* DwarfInfo::dieForMangledSymbol(const QByteArray& symbol) const
     }
     return nullptr;
 }
-
-QString DwarfInfo::sourceLocationForMangledSymbol(const QByteArray& symbol) const
-{
-    const auto die = dieForMangledSymbol(symbol);
-    if (die)
-        return die->sourceLocation();
-    return {};
-}
