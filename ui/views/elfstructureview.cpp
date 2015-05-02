@@ -19,6 +19,7 @@
 #include "ui_elfstructureview.h"
 
 #include <model/elfmodel.h>
+#include <navigator/codenavigator.h>
 #include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
 
 ElfStructureView::ElfStructureView(QWidget* parent):
@@ -32,7 +33,13 @@ ElfStructureView::ElfStructureView(QWidget* parent):
 
     connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &ElfStructureView::selectionChanged);
-    connect(ui->elfStructureSearchLine, &QLineEdit::textChanged, this, [this](const QString &text) { m_proxy->setFilterFixedString(text); });
+    connect(ui->elfStructureSearchLine, &QLineEdit::textChanged, this, [this](const QString &text) {
+        m_proxy->setFilterFixedString(text);
+    });
+    connect(ui->elfDetailView, &QTextBrowser::anchorClicked, this, [](const QUrl &url) {
+        if (url.scheme() == QLatin1String("code"))
+            CodeNavigator::goTo(url);
+    });
 }
 
 ElfStructureView::~ElfStructureView() = default;

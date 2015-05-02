@@ -27,14 +27,17 @@
 #include <disassmbler/disassembler.h>
 #include <demangle/demangler.h>
 #include <checks/structurepackingcheck.h>
+#include <navigator/codenavigator.h>
 
 #include <printers/dynamicsectionprinter.h>
 #include <printers/notesectionprinter.h>
 #include <printers/relocationprinter.h>
 
 #include <QDebug>
+#include <QFileInfo>
 #include <QObject>
 #include <QStringBuilder>
+#include <QUrl>
 
 #include <libdwarf/dwarf.h>
 
@@ -265,6 +268,40 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
     return s;
 }
 
+static QString printSourceLocation(DwarfDie *die)
+{
+    QString s;
+    if (!die)
+        return s;
+
+    const auto fileName = die->sourceFilePath();
+    if (fileName.isEmpty())
+        return s;
+
+    const auto lineNum = die->attribute(DW_AT_decl_line).toInt();
+    const auto hasCodeNavigation = CodeNavigator::isValid() && QFileInfo(fileName).isAbsolute();
+
+    s += "Source location: ";
+    if (hasCodeNavigation) {
+        QUrl url;
+        url.setScheme("code");
+        url.setPath(fileName);
+        url.setFragment(QString::number(lineNum));
+        s += "<a href=\"";
+        s += url.toEncoded();
+        s += "\">";
+    }
+    s += fileName;
+    if (lineNum > 0)
+        s += ':' + QString::number(lineNum);
+    if (hasCodeNavigation) {
+        s += "</a>";
+    }
+    s += "<br/>";
+
+    return s;
+}
+
 QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 {
     switch (arg) {
@@ -349,9 +386,8 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                 }
             }
             auto *dwarf = entry->symbolTable()->file()->dwarfInfo();
-            if (dwarf && entry->size()) {
-                s += QStringLiteral("Source location: ") + dwarf->sourceLocationForMangledSymbol(entry->name()) + "<br/>";
-            }
+            if (dwarf)
+                s += printSourceLocation(dwarf->dieForMangledSymbol(entry->name()));
             return s;
         }
     }

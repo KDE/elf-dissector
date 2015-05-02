@@ -28,7 +28,7 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLineEdit" name="elfStructureSearchLine">
@@ -49,7 +49,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QTextBrowser" name="elfDetailView"/>
+     <widget class="QTextBrowser" name="elfDetailView">
+      <property name="openLinks">
+       <bool>false</bool>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>
