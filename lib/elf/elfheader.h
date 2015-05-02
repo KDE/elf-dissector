@@ -24,7 +24,7 @@
 class ElfHeader
 {
 public:
-//     virtual uint16_t type() const = 0;
+    virtual uint16_t type() const = 0;
     virtual uint16_t machine() const = 0;
 //     virtual uint32_t version() const = 0;
 //     virtual uint64_t entryPoint() const = 0;
@@ -45,6 +45,7 @@ class ElfHeaderImpl : public ElfHeader
 public:
     explicit inline ElfHeaderImpl(unsigned char *data) : m_hdr(reinterpret_cast<T*>(data)) {}
 
+    inline uint16_t type() const override { return m_hdr->e_type; }
     inline uint16_t machine() const override { return m_hdr->e_machine; }
     inline uint64_t sectionHeaderTableOffset() const override { return m_hdr->e_shoff; }
     inline uint16_t sectionHeaderEntrySize() const override { return m_hdr->e_shentsize; }
