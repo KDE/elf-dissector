@@ -554,6 +554,7 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
                     attrValueStr = attrValue.toString();
                 s += QString::fromLocal8Bit(die->attributeName(attrType)) + ": " + attrValueStr.toHtmlEscaped() + "<br/>";
             }
+            s += printSourceLocation(die);
 
             if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {
                 s += "<tt><pre>";
