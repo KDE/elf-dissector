@@ -31,6 +31,7 @@ set(libelfdisector_srcs
     checks/structurepackingcheck.cpp
     checks/virtualdtorcheck.cpp
 
+    printers/dwarfprinter.cpp
     printers/dynamicsectionprinter.cpp
     printers/elfprinter.cpp
     printers/notesectionprinter.cpp

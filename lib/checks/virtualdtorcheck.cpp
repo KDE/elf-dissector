@@ -20,6 +20,7 @@
 #include <elf/elffileset.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
+#include <dwarf/dwarftypes.h>
 
 #include <libdwarf/dwarf.h>
 
@@ -48,7 +49,7 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
         die->attribute(DW_AT_external).toBool() &&
         die->attribute(DW_AT_declaration).toBool() &&
         die->attribute(DW_AT_artificial).toBool() &&
-        die->attribute(DW_AT_virtuality).toString() == QLatin1String("DW_VIRTUALITY_virtual") && // TODO this should be an enum, not a stringq
+        die->attribute(DW_AT_virtuality).value<DwarfVirtuality>() == DwarfVirtuality::Virtual &&
         die->name().startsWith('~');
 
     if (isCandidate) {

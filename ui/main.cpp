@@ -18,8 +18,7 @@
 #include <config-elf-dissector-version.h>
 
 #include <ui/mainwindow.h>
-
-#include <dwarf/dwarfexpression.h>
+#include <printers/dwarfprinter.h>
 
 #include <QApplication>
 #include <QCommandLineParser>
@@ -32,7 +31,7 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationVersion(ELF_DISSECTOR_VERSION_STRING);
 
     Q_INIT_RESOURCE(plotter);
-    QMetaType::registerConverter<DwarfExpression, QString>(&DwarfExpression::displayString);
+    DwarfPrinter::registerConverterFunctions();
 
     QApplication app(argc, argv);
 

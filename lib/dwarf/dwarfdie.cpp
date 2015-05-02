@@ -18,6 +18,7 @@
 #include "dwarfdie.h"
 #include "dwarfinfo.h"
 #include "dwarfexpression.h"
+#include "dwarftypes.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -495,7 +496,7 @@ QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
             stringifyEnum(value, &dwarf_get_LANG_name);
             break;
         case DW_AT_virtuality:
-            stringifyEnum(value, &dwarf_get_VIRTUALITY_name);
+            value = QVariant::fromValue(static_cast<DwarfVirtuality>(value.toInt()));
             break;
         case DW_AT_visibility:
             stringifyEnum(value, &dwarf_get_VIS_name);
