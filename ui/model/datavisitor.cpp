@@ -30,6 +30,7 @@
 #include <navigator/codenavigator.h>
 
 #include <printers/dynamicsectionprinter.h>
+#include <printers/elfprinter.h>
 #include <printers/notesectionprinter.h>
 #include <printers/relocationprinter.h>
 
@@ -42,21 +43,6 @@
 #include <libdwarf/dwarf.h>
 
 #include <cassert>
-
-static QString machineToString(uint16_t machineType)
-{
-#define M(x) case EM_ ## x: return QStringLiteral("" #x);
-    switch (machineType) {
-        M(NONE)
-        M(386)
-        M(ARM)
-        M(X86_64)
-        M(AVR)
-        M(AARCH64)
-    }
-    return QStringLiteral("Unknown machine type: " ) + QString::number(machineType);
-#undef M
-}
 
 DataVisitor::DataVisitor(ElfFileSet* fileSet) : m_fileSet(fileSet)
 {
@@ -77,66 +63,13 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             s += "File name: " + file->fileName() + "<br/>";
             s += QStringLiteral("Address size: ") + (file->type() == ELFCLASS32 ? "32 bit" : "64 bit") + "<br/>";
             s += QStringLiteral("Byte order: ") + (file->byteOrder() == ELFDATA2LSB ? "little endian" : "big endian") + "<br/>";
-            s += QStringLiteral("Machine: ") + machineToString(file->header()->machine()) + "<br/>";
+            s += QStringLiteral("Machine: ") + ElfPrinter::machine(file->header()->machine()) + "<br/>";
             return s;
         }
         case ElfModel::FileRole:
             return QVariant::fromValue(file);
     }
     return QVariant();
-}
-
-static QString sectionTypeToString(uint32_t sectionType)
-{
-    switch (sectionType) {
-        case SHT_NULL: return "&lt;null&gt;";
-        case SHT_PROGBITS: return "program data";
-        case SHT_SYMTAB: return "symbol table";
-        case SHT_STRTAB: return "string table";
-        case SHT_RELA: return "relocation entries with addends";
-        case SHT_HASH: return "symbol hash table";
-        case SHT_DYNAMIC: return "dynamic linking information";
-        case SHT_NOTE: return "notes";
-        case SHT_NOBITS: return "bss";
-        case SHT_REL: return "relocation entries, no addends";
-        case SHT_SHLIB: return "reserved";
-        case SHT_DYNSYM: return "dynamic linker symbol table";
-        case SHT_INIT_ARRAY: return "array of constructors";
-        case SHT_FINI_ARRAY: return "array of destructors";
-        case SHT_PREINIT_ARRAY: return "array of preconstructors";
-        case SHT_GROUP: return "section group";
-        case SHT_SYMTAB_SHNDX: return "extended section indices";
-
-        case SHT_GNU_ATTRIBUTES: return "GNU object attributes";
-        case SHT_GNU_HASH: return "GNU-style hash table";
-        case SHT_GNU_LIBLIST: return "GNU prelink library list";
-        case SHT_CHECKSUM: return "checksum for DSO conent";
-        case SHT_GNU_verdef: return "GNU version definition";
-        case SHT_GNU_verneed: return "GNU version needs";
-        case SHT_GNU_versym: return "GNU version symbol table";
-
-        default: QObject::tr("unknown (0x%1)").arg(sectionType, 16);
-    }
-
-    return QString();
-}
-
-static QString sectionFlagsToString(uint64_t flags)
-{
-    QStringList s;
-    if (flags & SHF_WRITE) s.push_back(QObject::tr("writable"));
-    if (flags & SHF_ALLOC) s.push_back(QObject::tr("occupies memory during execution"));
-    if (flags & SHF_EXECINSTR) s.push_back(QObject::tr("executable"));
-    if (flags & SHF_MERGE) s.push_back(QObject::tr("might be merged"));
-    if (flags & SHF_STRINGS) s.push_back(QObject::tr("contains nul-terminated strings"));
-    if (flags & SHF_INFO_LINK) s.push_back(QObject::tr("sh_info contains SHT index"));
-    if (flags & SHF_LINK_ORDER) s.push_back(QObject::tr("preserve order after combining"));
-    if (flags & SHF_OS_NONCONFORMING) s.push_back(QObject::tr("non-standard OS specific handling required"));
-    if (flags & SHF_GROUP) s.push_back(QObject::tr("group member"));
-    if (flags & SHF_TLS) s.push_back(QObject::tr("holds thread-local data"));
-    if (s.isEmpty())
-        return QObject::tr("&lt;none&gt;");
-    return s.join(", ");
 }
 
 QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
@@ -153,10 +86,10 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             QString s;
             s += QStringLiteral("Name: ") + section->header()->name() + "<br/>";
             s += QStringLiteral("Size: ") + QString::number(section->header()->size()) + " bytes<br/>";
-            s += QStringLiteral("Flags: ") + sectionFlagsToString(section->header()->flags()) + "<br/>";
+            s += QStringLiteral("Flags: ") + ElfPrinter::sectionFlags(section->header()->flags()) + "<br/>";
             s += QStringLiteral("Offset: 0x") + QString::number(section->header()->sectionOffset(), 16) + "<br/>";
             s += QStringLiteral("Virtual Address: 0x") + QString::number(section->header()->virtualAddress(), 16) + "<br/>";
-            s += QStringLiteral("Type: ") + sectionTypeToString(section->header()->type()) + "<br/>";
+            s += QStringLiteral("Type: ") + ElfPrinter::sectionType(section->header()->type()) + "<br/>";
             if (section->header()->link())
                 s += QStringLiteral("Linked section: ") + section->linkedSection<ElfSection>()->header()->name() + "<br/>";
             if (section->header()->flags() & SHF_INFO_LINK)
