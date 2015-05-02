@@ -31,7 +31,7 @@ public:
     ~DwarfInfoPrivate();
 
     void scanCompilationUnits();
-    QString sourceLocationForMangledSymbolRecursive(const QByteArray &symbol, DwarfDie *die) const;
+    DwarfDie *dieForMangledSymbolRecursive(const QByteArray &symbol, DwarfDie *die) const;
 
     ElfFile *elfFile = nullptr;
     QVector<DwarfDie*> compilationUnits;
@@ -127,16 +127,16 @@ void DwarfInfoPrivate::scanCompilationUnits()
 }
 
 
-QString DwarfInfoPrivate::sourceLocationForMangledSymbolRecursive(const QByteArray& symbol, DwarfDie *die) const
+DwarfDie* DwarfInfoPrivate::dieForMangledSymbolRecursive(const QByteArray& symbol, DwarfDie *die) const
 {
     if (die->attribute(DW_AT_linkage_name).toByteArray() == symbol)
-        return die->sourceLocation();
+        return die;
     for (auto childDie : die->children()) {
-        const auto loc = sourceLocationForMangledSymbolRecursive(symbol, childDie);
-        if (!loc.isEmpty())
-            return loc;
+        const auto hit = dieForMangledSymbolRecursive(symbol, childDie);
+        if (hit)
+            return hit;
     }
-    return {};
+    return nullptr;
 }
 
 DwarfInfo::DwarfInfo(ElfFile* elfFile) :
@@ -183,12 +183,20 @@ DwarfDie* DwarfInfo::dieAtOffset(Dwarf_Off offset) const
     return (*it)->dieAtOffset(offset);
 }
 
-QString DwarfInfo::sourceLocationForMangledSymbol(const QByteArray& symbol) const
+DwarfDie* DwarfInfo::dieForMangledSymbol(const QByteArray& symbol) const
 {
     for (auto die : compilationUnits()) {
-        const auto loc = d->sourceLocationForMangledSymbolRecursive(symbol, die);
-        if (!loc.isEmpty())
-            return loc;
+        const auto hit = d->dieForMangledSymbolRecursive(symbol, die);
+        if (hit)
+            return hit;
     }
+    return nullptr;
+}
+
+QString DwarfInfo::sourceLocationForMangledSymbol(const QByteArray& symbol) const
+{
+    const auto die = dieForMangledSymbol(symbol);
+    if (die)
+        return die->sourceLocation();
     return {};
 }

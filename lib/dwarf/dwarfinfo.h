@@ -39,6 +39,7 @@ public:
     /** The ELF file this DWARF information belong to. */
     ElfFile* elfFile() const;
 
+    DwarfDie* dieForMangledSymbol(const QByteArray &symbol) const;
     QString sourceLocationForMangledSymbol(const QByteArray &symbol) const;
 
     Dwarf_Debug dwarfHandle() const; // TODO this shouldn't be public API
