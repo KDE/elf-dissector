@@ -16,11 +16,25 @@
 */
 
 #include "elfprinter.h"
+#include "printerutils_p.h"
 
 #include <elf.h>
 
 #include <QByteArray>
 #include <QList>
+
+static const LookupTableEntry<uint16_t> file_type_table[] {
+    { ET_NONE, "none" },
+    { ET_REL, "relocatable file" },
+    { ET_EXEC, "executable file" },
+    { ET_DYN, "shared object file" },
+    { ET_CORE, "core file" }
+};
+
+QByteArray ElfPrinter::fileType(uint16_t fileType)
+{
+    return lookupLabel(fileType, file_type_table);
+}
 
 QByteArray ElfPrinter::machine(uint16_t machineType)
 {

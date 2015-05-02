@@ -63,6 +63,7 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             s += "File name: " + file->fileName() + "<br/>";
             s += QStringLiteral("Address size: ") + (file->type() == ELFCLASS32 ? "32 bit" : "64 bit") + "<br/>";
             s += QStringLiteral("Byte order: ") + (file->byteOrder() == ELFDATA2LSB ? "little endian" : "big endian") + "<br/>";
+            s += QStringLiteral("File type: ") + ElfPrinter::fileType(file->header()->type()) + "<br/>";
             s += QStringLiteral("Machine: ") + ElfPrinter::machine(file->header()->machine()) + "<br/>";
             return s;
         }
