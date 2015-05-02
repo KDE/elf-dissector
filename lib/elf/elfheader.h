@@ -27,7 +27,7 @@ public:
     virtual uint16_t type() const = 0;
     virtual uint16_t machine() const = 0;
 //     virtual uint32_t version() const = 0;
-//     virtual uint64_t entryPoint() const = 0;
+    virtual uint64_t entryPoint() const = 0;
 //     virtual uint64_t programHeaderTableOffset() const = 0;
     virtual uint64_t sectionHeaderTableOffset() const = 0;
 //     virtual uint32_t flags() const = 0;
@@ -47,6 +47,7 @@ public:
 
     inline uint16_t type() const override { return m_hdr->e_type; }
     inline uint16_t machine() const override { return m_hdr->e_machine; }
+    inline uint64_t entryPoint() const override { return m_hdr->e_entry; }
     inline uint64_t sectionHeaderTableOffset() const override { return m_hdr->e_shoff; }
     inline uint16_t sectionHeaderEntrySize() const override { return m_hdr->e_shentsize; }
     inline uint16_t sectionHeaderCount() const override { return m_hdr->e_shnum; }
