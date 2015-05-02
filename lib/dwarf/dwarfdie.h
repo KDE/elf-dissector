@@ -57,6 +57,8 @@ public:
     QString displayName() const;
     /** Fully qualified name (including class/namespaces etc). */
     QByteArray fullyQualifiedName() const;
+    /** Path to the source file. Best effort attempt to make it absolute, but that can't be guaranteed. */
+    QString sourceFilePath() const;
     /** Source code location, best effort to find an absolute path, and line number if present. */
     QString sourceLocation() const;
 

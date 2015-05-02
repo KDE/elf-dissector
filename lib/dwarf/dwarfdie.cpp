@@ -321,7 +321,7 @@ QByteArray DwarfDie::fullyQualifiedName() const
     return baseName + typeName();
 }
 
-QString DwarfDie::sourceLocation() const
+QString DwarfDie::sourceFilePath() const
 {
     auto filePath = attribute(DW_AT_decl_file).toString();
     if (filePath.isEmpty())
@@ -338,7 +338,12 @@ QString DwarfDie::sourceLocation() const
     if (fi.exists())
         filePath = fi.canonicalFilePath();
 
-    return  filePath + ':' + QString::number(attribute(DW_AT_decl_line).toInt());
+    return filePath;
+}
+
+QString DwarfDie::sourceLocation() const
+{
+    return  sourceFilePath() + ':' + QString::number(attribute(DW_AT_decl_line).toInt());
 }
 
 static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const char**))
