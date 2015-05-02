@@ -80,7 +80,7 @@
      <string>&amp;View</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menu_Settings">
+   <widget class="QMenu" name="menuSettings">
     <property name="title">
      <string>&amp;Settings</string>
     </property>
@@ -96,7 +96,7 @@
    <addaction name="menu_File"/>
    <addaction name="menuView"/>
    <addaction name="menu_Checks"/>
-   <addaction name="menu_Settings"/>
+   <addaction name="menuSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">

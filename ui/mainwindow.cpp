@@ -24,6 +24,7 @@
 #include <checks/virtualdtorcheck.h>
 
 #include <model/elfmodel.h>
+#include <navigator/codenavigator.h>
 
 #include <QApplication>
 #include <QDebug>
@@ -45,6 +46,8 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::fileOpen);
     connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
     connect(ui->actionReopenPreviousFile, &QAction::triggered, this, &MainWindow::reloadFileOnStartup);
+
+    ui->menuSettings->addAction(CodeNavigator::configMenu(this));
 
     // ### temporary
     connect(ui->actionCheckStructurePacking, &QAction::triggered, this, [this]() {
