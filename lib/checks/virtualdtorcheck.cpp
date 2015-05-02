@@ -39,6 +39,13 @@ void VirtualDtorCheck::findImplicitVirtualDtors(ElfFileSet* fileSet)
             findImplicitVirtualDtors(die);
     }
 
+    // implicit virtual dtors in implementation files are not a problem
+    m_results.erase(
+        std::remove_if(m_results.begin(), m_results.end(), [](const Result &res) {
+            return res.sourceFilePath.endsWith(".cpp") || res.sourceFilePath.endsWith(".c") || res.sourceFilePath.endsWith(".cxx");
+        }), m_results.end()
+    );
+
     printResults();
 }
 
@@ -59,10 +66,15 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
         });
         const auto *typeDie = die->attribute(DW_AT_containing_type).value<DwarfDie*>();
         if (it == m_results.end()) {
-            const Result res = { fullName, typeDie ? typeDie->sourceLocation() : QString()};
+            const Result res = {
+                fullName,
+                typeDie ? typeDie->sourceFilePath() : QString(),
+                typeDie ? typeDie->attribute(DW_AT_decl_line).toInt() : 0
+            };
             m_results.push_back(res);
-        } else if ((*it).sourceLocation.isEmpty()) {
-            (*it).sourceLocation = typeDie ? typeDie->sourceLocation() : QString();
+        } else if ((*it).sourceFilePath.isEmpty() && typeDie) {
+            (*it).sourceFilePath = typeDie->sourceFilePath();
+            (*it).lineNumber = typeDie->attribute(DW_AT_decl_line).toInt();
         }
     }
 
@@ -74,6 +86,10 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
 
 void VirtualDtorCheck::printResults()
 {
-    for (const auto &res : m_results)
-        std::cout << res.fullName.constData() << " at " << qPrintable(res.sourceLocation) << std::endl;
+    for (const auto &res : m_results) {
+        std::cout << res.fullName.constData() << " at " << qPrintable(res.sourceFilePath);
+        if (res.lineNumber)
+            std::cout << ':' << res.lineNumber;
+        std::cout << std::endl;
+    }
 }

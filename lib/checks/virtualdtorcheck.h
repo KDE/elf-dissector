@@ -37,7 +37,8 @@ private:
 
     struct Result {
         QByteArray fullName;
-        QString sourceLocation;
+        QString sourceFilePath;
+        int lineNumber;
     };
 
     QVector<Result> m_results;
