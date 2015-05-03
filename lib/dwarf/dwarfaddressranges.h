@@ -40,6 +40,8 @@ public:
 
     /** Looks up the CU DIE for the given address. */
     DwarfDie* compilationUnitForAddress(uint64_t addr) const;
+    /** Looks up the DIE for the given address. */
+    DwarfDie* dieForAddress(uint64_t addr) const;
 
 private:
     Dwarf_Arange *m_aranges;

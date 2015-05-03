@@ -86,15 +86,21 @@ private slots:
             const auto die = dieQueue.takeFirst();
             dieQueue += die->children();
 
-            const auto lowPC = die->attribute(DW_AT_low_pc).toLongLong();
+            const auto lowPC = die->attribute(DW_AT_low_pc).toULongLong();
             if (!lowPC > 0)
                 continue;
 
-            const auto lookupDie = f.dwarfInfo()->addressRanges()->compilationUnitForAddress(lowPC);
+            const auto lookupCU = f.dwarfInfo()->addressRanges()->compilationUnitForAddress(lowPC);
             auto cuDie = die;
             while (cuDie && cuDie->tag() != DW_TAG_compile_unit)
                 cuDie = cuDie->parentDIE();
-            QCOMPARE(cuDie, lookupDie);
+            QCOMPARE(cuDie, lookupCU);
+
+            if (die->tag() == DW_TAG_compile_unit)
+                continue;
+
+            const auto lookupDie = f.dwarfInfo()->addressRanges()->dieForAddress(lowPC);
+            QCOMPARE(die, lookupDie);
         }
     }
 };

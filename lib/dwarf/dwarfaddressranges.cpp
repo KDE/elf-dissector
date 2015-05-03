@@ -17,8 +17,10 @@
 
 #include "dwarfaddressranges.h"
 #include "dwarfinfo.h"
+#include "dwarfdie.h"
 
-#include <QDebug>
+#include <libdwarf/dwarf.h>
+
 #include <cassert>
 
 DwarfAddressRanges::DwarfAddressRanges(DwarfInfo* info) :
@@ -59,4 +61,34 @@ DwarfDie* DwarfAddressRanges::compilationUnitForAddress(uint64_t addr) const
         return nullptr;
 
     return m_info->dieAtOffset(offset);
+}
+
+static DwarfDie* findByLowPCRecursive(DwarfDie *die, uint64_t addr)
+{
+    const auto lowPC = die->attribute(DW_AT_low_pc).toULongLong();
+    if (lowPC == addr)
+        return die;
+
+    for (const auto child : die->children()) {
+        auto res = findByLowPCRecursive(child, addr);
+        if (res)
+            return res;
+    }
+
+    return nullptr;
+}
+
+DwarfDie* DwarfAddressRanges::dieForAddress(uint64_t addr) const
+{
+    const auto cu = compilationUnitForAddress(addr);
+    if (!cu)
+        return nullptr;
+
+    for (const auto die : cu->children()) {
+        auto res = findByLowPCRecursive(die, addr);
+        if (res)
+            return res;
+    }
+
+    return nullptr;
 }
