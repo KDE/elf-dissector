@@ -73,8 +73,12 @@ QByteArray DwarfDie::name() const
 
     char* dwarfStr;
     const auto res = dwarf_diename(m_die, &dwarfStr, nullptr);
-    if (res != DW_DLV_OK)
+    if (res != DW_DLV_OK) {
+        const auto ref = inheritedFrom();
+        if (ref)
+            return ref->name();
         return {};
+    }
     const QByteArray s(dwarfStr);
     dwarf_dealloc(dwarfHandle(), dwarfStr, DW_DLA_STRING);
     return s;
