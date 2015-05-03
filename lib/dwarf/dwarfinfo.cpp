@@ -17,6 +17,7 @@
 
 #include "dwarfinfo.h"
 #include "dwarfdie.h"
+#include "dwarfaddressranges.h"
 
 #include <QDebug>
 
@@ -41,6 +42,7 @@ public:
     Dwarf_Debug dbg;
 
     DwarfInfo *q;
+    DwarfAddressRanges *aranges;
 };
 
 
@@ -147,15 +149,24 @@ DwarfInfo::DwarfInfo(ElfFile* elfFile) :
     if (dwarf_object_init(&d->objAccessIface, 0, 0, &d->dbg, 0) != DW_DLV_OK) {
         qDebug() << "error loading dwarf data";
     }
+
+    d->aranges = new DwarfAddressRanges(this);
 }
 
 DwarfInfo::~DwarfInfo()
 {
+    // make sure this is destroyed before d is reset, needs dwarfHandle in its dtor
+    delete d->aranges;
 }
 
 ElfFile* DwarfInfo::elfFile() const
 {
     return d->elfFile;
+}
+
+DwarfAddressRanges* DwarfInfo::addressRanges() const
+{
+    return d->aranges;
 }
 
 Dwarf_Debug DwarfInfo::dwarfHandle() const

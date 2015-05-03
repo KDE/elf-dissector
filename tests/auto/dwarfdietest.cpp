@@ -18,6 +18,7 @@
 #include <dwarf/dwarfdie.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfranges.h>
+#include <dwarf/dwarfaddressranges.h>
 
 #include <QDebug>
 #include <QtTest/qtest.h>
@@ -49,7 +50,7 @@ private slots:
         QVERIFY(cu->attributes().size() > 0);
     }
 
-    void testCodeAddressRanges()
+    void testAttribute_AT_ranges()
     {
         ElfFile f(BINDIR "single-executable");
         QVERIFY(f.dwarfInfo());
@@ -71,6 +72,29 @@ private slots:
                 QVERIFY(lowPC.value<uint64_t>() >= textSection->header()->virtualAddress());
                 QVERIFY(lowPC.value<uint64_t>() < textSection->header()->virtualAddress() + textSection->header()->size());
             }
+        }
+    }
+
+    void testArange()
+    {
+        ElfFile f(BINDIR "single-executable");
+        QVERIFY(f.dwarfInfo());
+        QVERIFY(f.dwarfInfo()->addressRanges()->isValid());
+
+        auto dieQueue = f.dwarfInfo()->compilationUnits();
+        while (!dieQueue.isEmpty()) {
+            const auto die = dieQueue.takeFirst();
+            dieQueue += die->children();
+
+            const auto lowPC = die->attribute(DW_AT_low_pc).toLongLong();
+            if (!lowPC > 0)
+                continue;
+
+            const auto lookupDie = f.dwarfInfo()->addressRanges()->compilationUnitForAddress(lowPC);
+            auto cuDie = die;
+            while (cuDie && cuDie->tag() != DW_TAG_compile_unit)
+                cuDie = cuDie->parentDIE();
+            QCOMPARE(cuDie, lookupDie);
         }
     }
 };

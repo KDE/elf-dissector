@@ -26,7 +26,9 @@
 
 class DwarfDie;
 class DwarfInfoPrivate;
+class DwarfAddressRanges;
 
+/** Represents the .debug_info section. */
 class DwarfInfo
 {
 public:
@@ -38,6 +40,9 @@ public:
 
     /** The ELF file this DWARF information belong to. */
     ElfFile* elfFile() const;
+
+    /** The corresponding .debug_arange section. Use for address-based lookups. */
+    DwarfAddressRanges* addressRanges() const;
 
     DwarfDie* dieForMangledSymbol(const QByteArray &symbol) const;
 

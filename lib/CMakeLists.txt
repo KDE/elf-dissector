@@ -22,6 +22,7 @@ set(libelfdisector_srcs
 
     disassmbler/disassembler.cpp
 
+    dwarf/dwarfaddressranges.cpp
     dwarf/dwarfinfo.cpp
     dwarf/dwarfdie.cpp
     dwarf/dwarfexpression.cpp
