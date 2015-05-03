@@ -24,6 +24,9 @@
 #include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
 #include <elf.h>
 
+#include <dwarf/dwarfaddressranges.h>
+#include <libdwarf/dwarf.h>
+
 #include <disassmbler/disassembler.h>
 #include <demangle/demangler.h>
 #include <checks/structurepackingcheck.h>
@@ -39,8 +42,6 @@
 #include <QObject>
 #include <QStringBuilder>
 #include <QUrl>
-
-#include <libdwarf/dwarf.h>
 
 #include <cassert>
 
@@ -209,6 +210,20 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
     return s;
 }
 
+static DwarfDie* findDwarfDie(ElfSymbolTableEntry *entry)
+{
+    auto *dwarf = entry->symbolTable()->file()->dwarfInfo();
+    if (!dwarf)
+        return nullptr;
+
+    DwarfDie* res = nullptr;
+    if (dwarf->addressRanges()->isValid())
+       res = dwarf->addressRanges()->dieForAddress(entry->value());
+    if (!res)
+        res = dwarf->dieForMangledSymbol(entry->name());
+    return res;
+}
+
 static QString printSourceLocation(DwarfDie *die)
 {
     QString s;
@@ -325,9 +340,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                         s += "</tt><br/>";
                 }
             }
-            auto *dwarf = entry->symbolTable()->file()->dwarfInfo();
-            if (dwarf)
-                s += printSourceLocation(dwarf->dieForMangledSymbol(entry->name()));
+            s += printSourceLocation(findDwarfDie(entry));
             return s;
         }
     }
