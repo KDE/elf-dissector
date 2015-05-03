@@ -18,6 +18,7 @@
 #include "dwarfprinter.h"
 
 #include <dwarf/dwarfexpression.h>
+#include <dwarf/dwarfranges.h>
 
 #include <QMetaType>
 #include <QString>
@@ -33,10 +34,30 @@ const char* DwarfPrinter::virtuality(DwarfVirtuality v)
     return str;
 }
 
+QByteArray DwarfPrinter::ranges(const DwarfRanges& ranges)
+{
+    QByteArray b;
+    for (int i = 0; i < ranges.size(); ++i) {
+        const auto r = ranges.entry(i);
+        if (r->dwr_type == DW_RANGES_ADDRESS_SELECTION) {
+            if (r->dwr_addr2 != 0)
+                b += "base address: 0x" + QByteArray::number(r->dwr_addr2, 16) + ' ';
+        } else {
+            b += "[0x" + QByteArray::number(r->dwr_addr1, 16);
+            b += ", 0x" + QByteArray::number(r->dwr_addr2, 16);
+            b += "]\n";
+        }
+    }
+    return b;
+}
+
 void DwarfPrinter::registerConverterFunctions()
 {
     QMetaType::registerConverter<DwarfExpression, QString>(&DwarfExpression::displayString);
     QMetaType::registerConverter<DwarfVirtuality, QString>([](DwarfVirtuality v){
         return QString::fromLatin1(DwarfPrinter::virtuality(v));
+    });
+    QMetaType::registerConverter<DwarfRanges, QString>([](const DwarfRanges &r){
+        return QString::fromLatin1(DwarfPrinter::ranges(r));
     });
 }

@@ -20,10 +20,14 @@
 
 #include <dwarf/dwarftypes.h>
 
+class DwarfRanges;
+
 /** Pretty printers for DWARF types. */
 namespace DwarfPrinter
 {
     const char* virtuality(DwarfVirtuality v);
+
+    QByteArray ranges(const DwarfRanges &ranges);
 
     /** Register string converters for QVariant. */
     void registerConverterFunctions();
