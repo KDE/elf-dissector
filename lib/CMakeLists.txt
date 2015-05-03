@@ -26,6 +26,7 @@ set(libelfdisector_srcs
     dwarf/dwarfdie.cpp
     dwarf/dwarfexpression.cpp
     dwarf/dwarfleb128.cpp
+    dwarf/dwarfranges.cpp
 
     checks/ldbenchmark.cpp
     checks/structurepackingcheck.cpp

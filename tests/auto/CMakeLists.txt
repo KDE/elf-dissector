@@ -27,6 +27,10 @@ add_executable(dwarfleb128test dwarfleb128test.cpp)
 target_link_libraries(dwarfleb128test Qt5::Test libelfdissector)
 add_test(NAME dwarfleb128test COMMAND dwarfleb128test)
 
+add_executable(dwarfdietest dwarfdietest.cpp)
+target_link_libraries(dwarfdietest Qt5::Test libelfdissector)
+add_test(NAME dwarfdietest COMMAND dwarfdietest)
+
 add_executable(elfmodeltest elfmodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
 target_link_libraries(elfmodeltest Qt5::Test libelfdissectorui)
 add_test(NAME elfmodeltest COMMAND elfmodeltest)

@@ -18,6 +18,7 @@
 #include "dwarfdie.h"
 #include "dwarfinfo.h"
 #include "dwarfexpression.h"
+#include "dwarfranges.h"
 #include "dwarftypes.h"
 
 #include <QDebug>
@@ -489,6 +490,9 @@ QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
             value = sourceFileForIndex(fileIndex -1);
             break;
         }
+        case DW_AT_ranges:
+            value = QVariant::fromValue(DwarfRanges(this, value.toLongLong()));
+            break;
         case DW_AT_accessibility:
             stringifyEnum(value, &dwarf_get_ACCESS_name);
             break;
