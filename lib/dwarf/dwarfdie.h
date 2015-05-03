@@ -77,6 +77,8 @@ private:
     DwarfDie(Dwarf_Die die, DwarfDie* parent);
     DwarfDie(Dwarf_Die die, DwarfInfo* info);
 
+    QVariant attributeLocal(Dwarf_Half attributeType) const;
+
     void scanChildren() const;
 
     const char* sourceFileForIndex(int i) const;

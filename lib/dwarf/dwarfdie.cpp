@@ -391,6 +391,27 @@ QByteArray DwarfDie::attributeName(Dwarf_Half attributeType) const
 
 QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
 {
+    const QVariant localAttr = attributeLocal(attributeType);
+    if (localAttr.isValid())
+        return localAttr;
+
+    switch (attributeType) {
+        case DW_AT_sibling:
+        case DW_AT_declaration:
+            return {}; // never inherit these
+    }
+
+    auto ref = attributeLocal(DW_AT_abstract_origin).value<DwarfDie*>();
+    if (!ref)
+        ref = attributeLocal(DW_AT_specification).value<DwarfDie*>();
+    if (!ref)
+        return {};
+
+    return ref->attribute(attributeType);
+}
+
+QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
+{
     Dwarf_Attribute attr;
     auto res = dwarf_attr(m_die, attributeType, &attr, nullptr);
     if (res != DW_DLV_OK)
