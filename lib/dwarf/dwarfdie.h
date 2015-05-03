@@ -69,6 +69,9 @@ public:
     QVector<DwarfDie*> children() const;
     DwarfDie* dieAtOffset(Dwarf_Off offset) const;
 
+    /** If this DIE is inheriting attributes from another DIE, that's returned here. */
+    DwarfDie* inheritedFrom() const;
+
     // internal
     Dwarf_Die dieHandle() const;
 

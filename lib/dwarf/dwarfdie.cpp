@@ -401,12 +401,9 @@ QVariant DwarfDie::attribute(Dwarf_Half attributeType) const
             return {}; // never inherit these
     }
 
-    auto ref = attributeLocal(DW_AT_abstract_origin).value<DwarfDie*>();
-    if (!ref)
-        ref = attributeLocal(DW_AT_specification).value<DwarfDie*>();
+    const auto ref = inheritedFrom();
     if (!ref)
         return {};
-
     return ref->attribute(attributeType);
 }
 
@@ -569,6 +566,14 @@ DwarfDie* DwarfDie::dieAtOffset(Dwarf_Off offset) const
     Q_ASSERT(it != cus.begin());
     --it;
     return (*it)->dieAtOffset(offset);
+}
+
+DwarfDie* DwarfDie::inheritedFrom() const
+{
+    auto ref = attributeLocal(DW_AT_abstract_origin).value<DwarfDie*>();
+    if (!ref)
+        ref = attributeLocal(DW_AT_specification).value<DwarfDie*>();
+    return ref;
 }
 
 void DwarfDie::scanChildren() const
