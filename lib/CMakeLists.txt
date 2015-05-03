@@ -38,6 +38,7 @@ set(libelfdisector_srcs
     printers/elfprinter.cpp
     printers/notesectionprinter.cpp
     printers/relocationprinter.cpp
+    printers/symbolprinter.cpp
 )
 
 add_library(libelfdissector STATIC ${libelfdisector_srcs})

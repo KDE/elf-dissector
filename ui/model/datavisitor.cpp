@@ -36,6 +36,7 @@
 #include <printers/elfprinter.h>
 #include <printers/notesectionprinter.h>
 #include <printers/relocationprinter.h>
+#include <printers/symbolprinter.h>
 
 #include <QDebug>
 #include <QFileInfo>
@@ -126,47 +127,6 @@ QVariant DataVisitor::doVisit(ElfSymbolTableSection* symtab, int arg) const
     s += "<br/>Imported symbols: " + QString::number(symtab->importCount());
     s += "<br/>";
     return s;
-}
-
-
-static QString bindTypeToString(uint8_t bindType)
-{
-    switch (bindType) {
-        case STB_LOCAL: return "local";
-        case STB_GLOBAL: return "global";
-        case STB_WEAK: return "weak";
-        case STB_GNU_UNIQUE: return "GNU unique";
-        default: QObject::tr("unknown (%1)").arg(bindType);
-    }
-    return QString();
-}
-
-static QString symbolTypeToString(uint8_t symbolType)
-{
-    switch (symbolType) {
-        case STT_NOTYPE: return "unspecified";
-        case STT_OBJECT: return "data object";
-        case STT_FUNC: return "code object";
-        case STT_SECTION: return "section";
-        case STT_FILE: return "file name";
-        case STT_COMMON: return "common data object";
-        case STT_TLS: return "thread-local data object";
-        case STT_GNU_IFUNC: return "GNU indirect code object";
-        default: QObject::tr("unknown (%1)").arg(symbolType);
-    }
-    return QString();
-}
-
-static QString visibilityToString(uint8_t visibility)
-{
-    switch (visibility) {
-        case STV_DEFAULT: return "default";
-        case STV_INTERNAL: return "internal";
-        case STV_HIDDEN: return "hidden";
-        case STV_PROTECTED: return "protected";
-        default: QObject::tr("unknown (%1)").arg(visibility);
-    }
-    return QString();
 }
 
 static uint64_t virtualTableEntry(ElfSymbolTableEntry *entry, int index)
@@ -275,9 +235,9 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             s += QStringLiteral("Demangled name: ") + QString(demangler.demangleFull(entry->name())).toHtmlEscaped() + "<br/>";
             s += QStringLiteral("Size: ") + QString::number(entry->size()) + "<br/>";
             s += QStringLiteral("Value: 0x") + QString::number(entry->value(), 16) + "<br/>";
-            s += QStringLiteral("Bind type: ") + bindTypeToString(entry->bindType()) + "<br/>";
-            s += QStringLiteral("Symbol type: ") + symbolTypeToString(entry->type()) + "<br/>";
-            s += QStringLiteral("Visibility: ") + visibilityToString(entry->visibility()) + "<br/>";
+            s += QStringLiteral("Bind type: ") + SymbolPrinter::bindType(entry->bindType()) + "<br/>";
+            s += QStringLiteral("Symbol type: ") + SymbolPrinter::symbolType(entry->type()) + "<br/>";
+            s += QStringLiteral("Visibility: ") + SymbolPrinter::visibility(entry->visibility()) + "<br/>";
             s += printVerSymInfo(entry);
 
             const auto hasValidSectionIndex = entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount();
