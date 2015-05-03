@@ -381,6 +381,20 @@ QVector< Dwarf_Half > DwarfDie::attributes() const
     }
 
     dwarf_dealloc(dwarfHandle(), attrList, DW_DLA_LIST);
+
+    if (const auto die = inheritedFrom()) {
+        auto inheritedAttrs = die->attributes();
+        // remove attributes that must not be inherited
+        inheritedAttrs.erase(
+            std::remove_if(inheritedAttrs.begin(), inheritedAttrs.end(), [](Dwarf_Half at) {
+                return at == DW_AT_declaration || at == DW_AT_sibling;
+            }), inheritedAttrs.end());
+
+        attrs += inheritedAttrs;
+        std::sort(attrs.begin(), attrs.end());
+        attrs.erase(std::unique(attrs.begin(), attrs.end()), attrs.end());
+    }
+
     return attrs;
 }
 
