@@ -176,7 +176,7 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
 static DwarfDie* findDwarfDie(ElfSymbolTableEntry *entry)
 {
     auto *dwarf = entry->symbolTable()->file()->dwarfInfo();
-    if (!dwarf)
+    if (!dwarf || entry->value() == 0)
         return nullptr;
 
     DwarfDie* res = nullptr;
