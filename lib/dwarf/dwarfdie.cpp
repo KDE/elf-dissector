@@ -335,7 +335,7 @@ QString DwarfDie::sourceFilePath() const
         while (parentDie && parentDie->tag() != DW_TAG_compile_unit)
             parentDie = parentDie->parentDIE();
         if (parentDie)
-            fi.setFile(parentDie->name() + "/" + filePath);
+            fi.setFile(parentDie->attribute(DW_AT_comp_dir).toString() + "/" + filePath);
     }
     if (fi.exists())
         filePath = fi.canonicalFilePath();
