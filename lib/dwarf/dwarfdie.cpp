@@ -591,3 +591,8 @@ const char* DwarfDie::sourceFileForIndex(int sourceIndex) const
     Q_ASSERT(sourceIndex < m_srcFileCount);
     return m_srcFiles[sourceIndex];
 }
+
+Dwarf_Die DwarfDie::dieHandle() const
+{
+    return m_die;
+}

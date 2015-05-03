@@ -69,6 +69,9 @@ public:
     QVector<DwarfDie*> children() const;
     DwarfDie* dieAtOffset(Dwarf_Off offset) const;
 
+    // internal
+    Dwarf_Die dieHandle() const;
+
 private:
     friend class DwarfInfoPrivate;
     DwarfDie(Dwarf_Die die, DwarfDie* parent);
