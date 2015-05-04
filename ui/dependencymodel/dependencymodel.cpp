@@ -37,9 +37,6 @@ DependencyModel::~DependencyModel()
 
 void DependencyModel::setFileSet(ElfFileSet* fileSet)
 {
-    if (m_fileSet == fileSet)
-        return;
-
     beginResetModel();
     const auto l = [](DependencyModel* m) { m->endResetModel(); };
     const auto endReset = std::unique_ptr<DependencyModel, decltype(l)>(this, l);
