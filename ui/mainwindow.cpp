@@ -81,7 +81,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::fileOpen()
 {
-    const QString fileName = QFileDialog::getOpenFileName(this, tr("Open ELF Object"));
+    const QFileInfo fi(m_currentFileName);
+
+    const QString fileName = QFileDialog::getOpenFileName(this, tr("Open ELF Object"), fi.path());
     if (fileName.isEmpty())
         return;
 
