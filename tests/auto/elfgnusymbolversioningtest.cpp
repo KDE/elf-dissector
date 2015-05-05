@@ -81,6 +81,7 @@ private slots:
 
         const auto verNeed = symbolVersionNeeds->requirement(0);
         QVERIFY(verNeed);
+        QVERIFY(verNeed->auxiliarySize() > 0);
     }
 };
 

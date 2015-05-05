@@ -8,6 +8,7 @@ set(libelfdisector_srcs
     elf/elfgnusymbolversiondefinitionauxiliaryentry.cpp
     elf/elfgnusymbolversiondefinitionssection.cpp
     elf/elfgnusymbolversionrequirement.cpp
+    elf/elfgnusymbolversionrequirementauxiliaryentry.cpp
     elf/elfgnusymbolversionrequirementssection.cpp
     elf/elfheader.cpp
     elf/elfnoteentry.cpp

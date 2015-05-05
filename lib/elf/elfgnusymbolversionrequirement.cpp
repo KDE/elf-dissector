@@ -17,6 +17,7 @@
 
 #include "elfgnusymbolversionrequirement.h"
 #include "elfgnusymbolversionrequirementssection.h"
+#include "elfgnusymbolversionrequirementauxiliaryentry.h"
 #include "elfstringtablesection.h"
 
 #include <cassert>
@@ -34,14 +35,12 @@ ElfGNUSymbolVersionRequirement::ElfGNUSymbolVersionRequirement(ElfGNUSymbolVersi
     uint32_t auxOffset = 0;
     m_auxEntries.reserve(auxiliarySize());
     for (int i = 0; i < auxiliarySize(); ++i) {
-#if 0
         const auto auxEntry = new ElfGNUSymbolVersionRequirementAuxiliaryEntry(this, auxOffset);
         m_auxEntries.push_back(auxEntry);
         auxOffset += auxEntry->nextAuxiliaryEntryOffset();
-#endif
     }
 
-//     assert(auxiliarySize() == m_auxEntries.size());
+    assert(auxiliarySize() == m_auxEntries.size());
 }
 
 ElfGNUSymbolVersionRequirement::~ElfGNUSymbolVersionRequirement() = default;
