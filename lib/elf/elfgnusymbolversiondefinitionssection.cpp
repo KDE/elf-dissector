@@ -26,7 +26,10 @@ ElfGNUSymbolVersionDefinitionsSection::ElfGNUSymbolVersionDefinitionsSection(Elf
 {
 }
 
-ElfGNUSymbolVersionDefinitionsSection::~ElfGNUSymbolVersionDefinitionsSection() = default;
+ElfGNUSymbolVersionDefinitionsSection::~ElfGNUSymbolVersionDefinitionsSection()
+{
+    qDeleteAll(m_versionDefinitions);
+}
 
 uint32_t ElfGNUSymbolVersionDefinitionsSection::entryCount() const
 {
