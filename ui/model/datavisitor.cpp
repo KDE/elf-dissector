@@ -22,6 +22,7 @@
 #include <elf/elfnoteentry.h>
 #include <elf/elfgnusymbolversiontable.h>
 #include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
+#include <elf/elfgnusymbolversionrequirement.h>
 #include <elf.h>
 
 #include <dwarf/dwarfaddressranges.h>
@@ -384,6 +385,26 @@ QVariant DataVisitor::doVisit(ElfGNUSymbolVersionDefinitionAuxiliaryEntry* auxEn
             QString s;
             s += QString("Name: ") + auxEntry->name() + "<br/>";
             s += "Next: " + QString::number(auxEntry->nextAuxiliaryEntryOffset()) + "<br/>";
+            return s;
+        }
+    }
+    return {};
+}
+
+QVariant DataVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNeed, int role) const
+{
+    switch (role) {
+        case Qt::DisplayRole:
+            return verNeed->fileName();
+        case ElfModel::SizeRole:
+            return verNeed->size();
+        case ElfModel::DetailRole:
+        {
+            QString s;
+            s += "File: " + QString(verNeed->fileName()) + "<br/>";
+            s += "Aux count: " + QString::number(verNeed->auxiliarySize()) + "<br/>";
+            s += "Aux offset: " + QString::number(verNeed->auxiliaryOffset()) + "<br/>";
+            s += "Next offset: " + QString::number(verNeed->nextOffset()) + "<br/>";
             return s;
         }
     }

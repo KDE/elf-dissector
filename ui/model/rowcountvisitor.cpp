@@ -49,6 +49,11 @@ int RowCountVisitor::doVisit(ElfGNUSymbolVersionDefinition *verDef, int) const
     return verDef->auxiliarySize();
 }
 
+int RowCountVisitor::doVisit(ElfGNUSymbolVersionRequirementsSection* section, int) const
+{
+    return section->entryCount();
+}
+
 int RowCountVisitor::doVisit(ElfNoteSection* section, int) const
 {
     return section->entryCount();

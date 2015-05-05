@@ -50,6 +50,9 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
         case SHT_GNU_verdef:
             type = ElfNodeVariant::VersionDefinitionSection;
             break;
+        case SHT_GNU_verneed:
+            type = ElfNodeVariant::VersionRequirementsSection;
+            break;
         default:
             if (qstrcmp(section->header()->name(), ".debug_info") == 0) {
                 type = ElfNodeVariant::DwarfInfo;
@@ -83,6 +86,12 @@ IndexVisitor::type IndexVisitor::doVisit(ElfGNUSymbolVersionDefinition *verDef, 
 {
     const auto auxEntry = verDef->auxiliaryEntry(row);
     return qMakePair<void*, ElfNodeVariant::Type>(auxEntry, ElfNodeVariant::VersionDefinitionAuxiliaryEntry);
+}
+
+IndexVisitor::type IndexVisitor::doVisit(ElfGNUSymbolVersionRequirementsSection *section, int row) const
+{
+    const auto entry = section->requirement(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::VersionRequirementEntry);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(ElfNoteSection *section, int row) const

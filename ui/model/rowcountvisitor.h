@@ -30,6 +30,7 @@ protected:
     int doVisit(ElfDynamicSection* section, int arg) const override;
     int doVisit(ElfGNUSymbolVersionDefinitionsSection* section, int arg) const override;
     int doVisit(ElfGNUSymbolVersionDefinition *verDef, int arg) const override;
+    int doVisit(ElfGNUSymbolVersionRequirementsSection* section, int) const override;
     int doVisit(ElfNoteSection* section, int arg) const override;
     int doVisit(ElfRelocationSection* section, int arg) const override;
     int doVisit(DwarfInfo* info, int arg) const override;
