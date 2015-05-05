@@ -21,6 +21,8 @@
 #include <elf/elfgnusymbolversiontable.h>
 #include <elf/elfgnusymbolversiondefinitionssection.h>
 #include <elf/elfgnusymbolversiondefinition.h>
+#include <elf/elfgnusymbolversionrequirementssection.h>
+#include <elf/elfgnusymbolversionrequirement.h>
 
 #include <QtTest/qtest.h>
 #include <QObject>
@@ -67,6 +69,18 @@ private slots:
 
         const auto verDefAux = verDef->auxiliaryEntry(0);
         QVERIFY(verDefAux);
+
+        const auto symNeedIndex = f->indexOfSection(".gnu.version_r");
+        QVERIFY(symNeedIndex > 0);
+        QCOMPARE(symNeedIndex, f->indexOfSection(SHT_GNU_verneed));
+        const auto symbolVersionNeeds = f->section<ElfGNUSymbolVersionRequirementsSection>(symNeedIndex);
+        QVERIFY(symbolVersionNeeds);
+
+        QCOMPARE(f->dynamicSection()->entryWithTag(DT_VERNEEDNUM)->value(), (uint64_t)symbolVersionNeeds->entryCount());
+        QVERIFY(symbolVersionNeeds->entryCount() > 0);
+
+        const auto verNeed = symbolVersionNeeds->requirement(0);
+        QVERIFY(verNeed);
     }
 };
 
