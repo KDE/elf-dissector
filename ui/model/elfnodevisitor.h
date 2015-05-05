@@ -41,6 +41,7 @@
 class ElfDynamicEntry;
 class ElfFile;
 class ElfFileSet;
+class ElfGNUSymbolVersionRequirementAuxiliaryEntry;
 
 template <typename T>
 class ElfNodeVisitor
@@ -86,6 +87,8 @@ public:
                 return doVisit(node->value<ElfGNUSymbolVersionRequirementsSection>(), arg);
             case ElfNodeVariant::VersionRequirementEntry:
                 return doVisit(node->value<ElfGNUSymbolVersionRequirement>(), arg);
+            case ElfNodeVariant::VersionRequirementAuxiliaryEntry:
+                return doVisit(node->value<ElfGNUSymbolVersionRequirementAuxiliaryEntry>(), arg);
             case ElfNodeVariant::DwarfInfo:
                 return doVisit(node->value<DwarfInfo>(), arg);
             case ElfNodeVariant::DwarfDie:
@@ -150,6 +153,10 @@ protected:
         return doVisit(static_cast<ElfSection*>(section), arg);
     }
     virtual T doVisit(ElfGNUSymbolVersionRequirement*, int) const
+    {
+        return T();
+    }
+    virtual T doVisit(ElfGNUSymbolVersionRequirementAuxiliaryEntry*, int) const
     {
         return T();
     }

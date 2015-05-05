@@ -19,6 +19,7 @@
 
 #include <elf/elffile.h>
 #include <elf/elffileset.h>
+#include <elf/elfgnusymbolversionrequirement.h>
 
 #include <elf.h>
 
@@ -92,6 +93,12 @@ IndexVisitor::type IndexVisitor::doVisit(ElfGNUSymbolVersionRequirementsSection 
 {
     const auto entry = section->requirement(row);
     return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::VersionRequirementEntry);
+}
+
+IndexVisitor::type IndexVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNeed, int row) const
+{
+    const auto auxEntry = verNeed->auxiliaryEntry(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(auxEntry, ElfNodeVariant::VersionRequirementAuxiliaryEntry);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(ElfNoteSection *section, int row) const

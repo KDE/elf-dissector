@@ -33,6 +33,7 @@ public:
     type doVisit(ElfGNUSymbolVersionDefinitionsSection *section, int row) const override;
     type doVisit(ElfGNUSymbolVersionDefinition *verDef, int row) const override;
     type doVisit(ElfGNUSymbolVersionRequirementsSection* section, int arg) const override;
+    type doVisit(ElfGNUSymbolVersionRequirement *verNeed, int row) const override;
     type doVisit(ElfNoteSection* section, int row) const override;
     type doVisit(ElfRelocationSection *section, int row) const override;
     type doVisit(DwarfInfo* info, int row) const override;

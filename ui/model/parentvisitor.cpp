@@ -18,6 +18,7 @@
 #include "parentvisitor.h"
 #include <elf/elffileset.h>
 #include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
+#include <elf/elfgnusymbolversionrequirement.h>
 
 #include <QDebug>
 
@@ -55,6 +56,19 @@ QPair< void*, int > ParentVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef
     }
     assert(row >= 0);
     return qMakePair<void*, int>(verDef->section(), row);
+}
+
+QPair< void*, int > ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNeed, int) const
+{
+    int row = -1;
+    for (uint i = 0; i < verNeed->section()->entryCount(); ++i) {
+        if (verNeed->section()->requirement(i) == verNeed) {
+            row = i;
+            break;
+        }
+    }
+    assert(row >= 0);
+    return qMakePair<void*, int>(verNeed->section(), row);
 }
 
 QPair< void*, int > ParentVisitor::doVisit(DwarfInfo* info, int) const

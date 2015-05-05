@@ -18,6 +18,7 @@
 #include "rowcountvisitor.h"
 
 #include <elf/elffileset.h>
+#include <elf/elfgnusymbolversionrequirement.h>
 
 int RowCountVisitor::doVisit(ElfFileSet* fileSet, int) const
 {
@@ -52,6 +53,11 @@ int RowCountVisitor::doVisit(ElfGNUSymbolVersionDefinition *verDef, int) const
 int RowCountVisitor::doVisit(ElfGNUSymbolVersionRequirementsSection* section, int) const
 {
     return section->entryCount();
+}
+
+int RowCountVisitor::doVisit(ElfGNUSymbolVersionRequirement* verNeed, int) const
+{
+    return verNeed->auxiliarySize();
 }
 
 int RowCountVisitor::doVisit(ElfNoteSection* section, int) const

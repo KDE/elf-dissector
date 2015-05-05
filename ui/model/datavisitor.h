@@ -36,6 +36,7 @@ protected:
     QVariant doVisit(ElfGNUSymbolVersionDefinition *verDef, int role) const override;
     QVariant doVisit(ElfGNUSymbolVersionDefinitionAuxiliaryEntry *auxEntry, int role) const override;
     QVariant doVisit(ElfGNUSymbolVersionRequirement *verNeed, int role) const override;
+    QVariant doVisit(ElfGNUSymbolVersionRequirementAuxiliaryEntry *auxEntry, int role) const override;
     QVariant doVisit(ElfNoteEntry *entry, int role) const override;
     QVariant doVisit(ElfRelocationEntry *entry, int arg) const override;
     QVariant doVisit(DwarfInfo *info, int arg) const override;

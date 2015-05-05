@@ -38,7 +38,7 @@ struct ElfNodeVariant
         VersionDefinitionAuxiliaryEntry,
         VersionRequirementsSection,
         VersionRequirementEntry,
-//         VersionRequirementAuxiliaryEntry,
+        VersionRequirementAuxiliaryEntry,
         DwarfInfo,
         DwarfDie
     };
