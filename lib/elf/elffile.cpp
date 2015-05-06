@@ -133,7 +133,8 @@ void ElfFile::close()
 
 void ElfFile::parse()
 {
-    if (m_file.size() <= EI_NIDENT)
+    static_assert(EV_CURRENT == 1, "ELF version changed");
+    if (m_file.size() <= EI_NIDENT || strncmp(reinterpret_cast<const char*>(m_data), ELFMAG, SELFMAG) != 0 || m_data[EI_VERSION] != EV_CURRENT)
         throw ElfFileException();
 
     parseHeader();
