@@ -24,6 +24,7 @@
 class ElfHeader
 {
 public:
+    virtual ~ElfHeader();
     virtual uint16_t type() const = 0;
     virtual uint16_t machine() const = 0;
 //     virtual uint32_t version() const = 0;
