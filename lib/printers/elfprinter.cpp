@@ -101,3 +101,24 @@ QByteArray ElfPrinter::sectionFlags(uint64_t flags)
     return s.join(", ");
 }
 
+static const LookupTableEntry<uint8_t> os_abi_table[] {
+    { ELFOSABI_SYSV, "UNIX System V ABI" },
+    { ELFOSABI_HPUX, "HP-UX" },
+    { ELFOSABI_NETBSD, "NetBSD" },
+    { ELFOSABI_GNU, "Object uses GNU ELF extensions" },
+    { ELFOSABI_SOLARIS, "Sun Solaris" },
+    { ELFOSABI_AIX, "IBM AIX" },
+    { ELFOSABI_IRIX, "SGI Irix" },
+    { ELFOSABI_FREEBSD, "FreeBSD" },
+    { ELFOSABI_TRU64, "Compaq TRU64 UNIX" },
+    { ELFOSABI_MODESTO, "Novell Modesto" },
+    { ELFOSABI_OPENBSD, "OpenBSD" },
+    { ELFOSABI_ARM_AEABI, "ARM EABI" },
+    { ELFOSABI_ARM, "ARM" },
+    { ELFOSABI_STANDALONE, "Standalone (embedded) application" }
+};
+
+QByteArray ElfPrinter::osAbi(uint8_t abi)
+{
+    return lookupLabel(abi, os_abi_table);
+}

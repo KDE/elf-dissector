@@ -61,6 +61,8 @@ public:
     int addressSize() const;
     /** Endianess. */
     int byteOrder() const;
+    /** OS ABI. */
+    uint8_t osAbi() const;
 
     /** Returns the ELF header. */
     ElfHeader* header() const;

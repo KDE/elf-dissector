@@ -72,6 +72,7 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             s += QStringLiteral("Byte order: ") + (file->byteOrder() == ELFDATA2LSB ? "little endian" : "big endian") + "<br/>";
             s += QStringLiteral("File type: ") + ElfPrinter::fileType(file->header()->type()) + "<br/>";
             s += QStringLiteral("Machine: ") + ElfPrinter::machine(file->header()->machine()) + "<br/>";
+            s += QStringLiteral("OS ABI: ") + ElfPrinter::osAbi(file->osAbi()) + "<br/>";
             s += QStringLiteral("Entry point: 0x") + QString::number(file->header()->entryPoint(), 16);
             if (file->header()->entryPoint()) {
                 const auto entry = file->symbolTable()->entryWithValue(file->header()->entryPoint());

@@ -92,6 +92,11 @@ int ElfFile::byteOrder() const
     return m_data[EI_DATA];
 }
 
+uint8_t ElfFile::osAbi() const
+{
+    return m_data[EI_OSABI];
+}
+
 ElfHeader* ElfFile::header() const
 {
     return m_header.get();

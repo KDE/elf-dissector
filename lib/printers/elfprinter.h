@@ -29,6 +29,8 @@ namespace ElfPrinter
     QByteArray fileType(uint16_t fileType);
     /** Machine type of a file. */
     QByteArray machine(uint16_t machineType);
+    /** OS ABI. */
+    QByteArray osAbi(uint8_t abi);
 
     /** Section type. */
     QByteArray sectionType(uint32_t sectionType);
