@@ -29,6 +29,7 @@ struct ElfNodeVariant
         SymbolTableEntry,
         DynamicSection,
         DynamicEntry,
+        HashSection,
         NoteSection,
         NoteEntry,
         RelocationSection,

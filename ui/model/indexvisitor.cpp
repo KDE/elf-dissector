@@ -54,6 +54,9 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
         case SHT_GNU_verneed:
             type = ElfNodeVariant::VersionRequirementsSection;
             break;
+        case SHT_HASH:
+            type = ElfNodeVariant::HashSection;
+            break;
         default:
             if (qstrcmp(section->header()->name(), ".debug_info") == 0) {
                 type = ElfNodeVariant::DwarfInfo;

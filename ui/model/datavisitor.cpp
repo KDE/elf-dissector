@@ -99,7 +99,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             return QVariant::fromValue<uint64_t>(section->size());
         case ElfModel::DetailRole:
         {
-            QString s;
+            QString s("<b>Section</b><br/>");
             s += QStringLiteral("Name: ") + section->header()->name() + "<br/>";
             s += QStringLiteral("Size: ") + QString::number(section->header()->size()) + " bytes<br/>";
             s += QStringLiteral("Flags: ") + ElfPrinter::sectionFlags(section->header()->flags()) + "<br/>";
@@ -129,6 +129,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableSection* symtab, int arg) const
     if (arg != ElfModel::DetailRole)
         return base;
     QString s = base.toString();
+    s += "<br/><b>Symbol Table</b>";
     s += "<br/>Exported symbols: " + QString::number(symtab->exportCount());
     s += "<br/>Imported symbols: " + QString::number(symtab->importCount());
     s += "<br/>";
@@ -351,6 +352,19 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
     }
 
     return QVariant();
+}
+
+QVariant DataVisitor::doVisit(ElfHashSection* section, int role) const
+{
+    const auto base = doVisit(static_cast<ElfSection*>(section), role);
+    if (role == ElfModel::DetailRole) {
+        QString s = base.toString();
+        s += "<br/><b>Hash Table</b><br/>";
+        s += "Buckets: " + QString::number(section->bucketCount()) + "<br/>";
+        s += "Chains: " + QString::number(section->chainCount()) + "<br/>";
+        return s;
+    }
+    return base;
 }
 
 QVariant DataVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int role) const
