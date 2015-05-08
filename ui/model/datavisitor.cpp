@@ -362,6 +362,12 @@ QVariant DataVisitor::doVisit(ElfHashSection* section, int role) const
         s += "<br/><b>Hash Table</b><br/>";
         s += "Buckets: " + QString::number(section->bucketCount()) + "<br/>";
         s += "Chains: " + QString::number(section->chainCount()) + "<br/>";
+
+        s += "Chain length histogram<br/>";
+        const auto hist = section->histogram();
+        for (int i = 0; i < hist.size(); ++i) {
+            s += "&nbsp;&nbsp;" + QString::number(i) + ": " + QString::number(hist.at(i)) + "<br/>";
+        }
         return s;
     }
     return base;

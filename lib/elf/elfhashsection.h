@@ -20,6 +20,8 @@
 
 #include "elfsection.h"
 
+#include <QVector>
+
 class ElfSymbolTableEntry;
 
 /** Represents the .hash section. */
@@ -36,6 +38,8 @@ public:
 
     static uint32_t elfHash(const char* name);
     ElfSymbolTableEntry *lookup(const char* name);
+
+    QVector<uint32_t> histogram() const;
 };
 
 #endif // ELFHASHSECTION_H

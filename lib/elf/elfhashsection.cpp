@@ -69,9 +69,7 @@ ElfSymbolTableEntry* ElfHashSection::lookup(const char* name)
     const auto symTab = linkedSection<ElfSymbolTableSection>();
     assert(symTab);
     auto y = bucket(x % bucketCount());
-    forever {
-        if (y == STN_UNDEF)
-            return nullptr;
+    while (y != STN_UNDEF) {
         const auto entry = symTab->entry(y);
         if (strcmp(entry->name(), name) == 0)
             return entry;
@@ -81,3 +79,20 @@ ElfSymbolTableEntry* ElfHashSection::lookup(const char* name)
     return nullptr;
 }
 
+QVector<uint32_t> ElfHashSection::histogram() const
+{
+    QVector<uint32_t> hist;
+    for (uint i = 0; i < bucketCount(); ++i) {
+        int count = 0;
+
+        auto y = bucket(i);
+        while (y != STN_UNDEF) {
+            ++count;
+            y = chain(y);
+        }
+
+        hist.resize(std::max(hist.size(), count + 1));
+        hist[count]++;
+    }
+    return hist;
+}

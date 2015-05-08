@@ -23,6 +23,7 @@
 #include <QObject>
 
 #include <elf.h>
+#include <algorithm>
 
 class ElfHashTest: public QObject
 {
@@ -47,6 +48,10 @@ private slots:
             const auto entry = symTab->entry(i);
             QCOMPARE(hashSection->lookup(entry->name()), entry);
         }
+
+        const auto hist = hashSection->histogram();
+        const uint32_t sum = std::accumulate(hist.begin(), hist.end(), 0);
+        QCOMPARE(sum, hashSection->bucketCount());
     }
 };
 
