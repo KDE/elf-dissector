@@ -182,8 +182,9 @@ void ElfFileSet::parseLdConf(const QString& fileName)
             }
             continue;
         }
-        if (QFileInfo::exists(line)) {
-            m_baseSearchPaths.push_back(line);
+        if (line.startsWith('/')) {
+            if (QFileInfo::exists(line))
+                m_baseSearchPaths.push_back(line);
             continue;
         }
         qWarning() << "unable to handle ld.so.conf line:" << line;
