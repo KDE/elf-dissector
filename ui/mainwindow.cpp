@@ -29,6 +29,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QSettings>
 #include <QStatusBar>
 
@@ -52,12 +53,12 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     // ### temporary
     connect(ui->actionCheckStructurePacking, &QAction::triggered, this, [this]() {
         StructurePackingCheck checker;
-        checker.setElfFileSet(m_fileSet);
+        checker.setElfFileSet(m_fileSet.get());
         checker.checkAll(m_fileSet->file(0)->dwarfInfo());
     });
     connect(ui->actionVirtualDestructors, &QAction::triggered, this, [this]() {
         VirtualDtorCheck checker;
-        checker.findImplicitVirtualDtors(m_fileSet);
+        checker.findImplicitVirtualDtors(m_fileSet.get());
     });
 
     restoreSettings();
@@ -124,18 +125,27 @@ void MainWindow::loadFile(const QString& fileName)
         return;
     setWindowFilePath(fileName);
 
-    delete m_fileSet;
-    m_fileSet = new ElfFileSet(this);
+    m_fileSet.reset(new ElfFileSet(this));
     m_fileSet->addFile(fileName);
-    m_fileSet->topologicalSort();
-    m_elfModel->setFileSet(m_fileSet);
-    ui->dependencyView->setFileSet(m_fileSet);
-    ui->loadTimeView->setFileSet(m_fileSet);
 
-    QSettings settings;
-    settings.setValue("Recent/PreviousFile", fileName);
+    if (m_fileSet->size() == 0) {
+        QMessageBox::critical(this, tr("Failed to load ELF file"), tr("Could not load %1.").arg(fileName));
 
-    statusBar()->showMessage(tr("Loaded %1.").arg(fileName));
+        m_fileSet.reset();
+
+        statusBar()->showMessage(tr("Failed to load %1.").arg(fileName));
+    } else {
+        m_fileSet->topologicalSort();
+
+        QSettings settings;
+        settings.setValue("Recent/PreviousFile", fileName);
+
+        statusBar()->showMessage(tr("Loaded %1.").arg(fileName));
+    }
+
+    m_elfModel->setFileSet(m_fileSet.get());
+    ui->dependencyView->setFileSet(m_fileSet.get());
+    ui->loadTimeView->setFileSet(m_fileSet.get());
 }
 
 void MainWindow::tabChanged()

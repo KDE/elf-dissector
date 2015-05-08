@@ -54,7 +54,7 @@ private:
     std::unique_ptr<Ui::MainWindow> ui;
     QString m_currentFileName;
     ElfModel *m_elfModel = 0;
-    ElfFileSet *m_fileSet = 0;
+    std::unique_ptr<ElfFileSet> m_fileSet;
 };
 
 #endif // MAINWINDOW_H
