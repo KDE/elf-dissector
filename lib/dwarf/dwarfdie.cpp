@@ -588,10 +588,12 @@ DwarfDie* DwarfDie::dieAtOffset(Dwarf_Off offset) const
 
 DwarfDie* DwarfDie::inheritedFrom() const
 {
-    auto ref = attributeLocal(DW_AT_abstract_origin).value<DwarfDie*>();
-    if (!ref)
-        ref = attributeLocal(DW_AT_specification).value<DwarfDie*>();
-    return ref;
+    auto ref = attributeLocal(DW_AT_abstract_origin);
+    if (ref.isNull())
+        ref = attributeLocal(DW_AT_specification);
+    if (ref.isNull())
+        return nullptr;
+    return ref.value<DwarfDie*>();
 }
 
 void DwarfDie::scanChildren() const
