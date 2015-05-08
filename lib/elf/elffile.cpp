@@ -124,6 +124,7 @@ void ElfFile::open(const QString &fileName)
     try {
         parse();
     } catch (const ElfFileException&) {
+        qCritical() << fileName << "is not a valid ELF file.";
         close();
     }
 }

@@ -43,6 +43,8 @@ int main(int argc, char** argv)
     for (const auto &fileName : parser.positionalArguments()) {
         ElfFileSet set;
         set.addFile(fileName);
+        if (set.size() == 0)
+            continue;
         checker.setElfFileSet(&set);
         checker.checkAll(set.file(0)->dwarfInfo());
     }
