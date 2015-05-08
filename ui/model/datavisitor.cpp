@@ -114,6 +114,20 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                 s += QStringLiteral("Entries: ") + QString::number(section->header()->entryCount())
                   + " x " + QString::number(section->header()->entrySize()) + " byte<br/>";
             }
+            if (section->header()->flags() & SHF_STRINGS && section->size() < 100000) { // QTextBrowser fails on too large input
+                s += "Strings:<br/>";
+                uint prevIndex = 0, index = 0;
+                do {
+                    if (section->rawData()[index] == 0) {
+                        if (index - prevIndex > 0) {
+                            const auto b = QByteArray::fromRawData(reinterpret_cast<const char*>(section->rawData() + prevIndex), index - prevIndex);
+                            s += QString::number(prevIndex) + ": " + b + "<br/>";
+                        }
+                        prevIndex = index + 1;
+                    }
+                    ++index;
+                } while (index < section->size());
+            }
             return s;
         }
         case ElfModel::SectionRole:
