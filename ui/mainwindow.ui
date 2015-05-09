@@ -49,6 +49,11 @@
         <string>&amp;Dependencies</string>
        </attribute>
       </widget>
+      <widget class="TypeView" name="typeView">
+       <attribute name="title">
+        <string>Data &amp;Types</string>
+       </attribute>
+      </widget>
       <widget class="LoadBenchmarkView" name="loadTimeView">
        <attribute name="title">
         <string>&amp;Load Time</string>
@@ -172,6 +177,12 @@
    <class>LoadBenchmarkView</class>
    <extends>QWidget</extends>
    <header>views/loadbenchmarkview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TypeView</class>
+   <extends>QWidget</extends>
+   <header>views/typeview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

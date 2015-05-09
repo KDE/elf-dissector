@@ -25,6 +25,7 @@ set(libelfdissectorui_srcs
     views/elfstructureview.cpp
     views/loadbenchmarkview.cpp
     views/sizetreemapview.cpp
+    views/typeview.cpp
 
     mainwindow.cpp
     colorizer.cpp
