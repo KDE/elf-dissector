@@ -33,7 +33,7 @@ public:
 
 private:
     void findImplicitVirtualDtors(DwarfDie* die);
-    void printResults();
+    void printResults() const;
 
     struct Result {
         QByteArray fullName;

@@ -84,7 +84,7 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
     }
 }
 
-void VirtualDtorCheck::printResults()
+void VirtualDtorCheck::printResults() const
 {
     for (const auto &res : m_results) {
         std::cout << res.fullName.constData() << " at " << qPrintable(res.sourceFilePath);
