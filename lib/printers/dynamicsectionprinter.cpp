@@ -51,7 +51,7 @@ static const FlagInfo dt_flag_1_infos[] {
     { DF_1_TRANS, "DF_1_TRANS" },
     { DF_1_INTERPOSE, "object is used to interpose" },
     { DF_1_NODEFLIB, "ignore default lib search path" },
-    { DF_1_NODUMP, "object can't be dldump'ed" },
+    { DF_1_NODUMP, "object cannot be dldump'ed" },
     { DF_1_CONFALT, "configuration alternative created" },
     { DF_1_ENDFILTEE, "filtee terminates filters search" },
     { DF_1_DISPRELDNE, "disp reloc applied at build time" },

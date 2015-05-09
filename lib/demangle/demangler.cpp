@@ -170,7 +170,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back(m_templateParams.value(component->u.s_number.number));
             break;
         case DEMANGLE_COMPONENT_FUNCTION_PARAM:
-            // no idea what this means, but that's what c++filt is outputing for these...
+            // no idea what this means, but that's what c++filt is outputting for these...
             nameParts.push_back(QByteArray("{parm#") + QByteArray::number((int)component->u.s_number.number) + '}');
             break;
         case DEMANGLE_COMPONENT_CTOR:

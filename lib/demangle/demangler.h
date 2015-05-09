@@ -33,7 +33,7 @@ public:
     Demangler(const Demangler &other) = delete;
     Demangler& operator=(const Demangler &other) = delete;
 
-    /** Demange the given name and return the name splitted in namespace(s)/class/method. */
+    /** Demange the given name and return the name split in namespace(s)/class/method. */
     QVector<QByteArray> demangle(const char* name);
 
     /** Demangle the given name into a single string. */
