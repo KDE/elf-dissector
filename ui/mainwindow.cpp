@@ -23,7 +23,7 @@
 #include <checks/structurepackingcheck.h>
 #include <checks/virtualdtorcheck.h>
 
-#include <model/elfmodel.h>
+#include <elfmodel/elfmodel.h>
 #include <navigator/codenavigator.h>
 
 #include <QApplication>

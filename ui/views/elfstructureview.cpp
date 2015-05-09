@@ -18,7 +18,7 @@
 #include "elfstructureview.h"
 #include "ui_elfstructureview.h"
 
-#include <model/elfmodel.h>
+#include <elfmodel/elfmodel.h>
 #include <navigator/codenavigator.h>
 #include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
 

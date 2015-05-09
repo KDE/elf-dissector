@@ -3,12 +3,12 @@ set(libelfdissectorui_srcs
     ${CMAKE_SOURCE_DIR}/3rdparty/treemap/treemap.cpp
     ${CMAKE_SOURCE_DIR}/3rdparty/kitemmodels/krecursivefilterproxymodel.cpp
 
-    model/elfmodel.cpp
-    model/datavisitor.cpp
-    model/indexvisitor.cpp
-    model/parentvisitor.cpp
-    model/rowcountvisitor.cpp
-    model/sectionproxymodel.cpp
+    elfmodel/elfmodel.cpp
+    elfmodel/datavisitor.cpp
+    elfmodel/indexvisitor.cpp
+    elfmodel/parentvisitor.cpp
+    elfmodel/rowcountvisitor.cpp
+    elfmodel/sectionproxymodel.cpp
 
     dependencymodel/dependencymodel.cpp
 

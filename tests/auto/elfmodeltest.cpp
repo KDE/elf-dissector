@@ -16,7 +16,7 @@
 */
 
 #include <elf/elffileset.h>
-#include <ui/model/elfmodel.h>
+#include <ui/elfmodel/elfmodel.h>
 
 #include <3rdparty/qt/modeltest.h>
 

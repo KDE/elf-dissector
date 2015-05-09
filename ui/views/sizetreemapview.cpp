@@ -20,8 +20,8 @@
 
 #include <treemap/treemap.h>
 #include <colorizer.h>
-#include <model/elfmodel.h>
-#include <model/sectionproxymodel.h>
+#include <elfmodel/elfmodel.h>
+#include <elfmodel/sectionproxymodel.h>
 
 #include <elf/elffile.h>
 #include <elf/elfsymboltablesection.h>
