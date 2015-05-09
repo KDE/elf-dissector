@@ -1,0 +1,13 @@
+CHECKSETS qt5,c++,foss
+
+#additional checks
+EXTRA defines,null,contractions,qenums,qmath
+
+# this is so heavily Linux-only, portability is not a concern
+EXCLUDE syscalls
+# this triggers tons of false-positives on C++11 types
+EXCLUDE typedefs
+
+#no need to check 3rdparty stuff
+SKIP /3rdparty/
+
