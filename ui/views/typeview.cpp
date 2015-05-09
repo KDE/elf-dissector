@@ -20,6 +20,7 @@
 
 #include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
 #include <typemodel/typemodel.h>
+#include <navigator/codenavigator.h>
 
 #include <QItemSelectionModel>
 
@@ -39,6 +40,11 @@ TypeView::TypeView(QWidget* parent):
     connect(ui->searchLineEdit, &QLineEdit::textChanged, this, [proxy](const QString &text) {
         proxy->setFilterFixedString(text);
     });
+    connect(ui->detailsView, &QTextBrowser::anchorClicked, this, [](const QUrl &url) {
+        if (url.scheme() == QLatin1String("code"))
+            CodeNavigator::goTo(url);
+    });
+
 }
 
 TypeView::~TypeView() = default;
@@ -60,8 +66,8 @@ void TypeView::showEvent(QShowEvent* event)
 void TypeView::selectionChanged(const QItemSelection& selection)
 {
     if (selection.isEmpty())
-        ui->textBrowser->clear();
+        ui->detailsView->clear();
 
     const QModelIndex index = selection.first().topLeft();
-    ui->textBrowser->setHtml(index.data(TypeModel::DetailRole).toString());
+    ui->detailsView->setHtml(index.data(TypeModel::DetailRole).toString());
 }

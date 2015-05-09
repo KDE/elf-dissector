@@ -17,6 +17,7 @@
 
 #include "typemodel.h"
 
+#include <navigator/codenavigatorprinter.h>
 #include <elf/elffileset.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
@@ -109,7 +110,11 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
         case Qt::DisplayRole:
             return node.die->name();
         case TypeModel::DetailRole:
-            return DwarfPrinter::dieRichText(node.die);
+        {
+            QString s = DwarfPrinter::dieRichText(node.die);
+            s += CodeNavigatorPrinter::sourceLocationRichText(node.die);
+            return s;
+        }
     };
 
     return {};

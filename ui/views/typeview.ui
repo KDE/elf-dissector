@@ -49,7 +49,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QTextBrowser" name="textBrowser"/>
+     <widget class="QTextBrowser" name="detailsView">
+      <property name="openLinks">
+       <bool>false</bool>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>
