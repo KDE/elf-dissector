@@ -68,7 +68,7 @@ void TypeModel::addFile(ElfFile* file)
 
     for (const auto cu : dwarf->compilationUnits()) {
         for (const auto die : cu->children())
-            addTopLevelDwarfDie(die);
+            addDwarfDieRecursive(die, 0);
     }
 }
 
@@ -108,28 +108,46 @@ bool isBetterDie(DwarfDie *prevDie, DwarfDie *newDie)
     return false;
 }
 
-void TypeModel::addTopLevelDwarfDie(DwarfDie* die)
+void TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
 {
-    if (die->tag() != DW_TAG_structure_type && die->tag() != DW_TAG_class_type)
-        return; // TODO support namespaces and nested types
-
-    auto& children = m_childMap[0];
-    const auto dieName = die->name();
-    const auto it = std::lower_bound(children.begin(), children.end(), dieName, [this](uint32_t nodeId, const QByteArray &dieName) {
-        return m_nodes.at(nodeId).die->name() < dieName;
-    });
-    if (it != children.constEnd() && m_nodes.at((*it)).die->name() == dieName) {
-        if (isBetterDie(m_nodes.at(*it).die, die))
-            m_nodes[*it].die = die;
-        return;
+    switch (die->tag()) {
+        case DW_TAG_class_type:
+        case DW_TAG_namespace:
+        case DW_TAG_structure_type: // TODO we can also have nested types in DW_TAG_subprograms!
+            break;
+        default:
+            return;
     }
 
-    const uint32_t nodeId = m_nodes.size();
-    m_nodes.resize(nodeId + 1);
-    m_nodes[nodeId].die = die;
-    children.insert(it, nodeId);
-    m_parentMap.resize(nodeId + 1);
-    m_parentMap[nodeId] = 0;
+    auto& children = m_childMap[parentId];
+    const auto dieName = die->name();
+    const auto it = std::lower_bound(children.begin(), children.end(), die, [this, &dieName](uint32_t nodeId, DwarfDie *die) {
+        const auto lhs = m_nodes.at(nodeId);
+        if (lhs.die->tag() == die->tag())
+            return m_nodes.at(nodeId).die->name() < dieName;
+        return lhs.die->tag() < die->tag();
+    });
+
+    uint32_t nodeId;
+    // TODO what about anon structs? name() is empty there
+    // TODO what about local symbols, compare CUs?
+    if (it != children.constEnd() && m_nodes.at(*it).die->tag() == die->tag() && m_nodes.at(*it).die->name() == dieName) {
+        nodeId = *it;
+        if (isBetterDie(m_nodes.at(nodeId).die, die))
+            m_nodes[nodeId].die = die;
+    } else {
+        nodeId = m_nodes.size();
+        m_nodes.resize(nodeId + 1);
+        m_nodes[nodeId].die = die;
+        children.insert(it, nodeId);
+        m_parentMap.resize(nodeId + 1);
+        m_parentMap[nodeId] = parentId;
+        m_childMap.resize(nodeId + 1);
+    }
+
+    // TODO suppress empty structure nodes
+    for (auto child : die->children())
+        addDwarfDieRecursive(child, nodeId);
 }
 
 int TypeModel::columnCount(const QModelIndex& parent) const
@@ -140,10 +158,10 @@ int TypeModel::columnCount(const QModelIndex& parent) const
 
 int TypeModel::rowCount(const QModelIndex& parent) const
 {
-    // TODO
-    if (!parent.isValid())
-        return m_childMap.at(0).size();
-    return 0;
+    if (parent.column() > 0)
+        return 0;
+    const uint32_t parentId = parent.internalId();
+    return m_childMap.at(parentId).size();
 }
 
 QVariant TypeModel::data(const QModelIndex& index, int role) const
@@ -156,7 +174,7 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
         case Qt::DisplayRole:
             if (index.column() == 0)
                 return node.die->name();
-            else if (index.column() == 1)
+            else if (index.column() == 1 && (node.die->tag() == DW_TAG_class_type || node.die->tag() == DW_TAG_structure_type))
                 return node.die->typeSize();
             return {};
         case TypeModel::DetailRole:
@@ -193,7 +211,7 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
 QModelIndex TypeModel::index(int row, int column, const QModelIndex& parent) const
 {
     const int32_t parentId = parent.internalId();
-    if (row < 0 || column < 0 || m_childMap.size() <= parentId || m_childMap.at(parentId).size() <= row)
+    if (!hasIndex(row, column, parent))
         return {};
 
     return createIndex(row, column, m_childMap.at(parentId).at(row));
@@ -201,7 +219,16 @@ QModelIndex TypeModel::index(int row, int column, const QModelIndex& parent) con
 
 QModelIndex TypeModel::parent(const QModelIndex& child) const
 {
-    return {};
+    const int32_t childId = child.internalId();
+    if (childId == 0)
+        return QModelIndex();
+    const int32_t parentId = m_parentMap.at(childId);
+    if (parentId == 0)
+        return QModelIndex();
+    const int32_t grandParentId = m_parentMap.at(parentId);
+    const int row = m_childMap.at(grandParentId).indexOf(parentId);
+
+    return createIndex(row, 0, parentId);
 }
 
 QVariant TypeModel::headerData(int section, Qt::Orientation orientation, int role) const
