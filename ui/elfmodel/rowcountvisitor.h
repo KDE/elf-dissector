@@ -38,6 +38,4 @@ protected:
     int doVisit(DwarfDie* die, int) const override;
 };
 
-
-
 #endif
