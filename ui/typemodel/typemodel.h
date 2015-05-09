@@ -58,6 +58,8 @@ private:
     QVector<QVector<uint32_t>> m_childMap;
     QVector<uint32_t> m_parentMap;
     QVector<Node> m_nodes;
+
+    ElfFileSet *m_fileSet = nullptr;
 };
 
 #endif // TYPEMODEL_H

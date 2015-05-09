@@ -22,6 +22,7 @@
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
 #include <printers/dwarfprinter.h>
+#include <checks/structurepackingcheck.h>
 
 #include <libdwarf/dwarf.h>
 
@@ -42,6 +43,7 @@ void TypeModel::setFileSet(ElfFileSet* fileSet)
     const auto l = [](TypeModel* m) { m->endResetModel(); };
     const auto endReset = std::unique_ptr<TypeModel, decltype(l)>(this, l);
 
+    m_fileSet = fileSet;
     m_childMap.clear();
     m_parentMap.clear();
     m_nodes.clear();
@@ -160,6 +162,15 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
         {
             QString s = DwarfPrinter::dieRichText(node.die);
             s += CodeNavigatorPrinter::sourceLocationRichText(node.die);
+
+            if ((node.die->tag() == DW_TAG_structure_type || node.die->tag() == DW_TAG_class_type) && node.die->typeSize() > 0) {
+                s += "<tt><pre>";
+                StructurePackingCheck check;
+                check.setElfFileSet(m_fileSet);
+                s += check.checkOneStructure(node.die).toHtmlEscaped();
+                s += "</pre></tt><br/>";
+            }
+
             return s;
         }
     };
