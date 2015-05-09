@@ -244,7 +244,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                             s += QString::number(i) + ": 0x" + QString::number(v, 16);
                             const auto ref = entry->symbolTable()->entryWithValue(v);
                             if (ref)
-                                s += QLatin1String(" ") + ref->name() + " (" + Demangler::demangleFull(ref->name()) + ")";
+                                s += QLatin1Char(' ') + ref->name() + QLatin1String(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
                             s += "<br/>";
                         }
                         s += "</tt><br/>";

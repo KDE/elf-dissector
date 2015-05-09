@@ -160,7 +160,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             }
             QVector<QByteArray> args;
             handleNameComponent(component->u.s_binary.right, args);
-            const QByteArray fullTemplate = nameParts.last() + "<" + join(args, ", ") + ">";
+            const QByteArray fullTemplate = nameParts.last() + '<' + join(args, ", ") + '>';
             if (m_inArgList) // we only want the template grouping on top-level
                 nameParts.removeLast();
             nameParts.push_back(fullTemplate);
@@ -171,7 +171,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         case DEMANGLE_COMPONENT_FUNCTION_PARAM:
             // no idea what this means, but that's what c++filt is outputing for these...
-            nameParts.push_back(QByteArray("{parm#") + QByteArray::number((int)component->u.s_number.number) + "}");
+            nameParts.push_back(QByteArray("{parm#") + QByteArray::number((int)component->u.s_number.number) + '}');
             break;
         case DEMANGLE_COMPONENT_CTOR:
             // TODO: do we need to consider u.s_ctor.kind?
@@ -280,7 +280,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             QVector<QByteArray> parts;
             handleNameComponent(component->u.s_binary.left, parts);
             handleNameComponent(component->u.s_binary.right, parts);
-            nameParts.push_back(parts.first() + " " + parts.last());
+            nameParts.push_back(parts.first() + ' ' + parts.last());
             break;
         }
         case DEMANGLE_COMPONENT_POINTER:
@@ -289,7 +289,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             m_pendingPointer = true;
             handleNameComponent(component->u.s_binary.left, nameParts);
             if (m_pendingPointer) // not consumed by a function pointer
-                nameParts.last().append("*");
+                nameParts.last().append('*');
             break;
         }
         case DEMANGLE_COMPONENT_REFERENCE:
@@ -298,7 +298,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             m_pendingReference = true;
             handleNameComponent(component->u.s_binary.left, nameParts);
             if (m_pendingReference && !nameParts.last().endsWith('&')) // not consumed by the array type, and primitive reference collapsing
-                nameParts.last().append("&");
+                nameParts.last().append('&');
             break;
         }
         case DEMANGLE_COMPONENT_RVALUE_REFERENCE:
@@ -325,15 +325,15 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleOptionalNameComponent(component->u.s_binary.right, args);
             QByteArray fullName;
             if (m_inArgList && !returnType.isEmpty())
-                fullName.prepend(returnType.last() + " ");
+                fullName.prepend(returnType.last() + ' ');
             if (previousPendingPointer) { // function pointer
                 fullName.append("(*)");
             } else if (!m_ptrmemType.isEmpty()) {
-                fullName.append("(" + m_ptrmemType + "::*)");
+                fullName.append('(' + m_ptrmemType + "::*)");
             } else {
                 m_pendingPointer = previousPendingPointer;
             }
-            fullName.append("(" + join(args, ", ") + ")");
+            fullName.append('(' + join(args, ", ") + ')');
             nameParts.push_back(fullName);
             break;
         }
@@ -354,7 +354,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             suffix += " [";
             if (!dim.isEmpty())
                 suffix.append(dim.last());
-            suffix += "]";
+            suffix += ']';
             nameParts.last().append(suffix);
             break;
         }
@@ -374,7 +374,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             // left is size, right is type
             handleNameComponent(component->u.s_binary.left, parts);
             handleNameComponent(component->u.s_binary.right, parts);
-            nameParts.push_back(parts.last() + " __vector(" + parts.first() + ")");
+            nameParts.push_back(parts.last() + " __vector(" + parts.first() + ')');
             break;
         }
         case DEMANGLE_COMPONENT_ARGLIST:
@@ -464,7 +464,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, type);
             handleNameComponent(component->u.s_binary.right, type);
             if (component->type == DEMANGLE_COMPONENT_LITERAL_NEG)
-                type.last().prepend("-");
+                type.last().prepend('-');
             QByteArray typeStr;
             // TODO add: unsigned, long, long long, unsigned long long
             if (type.first() == "bool") {
@@ -474,7 +474,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             } else if (type.first() == "unsigned long") {
                 typeStr = type.last() + "ul";
             } else { // custom type
-                typeStr = "(" + type.first() + ")" + type.last();
+                typeStr = '(' + type.first() + ')' + type.last();
             }
             nameParts.push_back(typeStr);
             break;
@@ -491,11 +491,11 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         {
             QVector<QByteArray> args;
             handleNameComponent(component->u.s_unary_num.sub, args);
-            nameParts.push_back("{lambda(" + join(args, ", ") + ")#" + QByteArray::number(component->u.s_unary_num.num + 1) + "}");
+            nameParts.push_back("{lambda(" + join(args, ", ") + ")#" + QByteArray::number(component->u.s_unary_num.num + 1) + '}');
             break;
         }
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
-            nameParts.push_back(QByteArray("{unnamed type#") + QByteArray::number((int)component->u.s_number.number + 1) + "}");
+            nameParts.push_back(QByteArray("{unnamed type#") + QByteArray::number((int)component->u.s_number.number + 1) + '}');
             break;
         case DEMANGLE_COMPONENT_PACK_EXPANSION:
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
@@ -507,7 +507,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, args);
             const auto n = nameParts.takeLast();
-            nameParts.push_back(n + " [clone " + args.last() + "]");
+            nameParts.push_back(n + " [clone " + args.last() + ']');
             break;
         }
         default:

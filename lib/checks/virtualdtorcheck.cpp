@@ -42,7 +42,9 @@ void VirtualDtorCheck::findImplicitVirtualDtors(ElfFileSet* fileSet)
     // implicit virtual dtors in implementation files are not a problem
     m_results.erase(
         std::remove_if(m_results.begin(), m_results.end(), [](const Result &res) {
-            return res.sourceFilePath.endsWith(".cpp") || res.sourceFilePath.endsWith(".c") || res.sourceFilePath.endsWith(".cxx");
+            return res.sourceFilePath.endsWith(QLatin1String(".cpp"))
+                || res.sourceFilePath.endsWith(QLatin1String(".c"))
+                || res.sourceFilePath.endsWith(QLatin1String(".cxx"));
         }), m_results.end()
     );
 

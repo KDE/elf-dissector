@@ -176,9 +176,9 @@ QByteArray DwarfDie::typeName() const
     // TODO: function pointers and pointer to members
     switch (tag()) {
         case DW_TAG_pointer_type:
-            return typeName + "*";
+            return typeName + '*';
         case DW_TAG_reference_type:
-            return typeName + "&";
+            return typeName + '&';
         case DW_TAG_rvalue_reference_type:
             return typeName + "&&";
         case DW_TAG_const_type:
@@ -188,7 +188,7 @@ QByteArray DwarfDie::typeName() const
             const auto dims = arrayDimensions(this);
             QByteArray n = typeName;
             for (int d : dims)
-                n += "[" + QString::number(d) + "]";
+                n += '[' + QByteArray::number(d) + ']';
             return n;
         }
         case DW_TAG_restrict_type:
@@ -196,14 +196,14 @@ QByteArray DwarfDie::typeName() const
         case DW_TAG_volatile_type:
             return typeName + " volatile";
         case DW_TAG_subroutine_type:
-            return typeName + " (*)(" + argumentList(this).join(", ") + ")";
+            return typeName + " (*)(" + argumentList(this).join(", ") + ')';
         case DW_TAG_ptr_to_member_type:
         {
             const auto classDie = attribute(DW_AT_containing_type).value<DwarfDie*>();
             QByteArray className;
             if (classDie)
                 className = classDie->typeName();
-            return typeName + " (" + className + "::*)(" + argumentList(this).join(", ") + ")";
+            return typeName + " (" + className + "::*)(" + argumentList(this).join(", ") + ')';
         }
     }
     return typeName;
@@ -314,7 +314,7 @@ QString DwarfDie::displayName() const
         n += ", offset ";
     }
     n += QString::number(offset());
-    n += ")";
+    n += QLatin1Char(')');
     return n;
 }
 
@@ -339,7 +339,7 @@ QString DwarfDie::sourceFilePath() const
         while (parentDie && parentDie->tag() != DW_TAG_compile_unit)
             parentDie = parentDie->parentDIE();
         if (parentDie)
-            fi.setFile(parentDie->attribute(DW_AT_comp_dir).toString() + "/" + filePath);
+            fi.setFile(parentDie->attribute(DW_AT_comp_dir).toString() + QLatin1Char('/') + filePath);
     }
     if (fi.exists())
         filePath = fi.canonicalFilePath();
@@ -349,7 +349,7 @@ QString DwarfDie::sourceFilePath() const
 
 QString DwarfDie::sourceLocation() const
 {
-    return  sourceFilePath() + ':' + QString::number(attribute(DW_AT_decl_line).toInt());
+    return  sourceFilePath() + QLatin1Char(':') + QString::number(attribute(DW_AT_decl_line).toInt());
 }
 
 static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const char**))
