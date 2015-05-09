@@ -470,7 +470,7 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
         {
             Dwarf_Bool b;
             res = dwarf_formflag(attr, &b, nullptr);
-            value = b;
+            value = b ? true : false;
             break;
         }
         case DW_FORM_ref1:
