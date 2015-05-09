@@ -15,6 +15,7 @@ set(libelfdissectorui_srcs
     typemodel/typemodel.cpp
 
     navigator/codenavigator.cpp
+    navigator/codenavigatorprinter.cpp
 
     plotter/gnuplotter.cpp
     plotter/plotter.qrc

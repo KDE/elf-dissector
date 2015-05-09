@@ -27,12 +27,11 @@
 #include <elf.h>
 
 #include <dwarf/dwarfaddressranges.h>
-#include <libdwarf/dwarf.h>
 
 #include <disassmbler/disassembler.h>
 #include <demangle/demangler.h>
 #include <checks/structurepackingcheck.h>
-#include <navigator/codenavigator.h>
+#include <navigator/codenavigatorprinter.h>
 
 #include <printers/dwarfprinter.h>
 #include <printers/dynamicsectionprinter.h>
@@ -42,10 +41,6 @@
 #include <printers/symbolprinter.h>
 
 #include <QDebug>
-#include <QFileInfo>
-#include <QObject>
-#include <QStringBuilder>
-#include <QUrl>
 
 #include <cassert>
 
@@ -203,40 +198,6 @@ static DwarfDie* findDwarfDie(ElfSymbolTableEntry *entry)
     return res;
 }
 
-static QString printSourceLocation(DwarfDie *die)
-{
-    QString s;
-    if (!die)
-        return s;
-
-    const auto fileName = die->sourceFilePath();
-    if (fileName.isEmpty())
-        return s;
-
-    const auto lineNum = die->attribute(DW_AT_decl_line).toInt();
-    const auto hasCodeNavigation = CodeNavigator::isValid() && QFileInfo(fileName).isAbsolute();
-
-    s += "Source location: ";
-    if (hasCodeNavigation) {
-        QUrl url;
-        url.setScheme("code");
-        url.setPath(fileName);
-        url.setFragment(QString::number(lineNum));
-        s += "<a href=\"";
-        s += url.toEncoded();
-        s += "\">";
-    }
-    s += fileName;
-    if (lineNum > 0)
-        s += ':' + QString::number(lineNum);
-    if (hasCodeNavigation) {
-        s += "</a>";
-    }
-    s += "<br/>";
-
-    return s;
-}
-
 QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 {
     switch (arg) {
@@ -322,7 +283,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 
             const auto die = findDwarfDie(entry);
             if (die) {
-                s += printSourceLocation(die);
+                s += CodeNavigatorPrinter::sourceLocationRichText(die);
                 s += "<br/><b>DWARF DIE</b><br/>";
                 s += DwarfPrinter::dieRichText(die);
             }
@@ -541,7 +502,7 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
         case ElfModel::DetailRole:
         {
             QString s = DwarfPrinter::dieRichText(die);
-            s += printSourceLocation(die);
+            s += CodeNavigatorPrinter::sourceLocationRichText(die);
 
             if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {
                 s += "<tt><pre>";
