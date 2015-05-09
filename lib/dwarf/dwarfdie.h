@@ -63,7 +63,7 @@ public:
     QString sourceLocation() const;
 
     QVector<Dwarf_Half> attributes() const;
-    QByteArray attributeName(Dwarf_Half attributeType) const;
+    static QByteArray attributeName(Dwarf_Half attributeType);
     QVariant attribute(Dwarf_Half attributeType) const;
 
     QVector<DwarfDie*> children() const;

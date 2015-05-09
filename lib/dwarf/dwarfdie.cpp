@@ -398,7 +398,7 @@ QVector< Dwarf_Half > DwarfDie::attributes() const
     return attrs;
 }
 
-QByteArray DwarfDie::attributeName(Dwarf_Half attributeType) const
+QByteArray DwarfDie::attributeName(Dwarf_Half attributeType)
 {
     const char* attrName;
     const auto res = dwarf_get_AT_name(attributeType, &attrName);
