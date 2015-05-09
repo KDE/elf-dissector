@@ -25,6 +25,8 @@
 
 #include <libdwarf/dwarf.h>
 
+#include <QTime>
+
 TypeModel::TypeModel(QObject* parent): QAbstractItemModel(parent)
 {
     setFileSet(nullptr);
@@ -34,6 +36,8 @@ TypeModel::~TypeModel() = default;
 
 void TypeModel::setFileSet(ElfFileSet* fileSet)
 {
+    QTime t;
+    t.start();
     beginResetModel();
     const auto l = [](TypeModel* m) { m->endResetModel(); };
     const auto endReset = std::unique_ptr<TypeModel, decltype(l)>(this, l);
@@ -50,7 +54,7 @@ void TypeModel::setFileSet(ElfFileSet* fileSet)
     for (int i = 0; i < fileSet->size(); ++i)
         addFile(fileSet->file(i));
 
-    qDebug() << "Found" << m_nodes.size() << "types.";
+    qDebug() << "Found" << m_nodes.size() << "types, took" << t.elapsed() << "ms.";
 }
 
 void TypeModel::addFile(ElfFile* file)
