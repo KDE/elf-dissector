@@ -19,11 +19,13 @@
 
 #include <dwarf/dwarfexpression.h>
 #include <dwarf/dwarfranges.h>
+#include <dwarf/dwarfdie.h>
 
 #include <QMetaType>
 #include <QString>
 
 #include <libdwarf/libdwarf.h>
+#include <cassert>
 
 const char* DwarfPrinter::virtuality(DwarfVirtuality v)
 {
@@ -60,4 +62,23 @@ void DwarfPrinter::registerConverterFunctions()
     QMetaType::registerConverter<DwarfRanges, QString>([](const DwarfRanges &r){
         return QString::fromLatin1(DwarfPrinter::ranges(r));
     });
+}
+
+QString DwarfPrinter::dieRichText(DwarfDie* die)
+{
+    assert(die);
+    QString s;
+    s += "TAG: " + QLatin1String(die->tagName()) + "<br/>";
+    s += "Name: " + QLatin1String(die->name()) + "<br/>";
+    s += "Offset: " + QString::number(die->offset()) + "<br/>";
+    foreach (const auto attrType, die->attributes()) {
+        const QVariant attrValue = die->attribute(attrType);
+        QString attrValueStr;
+        if (DwarfDie *die = attrValue.value<DwarfDie*>())
+            attrValueStr = die->displayName();
+        else
+            attrValueStr = attrValue.toString();
+        s += QLatin1String(die->attributeName(attrType)) + ": " + attrValueStr.toHtmlEscaped() + "<br/>";
+    }
+    return s;
 }

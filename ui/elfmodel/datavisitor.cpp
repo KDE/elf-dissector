@@ -34,6 +34,7 @@
 #include <checks/structurepackingcheck.h>
 #include <navigator/codenavigator.h>
 
+#include <printers/dwarfprinter.h>
 #include <printers/dynamicsectionprinter.h>
 #include <printers/elfprinter.h>
 #include <printers/notesectionprinter.h>
@@ -47,9 +48,6 @@
 #include <QUrl>
 
 #include <cassert>
-
-static QString printDwarfDie(DwarfDie *die);
-
 
 DataVisitor::DataVisitor(ElfFileSet* fileSet) : m_fileSet(fileSet)
 {
@@ -326,7 +324,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             if (die) {
                 s += printSourceLocation(die);
                 s += "<br/><b>DWARF DIE</b><br/>";
-                s += printDwarfDie(die);
+                s += DwarfPrinter::dieRichText(die);
             }
             return s;
         }
@@ -535,25 +533,6 @@ QVariant DataVisitor::doVisit(DwarfInfo* info, int arg) const
     return doVisit(section, arg);
 }
 
-static QString printDwarfDie(DwarfDie *die)
-{
-    assert(die);
-    QString s;
-    s += "TAG: " + QLatin1String(die->tagName()) + "<br/>";
-    s += "Name: " + QLatin1String(die->name()) + "<br/>";
-    s += "Offset: " + QString::number(die->offset()) + "<br/>";
-    foreach (const auto &attrType, die->attributes()) {
-        const QVariant attrValue = die->attribute(attrType);
-        QString attrValueStr;
-        if (DwarfDie *die = attrValue.value<DwarfDie*>())
-            attrValueStr = die->displayName();
-        else
-            attrValueStr = attrValue.toString();
-        s += QString::fromLocal8Bit(die->attributeName(attrType)) + ": " + attrValueStr.toHtmlEscaped() + "<br/>";
-    }
-    return s;
-}
-
 QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
 {
     switch (arg) {
@@ -561,7 +540,7 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
             return die->displayName();
         case ElfModel::DetailRole:
         {
-            QString s = printDwarfDie(die);
+            QString s = DwarfPrinter::dieRichText(die);
             s += printSourceLocation(die);
 
             if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {

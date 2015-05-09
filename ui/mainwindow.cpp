@@ -146,6 +146,7 @@ void MainWindow::loadFile(const QString& fileName)
     m_elfModel->setFileSet(m_fileSet.get());
     ui->dependencyView->setFileSet(m_fileSet.get());
     ui->loadTimeView->setFileSet(m_fileSet.get());
+    ui->typeView->setFileSet(m_fileSet.get());
 }
 
 void MainWindow::tabChanged()

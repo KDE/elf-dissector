@@ -20,7 +20,9 @@
 
 #include <dwarf/dwarftypes.h>
 
+class DwarfDie;
 class DwarfRanges;
+class QString;
 
 /** Pretty printers for DWARF types. */
 namespace DwarfPrinter
@@ -31,6 +33,9 @@ namespace DwarfPrinter
 
     /** Register string converters for QVariant. */
     void registerConverterFunctions();
+
+    /** Detailed rich-text description of the given DIE. */
+    QString dieRichText(DwarfDie *die);
 }
 
 #endif // DWARFPRINTER_H
