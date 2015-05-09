@@ -26,7 +26,6 @@
 #include <elf/elfgnusymbolversionrequirementssection.h>
 #include <elf/elfhashsection.h>
 #include <elf/elfnotesection.h>
-#include <elf/elfnotesection.h>
 #include <elf/elfrelocationsection.h>
 #include <elf/elfrelocationentry.h>
 
