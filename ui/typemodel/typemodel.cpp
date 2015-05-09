@@ -26,6 +26,7 @@
 
 #include <libdwarf/dwarf.h>
 
+#include <QIcon>
 #include <QTime>
 
 TypeModel::TypeModel(QObject* parent): QAbstractItemModel(parent)
@@ -173,6 +174,17 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
 
             return s;
         }
+        case Qt::DecorationRole:
+            if (index.column() != 0)
+                return {};
+            switch (node.die->tag()) {
+                case DW_TAG_namespace:
+                    return QIcon::fromTheme("code-context");
+                case DW_TAG_class_type:
+                case DW_TAG_structure_type:
+                    return QIcon::fromTheme("code-class");
+            }
+            return {};
     };
 
     return {};
