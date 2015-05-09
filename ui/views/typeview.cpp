@@ -34,6 +34,7 @@ TypeView::TypeView(QWidget* parent):
     auto proxy = new KRecursiveFilterProxyModel(this);
     proxy->setSourceModel(m_model);
     ui->typeTreeView->setModel(proxy);
+    ui->typeTreeView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 
     connect(ui->typeTreeView->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &TypeView::selectionChanged);

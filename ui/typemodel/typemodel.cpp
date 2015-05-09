@@ -132,7 +132,7 @@ void TypeModel::addTopLevelDwarfDie(DwarfDie* die)
 int TypeModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
-    return 1;
+    return 2;
 }
 
 int TypeModel::rowCount(const QModelIndex& parent) const
@@ -151,7 +151,11 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
     const auto node = m_nodes.at(index.internalId());
     switch (role) {
         case Qt::DisplayRole:
-            return node.die->name();
+            if (index.column() == 0)
+                return node.die->name();
+            else if (index.column() == 1)
+                return node.die->typeSize();
+            return {};
         case TypeModel::DetailRole:
         {
             QString s = DwarfPrinter::dieRichText(node.die);
@@ -182,6 +186,7 @@ QVariant TypeModel::headerData(int section, Qt::Orientation orientation, int rol
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
             case 0: return tr("Data Type");
+            case 1: return tr("Size");
         }
     }
     return QAbstractItemModel::headerData(section, orientation, role);
