@@ -12,6 +12,8 @@ set(libelfdissectorui_srcs
 
     dependencymodel/dependencymodel.cpp
 
+    typemodel/typemodel.cpp
+
     navigator/codenavigator.cpp
 
     plotter/gnuplotter.cpp

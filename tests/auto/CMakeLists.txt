@@ -42,3 +42,7 @@ add_test(NAME elfmodeltest COMMAND elfmodeltest)
 add_executable(dependencymodeltest dependencymodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
 target_link_libraries(dependencymodeltest Qt5::Test libelfdissectorui)
 add_test(NAME dependencymodeltest COMMAND dependencymodeltest)
+
+add_executable(typemodeltest typemodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
+target_link_libraries(typemodeltest Qt5::Test libelfdissectorui)
+add_test(NAME typemodeltest COMMAND typemodeltest)
