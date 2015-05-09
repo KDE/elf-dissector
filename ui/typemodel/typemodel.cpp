@@ -69,6 +69,42 @@ void TypeModel::addFile(ElfFile* file)
     }
 }
 
+bool dieInherits(DwarfDie *parentDie, DwarfDie *childDie)
+{
+    if (parentDie == childDie)
+        return true;
+    DwarfDie *baseDie = childDie->inheritedFrom();
+    if (!baseDie)
+        return false;
+    return dieInherits(parentDie, baseDie);
+}
+
+bool isBetterDie(DwarfDie *prevDie, DwarfDie *newDie)
+{
+    // we don't care about increasing the level of detail for structure nodes
+    if (prevDie->tag() != DW_TAG_class_type && prevDie->tag() != DW_TAG_structure_type)
+        return false;
+
+    // declarations are always worse then the real one
+    if (prevDie->attribute(DW_AT_declaration).toBool())
+        return true;
+
+    // size is also a good indicator for this belonging to a complete DIE
+    if (prevDie->typeSize() == 0)
+        return true;
+
+    // walk down the inheritance tree
+    if (dieInherits(prevDie, newDie))
+        return true;
+
+    // if we have member children, that's better
+    // TODO
+
+    // TODO what else?
+
+    return false;
+}
+
 void TypeModel::addTopLevelDwarfDie(DwarfDie* die)
 {
     if (die->tag() != DW_TAG_structure_type && die->tag() != DW_TAG_class_type)
@@ -79,8 +115,11 @@ void TypeModel::addTopLevelDwarfDie(DwarfDie* die)
     const auto it = std::lower_bound(children.begin(), children.end(), dieName, [this](uint32_t nodeId, const QByteArray &dieName) {
         return m_nodes.at(nodeId).die->name() < dieName;
     });
-    if (it != children.constEnd() && m_nodes.at((*it)).die->name() == dieName)
-        return; // TODO pick the one with more information here!
+    if (it != children.constEnd() && m_nodes.at((*it)).die->name() == dieName) {
+        if (isBetterDie(m_nodes.at(*it).die, die))
+            m_nodes[*it].die = die;
+        return;
+    }
 
     const uint32_t nodeId = m_nodes.size();
     m_nodes.resize(nodeId + 1);
