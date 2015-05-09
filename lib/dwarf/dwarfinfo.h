@@ -15,8 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DWARFDEBUG_H
-#define DWARFDEBUG_H
+#ifndef DWARFINFO_H
+#define DWARFINFO_H
 
 #include <elf/elffile.h>
 
@@ -56,4 +56,4 @@ private:
     std::unique_ptr<DwarfInfoPrivate> d;
 };
 
-#endif // DWARFDEBUG_H
+#endif // DWARFINFO_H
