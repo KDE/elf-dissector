@@ -228,7 +228,7 @@ static const opcode_t* opcode(uint8_t code)
     return nullptr;
 }
 
-DwarfExpression::DwarfExpression()
+DwarfExpression::DwarfExpression() : m_addrSize(0)
 {
 }
 
