@@ -120,18 +120,18 @@ void TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
     }
 
     auto& children = m_childMap[parentId];
-    const auto dieName = die->name();
+    const auto dieName = die->typeName();
     const auto it = std::lower_bound(children.begin(), children.end(), die, [this, &dieName](uint32_t nodeId, DwarfDie *die) {
         const auto lhs = m_nodes.at(nodeId);
         if (lhs.die->tag() == die->tag())
-            return m_nodes.at(nodeId).die->name() < dieName;
+            return m_nodes.at(nodeId).die->typeName() < dieName;
         return lhs.die->tag() < die->tag();
     });
 
     uint32_t nodeId;
-    // TODO what about anon structs? name() is empty there
+    // TODO what about anon stuff, name() is empty there, typeName() isn't, but that merges too much
     // TODO what about local symbols, compare CUs?
-    if (it != children.constEnd() && m_nodes.at(*it).die->tag() == die->tag() && m_nodes.at(*it).die->name() == dieName) {
+    if (it != children.constEnd() && m_nodes.at(*it).die->tag() == die->tag() && m_nodes.at(*it).die->typeName() == dieName) {
         nodeId = *it;
         if (isBetterDie(m_nodes.at(nodeId).die, die))
             m_nodes[nodeId].die = die;
@@ -173,7 +173,7 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
     switch (role) {
         case Qt::DisplayRole:
             if (index.column() == 0)
-                return node.die->name();
+                return node.die->typeName();
             else if (index.column() == 1 && (node.die->tag() == DW_TAG_class_type || node.die->tag() == DW_TAG_structure_type))
                 return node.die->typeSize();
             return {};
