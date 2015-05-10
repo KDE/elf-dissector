@@ -154,6 +154,8 @@ QByteArray DwarfDie::typeName() const
                 return "<anon struct>";
             case DW_TAG_union_type:
                 return "<anon union>";
+            case DW_TAG_namespace:
+                return "(anonymous namespace)";
             case DW_TAG_array_type:
             case DW_TAG_base_type:
             case DW_TAG_const_type:
