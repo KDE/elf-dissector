@@ -49,7 +49,7 @@ public:
 
 private:
     void addFile(ElfFile *file);
-    void addDwarfDieRecursive(DwarfDie *die, uint32_t parentId);
+    bool addDwarfDieRecursive(DwarfDie* die, uint32_t parentId);
 
     // the tree hierarchy is built using 32bit sequential ids, which act as index for the node struct
     struct Node {

@@ -108,7 +108,7 @@ bool isBetterDie(DwarfDie *prevDie, DwarfDie *newDie)
     return false;
 }
 
-void TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
+bool TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
 {
     switch (die->tag()) {
         case DW_TAG_class_type:
@@ -116,12 +116,15 @@ void TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
         case DW_TAG_structure_type: // TODO we can also have nested types in DW_TAG_subprograms!
             break;
         default:
-            return;
+            return false;
     }
 
-    auto& children = m_childMap[parentId];
+    QVector<uint32_t> children;
+    if (parentId < (uint32_t)m_childMap.size())
+        children = m_childMap.at(parentId);
+
     const auto dieName = die->typeName();
-    const auto it = std::lower_bound(children.begin(), children.end(), die, [this, &dieName](uint32_t nodeId, DwarfDie *die) {
+    const auto it = std::lower_bound(children.constBegin(), children.constEnd(), die, [this, &dieName](uint32_t nodeId, DwarfDie *die) {
         const auto lhs = m_nodes.at(nodeId);
         if (lhs.die->tag() == die->tag())
             return m_nodes.at(nodeId).die->typeName() < dieName;
@@ -129,25 +132,37 @@ void TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
     });
 
     uint32_t nodeId;
+    bool nodeExits;
+    // *it will be invalid when inserting below, as m_childMap might change, although m_childMap[parentId] stays unchanged
+    const int childInsertIndex = std::distance(children.constBegin(), it);
+
     // TODO what about anon stuff, name() is empty there, typeName() isn't, but that merges too much
     // TODO what about local symbols, compare CUs?
     if (it != children.constEnd() && m_nodes.at(*it).die->tag() == die->tag() && m_nodes.at(*it).die->typeName() == dieName) {
         nodeId = *it;
         if (isBetterDie(m_nodes.at(nodeId).die, die))
             m_nodes[nodeId].die = die;
+        nodeExits = true;
     } else {
-        nodeId = m_nodes.size();
-        m_nodes.resize(nodeId + 1);
-        m_nodes[nodeId].die = die;
-        children.insert(it, nodeId);
-        m_parentMap.resize(nodeId + 1);
-        m_parentMap[nodeId] = parentId;
-        m_childMap.resize(nodeId + 1);
+        nodeId = std::max((uint32_t)m_nodes.size(), parentId + 1);
+        nodeExits = false;
     }
 
-    // TODO suppress empty structure nodes
+    bool childCreated = false;
     for (auto child : die->children())
-        addDwarfDieRecursive(child, nodeId);
+        childCreated |= addDwarfDieRecursive(child, nodeId);
+
+    if (!nodeExits && (childCreated || die->tag() == DW_TAG_class_type || die->tag() == DW_TAG_structure_type)) {
+        m_nodes.resize(std::max((uint32_t)m_nodes.size(), nodeId + 1));
+        m_nodes[nodeId].die = die;
+        m_childMap.resize(std::max((uint32_t)m_childMap.size(), nodeId + 1));
+        m_childMap[parentId].insert(childInsertIndex, nodeId);
+        m_parentMap.resize(std::max((uint32_t)m_parentMap.size(), nodeId + 1));
+        m_parentMap[nodeId] = parentId;
+        return true;
+    }
+
+    return false;
 }
 
 int TypeModel::columnCount(const QModelIndex& parent) const
