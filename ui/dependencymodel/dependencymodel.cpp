@@ -53,6 +53,8 @@ void DependencyModel::setFileSet(ElfFileSet* fileSet)
     // build up indexes to make the tree building more efficient
     for (int i = 0; i < fileSet->size(); ++i) {
         const auto file = fileSet->file(i);
+        if (!file->dynamicSection())
+            continue;
         const auto soName = file->dynamicSection()->soName();
         if (!soName.isEmpty())
             m_fileIndex.insert(soName, i);
@@ -132,7 +134,7 @@ int DependencyModel::rowCount(const QModelIndex& parent) const
     }
 
     const auto file = fileIndex(parent.internalId());
-    if (file == InvalidFile || hasCycle(parent))
+    if (file == InvalidFile || hasCycle(parent) || !m_fileSet->file(file)->dynamicSection())
         return 0;
 
     const auto needed = m_fileSet->file(file)->dynamicSection()->neededLibraries();
