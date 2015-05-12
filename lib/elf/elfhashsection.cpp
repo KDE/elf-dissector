@@ -62,7 +62,7 @@ uint32_t ElfHashSection::elfHash(const char* name)
     return h;
 }
 
-ElfSymbolTableEntry* ElfHashSection::lookup(const char* name)
+ElfSymbolTableEntry* ElfHashSection::lookup(const char* name) const
 {
     const auto x = elfHash(name);
 

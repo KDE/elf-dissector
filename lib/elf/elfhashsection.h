@@ -37,7 +37,7 @@ public:
     uint32_t chain(uint32_t index) const;
 
     static uint32_t elfHash(const char* name);
-    ElfSymbolTableEntry *lookup(const char* name);
+    ElfSymbolTableEntry *lookup(const char* name) const;
 
     QVector<uint32_t> histogram() const;
 };
