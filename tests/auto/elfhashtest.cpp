@@ -44,8 +44,10 @@ private slots:
 
         QVERIFY(hashSection->bucketCount() > 0);
         QCOMPARE((uint64_t)hashSection->chainCount(), symTab->header()->entryCount());
-        for (uint32_t i = 1; i < symTab->header()->entryCount(); ++i) {
+        for (uint32_t i = 0; i < symTab->header()->entryCount(); ++i) {
             const auto entry = symTab->entry(i);
+            if (strcmp(entry->name(), "") == 0)
+                continue;
             QCOMPARE(hashSection->lookup(entry->name()), entry);
         }
 
