@@ -35,7 +35,11 @@ private slots:
         QVERIFY(f.isValid());
 
         const auto hashIndex = f.indexOfSection(SHT_HASH);
-        QVERIFY(hashIndex >= 0);
+        const auto gnuHashIndex = f.indexOfSection(SHT_GNU_HASH);
+        QVERIFY(hashIndex >= 0 || gnuHashIndex >= 0);
+        if (hashIndex < 0)
+            return;
+
         const auto hashSection = f.section<ElfHashSection>(hashIndex);
         QVERIFY(hashSection);
 
