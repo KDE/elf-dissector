@@ -48,6 +48,7 @@ private slots:
 
         QVERIFY(hashSection->bucketCount() > 0);
         QCOMPARE((uint64_t)hashSection->chainCount(), symTab->header()->entryCount());
+        // EXPECTED_FAIL: the .hash section seem broken with --hash-style=both and gold of binutils <= 2.24 (works with the old ld, fixed in 2.25)
         for (uint32_t i = 0; i < symTab->header()->entryCount(); ++i) {
             const auto entry = symTab->entry(i);
             if (strcmp(entry->name(), "") == 0)
