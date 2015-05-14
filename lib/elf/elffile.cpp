@@ -293,6 +293,16 @@ ElfSymbolTableSection* ElfFile::symbolTable() const
     return section<ElfSymbolTableSection>(index);
 }
 
+ElfHashSection* ElfFile::hash() const
+{
+    auto index = indexOfSection(SHT_GNU_HASH);
+    if (index < 0)
+        index = indexOfSection(SHT_HASH);
+    if (index < 0)
+        return nullptr;
+    return section<ElfHashSection>(index);
+}
+
 DwarfInfo* ElfFile::dwarfInfo() const
 {
     return m_dwarfInfo;

@@ -29,6 +29,7 @@
 #include <memory>
 
 class DwarfInfo;
+class ElfHashSection;
 class ElfHeader;
 class ElfSymbolTableSection;
 
@@ -83,6 +84,8 @@ public:
     ElfDynamicSection* dynamicSection() const;
     /** Returns .symtab if present, .dynsym otherwise. */
     ElfSymbolTableSection* symbolTable() const;
+    /** Returns a symbol table hash section for fast lookup. */
+    ElfHashSection* hash() const;
 
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;
