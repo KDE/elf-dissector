@@ -27,7 +27,7 @@
 #include "elfgnusymbolversionrequirementssection.h"
 #include "elfnotesection.h"
 #include "elfrelocationsection.h"
-#include "elfhashsection.h"
+#include "elfsysvhashsection.h"
 
 #include <dwarf/dwarfinfo.h>
 
@@ -223,7 +223,7 @@ void ElfFile::parseSections()
                 section = new ElfGNUSymbolVersionRequirementsSection(this, shdr);
                 break;
             case SHT_HASH:
-                section = new ElfHashSection(this, shdr);
+                section = new ElfSysvHashSection(this, shdr);
                 break;
             case SHT_GNU_HASH:
                 section = new ElfGnuHashSection(this, shdr);

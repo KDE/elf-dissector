@@ -24,22 +24,19 @@
 
 class ElfSymbolTableEntry;
 
-/** Represents the .hash section. */
+/** Interface for hash table sections for symbol lookup. */
 class ElfHashSection : public ElfSection
 {
 public:
-    ~ElfHashSection();
     ElfHashSection(ElfFile* file, ElfSectionHeader* shdr);
+    ~ElfHashSection();
 
-    uint32_t bucketCount() const;
-    uint32_t bucket(uint32_t index) const;
-    uint32_t chainCount() const;
-    uint32_t chain(uint32_t index) const;
+    virtual uint32_t bucketCount() const = 0;
+    virtual uint32_t chainCount() const = 0;
 
-    static uint32_t elfHash(const char* name);
-    ElfSymbolTableEntry *lookup(const char* name) const;
+    virtual ElfSymbolTableEntry *lookup(const char* name) const = 0;
 
-    QVector<uint32_t> histogram() const;
+    virtual QVector<uint32_t> histogram() const = 0;
 };
 
 #endif // ELFHASHSECTION_H

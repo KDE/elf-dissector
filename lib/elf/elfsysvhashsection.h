@@ -15,28 +15,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ELFGNUHASHSECTION_H
-#define ELFGNUHASHSECTION_H
+#ifndef ELFSYSVHASHSECTION_H
+#define ELFSYSVHASHSECTION_H
 
 #include "elfhashsection.h"
 
-#include <QVector>
-
-class ElfSymbolTableEntry;
-
-/** Represents the .gnu.hash section. */
-class ElfGnuHashSection : public ElfHashSection
+/** Represents the .hash section. */
+class ElfSysvHashSection : public ElfHashSection
 {
 public:
-    explicit ElfGnuHashSection(ElfFile* file, ElfSectionHeader* shdr);
-    ~ElfGnuHashSection();
+    explicit ElfSysvHashSection(ElfFile* file, ElfSectionHeader* shdr);
+    ~ElfSysvHashSection();
 
     uint32_t bucketCount() const final;
     uint32_t chainCount() const final;
-
-    uint32_t symbolIndex() const;
-    uint32_t maskWordsCount() const;
-    uint32_t shift2() const;
 
     static uint32_t hash(const char* name);
     ElfSymbolTableEntry *lookup(const char* name) const final;
@@ -45,8 +37,7 @@ public:
 
 private:
     uint32_t bucket(uint32_t index) const;
-    uint32_t* value(uint32_t index) const;
-    uint64_t filterMask(uint32_t index) const;
+    uint32_t chain(uint32_t index) const;
 };
 
-#endif // ELFGNUHASHSECTION_H
+#endif // ELFSYSVHASHSECTION_H

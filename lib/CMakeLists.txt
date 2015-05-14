@@ -22,6 +22,7 @@ set(libelfdisector_srcs
     elf/elfstringtablesection.cpp
     elf/elfsymboltableentry.cpp
     elf/elfsymboltablesection.cpp
+    elf/elfsysvhashsection.cpp
 
     demangle/demangler.cpp
 

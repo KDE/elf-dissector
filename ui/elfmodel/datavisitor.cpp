@@ -335,28 +335,11 @@ QVariant DataVisitor::doVisit(ElfHashSection* section, int role) const
         s += "<br/><b>SYSV Hash Table</b><br/>";
         s += "Buckets: " + QString::number(section->bucketCount()) + "<br/>";
         s += "Chains: " + QString::number(section->chainCount()) + "<br/>";
-
-        s += "Chain length histogram<br/>";
-        const auto hist = section->histogram();
-        for (int i = 0; i < hist.size(); ++i) {
-            s += "&nbsp;&nbsp;" + QString::number(i) + ": " + QString::number(hist.at(i)) + "<br/>";
+        if (ElfGnuHashSection *gnuHash = dynamic_cast<ElfGnuHashSection*>(section)) {
+            s += "Symbol table index: " + QString::number(gnuHash->symbolIndex()) + "<br/>";
+            s += "Mask word count: " + QString::number(gnuHash->maskWordsCount()) + "<br/>";
+            s += "Shift count: " + QString::number(gnuHash->shift2()) + "<br/>";
         }
-        return s;
-    }
-    return base;
-}
-
-QVariant DataVisitor::doVisit(ElfGnuHashSection* section, int role) const
-{
-    const auto base = doVisit(static_cast<ElfSection*>(section), role);
-    if (role == ElfModel::DetailRole) {
-        QString s = base.toString();
-        s += "<br/><b>GNU Hash Table</b><br/>";
-        s += "Buckets: " + QString::number(section->bucketCount()) + "<br/>";
-        s += "Chains: " + QString::number(section->chainCount()) + "<br/>";
-        s += "Symbol table index: " + QString::number(section->symbolIndex()) + "<br/>";
-        s += "Mask word count: " + QString::number(section->maskWordsCount()) + "<br/>";
-        s += "Shift count: " + QString::number(section->shift2()) + "<br/>";
 
         s += "Chain length histogram<br/>";
         const auto hist = section->histogram();

@@ -34,7 +34,6 @@ protected:
     QVariant doVisit(ElfSymbolTableEntry* entry, int arg) const override;
     QVariant doVisit(ElfDynamicEntry* entry, int arg) const override;
     QVariant doVisit(ElfHashSection* section, int role) const override;
-    QVariant doVisit(ElfGnuHashSection* section, int role) const override;
     QVariant doVisit(ElfGNUSymbolVersionDefinition *verDef, int role) const override;
     QVariant doVisit(ElfGNUSymbolVersionDefinitionAuxiliaryEntry *auxEntry, int role) const override;
     QVariant doVisit(ElfGNUSymbolVersionRequirement *verNeed, int role) const override;

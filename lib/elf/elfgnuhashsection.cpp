@@ -24,7 +24,7 @@
 #include <cassert>
 
 ElfGnuHashSection::ElfGnuHashSection(ElfFile* file, ElfSectionHeader* shdr):
-    ElfSection(file, shdr)
+    ElfHashSection(file, shdr)
 {
     // must be a power of two
     assert ((maskWordsCount() & (maskWordsCount() - 1)) == 0);
@@ -86,7 +86,7 @@ uint64_t ElfGnuHashSection::filterMask(uint32_t index) const
     return *(reinterpret_cast<const uint32_t*>(rawData()) + 4 + index);
 }
 
-ElfSymbolTableEntry* ElfGnuHashSection::lookup(const char* name)
+ElfSymbolTableEntry* ElfGnuHashSection::lookup(const char* name) const
 {
     auto h1 = hash(name);
 

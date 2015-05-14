@@ -16,11 +16,6 @@
 */
 
 #include "elfhashsection.h"
-#include "elfsymboltableentry.h"
-#include "elfsymboltablesection.h"
-
-#include <elf.h>
-#include <cassert>
 
 ElfHashSection::ElfHashSection(ElfFile* file, ElfSectionHeader* shdr) :
     ElfSection(file, shdr)
@@ -28,71 +23,3 @@ ElfHashSection::ElfHashSection(ElfFile* file, ElfSectionHeader* shdr) :
 }
 
 ElfHashSection::~ElfHashSection() = default;
-
-uint32_t ElfHashSection::bucketCount() const
-{
-    return *reinterpret_cast<const uint32_t*>(rawData());
-}
-
-uint32_t ElfHashSection::bucket(uint32_t index) const
-{
-    return *(reinterpret_cast<const uint32_t*>(rawData()) + 2 + index);
-}
-
-uint32_t ElfHashSection::chainCount() const
-{
-    return *(reinterpret_cast<const uint32_t*>(rawData()) + 1);
-}
-
-uint32_t ElfHashSection::chain(uint32_t index) const
-{
-    return *(reinterpret_cast<const uint32_t*>(rawData()) + 2 + bucketCount() + index);
-}
-
-uint32_t ElfHashSection::elfHash(const char* name)
-{
-    unsigned long h = 0, g;
-    while (*name)
-    {
-        h = (h << 4) + *name++;
-        if ((g = h & 0xf0000000))
-            h ^= g >> 24;
-        h &= ~g;
-    }
-    return h;
-}
-
-ElfSymbolTableEntry* ElfHashSection::lookup(const char* name) const
-{
-    const auto x = elfHash(name);
-
-    const auto symTab = linkedSection<ElfSymbolTableSection>();
-    assert(symTab);
-    auto y = bucket(x % bucketCount());
-    while (y != STN_UNDEF) {
-        const auto entry = symTab->entry(y);
-        if (strcmp(entry->name(), name) == 0)
-            return entry;
-        y = chain(y);
-    }
-
-    return nullptr;
-}
-
-QVector<uint32_t> ElfHashSection::histogram() const
-{
-    QVector<uint32_t> hist;
-    for (uint i = 0; i < bucketCount(); ++i) {
-        int count = 0;
-
-        auto y = bucket(i);
-        while (y != STN_UNDEF) {
-            ++count;
-            y = chain(y);
-        }
-
-        hist.resize(std::max(hist.size(), count + 1));
-        hist[count]++;
-    }
-    return hist;
-}

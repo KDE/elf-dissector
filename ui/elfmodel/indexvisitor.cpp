@@ -55,10 +55,8 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
             type = ElfNodeVariant::VersionRequirementsSection;
             break;
         case SHT_HASH:
-            type = ElfNodeVariant::SysvHashSection;
-            break;
         case SHT_GNU_HASH:
-            type = ElfNodeVariant::GnuHashSection;
+            type = ElfNodeVariant::HashSection;
             break;
         default:
             if (qstrcmp(section->header()->name(), ".debug_info") == 0) {
