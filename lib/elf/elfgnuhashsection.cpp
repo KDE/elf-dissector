@@ -140,3 +140,33 @@ QVector<uint32_t> ElfGnuHashSection::histogram() const
     }
     return hist;
 }
+
+double ElfGnuHashSection::averagePrefixLength() const
+{
+    int sum = 0;
+    int count = 0;
+
+    const auto symTab = linkedSection<ElfSymbolTableSection>();
+    assert(symTab);
+
+    for (uint i = 0; i < bucketCount(); ++i) {
+        auto n1 = bucket(i);
+        auto hashValue1 = value(n1);
+        while (!(*hashValue1 & 1)) {
+            const auto entry1 = symTab->entry(n1);
+
+            auto n2 = n1 + 1;
+            auto hashValue2 = hashValue1 + 1;
+            while (!(*hashValue2 & 1)) {
+                const auto entry2 = symTab->entry(n2);
+                sum += commonPrefixLength(entry1->name(), entry2->name());
+                ++count;
+                ++hashValue2;
+            }
+            ++hashValue1;
+            ++n1;
+        }
+    }
+
+    return count > 0 ? (double)sum / (double)count : 0.0;
+}

@@ -42,6 +42,7 @@ public:
     ElfSymbolTableEntry *lookup(const char* name) const final;
 
     QVector<uint32_t> histogram() const final;
+    double averagePrefixLength() const final;
 
 private:
     uint32_t bucket(uint32_t index) const;

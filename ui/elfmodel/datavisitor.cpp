@@ -332,7 +332,7 @@ QVariant DataVisitor::doVisit(ElfHashSection* section, int role) const
     const auto base = doVisit(static_cast<ElfSection*>(section), role);
     if (role == ElfModel::DetailRole) {
         QString s = base.toString();
-        s += "<br/><b>SYSV Hash Table</b><br/>";
+        s += "<br/><b>Hash Table</b><br/>";
         s += "Buckets: " + QString::number(section->bucketCount()) + "<br/>";
         s += "Chains: " + QString::number(section->chainCount()) + "<br/>";
         if (ElfGnuHashSection *gnuHash = dynamic_cast<ElfGnuHashSection*>(section)) {
@@ -346,6 +346,7 @@ QVariant DataVisitor::doVisit(ElfHashSection* section, int role) const
         for (int i = 0; i < hist.size(); ++i) {
             s += "&nbsp;&nbsp;" + QString::number(i) + ": " + QString::number(hist.at(i)) + "<br/>";
         }
+        s += "Average collision common prefix length: " + QString::number(section->averagePrefixLength()) + "<br/>";
         return s;
     }
     return base;

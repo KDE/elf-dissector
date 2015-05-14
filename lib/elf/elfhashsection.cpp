@@ -23,3 +23,14 @@ ElfHashSection::ElfHashSection(ElfFile* file, ElfSectionHeader* shdr) :
 }
 
 ElfHashSection::~ElfHashSection() = default;
+
+int ElfHashSection::commonPrefixLength(const char* s1, const char* s2)
+{
+    int l = 0;
+    while (*s1 && *s2 && *s1 == *s2) {
+        ++l;
+        ++s1;
+        ++s2;
+    }
+    return l;
+}
