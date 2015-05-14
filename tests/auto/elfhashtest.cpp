@@ -16,6 +16,7 @@
 */
 
 #include <elf/elffile.h>
+#include <elf/elfgnuhashsection.h>
 #include <elf/elfhashsection.h>
 #include <elf/elfsymboltablesection.h>
 
@@ -53,6 +54,38 @@ private slots:
             const auto entry = symTab->entry(i);
             if (strcmp(entry->name(), "") == 0)
                 continue;
+            QCOMPARE(hashSection->lookup(entry->name()), entry);
+        }
+
+        const auto hist = hashSection->histogram();
+        const uint32_t sum = std::accumulate(hist.begin(), hist.end(), 0);
+        QCOMPARE(sum, hashSection->bucketCount());
+    }
+
+    void testGnuHashSection()
+    {
+        ElfFile f(BINDIR "/elf-dissector");
+        QVERIFY(f.isValid());
+
+        const auto hashIndex = f.indexOfSection(SHT_GNU_HASH);
+        const auto sysvHashIndex = f.indexOfSection(SHT_HASH);
+        QVERIFY(hashIndex >= 0 || sysvHashIndex >= 0);
+        if (hashIndex < 0)
+            return;
+
+        const auto hashSection = f.section<ElfGnuHashSection>(hashIndex);
+        QVERIFY(hashSection);
+
+        const auto symTab = hashSection->linkedSection<ElfSymbolTableSection>();
+        QVERIFY(symTab);
+
+        QVERIFY(hashSection->bucketCount() > 0);
+        QVERIFY(hashSection->symbolIndex() > 0);
+        QVERIFY(hashSection->symbolIndex() < symTab->header()->entryCount());
+        QCOMPARE((uint64_t)hashSection->chainCount(), symTab->header()->entryCount() - hashSection->symbolIndex());
+
+        for (uint32_t i = hashSection->symbolIndex(); i < symTab->header()->entryCount(); ++i) {
+            const auto entry = symTab->entry(i);
             QCOMPARE(hashSection->lookup(entry->name()), entry);
         }
 

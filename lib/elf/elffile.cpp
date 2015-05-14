@@ -21,6 +21,7 @@
 #include "elfstringtablesection.h"
 #include "elfsymboltablesection_impl.h"
 #include "elfdynamicsection_impl.h"
+#include "elfgnuhashsection.h"
 #include "elfgnusymbolversiontable.h"
 #include "elfgnusymbolversiondefinitionssection.h"
 #include "elfgnusymbolversionrequirementssection.h"
@@ -223,6 +224,9 @@ void ElfFile::parseSections()
                 break;
             case SHT_HASH:
                 section = new ElfHashSection(this, shdr);
+                break;
+            case SHT_GNU_HASH:
+                section = new ElfGnuHashSection(this, shdr);
                 break;
             default:
                 section = new ElfSection(this, shdr);
