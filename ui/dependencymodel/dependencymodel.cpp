@@ -86,6 +86,7 @@ void DependencyModel::setFileSet(ElfFileSet* fileSet)
         const auto userSymbolTable = m_fileSet->file(i)->symbolTable();
         if (!userSymbolTable)
             continue;
+        const auto userSymbolTableSize = userSymbolTable->header()->entryCount();
 
         for (int j = 0; j < m_fileSet->size(); ++j) {
             if (i == j)
@@ -93,7 +94,7 @@ void DependencyModel::setFileSet(ElfFileSet* fileSet)
 
             const auto depHash = m_fileSet->file(j)->hash();
             int count = 0;
-            for (uint k = 0; k < userSymbolTable->header()->entryCount(); ++k) {
+            for (uint k = 0; k < userSymbolTableSize; ++k) {
                 const auto entry = userSymbolTable->entry(k);
                 if (entry->value() != 0)
                     continue;
