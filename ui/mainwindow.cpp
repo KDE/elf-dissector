@@ -22,6 +22,7 @@
 
 #include <checks/structurepackingcheck.h>
 #include <checks/virtualdtorcheck.h>
+#include <checks/unuseddependenciescheck.h>
 
 #include <elfmodel/elfmodel.h>
 #include <navigator/codenavigator.h>
@@ -59,6 +60,10 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionVirtualDestructors, &QAction::triggered, this, [this]() {
         VirtualDtorCheck checker;
         checker.findImplicitVirtualDtors(m_fileSet.get());
+    });
+    connect(ui->actionUnusedDependencies, &QAction::triggered, this, [this]() {
+        UnusedDependenciesCheck checker;
+        checker.checkFileSet(m_fileSet.get());
     });
 
     restoreSettings();
