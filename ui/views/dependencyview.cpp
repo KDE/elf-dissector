@@ -38,6 +38,8 @@ DependencyView::~DependencyView() = default;
 void DependencyView::setFileSet(ElfFileSet* fileSet)
 {
     m_dependencyModel->setFileSet(fileSet);
+    if (m_dependencyModel->rowCount() > 0)
+        ui->dependencyView->expand(m_dependencyModel->index(0, 0));
 }
 
 void DependencyView::search(const QString& text)
