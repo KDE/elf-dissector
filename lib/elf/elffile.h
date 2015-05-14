@@ -103,6 +103,7 @@ private:
     std::unique_ptr<ElfHeader> m_header;
     QVector<ElfSectionHeader*> m_sectionHeaders;
     QVector<ElfSection*> m_sections;
+    ElfDynamicSection* m_dynamicSection = nullptr;
     DwarfInfo *m_dwarfInfo = nullptr;
 };
 

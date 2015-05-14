@@ -202,9 +202,10 @@ void ElfFile::parseSections()
                 break;
             case SHT_DYNAMIC:
                 if (type() == ELFCLASS32)
-                    section = new ElfDynamicSectionImpl<Elf32_Dyn>(this, shdr);
+                    m_dynamicSection = new ElfDynamicSectionImpl<Elf32_Dyn>(this, shdr);
                 else if (type() == ELFCLASS64)
-                    section = new ElfDynamicSectionImpl<Elf64_Dyn>(this, shdr);
+                    m_dynamicSection = new ElfDynamicSectionImpl<Elf64_Dyn>(this, shdr);
+                section = m_dynamicSection;
                 break;
             case SHT_REL:
             case SHT_RELA:
@@ -277,10 +278,7 @@ int ElfFile::indexOfSection(const char* name) const
 
 ElfDynamicSection* ElfFile::dynamicSection() const
 {
-    const auto index = indexOfSection(SHT_DYNAMIC);
-    if (index < 0)
-        return nullptr;
-    return section<ElfDynamicSection>(index);
+    return m_dynamicSection;
 }
 
 ElfSymbolTableSection* ElfFile::symbolTable() const
