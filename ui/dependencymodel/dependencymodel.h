@@ -57,7 +57,8 @@ private:
     mutable uint32_t m_uniqueIndex = 0; // 0 is the invisible root
     static const int32_t InvalidFile = -1; // marker for dependencies we could not find
 
-    QVector<QVector<int>> m_symbolCountTable;
+    int usedSymbolCount(int parentId, int fileId) const;
+    mutable QVector<QVector<int>> m_symbolCountTable;
 };
 
 #endif // DEPENDENCYMODEL_H

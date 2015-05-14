@@ -78,32 +78,12 @@ void DependencyModel::setFileSet(ElfFileSet* fileSet)
     m_childMap[0].push_back(makeId(m_uniqueIndex, 0));
     m_childMap.push_back({});
 
-    // fill symbol usage count table
+    // clear symbol usage count table, will be filled on demand
     m_symbolCountTable.clear();
     m_symbolCountTable.resize(m_fileSet->size());
     for (int i = 0; i < m_fileSet->size(); ++i) {
         m_symbolCountTable[i].resize(m_fileSet->size());
-        const auto userSymbolTable = m_fileSet->file(i)->symbolTable();
-        if (!userSymbolTable)
-            continue;
-        const auto userSymbolTableSize = userSymbolTable->header()->entryCount();
-
-        for (int j = 0; j < m_fileSet->size(); ++j) {
-            if (i == j)
-                continue;
-
-            const auto depHash = m_fileSet->file(j)->hash();
-            int count = 0;
-            for (uint k = 0; k < userSymbolTableSize; ++k) {
-                const auto entry = userSymbolTable->entry(k);
-                if (entry->value() != 0)
-                    continue;
-                if (depHash->lookup(entry->name()))
-                    ++count;
-            }
-
-            m_symbolCountTable[i][j] = count;
-        }
+        m_symbolCountTable[i].fill(-1, m_fileSet->size());
     }
 }
 
@@ -127,8 +107,12 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
                 return m_fileSet->file(parentFile)->dynamicSection()->neededLibraries().at(index.row());
             }
 
-            if (index.column() == 1 && file != InvalidFile && parentIdx.isValid())
-                return m_symbolCountTable.at(parentFile).at(file);
+            if (index.column() == 1 && file != InvalidFile && parentIdx.isValid()) {
+                auto count = m_symbolCountTable.at(parentFile).at(file);
+                if (count == -1)
+                    count = m_symbolCountTable[parentFile][file] = usedSymbolCount(parentFile, file);
+                return count;
+            }
 
             break;
         }
@@ -281,4 +265,27 @@ bool DependencyModel::hasCycle(const QModelIndex& index) const
             return true;
     }
     Q_UNREACHABLE();
+}
+
+int DependencyModel::usedSymbolCount(int parentId, int fileId) const
+{
+    assert(parentId != fileId);
+    assert(parentId >= 0);
+    assert(fileId >= 0);
+
+    const auto userSymbolTable = m_fileSet->file(parentId)->symbolTable();
+    if (!userSymbolTable)
+        return 0;
+    const auto userSymbolTableSize = userSymbolTable->header()->entryCount();
+    const auto depHash = m_fileSet->file(fileId)->hash();
+    int count = 0;
+
+    for (uint i = 0; i < userSymbolTableSize; ++i) {
+        const auto entry = userSymbolTable->entry(i);
+        if (entry->value() != 0)
+            continue;
+        if (depHash->lookup(entry->name()))
+            ++count;
+    }
+    return count;
 }
