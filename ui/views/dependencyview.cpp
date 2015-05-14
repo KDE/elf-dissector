@@ -28,6 +28,7 @@ DependencyView::DependencyView(QWidget* parent):
 {
     ui->setupUi(this);
     ui->dependencyView->setModel(m_dependencyModel);
+    ui->dependencyView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 
     connect(ui->searchLine, &QLineEdit::textChanged, this, &DependencyView::search);
 }

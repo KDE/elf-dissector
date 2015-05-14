@@ -20,6 +20,8 @@
 #include <elf/elffileset.h>
 #include <elf/elffile.h>
 #include <elf/elfdynamicsection.h>
+#include <elf/elfsymboltablesection.h>
+#include <elf/elfhashsection.h>
 
 #include <QDebug>
 #include <QIcon>
@@ -75,6 +77,33 @@ void DependencyModel::setFileSet(ElfFileSet* fileSet)
     m_parentMap.push_back(0);
     m_childMap[0].push_back(makeId(m_uniqueIndex, 0));
     m_childMap.push_back({});
+
+    // fill symbol usage count table
+    m_symbolCountTable.clear();
+    m_symbolCountTable.resize(m_fileSet->size());
+    for (int i = 0; i < m_fileSet->size(); ++i) {
+        m_symbolCountTable[i].resize(m_fileSet->size());
+        const auto userSymbolTable = m_fileSet->file(i)->symbolTable();
+        if (!userSymbolTable)
+            continue;
+
+        for (int j = 0; j < m_fileSet->size(); ++j) {
+            if (i == j)
+                continue;
+
+            const auto depHash = m_fileSet->file(j)->hash();
+            int count = 0;
+            for (uint k = 0; k < userSymbolTable->header()->entryCount(); ++k) {
+                const auto entry = userSymbolTable->entry(k);
+                if (entry->value() != 0)
+                    continue;
+                if (depHash->lookup(entry->name()))
+                    ++count;
+            }
+
+            m_symbolCountTable[i][j] = count;
+        }
+    }
 }
 
 QVariant DependencyModel::data(const QModelIndex& index, int role) const
@@ -88,13 +117,23 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
     switch (role) {
         case Qt::DisplayRole:
         {
-            if (file != InvalidFile)
-                return m_fileSet->file(file)->displayName();
             const auto parentIdx = parent(index);
             const auto parentFile = fileIndex(parentIdx.internalId());
-            return m_fileSet->file(parentFile)->dynamicSection()->neededLibraries().at(index.row());
+
+            if (index.column() == 0) {
+                if (file != InvalidFile)
+                    return m_fileSet->file(file)->displayName();
+                return m_fileSet->file(parentFile)->dynamicSection()->neededLibraries().at(index.row());
+            }
+
+            if (index.column() == 1 && file != InvalidFile && parentIdx.isValid())
+                return m_symbolCountTable.at(parentFile).at(file);
+
+            break;
         }
         case Qt::DecorationRole:
+            if (index.column())
+                break;
             if (file == InvalidFile)
                 return QIcon::fromTheme("dialog-error");
             if (hasCycle(index))
@@ -115,7 +154,7 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
 int DependencyModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
-    return 1;
+    return 2;
 }
 
 int DependencyModel::rowCount(const QModelIndex& parent) const
@@ -197,6 +236,7 @@ QVariant DependencyModel::headerData(int section, Qt::Orientation orientation, i
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
             case 0: return tr("Library");
+            case 1: return tr("Symbols Used");
         }
     }
     return QAbstractItemModel::headerData(section, orientation, role);
