@@ -130,7 +130,7 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
             else
                 return tr("Dependency not found!");
         case UserFileRole:
-            if (parentFile == InvalidFile)
+            if (parentFile == InvalidFile || !parentIdx.isValid())
                 return QVariant::fromValue<ElfFile*>(nullptr);
             return QVariant::fromValue(m_fileSet->file(parentFile));
         case ProviderFileRole:
