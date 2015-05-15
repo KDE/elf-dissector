@@ -67,6 +67,8 @@ QByteArray Demangler::demangleFull(const char* name)
     free(fullName);
     free(memory);
 
+    if (b.isEmpty())
+        return name;
     return b;
 }
 
