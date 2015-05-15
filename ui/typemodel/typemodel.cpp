@@ -216,6 +216,8 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
                 case DW_TAG_class_type:
                 case DW_TAG_structure_type:
                     return QIcon::fromTheme("code-class");
+                case DW_TAG_subprogram:
+                    return QIcon::fromTheme("code-function");
             }
             return {};
     };
