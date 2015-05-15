@@ -150,7 +150,7 @@ int DependencyModel::columnCount(const QModelIndex& parent) const
 
 int DependencyModel::rowCount(const QModelIndex& parent) const
 {
-    if (!m_fileSet)
+    if (!m_fileSet || parent.column() > 0)
         return 0;
 
     const auto node = nodeId(parent.internalId());
