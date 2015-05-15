@@ -17,20 +17,33 @@
 
 #include "dependencyview.h"
 #include "ui_dependencyview.h"
-#include "dependencymodel/dependencymodel.h"
+#include <dependencymodel/dependencymodel.h>
+#include <dependencymodel/usedsymbolmodel.h>
+
+#include <elf/elffile.h>
 
 #include <QDebug>
+#include <QSortFilterProxyModel>
 
 DependencyView::DependencyView(QWidget* parent):
     QWidget(parent),
     ui(new Ui::DependencyView),
-    m_dependencyModel(new DependencyModel(this))
+    m_dependencyModel(new DependencyModel(this)),
+    m_symbolModel(new UsedSymbolModel(this))
 {
     ui->setupUi(this);
     ui->dependencyView->setModel(m_dependencyModel);
     ui->dependencyView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 
-    connect(ui->searchLine, &QLineEdit::textChanged, this, &DependencyView::search);
+    auto proxy = new QSortFilterProxyModel(this);
+    proxy->setSourceModel(m_symbolModel);
+    ui->symbolView->setModel(proxy);
+
+    connect(ui->dependencySearchLine, &QLineEdit::textChanged, this, &DependencyView::search);
+    connect(ui->dependencyView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &DependencyView::dependencySelected);
+    connect(ui->symbolSearchLine, &QLineEdit::textChanged, this, [proxy](const QString &text) {
+        proxy->setFilterFixedString(text);
+    });
 }
 
 DependencyView::~DependencyView() = default;
@@ -53,4 +66,15 @@ void DependencyView::search(const QString& text)
     const auto index = result.first();
     ui->dependencyView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
     ui->dependencyView->scrollTo(index);
+}
+
+void DependencyView::dependencySelected(const QItemSelection& selection)
+{
+    if (selection.isEmpty())
+        return;
+    const auto idx = selection.first().topLeft();
+
+    auto user = idx.data(DependencyModel::UserFileRole).value<ElfFile*>();
+    auto provider = idx.data(DependencyModel::ProviderFileRole).value<ElfFile*>();
+    m_symbolModel->setFiles(user, provider);
 }

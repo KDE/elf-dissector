@@ -11,6 +11,7 @@ set(libelfdissectorui_srcs
     elfmodel/sectionproxymodel.cpp
 
     dependencymodel/dependencymodel.cpp
+    dependencymodel/usedsymbolmodel.cpp
 
     typemodel/typemodel.cpp
 

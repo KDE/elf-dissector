@@ -33,6 +33,11 @@ public:
     explicit DependencyModel(QObject* parent = 0);
     ~DependencyModel();
 
+    enum Role {
+        UserFileRole = Qt::UserRole + 1,
+        ProviderFileRole
+    };
+
     void setFileSet(ElfFileSet *fileSet);
 
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const final;

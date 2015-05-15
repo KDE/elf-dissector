@@ -93,14 +93,12 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
         return {};
 
     const auto file = fileIndex(index.internalId());
+    const auto parentIdx = parent(index);
+    const auto parentFile = fileIndex(parentIdx.internalId());
 
-    // TODO show number of symbols used for parent/child pair in second column
     switch (role) {
         case Qt::DisplayRole:
         {
-            const auto parentIdx = parent(index);
-            const auto parentFile = fileIndex(parentIdx.internalId());
-
             if (index.column() == 0) {
                 if (file != InvalidFile)
                     return m_fileSet->file(file)->displayName();
@@ -131,6 +129,14 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
                 return m_fileSet->file(file)->fileName();
             else
                 return tr("Dependency not found!");
+        case UserFileRole:
+            if (parentFile == InvalidFile)
+                return QVariant::fromValue<ElfFile*>(nullptr);
+            return QVariant::fromValue(m_fileSet->file(parentFile));
+        case ProviderFileRole:
+            if (file == InvalidFile)
+                return QVariant::fromValue<ElfFile*>(nullptr);
+            return QVariant::fromValue(m_fileSet->file(file));
     }
 
     return {};

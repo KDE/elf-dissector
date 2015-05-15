@@ -15,40 +15,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DEPENDENCYVIEW_H
-#define DEPENDENCYVIEW_H
+#ifndef USEDSYMBOLMODEL_H
+#define USEDSYMBOLMODEL_H
 
-#include <QWidget>
+#include <QAbstractListModel>
+#include <QVector>
 
-#include <memory>
+class ElfFile;
+class ElfSymbolTableEntry;
 
-namespace Ui {
-class DependencyView;
-}
-
-class ElfFileSet;
-class DependencyModel;
-class UsedSymbolModel;
-
-class QItemSelection;
-
-class DependencyView : public QWidget
+class UsedSymbolModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit DependencyView(QWidget* parent = 0);
-    ~DependencyView();
+    explicit UsedSymbolModel(QObject* parent = 0);
+    ~UsedSymbolModel();
 
-    void setFileSet(ElfFileSet *fileSet);
+    void setFiles(ElfFile *user, ElfFile *provider);
 
-private slots:
-    void search(const QString &text);
-    void dependencySelected(const QItemSelection &selection);
+    QVariant data(const QModelIndex& index, int role) const override;
+    int rowCount(const QModelIndex& parent) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 private:
-    std::unique_ptr<Ui::DependencyView> ui;
-    DependencyModel *m_dependencyModel;
-    UsedSymbolModel *m_symbolModel;
+    QVector<ElfSymbolTableEntry*> m_entries;
 };
 
-#endif // DEPENDENCYVIEW_H
+#endif // USEDSYMBOLMODEL_H
