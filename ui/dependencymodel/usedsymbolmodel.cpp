@@ -22,6 +22,8 @@
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfhashsection.h>
 
+#include <demangle/demangler.h>
+
 #include <cassert>
 
 UsedSymbolModel::UsedSymbolModel(QObject* parent): QAbstractListModel(parent)
@@ -65,7 +67,7 @@ QVariant UsedSymbolModel::data(const QModelIndex& index, int role) const
 
     switch (role) {
         case Qt::DisplayRole:
-            return m_entries.at(index.row())->name();
+            return Demangler::demangleFull(m_entries.at(index.row())->name());
             break;
     }
 
