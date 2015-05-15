@@ -56,7 +56,7 @@ void UnusedDependenciesCheck::checkFileSet(ElfFileSet* fileSet)
             const auto depFile = fileSet->file(fileIndex.value(needed));
             const auto depHash = depFile->hash();
             int count = 0;
-            for (uint k = 0; k < userSymbolTable->header()->entryCount(); ++k) {
+            for (uint k = 0; k < userSymbolTableSize; ++k) {
                 const auto entry = userSymbolTable->entry(k);
                 if (entry->value() != 0)
                     continue;
