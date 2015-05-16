@@ -29,7 +29,6 @@ class SizeTreeMapView;
 class TreeMapWidget;
 
 class QAbstractItemModel;
-class QItemSelection;
 class QSortFilterProxyModel;
 
 class SizeTreeMapView : public QWidget

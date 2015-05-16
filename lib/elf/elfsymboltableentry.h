@@ -21,7 +21,6 @@
 #include <cstdint>
 
 class ElfSymbolTableSection;
-class QByteArray;
 
 /** Symbol table entry. */
 class ElfSymbolTableEntry
