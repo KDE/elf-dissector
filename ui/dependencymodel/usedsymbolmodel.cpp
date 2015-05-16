@@ -55,7 +55,7 @@ void UsedSymbolModel::setFiles(ElfFile* user, ElfFile* provider)
         if (userEntry->value() != 0)
             continue;
         const auto providerEntry = hashtab->lookup(userEntry->name());
-        if (providerEntry)
+        if (providerEntry && providerEntry->value() > 0)
             m_entries.push_back(providerEntry);
     }
 }
