@@ -23,6 +23,7 @@
 #include <elf/elfhashsection.h>
 
 #include <demangle/demangler.h>
+#include <checks/unuseddependenciescheck.h>
 
 #include <cassert>
 
@@ -42,22 +43,7 @@ void UsedSymbolModel::setFiles(ElfFile* user, ElfFile* provider)
     if (!user || !provider)
         return;
 
-    const auto symtab = user->symbolTable();
-    if (!symtab)
-        return;
-    const auto symtabSize = symtab->header()->entryCount();
-
-    const auto hashtab = provider->hash();
-    assert(hashtab);
-
-    for (uint i = 0; i < symtabSize; ++i) {
-        const auto userEntry = symtab->entry(i);
-        if (userEntry->value() != 0)
-            continue;
-        const auto providerEntry = hashtab->lookup(userEntry->name());
-        if (providerEntry && providerEntry->value() > 0)
-            m_entries.push_back(providerEntry);
-    }
+    m_entries = UnusedDependenciesCheck::usedSymbols(user, provider);
 }
 
 QVariant UsedSymbolModel::data(const QModelIndex& index, int role) const

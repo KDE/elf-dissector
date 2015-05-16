@@ -19,6 +19,10 @@
 #define UNUSEDDEPENDENCIESCHECK_H
 
 class ElfFileSet;
+class ElfFile;
+class ElfSymbolTableEntry;
+
+#include <QVector>
 
 class UnusedDependenciesCheck
 {
@@ -27,6 +31,11 @@ public:
     ~UnusedDependenciesCheck();
 
     void checkFileSet(ElfFileSet *fileSet);
+
+    /** Returns a list of symbols of @p providerFile used by @p userFile. */
+    static QVector<ElfSymbolTableEntry*> usedSymbols(ElfFile *userFile, ElfFile* providerFile);
+    /** Returns the amount of symbols from @p providerFile used by @p userFile. */
+    static int usedSymbolCount(ElfFile *userFile, ElfFile* providerFile);
 };
 
 #endif // UNUSEDDEPENDENCIESCHECK_H

@@ -22,6 +22,7 @@
 #include <elf/elfdynamicsection.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfhashsection.h>
+#include <checks/unuseddependenciescheck.h>
 
 #include <QDebug>
 #include <QIcon>
@@ -278,20 +279,5 @@ int DependencyModel::usedSymbolCount(int parentId, int fileId) const
     assert(parentId != fileId);
     assert(parentId >= 0);
     assert(fileId >= 0);
-
-    const auto userSymbolTable = m_fileSet->file(parentId)->symbolTable();
-    if (!userSymbolTable)
-        return 0;
-    const auto userSymbolTableSize = userSymbolTable->header()->entryCount();
-    const auto depHash = m_fileSet->file(fileId)->hash();
-    int count = 0;
-
-    for (uint i = 0; i < userSymbolTableSize; ++i) {
-        const auto entry = userSymbolTable->entry(i);
-        if (entry->value() != 0)
-            continue;
-        if (depHash->lookup(entry->name()))
-            ++count;
-    }
-    return count;
+    return UnusedDependenciesCheck::usedSymbolCount(m_fileSet->file(parentId), m_fileSet->file(fileId));
 }

@@ -26,6 +26,7 @@
 
 #include <QHash>
 
+#include <cassert>
 #include <iostream>
 
 UnusedDependenciesCheck::UnusedDependenciesCheck()
@@ -47,25 +48,57 @@ void UnusedDependenciesCheck::checkFileSet(ElfFileSet* fileSet)
     }
 
     for (int i = 0; i < fileSet->size(); ++i) {
-        const auto userSymbolTable = fileSet->file(i)->symbolTable();
-        if (!userSymbolTable)
-            continue;
-        const auto userSymbolTableSize = userSymbolTable->header()->entryCount();
-
         for (const auto &needed : fileSet->file(i)->dynamicSection()->neededLibraries()) {
             const auto depFile = fileSet->file(fileIndex.value(needed));
-            const auto depHash = depFile->hash();
-            int count = 0;
-            for (uint k = 0; k < userSymbolTableSize; ++k) {
-                const auto entry = userSymbolTable->entry(k);
-                if (entry->value() != 0)
-                    continue;
-                if (depHash->lookup(entry->name()))
-                    ++count;
-            }
-
+            const auto count = usedSymbolCount(fileSet->file(i), depFile);
             if (count == 0)
                 std::cout << qPrintable(fileSet->file(i)->displayName()) << " depends on " << needed.constData() << " without using any of its symbols" << std::endl;
         }
     }
+}
+
+QVector<ElfSymbolTableEntry*> UnusedDependenciesCheck::usedSymbols(ElfFile* userFile, ElfFile* providerFile)
+{
+    QVector<ElfSymbolTableEntry*> symbols;
+
+    const auto symtab = userFile->symbolTable();
+    if (!symtab)
+        return symbols;
+    const auto symtabSize = symtab->header()->entryCount();
+
+    const auto hashtab = providerFile->hash();
+    assert(hashtab);
+
+    for (uint i = 0; i < symtabSize; ++i) {
+        const auto userEntry = symtab->entry(i);
+        if (userEntry->value() != 0)
+            continue;
+        const auto providerEntry = hashtab->lookup(userEntry->name());
+        if (providerEntry && providerEntry->value() > 0)
+            symbols.push_back(providerEntry);
+    }
+
+    return symbols;
+}
+
+int UnusedDependenciesCheck::usedSymbolCount(ElfFile* userFile, ElfFile* providerFile)
+{
+    const auto symtab = userFile->symbolTable();
+    if (!symtab)
+        return 0;
+    const auto symtabSize = symtab->header()->entryCount();
+
+    const auto hashtab = providerFile->hash();
+    assert(hashtab);
+
+    int count = 0;
+    for (uint i = 0; i < symtabSize; ++i) {
+        const auto userEntry = symtab->entry(i);
+        if (userEntry->value() != 0)
+            continue;
+        const auto providerEntry = hashtab->lookup(userEntry->name());
+        if (providerEntry && providerEntry->value() > 0)
+            ++count;
+    }
+    return count;
 }
