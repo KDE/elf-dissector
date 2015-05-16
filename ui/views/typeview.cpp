@@ -23,6 +23,7 @@
 #include <navigator/codenavigator.h>
 
 #include <QItemSelectionModel>
+#include <QMessageBox>
 
 TypeView::TypeView(QWidget* parent):
     QWidget(parent),
@@ -59,8 +60,11 @@ void TypeView::setFileSet(ElfFileSet* fileSet)
 
 void TypeView::showEvent(QShowEvent* event)
 {
-    if (isVisible() && m_model->rowCount() == 0 && m_fileSet)
-        m_model->setFileSet(m_fileSet);
+    if (isVisible() && m_model->rowCount() == 0 && m_fileSet) {
+        const auto res = QMessageBox::question(this, tr("Compute Type Tree"), tr("Computing the type tree from DWARF data can take up to several minutes in which the application will not respond, and use up to 1.5GB of memory. Proceed anyway?"), QMessageBox::Yes, QMessageBox::Cancel);
+        if (res == QMessageBox::Yes)
+            m_model->setFileSet(m_fileSet);
+    }
     QWidget::showEvent(event);
 }
 
