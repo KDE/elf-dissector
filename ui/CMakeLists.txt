@@ -39,3 +39,5 @@ target_link_libraries(libelfdissectorui Qt5::Widgets libelfdissector)
 add_executable(elf-dissector main.cpp)
 target_link_libraries(elf-dissector libelfdissectorui)
 install(TARGETS elf-dissector ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+install(FILES elf-dissector.desktop DESTINATION share/applications)

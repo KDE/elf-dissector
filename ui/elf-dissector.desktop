@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ELF Dissector
+Comment=Tool for analyzing ELF binary files.
+GenericName=ELF binary inspector
+Exec=elf-dissector
+Icon=document-edit-decrypt-verify
+Type=Application
+Categories=Development;
+X-KDE-StartupNotify=true
