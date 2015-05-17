@@ -21,6 +21,7 @@
 #include <dependencymodel/usedsymbolmodel.h>
 
 #include <elf/elffile.h>
+#include <elf/elffileset.h>
 #include <optimizers/dependencysorter.h>
 
 #include <QDebug>
@@ -48,9 +49,19 @@ DependencyView::DependencyView(QWidget* parent):
 
     addAction(ui->actionOptimizeDependencyOrder);
     connect(ui->actionOptimizeDependencyOrder, &QAction::triggered, this, [this]() {
-        if (m_dependencyModel->fileSet()) {
+        const auto selection = ui->dependencyView->selectionModel()->selectedRows();
+        if (selection.isEmpty())
+            return;
+        const auto idx = selection.first();
+        const auto f = idx.data(DependencyModel::ProviderFileRole).value<ElfFile*>();
+        if (f) {
+            qDebug() << f->fileName();
+            ElfFileSet set;
+            set.addFile(f->fileName());
             DependencySorter sorter;
-            sorter.sortDtNeeded(m_dependencyModel->fileSet());
+            sorter.sortDtNeeded(&set);
+
+            // TODO reload file set!
         }
     });
 }
