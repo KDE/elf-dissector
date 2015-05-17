@@ -60,7 +60,7 @@ public:
     uint64_t size() const;
 
     /** Returns a pointer to the raw ELF data. */
-    const unsigned char* rawData() const;
+    unsigned char* rawData() const;
 
     /** ELF class type (32/64 bit). */
     int type() const;

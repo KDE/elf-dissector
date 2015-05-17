@@ -42,7 +42,7 @@ uint64_t ElfSection::size() const
     return m_sectionHeader->size();
 }
 
-const unsigned char* ElfSection::rawData() const
+unsigned char* ElfSection::rawData() const
 {
     return m_file->rawData() + m_sectionHeader->sectionOffset();
 }

@@ -45,7 +45,7 @@ public:
     /** Size of the section. */
     uint64_t size() const;
     /** Access to the raw data of the section. */
-    const unsigned char* rawData() const;
+    unsigned char* rawData() const;
 
     /** The file this section belongs to. */
     ElfFile* file() const;

@@ -85,7 +85,7 @@ static int callback_load_section(void *obj, Dwarf_Half index, Dwarf_Small **retu
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
     const auto sectionHeader = d->elfFile->sectionHeaders().at(index);
-    *returnData = const_cast<Dwarf_Small*>(d->elfFile->rawData() + sectionHeader->sectionOffset());
+    *returnData = d->elfFile->rawData() + sectionHeader->sectionOffset();
     *error = DW_DLV_OK;
     return DW_DLV_OK;
 }

@@ -71,7 +71,7 @@ uint64_t ElfFile::size() const
     return m_file.size();
 }
 
-const unsigned char* ElfFile::rawData() const
+unsigned char* ElfFile::rawData() const
 {
     return m_data;
 }
