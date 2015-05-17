@@ -39,9 +39,15 @@ class ElfFile
 public:
     explicit ElfFile(const QString &fileName);
     ElfFile(const ElfFile &other) = delete;
+    /** Closes the file. */
     ~ElfFile();
 
     ElfFile& operator=(const ElfFile &other) = delete;
+
+    /** Open the file and parse its content. Must be called before the file can be used. */
+    bool open(QIODevice::OpenMode openMode);
+    void close();
+
 
     /** Returns @c true if the file could be loaded and is parsed correctly. */
     bool isValid() const;
@@ -91,8 +97,6 @@ public:
     DwarfInfo* dwarfInfo() const;
 
 private:
-    void open(const QString& fileName);
-    void close();
     void parse();
     void parseHeader();
     void parseSections();

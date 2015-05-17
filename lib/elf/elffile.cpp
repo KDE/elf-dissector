@@ -41,7 +41,7 @@ struct ElfFileException {};
 
 ElfFile::ElfFile(const QString& fileName) : m_data(nullptr)
 {
-    open(fileName);
+    m_file.setFileName(fileName);
 }
 
 ElfFile::~ElfFile()
@@ -109,25 +109,27 @@ QVector<ElfSectionHeader*> ElfFile::sectionHeaders() const
     return m_sectionHeaders;
 }
 
-void ElfFile::open(const QString &fileName)
+bool ElfFile::open(QIODevice::OpenMode openMode)
 {
-    m_file.setFileName(fileName);
-    if (!m_file.open(QFile::ReadOnly)) {
-        qCritical() << m_file.errorString() << fileName;
-        return;
+    if (!m_file.open(openMode)) {
+        qCritical() << m_file.errorString() << m_file.fileName();
+        return false;
     }
     m_data = m_file.map(0, m_file.size());
     if (!m_data) {
         close();
-        return;
+        return false;
     }
 
     try {
         parse();
     } catch (const ElfFileException&) {
-        qCritical() << fileName << "is not a valid ELF file.";
+        qCritical() << m_file.fileName() << "is not a valid ELF file.";
         close();
+        return false;
     }
+
+    return true;
 }
 
 void ElfFile::close()

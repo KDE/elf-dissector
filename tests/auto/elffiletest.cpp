@@ -38,6 +38,7 @@ private slots:
         QFETCH(QString, executable);
 
         ElfFile f(executable);
+        QVERIFY(f.open(QFile::ReadOnly));
         QCOMPARE(f.isValid(), true);
         QCOMPARE(f.byteOrder(), ELFDATA2LSB);
         QVERIFY(f.header());
@@ -64,6 +65,7 @@ private slots:
         QFETCH(QString, executable);
 
         ElfFile f(executable);
+        QCOMPARE(f.open(QFile::ReadOnly), false);
         QCOMPARE(f.isValid(), false);
     }
 };

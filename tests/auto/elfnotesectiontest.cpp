@@ -31,6 +31,7 @@ private slots:
     void testABISection()
     {
         ElfFile f(BINDIR "single-executable");
+        QVERIFY(f.open(QFile::ReadOnly));
         QCOMPARE(f.isValid(), true);
 
         const auto index = f.indexOfSection(".note.ABI-tag");

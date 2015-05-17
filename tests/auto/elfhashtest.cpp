@@ -33,6 +33,7 @@ private slots:
     void testHashSection()
     {
         ElfFile f(BINDIR "/elf-dissector");
+        QVERIFY(f.open(QFile::ReadOnly));
         QVERIFY(f.isValid());
 
         const auto hashIndex = f.indexOfSection(SHT_HASH);
@@ -65,6 +66,7 @@ private slots:
     void testGnuHashSection()
     {
         ElfFile f(BINDIR "/elf-dissector");
+        QVERIFY(f.open(QFile::ReadOnly));
         QVERIFY(f.isValid());
 
         const auto hashIndex = f.indexOfSection(SHT_GNU_HASH);

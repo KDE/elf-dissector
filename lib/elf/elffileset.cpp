@@ -39,7 +39,7 @@ ElfFileSet::~ElfFileSet()
 void ElfFileSet::addFile(const QString& fileName)
 {
     ElfFile* f = new ElfFile(fileName);
-    if (!f->isValid()) {
+    if (!f->open(QIODevice::ReadOnly) || !f->isValid()) {
         delete f;
         return;
     }
@@ -73,7 +73,7 @@ void ElfFileSet::addFile(ElfFile* file)
             if (!QFile::exists(fullPath))
                 continue;
             ElfFile *dep = new ElfFile(fullPath);
-            if (dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
+            if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
                 addFile(dep);
                 break;
             }
