@@ -2847,8 +2847,8 @@ void TreeMapWidget::addSplitAction(QMenu* m, const QString& s, int v)
 
 void TreeMapWidget::addSplitDirectionItems(QMenu* m)
 {
-    connect(m, SIGNAL(triggered(QAction*)),
-	    this, SLOT(splitActivated(QAction*)) );
+    connect(m, &QMenu::triggered,
+        this, &TreeMapWidget::splitActivated );
 
     addSplitAction(m, tr("Recursive Bisection"), TreeMapItem::Bisection);
     addSplitAction(m, tr("Columns"), TreeMapItem::Columns);
