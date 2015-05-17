@@ -38,6 +38,7 @@ public:
         ProviderFileRole
     };
 
+    ElfFileSet* fileSet() const;
     void setFileSet(ElfFileSet *fileSet);
 
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const final;

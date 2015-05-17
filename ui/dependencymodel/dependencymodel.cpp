@@ -38,6 +38,11 @@ DependencyModel::~DependencyModel()
 {
 }
 
+ElfFileSet* DependencyModel::fileSet() const
+{
+    return m_fileSet;
+}
+
 void DependencyModel::setFileSet(ElfFileSet* fileSet)
 {
     beginResetModel();
