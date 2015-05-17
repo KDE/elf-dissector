@@ -21,6 +21,7 @@
 #include <dependencymodel/usedsymbolmodel.h>
 
 #include <elf/elffile.h>
+#include <optimizers/dependencysorter.h>
 
 #include <QDebug>
 #include <QSortFilterProxyModel>
@@ -43,6 +44,14 @@ DependencyView::DependencyView(QWidget* parent):
     connect(ui->dependencyView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &DependencyView::dependencySelected);
     connect(ui->symbolSearchLine, &QLineEdit::textChanged, this, [proxy](const QString &text) {
         proxy->setFilterFixedString(text);
+    });
+
+    addAction(ui->actionOptimizeDependencyOrder);
+    connect(ui->actionOptimizeDependencyOrder, &QAction::triggered, this, [this]() {
+        if (m_dependencyModel->fileSet()) {
+            DependencySorter sorter;
+            sorter.sortDtNeeded(m_dependencyModel->fileSet());
+        }
     });
 }
 

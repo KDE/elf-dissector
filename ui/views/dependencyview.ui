@@ -28,7 +28,7 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLineEdit" name="dependencySearchLine">
@@ -49,7 +49,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QLineEdit" name="symbolSearchLine">
@@ -76,6 +76,11 @@
     </widget>
    </item>
   </layout>
+  <action name="actionOptimizeDependencyOrder">
+   <property name="text">
+    <string>&amp;Optimize Dependency Order</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

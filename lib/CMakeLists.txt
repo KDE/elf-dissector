@@ -46,6 +46,8 @@ set(libelfdisector_srcs
     printers/notesectionprinter.cpp
     printers/relocationprinter.cpp
     printers/symbolprinter.cpp
+
+    optimizers/dependencysorter.cpp
 )
 
 add_library(libelfdissector STATIC ${libelfdisector_srcs})
