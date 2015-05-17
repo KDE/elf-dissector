@@ -22,7 +22,6 @@
 
 #include <QDebug>
 #include <QProcess>
-#include <QStringList>
 
 #include <algorithm>
 #include <iostream>

@@ -21,7 +21,6 @@
 #include "elffile.h"
 
 #include <QObject>
-#include <QStringList>
 
 /** A set of ELF files. */
 class ElfFileSet : public QObject

@@ -21,7 +21,6 @@
 #include "dwarfranges.h"
 #include "dwarftypes.h"
 
-#include <QDebug>
 #include <QFileInfo>
 #include <QString>
 

@@ -24,7 +24,6 @@
 
 #include <libdwarf/dwarf.h>
 
-#include <QDebug>
 
 #include <algorithm>
 #include <iostream>

@@ -20,7 +20,6 @@
 #include "elfstringtablesection.h"
 #include "elffile.h"
 
-#include <QByteArray>
 
 #include <elf.h>
 

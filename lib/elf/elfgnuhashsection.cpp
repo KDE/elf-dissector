@@ -19,7 +19,6 @@
 #include "elfsymboltablesection.h"
 #include "elffile.h"
 
-#include <QDebug>
 
 #include <cassert>
 
