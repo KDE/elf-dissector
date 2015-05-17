@@ -23,7 +23,8 @@
 ElfSymbolTableSection::ElfSymbolTableSection(ElfFile* file, ElfSectionHeader *shdr): ElfSection(file, shdr)
 {
     m_entries.reserve(header()->entryCount());
-    for (uint i = 0; i < header()->entryCount(); ++i)
+    const auto entryCount = header()->entryCount();
+    for (uint i = 0; i < entryCount; ++i)
         m_entries.push_back(ElfSymbolTableEntry(this, i));
 }
 
