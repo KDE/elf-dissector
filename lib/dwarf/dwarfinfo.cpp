@@ -42,7 +42,7 @@ public:
     Dwarf_Debug dbg;
 
     DwarfInfo *q;
-    DwarfAddressRanges *aranges;
+    DwarfAddressRanges *aranges = nullptr;
 };
 
 
@@ -149,8 +149,6 @@ DwarfInfo::DwarfInfo(ElfFile* elfFile) :
     if (dwarf_object_init(&d->objAccessIface, 0, 0, &d->dbg, 0) != DW_DLV_OK) {
         qDebug() << "error loading dwarf data";
     }
-
-    d->aranges = new DwarfAddressRanges(this);
 }
 
 DwarfInfo::~DwarfInfo()
@@ -166,6 +164,8 @@ ElfFile* DwarfInfo::elfFile() const
 
 DwarfAddressRanges* DwarfInfo::addressRanges() const
 {
+    if (!d->aranges)
+        d->aranges = new DwarfAddressRanges(const_cast<DwarfInfo*>(this));
     return d->aranges;
 }
 
