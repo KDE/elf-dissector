@@ -19,7 +19,7 @@
 #define ELFSYMBOLTABLESECTION_IMPL_H
 
 #include "elfsymboltablesection.h"
-#include "elfsymboltableentry_impl.h"
+#include "elfsymboltableentry.h"
 
 template <typename T>
 class ElfSymbolTableSectionImpl : public ElfSymbolTableSection
@@ -32,7 +32,7 @@ public:
 
     inline ElfSymbolTableEntry* createEntry(uint32_t index) const override
     {
-        return new ElfSymbolTableEntryImpl<T>(this, index);
+        return new ElfSymbolTableEntry(this, index);
     }
 };
 

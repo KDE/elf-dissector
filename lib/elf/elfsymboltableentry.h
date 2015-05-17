@@ -18,7 +18,10 @@
 #ifndef ELFSYMBOLTABLEENTRY_H
 #define ELFSYMBOLTABLEENTRY_H
 
+#include <qglobal.h>
+
 #include <cstdint>
+#include <elf.h>
 
 class ElfSymbolTableSection;
 
@@ -26,16 +29,14 @@ class ElfSymbolTableSection;
 class ElfSymbolTableEntry
 {
 public:
-    ElfSymbolTableEntry(const ElfSymbolTableEntry &other) = delete;
-    virtual ~ElfSymbolTableEntry();
-    ElfSymbolTableEntry& operator=(const ElfSymbolTableEntry &other) = delete;
+    explicit ElfSymbolTableEntry(const ElfSymbolTableSection* section, uint32_t index);
 
     const ElfSymbolTableSection* symbolTable() const;
 
-    virtual uint32_t nameIndex() const = 0;
-    virtual uint16_t sectionIndex() const = 0;
-    virtual uint64_t value() const = 0;
-    virtual uint64_t size() const = 0;
+    uint32_t nameIndex() const;
+    uint16_t sectionIndex() const;
+    uint64_t value() const;
+    uint64_t size() const;
 
     /** Bind type. */
     uint8_t bindType() const;
@@ -51,14 +52,19 @@ public:
     const char* name() const;
 
     /** Index in the symbol table. */
-    virtual uint32_t index() const = 0;
+    uint32_t index() const;
 
-protected:
-    explicit ElfSymbolTableEntry(const ElfSymbolTableSection *section);
-    virtual uint8_t info() const = 0;
-    virtual uint8_t other() const = 0;
+private:
+    uint8_t info() const;
+    uint8_t other() const;
+
     const ElfSymbolTableSection *m_section;
-
+    union {
+        Elf32_Sym* sym32;
+        Elf64_Sym* sym64;
+    } m_symbol;
 };
+
+Q_DECLARE_TYPEINFO(ElfSymbolTableEntry, Q_MOVABLE_TYPE);
 
 #endif // ELFSYMBOLTABLEENTRY_H

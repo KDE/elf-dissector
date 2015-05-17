@@ -23,12 +23,58 @@
 
 #include <elf.h>
 
-ElfSymbolTableEntry::ElfSymbolTableEntry(const ElfSymbolTableSection* section) :  m_section(section)
+ElfSymbolTableEntry::ElfSymbolTableEntry(const ElfSymbolTableSection* section, uint32_t index) :
+    m_section(section)
 {
+    // sym64 will contain the right pointer as well
+    m_symbol.sym32 = reinterpret_cast<Elf32_Sym*>(section->rawData() + index * section->header()->entrySize());
 }
 
-ElfSymbolTableEntry::~ElfSymbolTableEntry()
+uint32_t ElfSymbolTableEntry::nameIndex() const
 {
+    if (m_section->file()->type() == ELFCLASS64)
+        return m_symbol.sym64->st_name;
+    return m_symbol.sym32->st_name;
+}
+
+uint8_t ElfSymbolTableEntry::info() const
+{
+    if (m_section->file()->type() == ELFCLASS64)
+        return m_symbol.sym64->st_info;
+    return m_symbol.sym32->st_info;
+}
+
+uint8_t ElfSymbolTableEntry::other() const
+{
+    if (m_section->file()->type() == ELFCLASS64)
+        return m_symbol.sym64->st_other;
+    return m_symbol.sym32->st_other;
+}
+
+uint16_t ElfSymbolTableEntry::sectionIndex() const
+{
+    if (m_section->file()->type() == ELFCLASS64)
+        return m_symbol.sym64->st_shndx;
+    return m_symbol.sym32->st_shndx;
+}
+
+uint64_t ElfSymbolTableEntry::value() const
+{
+    if (m_section->file()->type() == ELFCLASS64)
+        return m_symbol.sym64->st_value;
+    return m_symbol.sym32->st_value;
+}
+
+uint64_t ElfSymbolTableEntry::size() const
+{
+    if (m_section->file()->type() == ELFCLASS64)
+        return m_symbol.sym64->st_size;
+    return m_symbol.sym32->st_size;
+}
+
+uint32_t ElfSymbolTableEntry::index() const
+{
+    return (reinterpret_cast<const unsigned char*>(m_symbol.sym32) - symbolTable()->rawData()) / symbolTable()->header()->entrySize();
 }
 
 const ElfSymbolTableSection* ElfSymbolTableEntry::symbolTable() const
