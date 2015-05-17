@@ -26,7 +26,7 @@ class ElfDynamicEntryImpl : public ElfDynamicEntry
 public:
     explicit inline ElfDynamicEntryImpl(const ElfDynamicSection *section, uint32_t index) :
         ElfDynamicEntry(section),
-        m_entry(reinterpret_cast<const T*>(section->rawData() + index * section->header()->entrySize()))
+        m_entry(reinterpret_cast<T*>(section->rawData() + index * section->header()->entrySize()))
     {
     }
 
@@ -40,13 +40,18 @@ public:
         return m_entry->d_un.d_val;
     }
 
+    void setValue(uint64_t value) override
+    {
+        m_entry->d_un.d_val = value;
+    }
+
     uint64_t pointer() const override
     {
         return m_entry->d_un.d_ptr;
     }
 
 private:
-    const T* m_entry = 0;
+    T* m_entry = 0;
 
 };
 

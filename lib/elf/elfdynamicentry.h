@@ -48,6 +48,10 @@ public:
 
     virtual int64_t tag() const = 0;
     virtual uint64_t value() const = 0;
+    /** Changes the value for this entry. Note that this actually writes to the file, assuming
+     *  it's written in write mode.
+     */
+    virtual void setValue(uint64_t value) = 0;
     virtual uint64_t pointer() const = 0;
 
 protected:
