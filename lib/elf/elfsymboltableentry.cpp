@@ -23,6 +23,11 @@
 
 #include <elf.h>
 
+ElfSymbolTableEntry::ElfSymbolTableEntry(): m_section(nullptr)
+{
+    m_symbol.sym32 = nullptr;
+}
+
 ElfSymbolTableEntry::ElfSymbolTableEntry(const ElfSymbolTableSection* section, uint32_t index) :
     m_section(section)
 {

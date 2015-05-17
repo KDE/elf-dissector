@@ -21,17 +21,23 @@
 #include "elfarraysection.h"
 #include "elfsymboltableentry.h"
 
-/** Size-independent adaptor for symbol table sections. */
-class ElfSymbolTableSection : public ElfArraySection<ElfSymbolTableEntry>
+#include <QVector>
+
+/** Represents a symbol table sections (.symtab or .dynsym). */
+class ElfSymbolTableSection : public ElfSection
 {
 public:
     explicit ElfSymbolTableSection(ElfFile* file, ElfSectionHeader *shdr);
+    ~ElfSymbolTableSection();
 
     /** Number of exported entries. */
     int exportCount() const;
 
     /** Number of undefined symbols, ie. symbols needed to be provided from other libraries. */
     int importCount() const;
+
+    /** Returns the symbol table at @p index. */
+    ElfSymbolTableEntry* entry(uint32_t index) const;
 
     /** Finds the first symbol table entry with the given value.
      *  @note: This does exhaustive search, and thus is expected to be slow.
@@ -41,6 +47,9 @@ public:
 
     /** Similar as the above, but looks for entries containing @p value rather than matching it exactly .*/
     ElfSymbolTableEntry* entryContainingValue(uint64_t value) const;
+
+private:
+    QVector<ElfSymbolTableEntry> m_entries;
 };
 
 #endif // ELFSYMBOLTABLESECTION_H

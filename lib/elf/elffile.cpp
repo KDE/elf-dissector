@@ -19,7 +19,7 @@
 #include "elfheader.h"
 #include "elfsectionheader_impl.h"
 #include "elfstringtablesection.h"
-#include "elfsymboltablesection_impl.h"
+#include "elfsymboltablesection.h"
 #include "elfdynamicsection_impl.h"
 #include "elfgnuhashsection.h"
 #include "elfgnusymbolversiontable.h"
@@ -197,10 +197,7 @@ void ElfFile::parseSections()
                 break;
             case SHT_SYMTAB:
             case SHT_DYNSYM:
-                if (type() == ELFCLASS32)
-                    section = new ElfSymbolTableSectionImpl<Elf32_Sym>(this, shdr);
-                else if (type() == ELFCLASS64)
-                    section = new ElfSymbolTableSectionImpl<Elf64_Sym>(this, shdr);
+                section = new ElfSymbolTableSection(this, shdr);
                 break;
             case SHT_DYNAMIC:
                 if (type() == ELFCLASS32)

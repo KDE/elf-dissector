@@ -20,15 +20,25 @@
 
 #include <elf.h>
 
-ElfSymbolTableSection::ElfSymbolTableSection(ElfFile* file, ElfSectionHeader *shdr): ElfArraySection(file, shdr)
+ElfSymbolTableSection::ElfSymbolTableSection(ElfFile* file, ElfSectionHeader *shdr): ElfSection(file, shdr)
 {
+    m_entries.reserve(header()->entryCount());
+    for (uint i = 0; i < header()->entryCount(); ++i)
+        m_entries.push_back(ElfSymbolTableEntry(this, i));
+}
+
+ElfSymbolTableSection::~ElfSymbolTableSection() = default;
+
+ElfSymbolTableEntry* ElfSymbolTableSection::entry(uint32_t index) const
+{
+    return const_cast<ElfSymbolTableEntry*>(m_entries.data() + index);
 }
 
 int ElfSymbolTableSection::exportCount() const
 {
     int count = 0;
-    for (const auto entry : m_entries) {
-        if (entry->bindType() == STB_GLOBAL && entry->size() > 0)
+    for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
+        if (it->bindType() == STB_GLOBAL && it->size() > 0)
             ++count;
     }
     return count;
@@ -37,8 +47,8 @@ int ElfSymbolTableSection::exportCount() const
 int ElfSymbolTableSection::importCount() const
 {
     int count = 0;
-    for (const auto entry : m_entries) {
-        if (entry->bindType() == STB_GLOBAL && entry->size() == 0)
+    for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
+        if (it->bindType() == STB_GLOBAL && it->size() == 0)
             ++count;
     }
     return count;
@@ -49,9 +59,9 @@ ElfSymbolTableEntry* ElfSymbolTableSection::entryWithValue(uint64_t value) const
     if (value == 0)
         return nullptr;
 
-    for (const auto entry : m_entries) {
-        if (entry->value() == value)
-            return entry;
+    for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
+        if (it->value() == value)
+            return const_cast<ElfSymbolTableEntry*>(it);
     }
     return nullptr;
 }
@@ -61,11 +71,11 @@ ElfSymbolTableEntry* ElfSymbolTableSection::entryContainingValue(uint64_t value)
     if (value == 0)
         return nullptr;
 
-    for (const auto entry : m_entries) {
-        if (entry->value() == 0 || entry->size() == 0)
+    for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
+        if (it->value() == 0 || it->size() == 0)
             continue;
-        if (entry->value() <= value && value < entry->value() + entry->size())
-            return entry;
+        if (it->value() <= value && value < it->value() + it->size())
+            return const_cast<ElfSymbolTableEntry*>(it);
     }
     return nullptr;
 }

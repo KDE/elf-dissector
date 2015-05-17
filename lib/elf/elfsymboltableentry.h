@@ -29,6 +29,7 @@ class ElfSymbolTableSection;
 class ElfSymbolTableEntry
 {
 public:
+    ElfSymbolTableEntry();
     explicit ElfSymbolTableEntry(const ElfSymbolTableSection* section, uint32_t index);
 
     const ElfSymbolTableSection* symbolTable() const;
