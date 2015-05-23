@@ -275,6 +275,16 @@ int ElfFile::indexOfSection(const char* name) const
     return -1;
 }
 
+int ElfFile::indexOfSectionWidthVirtualAddress(uint64_t virtAddr) const
+{
+    for (int i = 0; i < m_sectionHeaders.size(); ++i) {
+        const auto hdr = m_sectionHeaders.at(i);
+        if (hdr->virtualAddress() <= virtAddr && virtAddr < hdr->virtualAddress() + hdr->size())
+            return i;
+    }
+    return -1;
+}
+
 ElfDynamicSection* ElfFile::dynamicSection() const
 {
     return m_dynamicSection;

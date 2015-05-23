@@ -57,6 +57,14 @@ static void print_address(bfd_vma addr, struct disassemble_info *info)
     const auto target = entry->symbolTable()->file()->symbolTable()->entryWithValue(targetAddr);
     if (target) {
         (*info->fprintf_func) (info->stream, " (%s)", target->name());
+        return;
+    }
+
+    const auto secIdx = entry->symbolTable()->file()->indexOfSectionWidthVirtualAddress(targetAddr);
+    if (secIdx >= 0) {
+        const auto section = entry->symbolTable()->file()->section<ElfSection>(secIdx);
+        assert(section);
+        (*info->fprintf_func) (info->stream, " (%s + 0x%lx)", section->header()->name(), targetAddr - section->header()->virtualAddress());
     }
 }
 
