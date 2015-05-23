@@ -62,7 +62,7 @@ ElfSymbolTableEntry* ElfSymbolTableSection::entryWithValue(uint64_t value) const
 
     for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
         if (it->value() == value)
-            return const_cast<ElfSymbolTableEntry*>(it);
+            return const_cast<ElfSymbolTableEntry*>(static_cast<const ElfSymbolTableEntry*>(it));
     }
     return nullptr;
 }
@@ -76,7 +76,7 @@ ElfSymbolTableEntry* ElfSymbolTableSection::entryContainingValue(uint64_t value)
         if (it->value() == 0 || it->size() == 0)
             continue;
         if (it->value() <= value && value < it->value() + it->size())
-            return const_cast<ElfSymbolTableEntry*>(it);
+            return const_cast<ElfSymbolTableEntry*>(static_cast<const ElfSymbolTableEntry*>(it));
     }
     return nullptr;
 }
