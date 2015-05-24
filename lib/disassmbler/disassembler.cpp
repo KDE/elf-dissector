@@ -46,39 +46,56 @@ static int qstring_printf(void *data, const char *format, ...)
 
 static void print_address(bfd_vma addr, struct disassemble_info *info)
 {
-    const auto entry = static_cast<ElfSymbolTableEntry*>(info->application_data);
-    assert(entry);
+    const auto disasm = static_cast<Disassembler*>(info->application_data);
+    assert(disasm);
 
     // TODO handle relocations/PLT/etc
 
     (*info->fprintf_func) (info->stream, "0x%lx", addr);
 
-    const uint64_t targetAddr = entry->value() + addr;
-    const auto target = entry->symbolTable()->file()->symbolTable()->entryWithValue(targetAddr);
+    const uint64_t targetAddr = disasm->baseAddress() + addr;
+    const auto target = disasm->file()->symbolTable()->entryWithValue(targetAddr);
     if (target) {
         (*info->fprintf_func) (info->stream, " (%s)", target->name());
         return;
     }
 
-    const auto secIdx = entry->symbolTable()->file()->indexOfSectionWidthVirtualAddress(targetAddr);
+    const auto secIdx = disasm->file()->indexOfSectionWidthVirtualAddress(targetAddr);
     if (secIdx >= 0) {
-        const auto section = entry->symbolTable()->file()->section<ElfSection>(secIdx);
+        const auto section = disasm->file()->section<ElfSection>(secIdx);
         assert(section);
         (*info->fprintf_func) (info->stream, " (%s + 0x%lx)", section->header()->name(), targetAddr - section->header()->virtualAddress());
     }
 }
 
-QString Disassembler::disassemble(ElfSymbolTableEntry* entry) const
+Disassembler::~Disassembler() = default;
+
+QString Disassembler::disassemble(ElfSection* section)
+{
+    m_file = section->file();
+    m_baseAddress = section->header()->virtualAddress();
+    return disassemble(section->rawData(), section->size());
+}
+
+QString Disassembler::disassemble(ElfSymbolTableEntry* entry)
+{
+    m_file = entry->symbolTable()->file();
+    m_baseAddress = entry->value();
+    return disassemble(entry->data(), entry->size());
+
+}
+
+QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
 {
     QString result;
     disassembler_ftype disassemble_fn;
     disassemble_info info;
     INIT_DISASSEMBLE_INFO(info, &result, qstring_printf);
 
-    info.application_data = entry;
+    info.application_data = this;
     info.flavour = bfd_target_elf_flavour;
-    info.endian = entry->symbolTable()->file()->byteOrder() == ELFDATA2LSB ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
-    switch (entry->symbolTable()->file()->header()->machine()) {
+    info.endian = m_file->byteOrder() == ELFDATA2LSB ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
+    switch (m_file->header()->machine()) {
         case EM_386:
             info.arch = bfd_arch_i386;
             info.mach = bfd_mach_i386_i386;
@@ -104,17 +121,27 @@ QString Disassembler::disassemble(ElfSymbolTableEntry* entry) const
             return {};
     }
 
-    info.buffer = const_cast<bfd_byte*>(entry->data());
-    info.buffer_length = entry->size();
+    info.buffer = const_cast<bfd_byte*>(data);
+    info.buffer_length = size;
     info.buffer_vma = 0;
     info.print_address_func = print_address;
 
     uint32_t bytes = 0;
-    while (bytes < entry->size()) {
+    while (bytes < size) {
         result += QString::fromLatin1("%1: ").arg(bytes, 8, 10);
         bytes += (*disassemble_fn)(bytes, &info);
         result += "<br/>";
     }
 
     return result;
+}
+
+ElfFile* Disassembler::file() const
+{
+    return m_file;
+}
+
+uint64_t Disassembler::baseAddress() const
+{
+    return m_baseAddress;
 }

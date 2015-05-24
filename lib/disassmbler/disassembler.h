@@ -18,14 +18,31 @@
 #ifndef DISASSEMBLER_H
 #define DISASSEMBLER_H
 
+#include <cstdint>
+
 class QString;
 
+class ElfFile;
+class ElfSection;
 class ElfSymbolTableEntry;
 
 class Disassembler
 {
 public:
-    QString disassemble(ElfSymbolTableEntry *entry) const;
+    ~Disassembler();
+
+    QString disassemble(ElfSymbolTableEntry *entry);
+    QString disassemble(ElfSection *section);
+
+    // internal
+    ElfFile* file() const;
+    uint64_t baseAddress() const;
+
+private:
+    QString disassemble(const unsigned char* data, uint64_t size);
+
+    ElfFile *m_file = nullptr;
+    uint64_t m_baseAddress = 0;
 };
 
 #endif // DISASSEMBLER_H
