@@ -121,6 +121,10 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                     ++index;
                 } while (index < section->size());
             }
+            if (strcmp(section->header()->name(), ".init") == 0 || strcmp(section->header()->name(), ".fini") == 0) {
+                Disassembler da;
+                s += "Code:<br/><tt>" + da.disassemble(section) + "</tt>";
+            }
             return s;
         }
         case ElfModel::SectionRole:
