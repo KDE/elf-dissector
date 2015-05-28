@@ -23,7 +23,7 @@
 #include <elf/elfhashsection.h>
 
 #include <demangle/demangler.h>
-#include <checks/unuseddependenciescheck.h>
+#include <checks/dependenciescheck.h>
 
 #include <cassert>
 
@@ -43,7 +43,7 @@ void UsedSymbolModel::setFiles(ElfFile* user, ElfFile* provider)
     if (!user || !provider)
         return;
 
-    m_entries = UnusedDependenciesCheck::usedSymbols(user, provider);
+    m_entries = DependenciesCheck::usedSymbols(user, provider);
 }
 
 QVariant UsedSymbolModel::data(const QModelIndex& index, int role) const

@@ -22,7 +22,7 @@
 #include <elf/elfdynamicsection.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfhashsection.h>
-#include <checks/unuseddependenciescheck.h>
+#include <checks/dependenciescheck.h>
 
 #include <QDebug>
 #include <QIcon>
@@ -284,5 +284,5 @@ int DependencyModel::usedSymbolCount(int parentId, int fileId) const
     assert(parentId != fileId);
     assert(parentId >= 0);
     assert(fileId >= 0);
-    return UnusedDependenciesCheck::usedSymbolCount(m_fileSet->file(parentId), m_fileSet->file(fileId));
+    return DependenciesCheck::usedSymbolCount(m_fileSet->file(parentId), m_fileSet->file(fileId));
 }

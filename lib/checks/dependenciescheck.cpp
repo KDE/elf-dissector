@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "unuseddependenciescheck.h"
+#include "dependenciescheck.h"
 
 #include <elf/elffileset.h>
 #include <elf/elffile.h>
@@ -29,13 +29,13 @@
 #include <cassert>
 #include <iostream>
 
-UnusedDependenciesCheck::UnusedDependenciesCheck()
+DependenciesCheck::DependenciesCheck()
 {
 }
 
-UnusedDependenciesCheck::~UnusedDependenciesCheck() = default;
+DependenciesCheck::~DependenciesCheck() = default;
 
-void UnusedDependenciesCheck::checkFileSet(ElfFileSet* fileSet)
+void DependenciesCheck::checkFileSet(ElfFileSet* fileSet)
 {
     QHash<QByteArray, int> fileIndex;
     for (int i = 0; i < fileSet->size(); ++i) {
@@ -57,7 +57,7 @@ void UnusedDependenciesCheck::checkFileSet(ElfFileSet* fileSet)
     }
 }
 
-QVector<ElfSymbolTableEntry*> UnusedDependenciesCheck::usedSymbols(ElfFile* userFile, ElfFile* providerFile)
+QVector<ElfSymbolTableEntry*> DependenciesCheck::usedSymbols(ElfFile* userFile, ElfFile* providerFile)
 {
     QVector<ElfSymbolTableEntry*> symbols;
 
@@ -81,7 +81,7 @@ QVector<ElfSymbolTableEntry*> UnusedDependenciesCheck::usedSymbols(ElfFile* user
     return symbols;
 }
 
-int UnusedDependenciesCheck::usedSymbolCount(ElfFile* userFile, ElfFile* providerFile)
+int DependenciesCheck::usedSymbolCount(ElfFile* userFile, ElfFile* providerFile)
 {
     const auto symtab = userFile->symbolTable();
     if (!symtab)

@@ -37,7 +37,7 @@ set(libelfdisector_srcs
 
     checks/ldbenchmark.cpp
     checks/structurepackingcheck.cpp
-    checks/unuseddependenciescheck.cpp
+    checks/dependenciescheck.cpp
     checks/virtualdtorcheck.cpp
 
     printers/dwarfprinter.cpp

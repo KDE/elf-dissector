@@ -16,7 +16,7 @@
 */
 
 #include "dependencysorter.h"
-#include <checks/unuseddependenciescheck.h>
+#include <checks/dependenciescheck.h>
 #include <elf/elffileset.h>
 
 #include <QDebug>
@@ -58,7 +58,7 @@ void DependencySorter::sortDtNeeded(ElfFileSet* fileSet)
         assert(depFile);
         assert(file != depFile);
 
-        usageCounts[i] = UnusedDependenciesCheck::usedSymbolCount(file, depFile);
+        usageCounts[i] = DependenciesCheck::usedSymbolCount(file, depFile);
     }
     qDebug() << usageCounts;
 

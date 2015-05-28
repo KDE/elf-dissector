@@ -17,7 +17,7 @@
 
 #include <config-elf-dissector-version.h>
 
-#include <checks/unuseddependenciescheck.h>
+#include <checks/dependenciescheck.h>
 
 #include <elf/elffileset.h>
 
@@ -44,7 +44,7 @@ int main(int argc, char** argv)
         set.addFile(fileName);
         if (set.size() == 0)
             continue;
-        UnusedDependenciesCheck checker;
+        DependenciesCheck checker;
         checker.checkFileSet(&set);
     }
 

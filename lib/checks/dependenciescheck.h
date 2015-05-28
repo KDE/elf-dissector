@@ -15,8 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef UNUSEDDEPENDENCIESCHECK_H
-#define UNUSEDDEPENDENCIESCHECK_H
+#ifndef DEPENDENCIESCHECK_H
+#define DEPENDENCIESCHECK_H
 
 class ElfFileSet;
 class ElfFile;
@@ -24,11 +24,11 @@ class ElfSymbolTableEntry;
 
 #include <QVector>
 
-class UnusedDependenciesCheck
+class DependenciesCheck
 {
 public:
-    UnusedDependenciesCheck();
-    ~UnusedDependenciesCheck();
+    DependenciesCheck();
+    ~DependenciesCheck();
 
     void checkFileSet(ElfFileSet *fileSet);
 
@@ -38,4 +38,4 @@ public:
     static int usedSymbolCount(ElfFile *userFile, ElfFile* providerFile);
 };
 
-#endif // UNUSEDDEPENDENCIESCHECK_H
+#endif // DEPENDENCIESCHECK_H
