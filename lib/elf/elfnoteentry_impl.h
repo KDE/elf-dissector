@@ -37,7 +37,8 @@ public:
 
     uint64_t size() const final
     {
-        return alignTo(nameSize(), sizeof(T::n_namesz)) + alignTo(descriptionSize(), sizeof(T::n_namesz)) + sizeof(T);
+        const uint64_t nameszSize = sizeof(((T*)0)->n_namesz);
+        return alignTo(nameSize(), nameszSize) + alignTo(descriptionSize(), nameszSize) + sizeof(T);
     }
 
     const char* name() const final
@@ -52,7 +53,7 @@ public:
 
     const char* descriptionData() const final
     {
-        return reinterpret_cast<const char*>(m_note) + sizeof(T) + alignTo(nameSize(), sizeof(T::n_namesz));
+        return reinterpret_cast<const char*>(m_note) + sizeof(T) + alignTo(nameSize(), sizeof(((T*)0)->n_namesz));
     }
 
 protected:
