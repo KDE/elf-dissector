@@ -24,7 +24,7 @@
 #include <printers/dwarfprinter.h>
 #include <checks/structurepackingcheck.h>
 
-#include <libdwarf/dwarf.h>
+#include <dwarf.h>
 
 #include <QIcon>
 #include <QTime>

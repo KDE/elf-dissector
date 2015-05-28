@@ -18,7 +18,7 @@
 #ifndef DWARFADDRESSRANGES_H
 #define DWARFADDRESSRANGES_H
 
-#include <libdwarf/libdwarf.h>
+#include <libdwarf.h>
 
 #include <cstdint>
 

@@ -22,7 +22,7 @@
 #include <QString>
 #include <QtEndian>
 
-#include <libdwarf/dwarf.h>
+#include <dwarf.h>
 
 #include <cassert>
 

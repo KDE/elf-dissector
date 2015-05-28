@@ -20,7 +20,7 @@
 
 #include <QMetaType>
 
-#include <libdwarf/libdwarf.h>
+#include <libdwarf.h>
 
 #include <memory>
 

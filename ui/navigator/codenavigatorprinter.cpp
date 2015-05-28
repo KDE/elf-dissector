@@ -19,7 +19,7 @@
 #include "codenavigator.h"
 
 #include <dwarf/dwarfdie.h>
-#include <libdwarf/dwarf.h>
+#include <dwarf.h>
 
 #include <QFileInfo>
 #include <QUrl>

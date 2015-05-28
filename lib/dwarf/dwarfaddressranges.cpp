@@ -19,7 +19,7 @@
 #include "dwarfinfo.h"
 #include "dwarfdie.h"
 
-#include <libdwarf/dwarf.h>
+#include <dwarf.h>
 
 #include <cassert>
 

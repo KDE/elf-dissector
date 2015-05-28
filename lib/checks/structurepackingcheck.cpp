@@ -27,7 +27,7 @@
 #include <QString>
 #include <QTextStream>
 
-#include <libdwarf/dwarf.h>
+#include <dwarf.h>
 
 #include <cassert>
 #include <iostream>

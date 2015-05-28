@@ -20,7 +20,7 @@
 
 #include <elf/elffile.h>
 
-#include <libdwarf/libdwarf.h>
+#include <libdwarf.h>
 
 #include <memory>
 

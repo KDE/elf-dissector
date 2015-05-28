@@ -24,7 +24,7 @@
 #include <QtTest/qtest.h>
 #include <QObject>
 
-#include <libdwarf/dwarf.h>
+#include <dwarf.h>
 
 class DwarfDieTest : public QObject
 {

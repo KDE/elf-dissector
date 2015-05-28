@@ -21,7 +21,7 @@
 #include <QVariant>
 #include <QVector>
 
-#include <libdwarf/libdwarf.h>
+#include <libdwarf.h>
 
 class DwarfInfo;
 class QString;

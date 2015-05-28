@@ -46,6 +46,9 @@ find_package(Qt5 COMPONENTS Widgets Test NO_MODULE REQUIRED)
 
 find_package(Iberty REQUIRED)
 find_package(Dwarf REQUIRED)
+if (NOT OPCODES_FOUND)
+    message(FATAL_ERROR "Binutils::Opcodes library not found")
+endif()
 
 # Installation settings
 set(BIN_INSTALL_DIR "bin")

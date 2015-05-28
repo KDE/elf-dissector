@@ -22,7 +22,7 @@
 #include <dwarf/dwarfdie.h>
 #include <dwarf/dwarftypes.h>
 
-#include <libdwarf/dwarf.h>
+#include <dwarf.h>
 
 
 #include <algorithm>

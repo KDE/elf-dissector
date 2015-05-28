@@ -24,8 +24,8 @@
 #include <QFileInfo>
 #include <QString>
 
-#include <libdwarf/dwarf.h>
-#include <libdwarf/libdwarf.h>
+#include <dwarf.h>
+#include <libdwarf.h>
 
 #include <cassert>
 

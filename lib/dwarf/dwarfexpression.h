@@ -22,7 +22,7 @@
 #include <QMetaType>
 #include <QStack>
 
-#include <libdwarf/libdwarf.h>
+#include <libdwarf.h>
 
 class QString;
 

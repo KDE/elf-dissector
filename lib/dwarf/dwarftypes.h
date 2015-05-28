@@ -20,7 +20,7 @@
 
 #include <QMetaType>
 
-#include <libdwarf/dwarf.h>
+#include <dwarf.h>
 
 enum class DwarfVirtuality : uint8_t
 {

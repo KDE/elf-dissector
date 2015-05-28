@@ -21,8 +21,8 @@
 
 #include <QDebug>
 
-#include <libdwarf/dwarf.h>
-#include <libdwarf/libdwarf.h>
+#include <dwarf.h>
+#include <libdwarf.h>
 
 #include <elf.h>
 

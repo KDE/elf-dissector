@@ -24,7 +24,7 @@
 #include <QMetaType>
 #include <QString>
 
-#include <libdwarf/libdwarf.h>
+#include <libdwarf.h>
 #include <cassert>
 
 const char* DwarfPrinter::virtuality(DwarfVirtuality v)

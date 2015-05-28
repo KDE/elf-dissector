@@ -1,7 +1,7 @@
 include(CheckCSourceCompiles)
 include(CMakePushCheckState)
 
-find_path(Dwarf_INCLUDE_DIR libdwarf/libdwarf.h)
+find_path(Dwarf_INCLUDE_DIR libdwarf.h PATH_SUFFIXES libdwarf)
 
 find_library(Dwarf_LIBRARY NAMES dwarf)
 
