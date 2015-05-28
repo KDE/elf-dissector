@@ -167,6 +167,8 @@ void ElfFileSet::parseLdConf(const QString& fileName)
 
     while (!file.atEnd()) {
         const auto line = file.readLine().trimmed();
+        if (line.isEmpty())
+            continue;
         if (line.startsWith('#'))
             continue;
         if (line.startsWith("include")) {
