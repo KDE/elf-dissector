@@ -29,13 +29,7 @@
 #include <cassert>
 #include <iostream>
 
-DependenciesCheck::DependenciesCheck()
-{
-}
-
-DependenciesCheck::~DependenciesCheck() = default;
-
-void DependenciesCheck::checkFileSet(ElfFileSet* fileSet)
+DependenciesCheck::UnusedDependencies DependenciesCheck::unusedDependencies(ElfFileSet* fileSet)
 {
     QHash<QByteArray, int> fileIndex;
     for (int i = 0; i < fileSet->size(); ++i) {
@@ -47,13 +41,26 @@ void DependenciesCheck::checkFileSet(ElfFileSet* fileSet)
             fileIndex.insert(soName, i);
     }
 
+    UnusedDependencies unusedDeps;
     for (int i = 0; i < fileSet->size(); ++i) {
         for (const auto &needed : fileSet->file(i)->dynamicSection()->neededLibraries()) {
-            const auto depFile = fileSet->file(fileIndex.value(needed));
+            const auto depIdx = fileIndex.value(needed);
+            const auto depFile = fileSet->file(depIdx);
             const auto count = usedSymbolCount(fileSet->file(i), depFile);
             if (count == 0)
-                std::cout << qPrintable(fileSet->file(i)->displayName()) << " depends on " << needed.constData() << " without using any of its symbols" << std::endl;
+                unusedDeps.push_back(qMakePair(i, depIdx));
         }
+    }
+
+    return unusedDeps;
+}
+
+void DependenciesCheck::printUnusedDependencies(ElfFileSet* fileSet, const UnusedDependencies& unusedDeps)
+{
+    for (auto unusedDep : unusedDeps) {
+        std::cout << qPrintable(fileSet->file(unusedDep.first)->displayName()) << " depends on "
+                  << qPrintable(fileSet->file(unusedDep.second)->displayName()) << " without using any of its symbols"
+                  << std::endl;
     }
 }
 

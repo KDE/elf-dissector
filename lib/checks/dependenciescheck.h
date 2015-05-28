@@ -22,20 +22,22 @@ class ElfFileSet;
 class ElfFile;
 class ElfSymbolTableEntry;
 
+#include <QPair>
 #include <QVector>
 
-class DependenciesCheck
+namespace DependenciesCheck
 {
-public:
-    DependenciesCheck();
-    ~DependenciesCheck();
+    using UnusedDependencies = QVector<QPair<int, int>>;
+    /** Find all unused DT_NEEDED entries in the entire file set. */
+    UnusedDependencies unusedDependencies(ElfFileSet *fileSet);
 
-    void checkFileSet(ElfFileSet *fileSet);
+    /** Dump unused dependencies to stdout, for use in CLI tools. */
+    void printUnusedDependencies(ElfFileSet *fileSet, const UnusedDependencies &unusedDeps);
 
     /** Returns a list of symbols of @p providerFile used by @p userFile. */
-    static QVector<ElfSymbolTableEntry*> usedSymbols(ElfFile *userFile, ElfFile* providerFile);
+    QVector<ElfSymbolTableEntry*> usedSymbols(ElfFile *userFile, ElfFile* providerFile);
     /** Returns the amount of symbols from @p providerFile used by @p userFile. */
-    static int usedSymbolCount(ElfFile *userFile, ElfFile* providerFile);
-};
+    int usedSymbolCount(ElfFile *userFile, ElfFile* providerFile);
+}
 
 #endif // DEPENDENCIESCHECK_H

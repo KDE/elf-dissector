@@ -44,8 +44,8 @@ int main(int argc, char** argv)
         set.addFile(fileName);
         if (set.size() == 0)
             continue;
-        DependenciesCheck checker;
-        checker.checkFileSet(&set);
+        const auto unusedDeps = DependenciesCheck::unusedDependencies(&set);
+        DependenciesCheck::printUnusedDependencies(&set, unusedDeps);
     }
 
     return 0;

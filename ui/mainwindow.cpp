@@ -62,8 +62,8 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
         checker.findImplicitVirtualDtors(m_fileSet.get());
     });
     connect(ui->actionUnusedDependencies, &QAction::triggered, this, [this]() {
-        DependenciesCheck checker;
-        checker.checkFileSet(m_fileSet.get());
+        auto unusedDeps = DependenciesCheck::unusedDependencies(m_fileSet.get());
+        DependenciesCheck::printUnusedDependencies(m_fileSet.get(), unusedDeps);
     });
 
     restoreSettings();
