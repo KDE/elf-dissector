@@ -1,8 +1,4 @@
-set(elfpackcheck_srcs
-    main.cpp
-)
-
-add_executable(elf-packcheck ${elfpackcheck_srcs})
+add_executable(elf-packcheck packcheck.cpp)
 target_link_libraries(elf-packcheck libelfdissector)
 install(TARGETS elf-packcheck ${INSTALL_TARGETS_DEFAULT_ARGS})
 
