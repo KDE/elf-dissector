@@ -34,7 +34,7 @@ set(libelfdissectorui_srcs
 )
 
 add_library(libelfdissectorui STATIC ${libelfdissectorui_srcs})
-target_link_libraries(libelfdissectorui Qt5::Widgets libelfdissector)
+target_link_libraries(libelfdissectorui Qt5::Widgets Dwarf::Dwarf libelfdissector)
 
 add_executable(elf-dissector main.cpp)
 target_link_libraries(elf-dissector libelfdissectorui)

@@ -24,7 +24,7 @@ target_link_libraries(elfhashtest Qt5::Test libelfdissector)
 add_test(NAME elfhashtest COMMAND elfhashtest)
 
 add_executable(dwarfexpressiontest dwarfexpressiontest.cpp)
-target_link_libraries(dwarfexpressiontest Qt5::Test libelfdissector)
+target_link_libraries(dwarfexpressiontest Qt5::Test Dwarf::Dwarf libelfdissector)
 add_test(NAME dwarfexpressiontest COMMAND dwarfexpressiontest)
 
 add_executable(dwarfleb128test dwarfleb128test.cpp)
@@ -32,7 +32,7 @@ target_link_libraries(dwarfleb128test Qt5::Test libelfdissector)
 add_test(NAME dwarfleb128test COMMAND dwarfleb128test)
 
 add_executable(dwarfdietest dwarfdietest.cpp)
-target_link_libraries(dwarfdietest Qt5::Test libelfdissector)
+target_link_libraries(dwarfdietest Qt5::Test Dwarf::Dwarf libelfdissector)
 add_test(NAME dwarfdietest COMMAND dwarfdietest)
 
 add_executable(elfmodeltest elfmodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
