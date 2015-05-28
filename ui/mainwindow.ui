@@ -97,7 +97,6 @@
     </property>
     <addaction name="actionCheckStructurePacking"/>
     <addaction name="actionVirtualDestructors"/>
-    <addaction name="actionUnusedDependencies"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuView"/>
@@ -152,11 +151,6 @@
   <action name="actionVirtualDestructors">
    <property name="text">
     <string>&amp;Implicit Virtual Destructors</string>
-   </property>
-  </action>
-  <action name="actionUnusedDependencies">
-   <property name="text">
-    <string>Find &amp;Unused Dependencies</string>
    </property>
   </action>
  </widget>
