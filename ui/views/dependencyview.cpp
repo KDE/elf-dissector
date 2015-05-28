@@ -19,6 +19,7 @@
 #include "ui_dependencyview.h"
 #include <dependencymodel/dependencymodel.h>
 #include <dependencymodel/usedsymbolmodel.h>
+#include <dependencymodel/unuseddependenciesmodel.h>
 
 #include <elf/elffile.h>
 #include <elf/elffileset.h>
@@ -31,20 +32,35 @@ DependencyView::DependencyView(QWidget* parent):
     QWidget(parent),
     ui(new Ui::DependencyView),
     m_dependencyModel(new DependencyModel(this)),
-    m_symbolModel(new UsedSymbolModel(this))
+    m_symbolModel(new UsedSymbolModel(this)),
+    m_unusedDependenciesModel(new UnusedDependenciesModel(this))
 {
     ui->setupUi(this);
     ui->dependencyView->setModel(m_dependencyModel);
     ui->dependencyView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-
-    auto proxy = new QSortFilterProxyModel(this);
-    proxy->setSourceModel(m_symbolModel);
-    ui->symbolView->setModel(proxy);
-
     connect(ui->dependencySearchLine, &QLineEdit::textChanged, this, &DependencyView::search);
     connect(ui->dependencyView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &DependencyView::dependencySelected);
+
+    auto proxy = new QSortFilterProxyModel(this);
+    proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxy->setSourceModel(m_symbolModel);
+    ui->symbolView->setModel(proxy);
     connect(ui->symbolSearchLine, &QLineEdit::textChanged, this, [proxy](const QString &text) {
         proxy->setFilterFixedString(text);
+    });
+
+    proxy = new QSortFilterProxyModel(this);
+    proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxy->setFilterKeyColumn(-1);
+    proxy->setSourceModel(m_unusedDependenciesModel);
+    ui->unusedDependencyView->setModel(proxy);
+    ui->unusedDependencyView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    connect(ui->unusedSearchLine, &QLineEdit::textChanged, this, [proxy](const QString &text) {
+        proxy->setFilterFixedString(text);
+    });
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this]{
+        if (ui->tabWidget->currentWidget() == ui->unusedDependenciesTab)
+            m_unusedDependenciesModel->findUnusedDependencies();
     });
 
     addAction(ui->actionOptimizeDependencyOrder);
@@ -73,6 +89,9 @@ void DependencyView::setFileSet(ElfFileSet* fileSet)
     m_dependencyModel->setFileSet(fileSet);
     if (m_dependencyModel->rowCount() > 0)
         ui->dependencyView->expand(m_dependencyModel->index(0, 0));
+    m_unusedDependenciesModel->setFileSet(fileSet);
+    if (ui->tabWidget->currentWidget() == ui->unusedDependenciesTab)
+        m_unusedDependenciesModel->findUnusedDependencies();
 }
 
 void DependencyView::search(const QString& text)

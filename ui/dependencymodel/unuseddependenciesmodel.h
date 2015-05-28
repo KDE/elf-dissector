@@ -15,42 +15,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DEPENDENCYVIEW_H
-#define DEPENDENCYVIEW_H
+#ifndef UNUSEDDEPENDENCIESMODEL_H
+#define UNUSEDDEPENDENCIESMODEL_H
 
-#include <QWidget>
+#include <checks/dependenciescheck.h>
 
-#include <memory>
+#include <QAbstractTableModel>
 
-namespace Ui {
-class DependencyView;
-}
-
-class ElfFileSet;
-class DependencyModel;
-class UsedSymbolModel;
-class UnusedDependenciesModel;
-
-class QItemSelection;
-
-class DependencyView : public QWidget
+class UnusedDependenciesModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit DependencyView(QWidget* parent = 0);
-    ~DependencyView();
+    explicit UnusedDependenciesModel(QObject* parent = 0);
+    ~UnusedDependenciesModel();
 
     void setFileSet(ElfFileSet *fileSet);
+    void findUnusedDependencies();
 
-private slots:
-    void search(const QString &text);
-    void dependencySelected(const QItemSelection &selection);
+    QVariant data(const QModelIndex& index, int role) const override;
+    int columnCount(const QModelIndex& parent) const override;
+    int rowCount(const QModelIndex& parent) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 private:
-    std::unique_ptr<Ui::DependencyView> ui;
-    DependencyModel *m_dependencyModel;
-    UsedSymbolModel *m_symbolModel;
-    UnusedDependenciesModel *m_unusedDependenciesModel;
+    ElfFileSet *m_fileSet = nullptr;
+    DependenciesCheck::UnusedDependencies m_unusedDeps;
 };
 
-#endif // DEPENDENCYVIEW_H
+#endif // UNUSEDDEPENDENCIESMODEL_H

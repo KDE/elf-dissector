@@ -12,6 +12,7 @@ set(libelfdissectorui_srcs
 
     dependencymodel/dependencymodel.cpp
     dependencymodel/usedsymbolmodel.cpp
+    dependencymodel/unuseddependenciesmodel.cpp
 
     typemodel/typemodel.cpp
 
