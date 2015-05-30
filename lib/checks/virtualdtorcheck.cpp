@@ -46,8 +46,6 @@ void VirtualDtorCheck::findImplicitVirtualDtors(ElfFileSet* fileSet)
                 || res.sourceFilePath.endsWith(QLatin1String(".cxx"));
         }), m_results.end()
     );
-
-    printResults();
 }
 
 void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
@@ -93,4 +91,14 @@ void VirtualDtorCheck::printResults() const
             std::cout << ':' << res.lineNumber;
         std::cout << std::endl;
     }
+}
+
+void VirtualDtorCheck::clear()
+{
+    m_results.clear();
+}
+
+const QVector< VirtualDtorCheck::Result >& VirtualDtorCheck::results() const
+{
+    return m_results;
 }

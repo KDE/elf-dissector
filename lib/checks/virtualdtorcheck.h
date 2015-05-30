@@ -30,9 +30,6 @@ class VirtualDtorCheck
 {
 public:
     void findImplicitVirtualDtors(ElfFileSet* fileSet);
-
-private:
-    void findImplicitVirtualDtors(DwarfDie* die);
     void printResults() const;
 
     struct Result {
@@ -40,6 +37,11 @@ private:
         QString sourceFilePath;
         int lineNumber;
     };
+    const QVector<Result>& results() const;
+    void clear();
+
+private:
+    void findImplicitVirtualDtors(DwarfDie* die);
 
     QVector<Result> m_results;
 };

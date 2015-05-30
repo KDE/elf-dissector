@@ -46,6 +46,7 @@ int main(int argc, char** argv)
             continue;
         VirtualDtorCheck checker;
         checker.findImplicitVirtualDtors(&set);
+        checker.printResults();
     }
 
     return 0;
