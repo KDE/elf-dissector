@@ -36,6 +36,7 @@ public:
 
     DwarfInfo* dwarfInfo() const;
     DwarfDie* parentDie() const;
+    bool isCompilationUnit() const;
 
     /** Content of the name attribute. */
     QByteArray name() const;
@@ -90,8 +91,10 @@ private:
     Dwarf_Debug dwarfHandle() const;
 
     Dwarf_Die m_die = nullptr;
-    DwarfDie *m_parent = nullptr;
-    DwarfInfo *m_info = nullptr;
+    union {
+        DwarfDie *parent = nullptr;
+        DwarfInfo *info;
+    } m_parent;
 
     mutable QVector<DwarfDie*> m_children;
     mutable char** m_srcFiles = nullptr;

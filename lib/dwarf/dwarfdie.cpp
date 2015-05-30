@@ -30,15 +30,15 @@
 #include <cassert>
 
 DwarfDie::DwarfDie(Dwarf_Die die, DwarfDie* parent) :
-    m_die(die),
-    m_parent(parent)
+    m_die(die)
 {
+    m_parent.parent = parent;
 }
 
 DwarfDie::DwarfDie(Dwarf_Die die, DwarfInfo* info) :
-    m_die(die),
-    m_info(info)
+    m_die(die)
 {
+    m_parent.info = info;
 }
 
 DwarfDie::~DwarfDie()
@@ -55,15 +55,22 @@ DwarfDie::~DwarfDie()
 
 DwarfInfo* DwarfDie::dwarfInfo() const
 {
-    if (m_info)
-        return m_info;
-    Q_ASSERT(m_parent);
+    if (isCompilationUnit())
+        return m_parent.info;
+    Q_ASSERT(m_parent.parent);
     return parentDie()->dwarfInfo();
 }
 
 DwarfDie* DwarfDie::parentDie() const
 {
-    return m_parent;
+    if (isCompilationUnit())
+        return nullptr;
+    return m_parent.parent;
+}
+
+bool DwarfDie::isCompilationUnit() const
+{
+    return tag() == DW_TAG_compile_unit || tag() == DW_TAG_partial_unit || tag() == DW_TAG_type_unit;
 }
 
 QByteArray DwarfDie::name() const
