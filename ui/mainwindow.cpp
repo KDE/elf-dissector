@@ -21,7 +21,6 @@
 #include <elf/elffileset.h>
 
 #include <checks/structurepackingcheck.h>
-#include <checks/virtualdtorcheck.h>
 
 #include <elfmodel/elfmodel.h>
 #include <navigator/codenavigator.h>
@@ -55,10 +54,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
         StructurePackingCheck checker;
         checker.setElfFileSet(m_fileSet.get());
         checker.checkAll(m_fileSet->file(0)->dwarfInfo());
-    });
-    connect(ui->actionVirtualDestructors, &QAction::triggered, this, [this]() {
-        VirtualDtorCheck checker;
-        checker.findImplicitVirtualDtors(m_fileSet.get());
     });
 
     restoreSettings();
