@@ -78,7 +78,8 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
     }
 
     // TODO can we abort traversal earlier?
-    for (const auto child : die->children()) {
+    const auto children = die->children();
+    for (const auto child : children) {
         findImplicitVirtualDtors(child);
     }
 }
