@@ -43,7 +43,10 @@ ElfGNUSymbolVersionDefinition::ElfGNUSymbolVersionDefinition(ElfGNUSymbolVersion
     assert(auxiliarySize() == m_auxEntries.size());
 }
 
-ElfGNUSymbolVersionDefinition::~ElfGNUSymbolVersionDefinition() = default;
+ElfGNUSymbolVersionDefinition::~ElfGNUSymbolVersionDefinition()
+{
+    qDeleteAll(m_auxEntries);
+}
 
 ElfGNUSymbolVersionDefinitionsSection* ElfGNUSymbolVersionDefinition::section() const
 {

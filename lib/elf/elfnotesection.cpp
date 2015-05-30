@@ -39,6 +39,11 @@ ElfNoteSection::ElfNoteSection(ElfFile* file, ElfSectionHeader* shdr):
     } while(offset < size() && entry->size() > 0);
 }
 
+ElfNoteSection::~ElfNoteSection()
+{
+    qDeleteAll(m_entries);
+}
+
 int ElfNoteSection::entryCount() const
 {
     return m_entries.size();

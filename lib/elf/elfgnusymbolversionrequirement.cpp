@@ -43,7 +43,10 @@ ElfGNUSymbolVersionRequirement::ElfGNUSymbolVersionRequirement(ElfGNUSymbolVersi
     assert(auxiliarySize() == m_auxEntries.size());
 }
 
-ElfGNUSymbolVersionRequirement::~ElfGNUSymbolVersionRequirement() = default;
+ElfGNUSymbolVersionRequirement::~ElfGNUSymbolVersionRequirement()
+{
+    qDeleteAll(m_auxEntries);
+}
 
 ElfGNUSymbolVersionRequirementsSection* ElfGNUSymbolVersionRequirement::section() const
 {

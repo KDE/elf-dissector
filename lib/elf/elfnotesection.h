@@ -28,6 +28,7 @@ class ElfNoteSection : public ElfSection
 {
 public:
     explicit ElfNoteSection(ElfFile *file, ElfSectionHeader *shdr);
+    ~ElfNoteSection();
 
     /** Number of note entries in this section. */
     int entryCount() const;
