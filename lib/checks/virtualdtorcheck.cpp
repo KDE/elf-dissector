@@ -77,9 +77,13 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
         }
     }
 
-    // TODO can we abort traversal earlier?
     const auto children = die->children();
     for (const auto child : children) {
+        if (child->tag() != DW_TAG_subprogram &&
+            child->tag() != DW_TAG_class_type &&
+            child->tag() != DW_TAG_structure_type &&
+            child->tag() != DW_TAG_namespace)
+            continue;
         findImplicitVirtualDtors(child);
     }
 }
