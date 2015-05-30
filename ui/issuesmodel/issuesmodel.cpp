@@ -33,6 +33,17 @@ void IssuesModel::setFileSet(ElfFileSet* fileSet)
 
     m_fileSet = fileSet;
     m_checker.clear();
+}
+
+void IssuesModel::runChecks()
+{
+    if (!m_checker.results().isEmpty())
+        return;
+
+    beginResetModel();
+    const auto l = [](decltype(this) m) { m->endResetModel(); };
+    const auto endReset = std::unique_ptr<IssuesModel, decltype(l)>(this, l);
+
     if (m_fileSet)
         m_checker.findImplicitVirtualDtors(m_fileSet);
 }

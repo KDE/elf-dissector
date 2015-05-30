@@ -31,6 +31,7 @@ public:
     ~IssuesModel();
 
     void setFileSet(ElfFileSet *fileSet);
+    void runChecks();
 
     QVariant data(const QModelIndex& index, int role) const override;
     int columnCount(const QModelIndex& parent) const override;

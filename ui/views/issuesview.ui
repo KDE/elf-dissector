@@ -40,6 +40,13 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QPushButton" name="checkButton">
+     <property name="text">
+      <string>&amp;Check for issues (expensive!)</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

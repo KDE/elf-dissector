@@ -39,6 +39,8 @@ IssuesView::IssuesView(QWidget* parent):
     connect(ui->searchLine, &QLineEdit::textChanged, this, [proxy](const QString &text) {
         proxy->setFilterFixedString(text);
     });
+
+    connect(ui->checkButton, &QPushButton::clicked, m_issuesModel, &IssuesModel::runChecks);
 }
 
 IssuesView::~IssuesView() = default;
