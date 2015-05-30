@@ -52,7 +52,7 @@ DwarfInfo* DwarfDie::dwarfInfo() const
     if (isCompilationUnit())
         return m_parent.info;
     Q_ASSERT(m_parent.parent);
-    return parentDie()->dwarfInfo();
+    return m_parent.parent->dwarfInfo();
 }
 
 DwarfDie* DwarfDie::parentDie() const
@@ -635,5 +635,5 @@ const DwarfCuDie* DwarfDie::compilationUnit() const
     if (isCompilationUnit())
         return static_cast<const DwarfCuDie*>(this);
     assert(m_parent.parent);
-    return parentDie()->compilationUnit();
+    return m_parent.parent->compilationUnit();
 }
