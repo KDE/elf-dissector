@@ -78,6 +78,7 @@ public:
 private:
     friend class DwarfInfoPrivate;
     DwarfDie(Dwarf_Die die, DwarfDie* parent);
+    friend class DwarfCuDie;
     DwarfDie(Dwarf_Die die, DwarfInfo* info);
 
     QVariant attributeLocal(Dwarf_Half attributeType) const;

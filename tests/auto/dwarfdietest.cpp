@@ -16,6 +16,7 @@
 */
 
 #include <dwarf/dwarfdie.h>
+#include <dwarf/dwarfcudie.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfranges.h>
 #include <dwarf/dwarfaddressranges.h>
@@ -84,7 +85,9 @@ private slots:
         QVERIFY(f.dwarfInfo());
         QVERIFY(f.dwarfInfo()->addressRanges()->isValid());
 
-        auto dieQueue = f.dwarfInfo()->compilationUnits();
+        QVector<DwarfDie*> dieQueue;
+        dieQueue.resize(f.dwarfInfo()->compilationUnits().size());
+        std::copy(f.dwarfInfo()->compilationUnits().constBegin(), f.dwarfInfo()->compilationUnits().constEnd(), dieQueue.begin());
         while (!dieQueue.isEmpty()) {
             const auto die = dieQueue.takeFirst();
             dieQueue += die->children();

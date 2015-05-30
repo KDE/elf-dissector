@@ -20,6 +20,7 @@
 #include <elf/elffileset.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
+#include <dwarf/dwarfcudie.h>
 #include <dwarf/dwarftypes.h>
 
 #include <dwarf.h>

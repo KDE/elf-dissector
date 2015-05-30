@@ -16,7 +16,7 @@
 */
 
 #include "dwarfinfo.h"
-#include "dwarfdie.h"
+#include "dwarfcudie.h"
 #include "dwarfaddressranges.h"
 
 #include <QDebug>
@@ -35,7 +35,7 @@ public:
     DwarfDie *dieForMangledSymbolRecursive(const QByteArray &symbol, DwarfDie *die) const;
 
     ElfFile *elfFile = nullptr;
-    QVector<DwarfDie*> compilationUnits;
+    QVector<DwarfCuDie*> compilationUnits;
     Dwarf_Obj_Access_Interface objAccessIface;
     Dwarf_Obj_Access_Methods objAccessMethods;
 
@@ -124,7 +124,7 @@ void DwarfInfoPrivate::scanCompilationUnits()
         if(res != DW_DLV_OK)
             return;
 
-        compilationUnits.push_back(new DwarfDie(cuDie, q));
+        compilationUnits.push_back(new DwarfCuDie(cuDie, q));
     }
 }
 
@@ -174,7 +174,7 @@ Dwarf_Debug DwarfInfo::dwarfHandle() const
     return d->dbg;
 }
 
-QVector< DwarfDie* > DwarfInfo::compilationUnits() const
+QVector< DwarfCuDie* > DwarfInfo::compilationUnits() const
 {
     if (d->compilationUnits.isEmpty())
         d->scanCompilationUnits();

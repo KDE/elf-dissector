@@ -20,6 +20,7 @@
 #include <elf/elffileset.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
+#include <dwarf/dwarfcudie.h>
 #include <dwarf/dwarfexpression.h>
 
 #include <QBitArray>
@@ -47,7 +48,7 @@ void StructurePackingCheck::checkAll(DwarfInfo* info)
     if (!info)
         return;
 
-    for (DwarfDie* die : info->compilationUnits())
+    for (auto die : info->compilationUnits())
         checkDie(die);
 }
 

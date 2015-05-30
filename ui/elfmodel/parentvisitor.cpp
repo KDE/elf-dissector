@@ -19,6 +19,7 @@
 #include <elf/elffileset.h>
 #include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
 #include <elf/elfgnusymbolversionrequirement.h>
+#include <dwarf/dwarfcudie.h>
 
 #include <QDebug>
 
@@ -81,5 +82,5 @@ QPair< void*, int > ParentVisitor::doVisit(DwarfDie* die, int) const
     if (die->parentDie()) {
         return qMakePair<void*, int>(die->parentDie(), die->parentDie()->children().indexOf(die));
     }
-    return qMakePair<void*, int>(die->dwarfInfo(), die->dwarfInfo()->compilationUnits().indexOf(die));
+    return qMakePair<void*, int>(die->dwarfInfo(), die->dwarfInfo()->compilationUnits().indexOf(static_cast<DwarfCuDie*>(die)));
 }

@@ -21,6 +21,7 @@
 #include <elf/elffileset.h>
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
+#include <dwarf/dwarfcudie.h>
 #include <printers/dwarfprinter.h>
 #include <checks/structurepackingcheck.h>
 

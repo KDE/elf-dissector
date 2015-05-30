@@ -24,6 +24,7 @@
 
 #include <memory>
 
+class DwarfCuDie;
 class DwarfDie;
 class DwarfInfoPrivate;
 class DwarfAddressRanges;
@@ -48,7 +49,7 @@ public:
 
     Dwarf_Debug dwarfHandle() const; // TODO this shouldn't be public API
 
-    QVector<DwarfDie*> compilationUnits() const;
+    QVector<DwarfCuDie*> compilationUnits() const;
 
     DwarfDie* dieAtOffset(Dwarf_Off offset) const;
 

@@ -20,6 +20,7 @@
 #include <elf/elffile.h>
 #include <elf/elffileset.h>
 #include <elf/elfgnusymbolversionrequirement.h>
+#include <dwarf/dwarfcudie.h>
 
 #include <elf.h>
 
@@ -119,7 +120,7 @@ IndexVisitor::type IndexVisitor::doVisit(ElfRelocationSection* section, int row)
 
 IndexVisitor::type IndexVisitor::doVisit(DwarfInfo* info, int row) const
 {
-    DwarfDie *cuDie = info->compilationUnits().at(row);
+    auto cuDie = info->compilationUnits().at(row);
     return qMakePair<void*, ElfNodeVariant::Type>(cuDie, ElfNodeVariant::DwarfDie);
 }
 
