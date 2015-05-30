@@ -59,6 +59,11 @@
         <string>&amp;Load Time</string>
        </attribute>
       </widget>
+      <widget class="IssuesView" name="issuesView">
+       <attribute name="title">
+        <string>&amp;Issues</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -177,6 +182,12 @@
    <class>TypeView</class>
    <extends>QWidget</extends>
    <header>views/typeview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IssuesView</class>
+   <extends>QWidget</extends>
+   <header>views/issuesview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

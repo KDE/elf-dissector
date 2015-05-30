@@ -14,6 +14,8 @@ set(libelfdissectorui_srcs
     dependencymodel/usedsymbolmodel.cpp
     dependencymodel/unuseddependenciesmodel.cpp
 
+    issuesmodel/issuesmodel.cpp
+
     typemodel/typemodel.cpp
 
     navigator/codenavigator.cpp
@@ -26,6 +28,7 @@ set(libelfdissectorui_srcs
 
     views/dependencyview.cpp
     views/elfstructureview.cpp
+    views/issuesview.cpp
     views/loadbenchmarkview.cpp
     views/sizetreemapview.cpp
     views/typeview.cpp
