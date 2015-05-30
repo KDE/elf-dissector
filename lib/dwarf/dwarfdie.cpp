@@ -70,7 +70,8 @@ DwarfDie* DwarfDie::parentDie() const
 
 bool DwarfDie::isCompilationUnit() const
 {
-    return tag() == DW_TAG_compile_unit || tag() == DW_TAG_partial_unit || tag() == DW_TAG_type_unit;
+    const auto tagType = tag();
+    return tagType == DW_TAG_compile_unit || tagType == DW_TAG_partial_unit || tagType == DW_TAG_type_unit;
 }
 
 QByteArray DwarfDie::name() const
@@ -632,8 +633,7 @@ Dwarf_Debug DwarfDie::dwarfHandle() const
 
 const char* DwarfDie::sourceFileForIndex(int sourceIndex) const
 {
-    const auto tagType = tag();
-    if (tagType != DW_TAG_compile_unit && tagType != DW_TAG_partial_unit && tagType != DW_TAG_type_unit) {
+    if (!isCompilationUnit()) {
         if (parentDie())
             return parentDie()->sourceFileForIndex(sourceIndex);
         return nullptr;
