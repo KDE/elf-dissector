@@ -17,6 +17,8 @@
 
 #include "dwarfcudie.h"
 
+#include <libdwarf.h>
+
 DwarfCuDie::DwarfCuDie(Dwarf_Die die, DwarfInfo* info) : DwarfDie(die, info)
 {
 
@@ -24,4 +26,23 @@ DwarfCuDie::DwarfCuDie(Dwarf_Die die, DwarfInfo* info) : DwarfDie(die, info)
 
 DwarfCuDie::~DwarfCuDie()
 {
+    for (int i = 0; i < m_srcFileCount; ++i) {
+        dwarf_dealloc(dwarfHandle(), m_srcFiles[i], DW_DLA_STRING);
+    }
+    dwarf_dealloc(dwarfHandle(), m_srcFiles, DW_DLA_LIST);
+
+    dwarf_dealloc(dwarfHandle(), m_die, DW_DLA_DIE);
+}
+
+const char* DwarfCuDie::sourceFileForIndex(int sourceIndex) const
+{
+    if (!m_srcFiles) {
+        auto res = dwarf_srcfiles(m_die, &m_srcFiles, &m_srcFileCount, nullptr);
+        if (res != DW_DLV_OK)
+            return nullptr;
+    }
+
+    Q_ASSERT(sourceIndex >= 0);
+    Q_ASSERT(sourceIndex < m_srcFileCount);
+    return m_srcFiles[sourceIndex];
 }

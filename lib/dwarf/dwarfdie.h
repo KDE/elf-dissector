@@ -24,6 +24,7 @@
 #include <libdwarf.h>
 
 class DwarfInfo;
+class DwarfCuDie;
 class QString;
 
 class DwarfDie
@@ -74,19 +75,17 @@ public:
     DwarfDie* inheritedFrom() const;
 
     // internal
+    const DwarfCuDie* compilationUnit() const;
     Dwarf_Die dieHandle() const;
 
-private:
+protected:
     friend class DwarfInfoPrivate;
     DwarfDie(Dwarf_Die die, DwarfDie* parent);
-    friend class DwarfCuDie;
     DwarfDie(Dwarf_Die die, DwarfInfo* info);
 
     QVariant attributeLocal(Dwarf_Half attributeType) const;
 
     void scanChildren() const;
-
-    const char* sourceFileForIndex(int i) const;
 
     Dwarf_Debug dwarfHandle() const;
 
@@ -97,9 +96,6 @@ private:
     } m_parent;
 
     mutable QVector<DwarfDie*> m_children;
-    mutable char** m_srcFiles = nullptr;
-    mutable Dwarf_Signed m_srcFileCount = 0;
-
     mutable bool m_childrenScanned = false;
 };
 

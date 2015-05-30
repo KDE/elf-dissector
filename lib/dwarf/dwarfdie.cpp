@@ -16,6 +16,7 @@
 */
 
 #include "dwarfdie.h"
+#include "dwarfcudie.h"
 #include "dwarfinfo.h"
 #include "dwarfexpression.h"
 #include "dwarfranges.h"
@@ -44,13 +45,6 @@ DwarfDie::DwarfDie(Dwarf_Die die, DwarfInfo* info) :
 DwarfDie::~DwarfDie()
 {
     qDeleteAll(m_children);
-
-    for (int i = 0; i < m_srcFileCount; ++i) {
-        dwarf_dealloc(dwarfHandle(), m_srcFiles[i], DW_DLA_STRING);
-    }
-    dwarf_dealloc(dwarfHandle(), m_srcFiles, DW_DLA_LIST);
-
-    dwarf_dealloc(dwarfHandle(), m_die, DW_DLA_DIE);
 }
 
 DwarfInfo* DwarfDie::dwarfInfo() const
@@ -532,7 +526,7 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
         {
             const auto fileIndex = value.value<Dwarf_Unsigned>();
             // index 0 means not present, TODO handle that
-            value = sourceFileForIndex(fileIndex -1);
+            value = compilationUnit()->sourceFileForIndex(fileIndex -1);
             break;
         }
         case DW_AT_ranges:
@@ -631,26 +625,15 @@ Dwarf_Debug DwarfDie::dwarfHandle() const
     return dwarfInfo()->dwarfHandle();
 }
 
-const char* DwarfDie::sourceFileForIndex(int sourceIndex) const
-{
-    if (!isCompilationUnit()) {
-        if (parentDie())
-            return parentDie()->sourceFileForIndex(sourceIndex);
-        return nullptr;
-    }
-
-    if (!m_srcFiles) {
-        auto res = dwarf_srcfiles(m_die, &m_srcFiles, &m_srcFileCount, nullptr);
-        if (res != DW_DLV_OK)
-            return nullptr;
-    }
-
-    Q_ASSERT(sourceIndex >= 0);
-    Q_ASSERT(sourceIndex < m_srcFileCount);
-    return m_srcFiles[sourceIndex];
-}
-
 Dwarf_Die DwarfDie::dieHandle() const
 {
     return m_die;
+}
+
+const DwarfCuDie* DwarfDie::compilationUnit() const
+{
+    if (isCompilationUnit())
+        return static_cast<const DwarfCuDie*>(this);
+    assert(m_parent.parent);
+    return parentDie()->compilationUnit();
 }

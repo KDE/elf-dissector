@@ -27,10 +27,15 @@ class DwarfCuDie : public DwarfDie
 public:
     ~DwarfCuDie();
 
-private:
+protected:
+    friend class DwarfDie;
     friend class DwarfInfoPrivate;
     explicit DwarfCuDie(Dwarf_Die die, DwarfInfo* info);
 
+    const char* sourceFileForIndex(int i) const;
+
+    mutable char** m_srcFiles = nullptr;
+    mutable Dwarf_Signed m_srcFileCount = 0;
 };
 
 #endif // DWARFCUDIE_H
