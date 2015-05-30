@@ -35,7 +35,7 @@ public:
     DwarfDie& operator=(const DwarfDie&) = delete;
 
     DwarfInfo* dwarfInfo() const;
-    DwarfDie* parentDIE() const;
+    DwarfDie* parentDie() const;
 
     /** Content of the name attribute. */
     QByteArray name() const;

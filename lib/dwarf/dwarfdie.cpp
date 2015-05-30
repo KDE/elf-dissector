@@ -58,10 +58,10 @@ DwarfInfo* DwarfDie::dwarfInfo() const
     if (m_info)
         return m_info;
     Q_ASSERT(m_parent);
-    return parentDIE()->dwarfInfo();
+    return parentDie()->dwarfInfo();
 }
 
-DwarfDie* DwarfDie::parentDIE() const
+DwarfDie* DwarfDie::parentDie() const
 {
     return m_parent;
 }
@@ -322,9 +322,9 @@ QString DwarfDie::displayName() const
 QByteArray DwarfDie::fullyQualifiedName() const
 {
     QByteArray baseName;
-    auto parentDie = parentDIE();
-    if (parentDie->tag() == DW_TAG_class_type || parentDie->tag() == DW_TAG_structure_type || parentDie->tag() == DW_TAG_namespace)
-        baseName = parentDie->fullyQualifiedName() + "::";
+    auto parent = parentDie();
+    if (parent->tag() == DW_TAG_class_type || parent->tag() == DW_TAG_structure_type || parent->tag() == DW_TAG_namespace)
+        baseName = parent->fullyQualifiedName() + "::";
     return baseName + typeName();
 }
 
@@ -338,7 +338,7 @@ QString DwarfDie::sourceFilePath() const
         QString cuPath;
         DwarfDie const* parentDie = this;
         while (parentDie && parentDie->tag() != DW_TAG_compile_unit)
-            parentDie = parentDie->parentDIE();
+            parentDie = parentDie->parentDie();
         if (parentDie)
             fi.setFile(parentDie->attribute(DW_AT_comp_dir).toString() + QLatin1Char('/') + filePath);
     }
@@ -627,8 +627,8 @@ const char* DwarfDie::sourceFileForIndex(int sourceIndex) const
 {
     const auto tagType = tag();
     if (tagType != DW_TAG_compile_unit && tagType != DW_TAG_partial_unit && tagType != DW_TAG_type_unit) {
-        if (parentDIE())
-            return parentDIE()->sourceFileForIndex(sourceIndex);
+        if (parentDie())
+            return parentDie()->sourceFileForIndex(sourceIndex);
         return nullptr;
     }
 

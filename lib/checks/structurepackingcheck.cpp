@@ -436,7 +436,7 @@ DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
     DwarfDie *parentDie = typeDie;
     do {
         fullId.prepend(parentDie->name());
-        parentDie = parentDie->parentDIE();
+        parentDie = parentDie->parentDie();
     } while (parentDie && parentDie->tag() != DW_TAG_compile_unit);
 
     // sequential search in all CUs for a DIE with the same full id containing the full definition

@@ -96,7 +96,7 @@ private slots:
             const auto lookupCU = f.dwarfInfo()->addressRanges()->compilationUnitForAddress(lowPC);
             auto cuDie = die;
             while (cuDie && cuDie->tag() != DW_TAG_compile_unit)
-                cuDie = cuDie->parentDIE();
+                cuDie = cuDie->parentDie();
             QCOMPARE(cuDie, lookupCU);
 
             if (die->tag() == DW_TAG_compile_unit)

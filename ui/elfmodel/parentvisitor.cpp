@@ -78,8 +78,8 @@ QPair< void*, int > ParentVisitor::doVisit(DwarfInfo* info, int) const
 
 QPair< void*, int > ParentVisitor::doVisit(DwarfDie* die, int) const
 {
-    if (die->parentDIE()) {
-        return qMakePair<void*, int>(die->parentDIE(), die->parentDIE()->children().indexOf(die));
+    if (die->parentDie()) {
+        return qMakePair<void*, int>(die->parentDie(), die->parentDie()->children().indexOf(die));
     }
     return qMakePair<void*, int>(die->dwarfInfo(), die->dwarfInfo()->compilationUnits().indexOf(die));
 }
