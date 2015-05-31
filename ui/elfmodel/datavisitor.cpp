@@ -125,6 +125,19 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                 Disassembler da;
                 s += "Code:<br/><tt>" + da.disassemble(section) + "</tt>";
             }
+            if (section->header()->type() == SHT_INIT_ARRAY || section->header()->type() == SHT_FINI_ARRAY) {
+                const auto addrSize = section->file()->addressSize();
+                s += "Content:<br/>";
+                for (uint i = 0; i < section->header()->size() / addrSize; ++i) {
+                    uint64_t value = 0;
+                    memcpy(&value, section->rawData() + i * addrSize, addrSize);
+                    s += QString::number(i) + ": 0x" + QString::number(value, 16);
+                    const auto ref = section->file()->symbolTable()->entryWithValue(value);
+                    if (ref)
+                        s += QLatin1Char(' ') + ref->name();
+                    s += "<br/>";
+                }
+            }
             return s;
         }
         case ElfModel::SectionRole:
