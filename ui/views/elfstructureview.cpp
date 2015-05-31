@@ -22,6 +22,8 @@
 #include <navigator/codenavigator.h>
 #include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
 
+#include <QDebug>
+
 ElfStructureView::ElfStructureView(QWidget* parent):
     QWidget(parent),
     ui(new Ui::ElfStructureView),
@@ -37,6 +39,26 @@ ElfStructureView::ElfStructureView(QWidget* parent):
         m_proxy->setFilterFixedString(text);
     });
     connect(ui->elfDetailView, &QTextBrowser::anchorClicked, this, &ElfStructureView::anchorClicked);
+
+    ui->actionBack->setShortcut(QKeySequence::Back);
+    ui->actionFordward->setShortcut(QKeySequence::Forward);
+
+    connect(ui->actionBack, &QAction::triggered, this, [this]() {
+        --m_historyIndex;
+        m_historyLock = true;
+        selectUrl(m_history.at(m_historyIndex));
+        m_historyLock = false;
+        updateActionState();
+    });
+    connect(ui->actionFordward, &QAction::triggered, this, [this]() {
+        ++m_historyIndex;
+        m_historyLock = true;
+        selectUrl(m_history.at(m_historyIndex));
+        m_historyLock = false;
+        updateActionState();
+    });
+    addActions({ ui->actionBack, ui->actionFordward });
+    updateActionState();
 }
 
 ElfStructureView::~ElfStructureView() = default;
@@ -54,16 +76,36 @@ void ElfStructureView::selectionChanged(const QItemSelection &selection)
 
     const QModelIndex index = selection.first().topLeft();
     ui->elfDetailView->setHtml(index.data(ElfModel::DetailRole).toString());
+
+    if (m_historyLock)
+        return;
+    const auto url = index.data(ElfModel::NodeUrl).toUrl();
+    if (url.isValid() && !url.isEmpty()) {
+        m_history.resize(m_historyIndex + 2);
+        m_history[++m_historyIndex] = url;
+        updateActionState();
+    }
 }
 
 void ElfStructureView::anchorClicked(const QUrl& url)
 {
     if (url.scheme() == QLatin1String("code"))
         CodeNavigator::goTo(url);
-    else if (url.scheme() == QLatin1String("elfmodel")) {
-        auto idx = m_elfModel->indexForUrl(url);
-        idx = m_proxy->mapFromSource(idx);
-        ui->elfStructureView->selectionModel()->select(idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-        ui->elfStructureView->scrollTo(idx);
-    }
+    else if (url.scheme() == QLatin1String("elfmodel"))
+        selectUrl(url);
+}
+
+void ElfStructureView::updateActionState()
+{
+    ui->actionBack->setEnabled(m_historyIndex > 0);
+    ui->actionFordward->setEnabled(m_historyIndex + 1 < m_history.size());
+}
+
+void ElfStructureView::selectUrl(const QUrl& url)
+{
+    auto idx = m_elfModel->indexForUrl(url);
+    idx = m_proxy->mapFromSource(idx);
+    ui->elfStructureView->selectionModel()->select(idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    ui->elfStructureView->selectionModel()->setCurrentIndex(idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    ui->elfStructureView->scrollTo(idx);
 }

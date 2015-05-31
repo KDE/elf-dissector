@@ -57,6 +57,22 @@
     </widget>
    </item>
   </layout>
+  <action name="actionBack">
+   <property name="icon">
+    <iconset theme="go-previous"/>
+   </property>
+   <property name="text">
+    <string>&amp;Back</string>
+   </property>
+  </action>
+  <action name="actionFordward">
+   <property name="icon">
+    <iconset theme="go-next"/>
+   </property>
+   <property name="text">
+    <string>&amp;Fordward</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
