@@ -134,6 +134,25 @@ QVariant ElfModel::headerData(int section, Qt::Orientation orientation, int role
     return QAbstractItemModel::headerData(section, orientation, role);
 }
 
+QModelIndex ElfModel::indexForNode(ElfSymbolTableEntry* symbol) const
+{
+    return indexForNode(symbol, ElfNodeVariant::SymbolTableEntry);
+}
+
+QModelIndex ElfModel::indexForNode(void* payload, ElfNodeVariant::Type type) const
+{
+    if (!m_fileSet || !payload)
+        return {};
+
+    ElfNodeVariant var;
+    var.payload = payload;
+    var.type = type;
+    ParentVisitor parentV(this);
+    const auto parentData = parentV.visit(&var);
+    Q_ASSERT(m_internalPointerMap.contains(parentData.first->payload));
+    return createIndex(parentData.second, 0, parentData.first);
+}
+
 ElfNodeVariant* ElfModel::variantForIndex(const QModelIndex& index) const
 {
     return static_cast<ElfNodeVariant*>(index.internalPointer());

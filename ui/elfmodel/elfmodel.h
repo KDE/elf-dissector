@@ -23,6 +23,7 @@
 #include <QAbstractItemModel>
 
 class ElfFileSet;
+class ElfSymbolTableEntry;
 
 /** Model for the ELF structure.
  *
@@ -52,8 +53,11 @@ public:
     QModelIndex index(int row, int column, const QModelIndex& parent) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
+    QModelIndex indexForNode(ElfSymbolTableEntry* symbol) const;
 private:
     friend class ParentVisitor;
+
+    QModelIndex indexForNode(void* payload, ElfNodeVariant::Type type) const;
 
     void clearInternalPointerMap();
     ElfNodeVariant* variantForIndex(const QModelIndex &index) const;

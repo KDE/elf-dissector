@@ -16,6 +16,7 @@
 */
 
 #include <elf/elffileset.h>
+#include <elf/elfsymboltablesection.h>
 #include <ui/elfmodel/elfmodel.h>
 
 #include <3rdparty/qt/modeltest.h>
@@ -41,6 +42,25 @@ private slots:
         model.setFileSet(&s);
 
         QCOMPARE(model.rowCount(), s.size());
+    }
+
+    void navigationTest()
+    {
+        ElfFileSet s;
+        s.addFile(BINDIR "elf-dissector");
+        QVERIFY(s.size() > 1);
+
+        ElfModel model;
+        model.setFileSet(&s);
+
+        auto file = s.file(0);
+        auto symTab = file->symbolTable();
+        for (uint i = 0; i < symTab->header()->entryCount(); ++i) {
+            auto idx = model.indexForNode(symTab->entry(i));
+            QVERIFY(idx.isValid());
+            if (strcmp(symTab->entry(i)->name(), "") != 0)
+                QCOMPARE(idx.data(Qt::DisplayRole).toString(), QString(symTab->entry(i)->name()));
+        }
     }
 };
 
