@@ -25,6 +25,7 @@ set(libelfdissectorui_srcs
     plotter/plotter.qrc
 
     widgets/gnuplotwidget.cpp
+    widgets/sidepane.cpp
 
     views/dependencyview.cpp
     views/elfstructureview.cpp

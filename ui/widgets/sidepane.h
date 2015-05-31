@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2013-2014 Volker Krause <vkrause@kde.org>
+    Copyright (C) 2015 Volker Krause <vkrause@kde.org>
 
     This program is free software; you can redistribute it and/or modify it
     under the terms of the GNU Library General Public License as published by
@@ -15,46 +15,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SIDEPANE_H
+#define SIDEPANE_H
 
-#include <QMainWindow>
+#include <QListView>
 
-#include <memory>
-
-class ElfFileSet;
-class ElfModel;
-
-namespace Ui
-{
-class MainWindow;
-}
-
-class MainWindow : public QMainWindow
+class SidePane : public QListView
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget* parent = 0);
-    ~MainWindow();
+    explicit SidePane(QWidget* parent = 0);
+    ~SidePane();
 
-    void loadFile(const QString &fileName);
+    QSize sizeHint() const override;
+    void setModel(QAbstractItemModel* model) override;
 
-protected:
-    void closeEvent(QCloseEvent *event) override;
+signals:
+    void currentIndexChanged(int index);
 
 private slots:
-    void fileOpen();
-    void reloadFileOnStartup();
-    void currentViewChanged();
-
-private:
-    void restoreSettings();
-
-private:
-    std::unique_ptr<Ui::MainWindow> ui;
-    QString m_currentFileName;
-    ElfModel *m_elfModel = 0;
-    std::unique_ptr<ElfFileSet> m_fileSet;
+    void selectionChanged();
 };
 
-#endif // MAINWINDOW_H
+#endif // SIDEPANE_H

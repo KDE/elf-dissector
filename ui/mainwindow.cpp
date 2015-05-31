@@ -31,6 +31,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QStatusBar>
+#include <QStandardItemModel>
 
 #include <elf.h>
 
@@ -41,11 +42,23 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     ui->elfStructureView->setModel(m_elfModel);
     ui->sizeTreeMapView->setModel(m_elfModel);
 
-    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabChanged);
+    connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, &MainWindow::currentViewChanged);
 
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::fileOpen);
     connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
     connect(ui->actionReopenPreviousFile, &QAction::triggered, this, &MainWindow::reloadFileOnStartup);
+
+    auto viewModel = new QStandardItemModel(this);
+    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("document-preview"), "ELF Structure"));
+    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("table"), "Size Tree Map"));
+    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("view-list-tree"), "Dependencies"));
+    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("code-class"), "Data Types"));
+    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("chronometer"), "Performance"));
+    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("dialog-warning"), "Issues"));
+    ui->viewSelector->setModel(viewModel);
+    connect(ui->viewSelector, &SidePane::currentIndexChanged, this, [this](int index){
+        ui->stackedWidget->setCurrentIndex(index);
+    });
 
     ui->menuSettings->addAction(CodeNavigator::configMenu(this));
 
@@ -57,7 +70,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     });
 
     restoreSettings();
-    tabChanged();
+    currentViewChanged();
 }
 
 MainWindow::~MainWindow()
@@ -70,7 +83,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.beginGroup("MainWindow");
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
-    settings.setValue("currentTab", ui->tabWidget->currentIndex());
+    settings.setValue("currentView", ui->stackedWidget->currentIndex());
     settings.endGroup();
     QMainWindow::closeEvent(event);
 }
@@ -110,7 +123,10 @@ void MainWindow::restoreSettings()
     settings.beginGroup("MainWindow");
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
-    ui->tabWidget->setCurrentIndex(settings.value("currentTab", 0).toInt());
+    const auto currentViewIndex = settings.value("currentView", 0).toInt();
+    const auto currentIdx = ui->viewSelector->model()->index(currentViewIndex, 0);
+    ui->viewSelector->selectionModel()->select(currentIdx, QItemSelectionModel::ClearAndSelect);
+    ui->viewSelector->selectionModel()->setCurrentIndex(currentIdx, QItemSelectionModel::ClearAndSelect);
     settings.endGroup();
 }
 
@@ -145,9 +161,9 @@ void MainWindow::loadFile(const QString& fileName)
     ui->issuesView->setFileSet(m_fileSet.get());
 }
 
-void MainWindow::tabChanged()
+void MainWindow::currentViewChanged()
 {
     ui->menuView->clear();
-    ui->menuView->addActions(ui->tabWidget->currentWidget()->actions());
+    ui->menuView->addActions(ui->stackedWidget->currentWidget()->actions());
     ui->menuView->setEnabled(!ui->menuView->isEmpty());
 }
