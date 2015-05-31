@@ -58,8 +58,13 @@ private slots:
         for (uint i = 0; i < symTab->header()->entryCount(); ++i) {
             auto idx = model.indexForNode(symTab->entry(i));
             QVERIFY(idx.isValid());
-            if (strcmp(symTab->entry(i)->name(), "") != 0)
-                QCOMPARE(idx.data(Qt::DisplayRole).toString(), QString(symTab->entry(i)->name()));
+            if (strcmp(symTab->entry(i)->name(), "") == 0)
+                continue;
+            QCOMPARE(idx.data(Qt::DisplayRole).toString(), QString(symTab->entry(i)->name()));
+            auto url = idx.data(ElfModel::NodeUrl).toUrl();
+            QVERIFY(url.isValid());
+            QVERIFY(!url.path().isEmpty());
+            QVERIFY(!url.scheme().isEmpty());
         }
     }
 };

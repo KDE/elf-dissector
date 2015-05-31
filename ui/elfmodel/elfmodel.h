@@ -38,6 +38,7 @@ public:
         DetailRole,
         FileRole,
         SectionRole,
+        NodeUrl
     };
 
     explicit ElfModel(QObject* parent = nullptr);
@@ -54,6 +55,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
     QModelIndex indexForNode(ElfSymbolTableEntry* symbol) const;
+
 private:
     friend class ParentVisitor;
 
@@ -63,6 +65,8 @@ private:
     ElfNodeVariant* variantForIndex(const QModelIndex &index) const;
     ElfNodeVariant contentForIndex(const QModelIndex& index) const;
     ElfNodeVariant* makeVariant(void* payload, ElfNodeVariant::Type type) const;
+
+    QUrl urlForIndex(const QModelIndex &index) const;
 
 private:
     ElfFileSet *m_fileSet = 0;

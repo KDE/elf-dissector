@@ -26,6 +26,7 @@
 #include "datavisitor.h"
 
 #include <QDebug>
+#include <QUrl>
 
 ElfModel::ElfModel(QObject* parent) : QAbstractItemModel(parent)
 {
@@ -66,6 +67,9 @@ QVariant ElfModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || !m_fileSet)
         return QVariant();
+
+    if (role == NodeUrl)
+        return urlForIndex(index);
 
     ElfNodeVariant var = contentForIndex(index);
 
@@ -183,4 +187,23 @@ ElfNodeVariant* ElfModel::makeVariant(void* payload, ElfNodeVariant::Type type) 
     var->type = type;
     m_internalPointerMap.insert(payload, var);
     return var;
+}
+
+QUrl ElfModel::urlForIndex(const QModelIndex& index) const
+{
+    QUrl url;
+    if (!index.isValid())
+        return url;
+
+    const auto parentIdx = parent(index);
+    if (!parentIdx.isValid()) {
+        url.setScheme("elfmodel");
+        url.setPath(QString::number(index.row()));
+        return url;
+    }
+
+    url = parentIdx.data(NodeUrl).toUrl();
+    url.setPath(url.path() + "/" + QString::number(index.row()));
+
+    return url;
 }
