@@ -36,16 +36,14 @@ ElfStructureView::ElfStructureView(QWidget* parent):
     connect(ui->elfStructureSearchLine, &QLineEdit::textChanged, this, [this](const QString &text) {
         m_proxy->setFilterFixedString(text);
     });
-    connect(ui->elfDetailView, &QTextBrowser::anchorClicked, this, [](const QUrl &url) {
-        if (url.scheme() == QLatin1String("code"))
-            CodeNavigator::goTo(url);
-    });
+    connect(ui->elfDetailView, &QTextBrowser::anchorClicked, this, &ElfStructureView::anchorClicked);
 }
 
 ElfStructureView::~ElfStructureView() = default;
 
-void ElfStructureView::setModel(QAbstractItemModel* model)
+void ElfStructureView::setModel(ElfModel* model)
 {
+    m_elfModel = model;
     m_proxy->setSourceModel(model);
 }
 
@@ -56,4 +54,16 @@ void ElfStructureView::selectionChanged(const QItemSelection &selection)
 
     const QModelIndex index = selection.first().topLeft();
     ui->elfDetailView->setHtml(index.data(ElfModel::DetailRole).toString());
+}
+
+void ElfStructureView::anchorClicked(const QUrl& url)
+{
+    if (url.scheme() == QLatin1String("code"))
+        CodeNavigator::goTo(url);
+    else if (url.scheme() == QLatin1String("elfmodel")) {
+        auto idx = m_elfModel->indexForUrl(url);
+        idx = m_proxy->mapFromSource(idx);
+        ui->elfStructureView->selectionModel()->select(idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+        ui->elfStructureView->scrollTo(idx);
+    }
 }

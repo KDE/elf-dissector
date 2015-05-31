@@ -46,6 +46,9 @@ protected:
     QVariant doVisit(DwarfDie *die, int arg) const override;
 
 private:
+    QString printSymbolName(ElfSymbolTableEntry *symbol) const;
+
+private:
     const ElfModel* const m_model;
 };
 

@@ -41,6 +41,7 @@
 #include <printers/symbolprinter.h>
 
 #include <QDebug>
+#include <QUrl>
 
 #include <cassert>
 
@@ -134,7 +135,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                     s += QString::number(i) + ": 0x" + QString::number(value, 16);
                     const auto ref = section->file()->symbolTable()->entryWithValue(value);
                     if (ref)
-                        s += QLatin1Char(' ') + ref->name();
+                        s += QLatin1Char(' ') + printSymbolName(ref);
                     s += "<br/>";
                 }
             }
@@ -261,7 +262,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                             s += QString::number(i) + ": 0x" + QString::number(v, 16);
                             const auto ref = entry->symbolTable()->entryWithValue(v);
                             if (ref)
-                                s += QLatin1Char(' ') + ref->name() + QLatin1String(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
+                                s += QLatin1Char(' ') + printSymbolName(ref) + QLatin1String(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
                             s += "<br/>";
                         }
                         s += "</tt><br/>";
@@ -539,4 +540,18 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
         }
     }
     return {};
+}
+
+QString DataVisitor::printSymbolName(ElfSymbolTableEntry* symbol) const
+{
+    const auto idx = m_model->indexForNode(symbol);
+    const auto url = idx.data(ElfModel::NodeUrl).toUrl();
+
+    QString s("<a href=\"");
+    s += url.toEncoded();
+    s += "\">";
+    s += symbol->name();
+    s += "</a>";
+
+    return s;
 }

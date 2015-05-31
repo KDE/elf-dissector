@@ -26,9 +26,11 @@ namespace Ui {
 class ElfStructureView;
 }
 
+class ElfModel;
 class QAbstractItemModel;
 class QItemSelection;
 class QSortFilterProxyModel;
+class QUrl;
 
 class ElfStructureView : public QWidget
 {
@@ -37,13 +39,15 @@ public:
     explicit ElfStructureView(QWidget* parent = 0);
     ~ElfStructureView();
 
-    void setModel(QAbstractItemModel* model);
+    void setModel(ElfModel* model);
 
 private slots:
     void selectionChanged(const QItemSelection& selection);
+    void anchorClicked(const QUrl &url);
 
 private:
     std::unique_ptr<Ui::ElfStructureView> ui;
+    ElfModel *m_elfModel = nullptr;
     QSortFilterProxyModel* m_proxy;
 };
 
