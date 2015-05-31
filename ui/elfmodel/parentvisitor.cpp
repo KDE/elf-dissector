@@ -77,7 +77,7 @@ ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNe
 ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) const
 {
     int row = -1;
-    for (uint i = 0; i < symbol->symbolTable()->size(); ++i) {
+    for (uint i = 0; i < symbol->symbolTable()->header()->entryCount(); ++i) {
         if (symbol->symbolTable()->entry(i) == symbol) {
             row = i;
             break;
