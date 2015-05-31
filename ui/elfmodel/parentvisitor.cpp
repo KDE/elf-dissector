@@ -16,6 +16,8 @@
 */
 
 #include "parentvisitor.h"
+#include "elfmodel.h"
+
 #include <elf/elffileset.h>
 #include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
 #include <elf/elfgnusymbolversionrequirement.h>
@@ -27,18 +29,18 @@
 
 #include <cassert>
 
-ParentVisitor::ParentVisitor(ElfFileSet* parent) : m_fileSet(parent)
+ParentVisitor::ParentVisitor(const ElfModel* model) : m_model(model)
 {
 }
 
 QPair<void*, int> ParentVisitor::doVisit(ElfFile* file, int) const
 {
     int row = 0;
-    for (; row < m_fileSet->size(); ++row) {
-        if (m_fileSet->file(row) == file)
+    for (; row < m_model->fileSet()->size(); ++row) {
+        if (m_model->fileSet()->file(row) == file)
             break;
     }
-    return qMakePair<void*, int>(m_fileSet, row);
+    return qMakePair<void*, int>(m_model->fileSet(), row);
 }
 
 QPair<void*, int> ParentVisitor::doVisit(ElfSection* section, int) const

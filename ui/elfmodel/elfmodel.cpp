@@ -36,6 +36,11 @@ ElfModel::~ElfModel()
     clearInternalPointerMap();
 }
 
+ElfFileSet* ElfModel::fileSet() const
+{
+    return m_fileSet;
+}
+
 void ElfModel::setFileSet(ElfFileSet *fileSet)
 {
     beginResetModel();
@@ -96,7 +101,7 @@ QModelIndex ElfModel::parent(const QModelIndex& child) const
     if (!m_fileSet || !child.isValid())
         return QModelIndex();
 
-    ParentVisitor v(m_fileSet);
+    ParentVisitor v(this);
     auto parentData = v.visit(variantForIndex(child));
     if (!parentData.first)
         return QModelIndex();

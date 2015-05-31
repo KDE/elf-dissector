@@ -22,10 +22,12 @@
 
 #include <QPair>
 
+class ElfModel;
+
 class ParentVisitor : public ElfNodeVisitor<QPair<void*, int>>
 {
 public:
-    explicit ParentVisitor(ElfFileSet* parent);
+    explicit ParentVisitor(const ElfModel* model);
 
 protected:
     type doVisit(ElfFile* file, int) const override;
@@ -37,7 +39,7 @@ protected:
     type doVisit(DwarfDie* die, int) const override;
 
 private:
-    ElfFileSet *m_fileSet;
+    const ElfModel* const m_model;
 };
 
 #endif // PARENTVISITOR_H
