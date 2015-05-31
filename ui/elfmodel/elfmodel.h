@@ -55,6 +55,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
     QModelIndex indexForNode(ElfSymbolTableEntry* symbol) const;
+    QModelIndex indexForUrl(const QUrl &url) const;
 
 private:
     friend class ParentVisitor;

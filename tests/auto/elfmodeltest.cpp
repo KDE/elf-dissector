@@ -65,6 +65,9 @@ private slots:
             QVERIFY(url.isValid());
             QVERIFY(!url.path().isEmpty());
             QVERIFY(!url.scheme().isEmpty());
+
+            auto idx2 = model.indexForUrl(url);
+            QCOMPARE(idx, idx2);
         }
     }
 };
