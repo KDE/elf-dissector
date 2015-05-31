@@ -49,7 +49,7 @@ struct ElfNodeVariant
         return static_cast<T*>(payload);
     }
 
-    void *payload = 0;
+    void *payload = nullptr;
     Type type = Invalid;
 };
 
