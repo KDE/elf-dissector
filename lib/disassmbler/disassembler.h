@@ -29,7 +29,7 @@ class ElfSymbolTableEntry;
 class Disassembler
 {
 public:
-    ~Disassembler();
+    virtual ~Disassembler();
 
     QString disassemble(ElfSymbolTableEntry *entry);
     QString disassemble(ElfSection *section);
@@ -37,6 +37,9 @@ public:
     // internal
     ElfFile* file() const;
     uint64_t baseAddress() const;
+
+    /** Pretty-print symbol name, override for adding navigation links etc. */
+    virtual QString printSymbol(ElfSymbolTableEntry *entry) const;
 
 private:
     QString disassemble(const unsigned char* data, uint64_t size);
