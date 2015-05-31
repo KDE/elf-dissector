@@ -33,22 +33,22 @@ ParentVisitor::ParentVisitor(const ElfModel* model) : m_model(model)
 {
 }
 
-QPair<void*, int> ParentVisitor::doVisit(ElfFile* file, int) const
+ParentVisitor::type ParentVisitor::doVisit(ElfFile* file, int) const
 {
     int row = 0;
     for (; row < m_model->fileSet()->size(); ++row) {
         if (m_model->fileSet()->file(row) == file)
             break;
     }
-    return qMakePair<void*, int>(m_model->fileSet(), row);
+    return makeParent(m_model->fileSet(), row);
 }
 
-QPair<void*, int> ParentVisitor::doVisit(ElfSection* section, int) const
+ParentVisitor::type ParentVisitor::doVisit(ElfSection* section, int) const
 {
-    return qMakePair<void*, int>(section->file(), section->header()->sectionIndex());
+    return makeParent(section->file(), section->header()->sectionIndex());
 }
 
-QPair< void*, int > ParentVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int) const
+ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int) const
 {
     int row = -1;
     for (uint i = 0; i < verDef->section()->entryCount(); ++i) {
@@ -58,10 +58,10 @@ QPair< void*, int > ParentVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef
         }
     }
     assert(row >= 0);
-    return qMakePair<void*, int>(verDef->section(), row);
+    return makeParent(verDef->section(), row);
 }
 
-QPair< void*, int > ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNeed, int) const
+ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNeed, int) const
 {
     int row = -1;
     for (uint i = 0; i < verNeed->section()->entryCount(); ++i) {
@@ -71,7 +71,7 @@ QPair< void*, int > ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNe
         }
     }
     assert(row >= 0);
-    return qMakePair<void*, int>(verNeed->section(), row);
+    return makeParent(verNeed->section(), row);
 }
 
 ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) const
@@ -84,18 +84,23 @@ ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) con
         }
     }
     assert(row >= 0);
-    return qMakePair<void*, int>(const_cast<ElfSymbolTableSection*>(symbol->symbolTable()), row);
+    return makeParent(const_cast<ElfSymbolTableSection*>(symbol->symbolTable()), row);
 }
 
-QPair< void*, int > ParentVisitor::doVisit(DwarfInfo* info, int) const
+ParentVisitor::type ParentVisitor::doVisit(DwarfInfo* info, int) const
 {
-    return qMakePair<void*, int>(info->elfFile(), info->elfFile()->indexOfSection(".debug_info"));
+    return makeParent(info->elfFile(), info->elfFile()->indexOfSection(".debug_info"));
 }
 
-QPair< void*, int > ParentVisitor::doVisit(DwarfDie* die, int) const
+ParentVisitor::type ParentVisitor::doVisit(DwarfDie* die, int) const
 {
     if (die->parentDie()) {
-        return qMakePair<void*, int>(die->parentDie(), die->parentDie()->children().indexOf(die));
+        return makeParent(die->parentDie(), die->parentDie()->children().indexOf(die));
     }
-    return qMakePair<void*, int>(die->dwarfInfo(), die->dwarfInfo()->compilationUnits().indexOf(static_cast<DwarfCuDie*>(die)));
+    return makeParent(die->dwarfInfo(), die->dwarfInfo()->compilationUnits().indexOf(static_cast<DwarfCuDie*>(die)));
+}
+
+ParentVisitor::type ParentVisitor::makeParent(void* payload, int row) const
+{
+    return qMakePair<void*, int>(payload, row);
 }

@@ -39,6 +39,8 @@ protected:
     type doVisit(DwarfDie* die, int) const override;
 
 private:
+    type makeParent(void* payload, int row) const;
+
     const ElfModel* const m_model;
 };
 
