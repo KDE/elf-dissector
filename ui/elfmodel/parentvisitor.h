@@ -24,7 +24,7 @@
 
 class ElfModel;
 
-class ParentVisitor : public ElfNodeVisitor<QPair<void*, int>>
+class ParentVisitor : public ElfNodeVisitor<QPair<ElfNodeVariant*, int>>
 {
 public:
     explicit ParentVisitor(const ElfModel* model);
@@ -39,7 +39,7 @@ protected:
     type doVisit(DwarfDie* die, int) const override;
 
 private:
-    type makeParent(void* payload, int row) const;
+    type makeParent(void* payload, ElfNodeVariant::Type type, int row) const;
 
     const ElfModel* const m_model;
 };

@@ -105,8 +105,8 @@ QModelIndex ElfModel::parent(const QModelIndex& child) const
     auto parentData = v.visit(variantForIndex(child));
     if (!parentData.first)
         return QModelIndex();
-    Q_ASSERT(m_internalPointerMap.contains(parentData.first));
-    return createIndex(parentData.second, 0, m_internalPointerMap.value(parentData.first));
+    Q_ASSERT(m_internalPointerMap.contains(parentData.first->payload));
+    return createIndex(parentData.second, 0, parentData.first);
 }
 
 QModelIndex ElfModel::index(int row, int column, const QModelIndex& parent) const

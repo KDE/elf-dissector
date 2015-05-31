@@ -40,12 +40,12 @@ ParentVisitor::type ParentVisitor::doVisit(ElfFile* file, int) const
         if (m_model->fileSet()->file(row) == file)
             break;
     }
-    return makeParent(m_model->fileSet(), row);
+    return makeParent(m_model->fileSet(), ElfNodeVariant::FileSet, row);
 }
 
 ParentVisitor::type ParentVisitor::doVisit(ElfSection* section, int) const
 {
-    return makeParent(section->file(), section->header()->sectionIndex());
+    return makeParent(section->file(), ElfNodeVariant::File, section->header()->sectionIndex());
 }
 
 ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int) const
@@ -58,7 +58,7 @@ ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef
         }
     }
     assert(row >= 0);
-    return makeParent(verDef->section(), row);
+    return makeParent(verDef->section(), ElfNodeVariant::VersionDefinitionSection, row);
 }
 
 ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNeed, int) const
@@ -71,7 +71,7 @@ ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNe
         }
     }
     assert(row >= 0);
-    return makeParent(verNeed->section(), row);
+    return makeParent(verNeed->section(), ElfNodeVariant::VersionRequirementsSection, row);
 }
 
 ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) const
@@ -84,23 +84,23 @@ ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) con
         }
     }
     assert(row >= 0);
-    return makeParent(const_cast<ElfSymbolTableSection*>(symbol->symbolTable()), row);
+    return makeParent(const_cast<ElfSymbolTableSection*>(symbol->symbolTable()), ElfNodeVariant::SymbolTableSection, row);
 }
 
 ParentVisitor::type ParentVisitor::doVisit(DwarfInfo* info, int) const
 {
-    return makeParent(info->elfFile(), info->elfFile()->indexOfSection(".debug_info"));
+    return makeParent(info->elfFile(), ElfNodeVariant::File, info->elfFile()->indexOfSection(".debug_info"));
 }
 
 ParentVisitor::type ParentVisitor::doVisit(DwarfDie* die, int) const
 {
     if (die->parentDie()) {
-        return makeParent(die->parentDie(), die->parentDie()->children().indexOf(die));
+        return makeParent(die->parentDie(), ElfNodeVariant::DwarfDie, die->parentDie()->children().indexOf(die));
     }
-    return makeParent(die->dwarfInfo(), die->dwarfInfo()->compilationUnits().indexOf(static_cast<DwarfCuDie*>(die)));
+    return makeParent(die->dwarfInfo(), ElfNodeVariant::DwarfInfo, die->dwarfInfo()->compilationUnits().indexOf(static_cast<DwarfCuDie*>(die)));
 }
 
-ParentVisitor::type ParentVisitor::makeParent(void* payload, int row) const
+ParentVisitor::type ParentVisitor::makeParent(void* payload, ElfNodeVariant::Type type, int row) const
 {
-    return qMakePair<void*, int>(payload, row);
+    return qMakePair(m_model->makeVariant(payload, type), row);
 }

@@ -53,6 +53,8 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 private:
+    friend class ParentVisitor;
+
     void clearInternalPointerMap();
     ElfNodeVariant* variantForIndex(const QModelIndex &index) const;
     ElfNodeVariant contentForIndex(const QModelIndex& index) const;
