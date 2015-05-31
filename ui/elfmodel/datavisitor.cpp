@@ -44,7 +44,7 @@
 
 #include <cassert>
 
-DataVisitor::DataVisitor(ElfFileSet* fileSet) : m_fileSet(fileSet)
+DataVisitor::DataVisitor(const ElfModel* model) : m_model(model)
 {
 }
 
@@ -530,7 +530,7 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
             if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {
                 s += "<tt><pre>";
                 StructurePackingCheck check;
-                check.setElfFileSet(m_fileSet);
+                check.setElfFileSet(m_model->fileSet());
                 s += check.checkOneStructure(die).toHtmlEscaped();
                 s += "</pre></tt><br/>";
             }

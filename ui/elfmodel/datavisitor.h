@@ -22,10 +22,12 @@
 
 #include <QVariant>
 
+class ElfModel;
+
 class DataVisitor : public ElfNodeVisitor<QVariant>
 {
 public:
-    explicit DataVisitor(ElfFileSet* fileSet);
+    explicit DataVisitor(const ElfModel* model);
 
 protected:
     QVariant doVisit(ElfFile* file, int arg) const override;
@@ -44,7 +46,7 @@ protected:
     QVariant doVisit(DwarfDie *die, int arg) const override;
 
 private:
-    ElfFileSet *m_fileSet;
+    const ElfModel* const m_model;
 };
 
 #endif // DATAVISITOR_H

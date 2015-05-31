@@ -73,7 +73,7 @@ QVariant ElfModel::data(const QModelIndex& index, int role) const
 
     ElfNodeVariant var = contentForIndex(index);
 
-    DataVisitor v(m_fileSet);
+    DataVisitor v(this);
     switch (index.column()) {
         case 0:
             return v.visit(&var, role);
