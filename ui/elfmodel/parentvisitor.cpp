@@ -72,6 +72,19 @@ QPair< void*, int > ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNe
     return qMakePair<void*, int>(verNeed->section(), row);
 }
 
+ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) const
+{
+    int row = -1;
+    for (uint i = 0; i < symbol->symbolTable()->size(); ++i) {
+        if (symbol->symbolTable()->entry(i) == symbol) {
+            row = i;
+            break;
+        }
+    }
+    assert(row >= 0);
+    return qMakePair<void*, int>(const_cast<ElfSymbolTableSection*>(symbol->symbolTable()), row);
+}
+
 QPair< void*, int > ParentVisitor::doVisit(DwarfInfo* info, int) const
 {
     return qMakePair<void*, int>(info->elfFile(), info->elfFile()->indexOfSection(".debug_info"));
