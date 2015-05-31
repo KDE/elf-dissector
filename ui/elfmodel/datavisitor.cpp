@@ -45,6 +45,20 @@
 
 #include <cassert>
 
+class NavigatingDisassembler : public Disassembler
+{
+public:
+    NavigatingDisassembler(const DataVisitor *v) : m_v(v) {}
+
+    QString printSymbol(ElfSymbolTableEntry* entry) const override
+    {
+        return m_v->printSymbolName(entry);
+    }
+
+private:
+    const DataVisitor* const m_v;
+};
+
 DataVisitor::DataVisitor(const ElfModel* model) : m_model(model)
 {
 }
@@ -123,7 +137,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                 } while (index < section->size());
             }
             if (strcmp(section->header()->name(), ".init") == 0 || strcmp(section->header()->name(), ".fini") == 0) {
-                Disassembler da;
+                NavigatingDisassembler da(this);
                 s += "Code:<br/><tt>" + da.disassemble(section) + "</tt>";
             }
             if (section->header()->type() == SHT_INIT_ARRAY || section->header()->type() == SHT_FINI_ARRAY) {
@@ -246,7 +260,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             if (hasValidSectionIndex && entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->type() == SHT_NOBITS) {
                 // .bss, i.e. no content to display
             } else if (entry->type() == STT_FUNC && entry->size() > 0) {
-                Disassembler da;
+                NavigatingDisassembler da(this);
                 s += QStringLiteral("Code:<br/><tt>") + da.disassemble(entry) + "</tt>";
             } else if (entry->type() == STT_OBJECT && entry->size() > 0) {
                 const auto addrSize = entry->symbolTable()->file()->addressSize();

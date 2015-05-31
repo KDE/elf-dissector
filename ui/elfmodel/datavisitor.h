@@ -46,6 +46,7 @@ protected:
     QVariant doVisit(DwarfDie *die, int arg) const override;
 
 private:
+    friend class NavigatingDisassembler;
     QString printSymbolName(ElfSymbolTableEntry *symbol) const;
 
 private:
