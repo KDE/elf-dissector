@@ -132,6 +132,7 @@ const char* ElfDynamicEntry::stringValue() const
 bool ElfDynamicEntry::isAddress() const
 {
     switch (tag()) {
+        case DT_PLTGOT:
         case DT_HASH:
         case DT_STRTAB:
         case DT_SYMTAB:
