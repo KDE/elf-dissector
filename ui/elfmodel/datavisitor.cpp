@@ -85,7 +85,7 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             if (file->header()->entryPoint()) {
                 const auto entry = file->symbolTable()->entryWithValue(file->header()->entryPoint());
                 if (entry)
-                    s += " (" + QString(entry->name()) + ')';
+                    s += " (" + printSymbolName(entry) + ')';
             }
             s += "<br/>";
             return s;
@@ -115,9 +115,9 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             s += QStringLiteral("Virtual Address: 0x") + QString::number(section->header()->virtualAddress(), 16) + "<br/>";
             s += QStringLiteral("Type: ") + ElfPrinter::sectionType(section->header()->type()) + "<br/>";
             if (section->header()->link())
-                s += QStringLiteral("Linked section: ") + section->linkedSection<ElfSection>()->header()->name() + "<br/>";
+                s += "Linked section: " + printSectionName(section->linkedSection<ElfSection>()) + "<br/>";
             if (section->header()->flags() & SHF_INFO_LINK)
-                s += QString("Referenced section: ") + section->file()->sectionHeaders().at(section->header()->info())->name() + "<br/>";
+                s += "Referenced section: " + printSectionName(section->file()->section<ElfSection>(section->header()->info())) + "<br/>";
             if (section->header()->entrySize()) {
                 s += QStringLiteral("Entries: ") + QString::number(section->header()->entryCount())
                   + " x " + QString::number(section->header()->entrySize()) + " byte<br/>";
@@ -254,7 +254,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 
             const auto hasValidSectionIndex = entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount();
             if (hasValidSectionIndex) {
-                s += QStringLiteral("Section: ") + entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->name() + "<br/>";
+                s += "Section: " + printSectionName(entry->symbolTable()->file()->section<ElfSection>(entry->sectionIndex())) + "<br/>";
             }
 
             if (hasValidSectionIndex && entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->type() == SHT_NOBITS) {
@@ -293,7 +293,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                             const auto ref = entry->symbolTable()->entryContainingValue(v - addrSize);
                             if (ref) {
                                 const auto offset = v - ref->value();
-                                s += QLatin1String(" entry ") + QString::number(offset / addrSize) + QLatin1String(" in ") + ref->name();
+                                s += QLatin1String(" entry ") + QString::number(offset / addrSize) + QLatin1String(" in ") + printSymbolName(ref);
                                 s += QLatin1String(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
                             }
                             s += "<br/>";
@@ -502,7 +502,7 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
             s += "Offset: 0x" + QString::number(entry->offset(), 16);
             const auto sym = entry->relocationTable()->file()->symbolTable()->entryContainingValue(entry->offset());
             if (sym) {
-                s += QString(" (") + sym->name() + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
+                s += QString(" (") + printSymbolName(sym) + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
             } else {
                 for (const auto &shdr : entry->relocationTable()->file()->sectionHeaders()) {
                     if (shdr->virtualAddress() <= entry->offset() && entry->offset() < shdr->virtualAddress() + shdr->size()) {
@@ -514,7 +514,7 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
             s += "<br/>";
             s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
             if (entry->symbol() > 0)
-                s += QString("Symbol: ") + entry->relocationTable()->linkedSection<ElfSymbolTableSection>()->entry(entry->symbol())->name() + "<br/>";
+                s += QString("Symbol: ") + printSymbolName(entry->relocationTable()->linkedSection<ElfSymbolTableSection>()->entry(entry->symbol())) + "<br/>";
             else
                 s += QString("Symbol: &lt;none&gt;<br/>");
             s += "Addend: 0x" + QString::number(entry->addend(), 16);
@@ -554,6 +554,20 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
         }
     }
     return {};
+}
+
+QString DataVisitor::printSectionName(ElfSection* section) const
+{
+    const auto idx = m_model->indexForNode(section);
+    const auto url = idx.data(ElfModel::NodeUrl).toUrl();
+
+    QString s("<a href=\"");
+    s += url.toEncoded();
+    s += "\">";
+    s += section->header()->name();
+    s += "</a>";
+
+    return s;
 }
 
 QString DataVisitor::printSymbolName(ElfSymbolTableEntry* symbol) const

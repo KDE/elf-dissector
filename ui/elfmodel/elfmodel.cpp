@@ -138,6 +138,11 @@ QVariant ElfModel::headerData(int section, Qt::Orientation orientation, int role
     return QAbstractItemModel::headerData(section, orientation, role);
 }
 
+QModelIndex ElfModel::indexForNode(ElfSection* section) const
+{
+    return indexForNode(section, ElfNodeVariant::Section);
+}
+
 QModelIndex ElfModel::indexForNode(ElfSymbolTableEntry* symbol) const
 {
     return indexForNode(symbol, ElfNodeVariant::SymbolTableEntry);

@@ -23,6 +23,7 @@
 #include <QAbstractItemModel>
 
 class ElfFileSet;
+class ElfSection;
 class ElfSymbolTableEntry;
 
 /** Model for the ELF structure.
@@ -54,6 +55,7 @@ public:
     QModelIndex index(int row, int column, const QModelIndex& parent) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
+    QModelIndex indexForNode(ElfSection* section) const;
     QModelIndex indexForNode(ElfSymbolTableEntry* symbol) const;
     QModelIndex indexForUrl(const QUrl &url) const;
 

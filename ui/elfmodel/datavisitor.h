@@ -47,6 +47,7 @@ protected:
 
 private:
     friend class NavigatingDisassembler;
+    QString printSectionName(ElfSection *section) const;
     QString printSymbolName(ElfSymbolTableEntry *symbol) const;
 
 private:
