@@ -148,6 +148,11 @@ QModelIndex ElfModel::indexForNode(ElfSymbolTableEntry* symbol) const
     return indexForNode(symbol, ElfNodeVariant::SymbolTableEntry);
 }
 
+QModelIndex ElfModel::indexForNode(DwarfDie* die) const
+{
+    return indexForNode(die, ElfNodeVariant::DwarfDie);
+}
+
 QModelIndex ElfModel::indexForNode(void* payload, ElfNodeVariant::Type type) const
 {
     if (!m_fileSet || !payload)

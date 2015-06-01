@@ -49,6 +49,8 @@ private:
     friend class NavigatingDisassembler;
     QString printSectionName(ElfSection *section) const;
     QString printSymbolName(ElfSymbolTableEntry *symbol) const;
+    QString printDwarfDie(DwarfDie* die) const;
+    QString printDwarfDieName(DwarfDie* die) const;
 
 private:
     const ElfModel* const m_model;

@@ -317,7 +317,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             if (die) {
                 s += CodeNavigatorPrinter::sourceLocationRichText(die);
                 s += "<br/><b>DWARF DIE</b><br/>";
-                s += DwarfPrinter::dieRichText(die);
+                s += printDwarfDie(die);
             }
             return s;
         }
@@ -539,7 +539,7 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
             return die->displayName();
         case ElfModel::DetailRole:
         {
-            QString s = DwarfPrinter::dieRichText(die);
+            QString s = printDwarfDie(die);
             s += CodeNavigatorPrinter::sourceLocationRichText(die);
 
             if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {
@@ -579,6 +579,39 @@ QString DataVisitor::printSymbolName(ElfSymbolTableEntry* symbol) const
     s += url.toEncoded();
     s += "\">";
     s += symbol->name();
+    s += "</a>";
+
+    return s;
+}
+
+QString DataVisitor::printDwarfDie(DwarfDie* die) const
+{
+    assert(die);
+    QString s;
+    s += "TAG: " + QLatin1String(die->tagName()) + "<br/>";
+    s += "Name: " + QString::fromLatin1(die->name()).toHtmlEscaped() + "<br/>";
+    s += "Offset: " + QString::number(die->offset()) + "<br/>";
+    foreach (const auto attrType, die->attributes()) {
+        const QVariant attrValue = die->attribute(attrType);
+        QString attrValueStr;
+        if (DwarfDie *die = attrValue.value<DwarfDie*>())
+            attrValueStr = printDwarfDieName(die);
+        else
+            attrValueStr = attrValue.toString().toHtmlEscaped();
+        s += QLatin1String(die->attributeName(attrType)) + ": " + attrValueStr + "<br/>";
+    }
+    return s;
+}
+
+QString DataVisitor::printDwarfDieName(DwarfDie* die) const
+{
+    const auto idx = m_model->indexForNode(die);
+    const auto url = idx.data(ElfModel::NodeUrl).toUrl();
+
+    QString s("<a href=\"");
+    s += url.toEncoded();
+    s += "\">";
+    s += die->displayName().toHtmlEscaped();
     s += "</a>";
 
     return s;
