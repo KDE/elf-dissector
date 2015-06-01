@@ -60,7 +60,8 @@ void ElfFileSet::addFile(ElfFile* file)
     const auto runpaths = file->dynamicSection()->runpaths();
     QVector<QByteArray> searchPaths;
     searchPaths.reserve(rpaths.size() + m_ldLibraryPaths.size() + runpaths.size() + m_baseSearchPaths.size());
-    searchPaths += rpaths;
+    if (runpaths.isEmpty()) // DT_RPATH is supposed to be ignored if DT_RUNPATH is present
+        searchPaths += rpaths;
     searchPaths += m_ldLibraryPaths;
     searchPaths += runpaths;
     searchPaths += m_baseSearchPaths;
