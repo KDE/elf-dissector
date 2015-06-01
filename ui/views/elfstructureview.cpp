@@ -23,6 +23,7 @@
 #include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
 
 #include <QDebug>
+#include <QMouseEvent>
 
 ElfStructureView::ElfStructureView(QWidget* parent):
     QWidget(parent),
@@ -59,6 +60,8 @@ ElfStructureView::ElfStructureView(QWidget* parent):
     });
     addActions({ ui->actionBack, ui->actionFordward });
     updateActionState();
+
+    installEventFilter(this);
 }
 
 ElfStructureView::~ElfStructureView() = default;
@@ -108,4 +111,21 @@ void ElfStructureView::selectUrl(const QUrl& url)
     ui->elfStructureView->selectionModel()->select(idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
     ui->elfStructureView->selectionModel()->setCurrentIndex(idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
     ui->elfStructureView->scrollTo(idx);
+}
+
+bool ElfStructureView::eventFilter(QObject *receiver, QEvent *event)
+{
+    if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease) {
+        auto mouseEv = static_cast<QMouseEvent*>(event);
+        if (mouseEv->button() == Qt::BackButton) {
+            if (ui->actionBack->isEnabled())
+                ui->actionBack->trigger();
+            return true;
+        } else if (mouseEv->button() == Qt::ForwardButton) {
+            if (ui->actionFordward->isEnabled())
+                ui->actionFordward->trigger();
+            return true;
+        }
+    }
+    return QObject::eventFilter(receiver, event);
 }

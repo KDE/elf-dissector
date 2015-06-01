@@ -42,6 +42,9 @@ public:
 
     void setModel(ElfModel* model);
 
+protected:
+    bool eventFilter(QObject* receiver, QEvent* event) override;
+
 private slots:
     void selectionChanged(const QItemSelection& selection);
     void anchorClicked(const QUrl &url);
