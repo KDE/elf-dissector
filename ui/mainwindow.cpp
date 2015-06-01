@@ -35,6 +35,14 @@
 
 #include <elf.h>
 
+static void addView(QStandardItemModel *model, const QString& iconName, const QString& title)
+{
+    auto icon = QIcon::fromTheme(iconName);
+    if (icon.isNull())
+        icon = QIcon::fromTheme("dialog-information"); // fallback
+        model->appendRow(new QStandardItem(icon, title));
+}
+
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow), m_elfModel(new ElfModel(this))
 {
     ui->setupUi(this);
@@ -49,12 +57,12 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionReopenPreviousFile, &QAction::triggered, this, &MainWindow::reloadFileOnStartup);
 
     auto viewModel = new QStandardItemModel(this);
-    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("document-preview"), "ELF Structure"));
-    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("table"), "Size Tree Map"));
-    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("view-list-tree"), "Dependencies"));
-    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("code-class"), "Data Types"));
-    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("chronometer"), "Performance"));
-    viewModel->appendRow(new QStandardItem(QIcon::fromTheme("dialog-warning"), "Issues"));
+    addView(viewModel, "document-preview", "ELF Structure");
+    addView(viewModel, "table", "Size Tree Map");
+    addView(viewModel, "view-list-tree", "Dependencies");
+    addView(viewModel, "code-class", "Data Types");
+    addView(viewModel, "chronometer", "Performance");
+    addView(viewModel, "dialog-warning", "Issues");
     ui->viewSelector->setModel(viewModel);
     connect(ui->viewSelector, &SidePane::currentIndexChanged, this, [this](int index){
         ui->stackedWidget->setCurrentIndex(index);
