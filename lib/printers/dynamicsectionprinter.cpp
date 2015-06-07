@@ -16,19 +16,14 @@
 */
 
 #include "dynamicsectionprinter.h"
+#include "printerutils_p.h"
 
 #include <QByteArray>
 #include <QList>
 
 #include <elf.h>
 
-struct FlagInfo
-{
-    uint64_t flag;
-    const char *desc;
-};
-
-static const FlagInfo dt_flag_infos[] {
+static const LookupTableEntry<uint64_t> dt_flag_infos[] {
     { DF_ORIGIN, "object may use DF_ORIGIN" },
     { DF_SYMBOLIC, "symbol resolutions starts here" },
     { DF_TEXTREL, "object contains text relocations" },
@@ -36,9 +31,7 @@ static const FlagInfo dt_flag_infos[] {
     { DF_STATIC_TLS, "module uses the static TLS model" }
 };
 
-static const int dt_flag_infos_size = sizeof(dt_flag_infos) / sizeof(FlagInfo);
-
-static const FlagInfo dt_flag_1_infos[] {
+static const LookupTableEntry<uint64_t> dt_flag_1_infos[] {
     { DF_1_NOW, "set RTLD_NOW for this object" },
     { DF_1_GLOBAL, "set RTLD_GLOBAL for this object" },
     { DF_1_GROUP, "set RTLD_GROUP for this object" },
@@ -67,38 +60,16 @@ static const FlagInfo dt_flag_1_infos[] {
     { DF_1_SINGLETON, "Singleton symbols are used" }
 };
 
-static const int dt_flag_1_infos_size = sizeof(dt_flag_1_infos) / sizeof(FlagInfo);
-
-static QByteArray dtFlagsToString(uint64_t flags, const FlagInfo* infos, int size)
-{
-    QList<QByteArray> l;
-    uint64_t handledFlags = 0;
-
-    for (int i = 0; i < size; ++i) {
-        if (flags & infos[i].flag)
-            l.push_back(QByteArray::fromRawData(infos[i].desc, strlen(infos[i].desc)));
-        handledFlags |= infos[i].flag;
-    }
-
-    if (flags & ~handledFlags)
-        l.push_back(QByteArray("unhandled flags 0x") + QByteArray::number(qulonglong(flags & ~handledFlags), 16));
-
-    if (l.isEmpty())
-        return "<none>";
-    return l.join(", ");
-}
-
-
 namespace DynamicSectionPrinter {
 
 QByteArray flagsToDescriptions(uint64_t flags)
 {
-    return dtFlagsToString(flags, dt_flag_infos, dt_flag_infos_size);
+    return lookupFlags(flags, dt_flag_infos);
 }
 
 QByteArray flags1ToDescriptions(uint64_t flags)
 {
-    return dtFlagsToString(flags, dt_flag_1_infos, dt_flag_1_infos_size);
+    return lookupFlags(flags, dt_flag_1_infos);
 }
 
 }
