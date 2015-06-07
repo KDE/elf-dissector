@@ -39,6 +39,8 @@ namespace ElfPrinter
 
     /** Segment type. */
     QByteArray segmentType(uint32_t segmentType);
+    /** Segment flags. */
+    QByteArray segmentFlags(uint32_t flags);
 }
 
 #endif // ELFPRINTER_H

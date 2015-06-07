@@ -144,3 +144,14 @@ QByteArray ElfPrinter::segmentType(uint32_t segmentType)
 {
     return lookupLabel(segmentType, segment_type_table);
 }
+
+static const LookupTableEntry<uint32_t> segment_flags_table[] {
+    { PF_X, "executable" },
+    { PF_W, "writable" },
+    { PF_R, "readable" }
+};
+
+QByteArray ElfPrinter::segmentFlags(uint32_t flags)
+{
+    return lookupFlags(flags, segment_flags_table);
+}
