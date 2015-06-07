@@ -24,6 +24,7 @@
 #include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
 #include <elf/elfgnusymbolversionrequirement.h>
 #include <elf/elfgnusymbolversionrequirementauxiliaryentry.h>
+#include <elf/elfsegmentheader.h>
 #include <elf.h>
 
 #include <dwarf/dwarfaddressranges.h>
@@ -88,7 +89,25 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
                 if (entry)
                     s += " (" + printSymbolName(entry) + ')';
             }
-            s += "<br/>";
+            s += "<br/><br/>";
+
+            s += "<b>Segments</b></br>";
+            s += "<table border=\"1\" border-style=\"solid\" cellspacing=\"0\">";
+            s += "<tr><th>Type</th><th>Flags</th><th>Offset</th><th>Virtual Address</th>";
+            s += "<th>Physical Address</th><th>File Size</th><th>Memory Size</th><th>Alignment</th></tr>";
+            for (auto phdr : file->segmentHeaders()) {
+                s += "<tr>";
+                s += "<td>" + ElfPrinter::segmentType(phdr->type()) + "</td>";
+                s += "<td>" + ElfPrinter::segmentFlags(phdr->flags()) + "</td>";
+                s += "<td>0x" + QString::number(phdr->offset(), 16) + "</td>";
+                s += "<td>0x" + QString::number(phdr->virtualAddress(), 16) + "</td>";
+                s += "<td>0x" + QString::number(phdr->physicalAddress(), 16) + "</td>";
+                s += "<td>" + QString::number(phdr->fileSize()) + "</td>";
+                s += "<td>" + QString::number(phdr->memorySize()) + "</td>";
+                s += "<td>0x" + QString::number(phdr->alignment(), 16) + "</td>";
+                s += "</tr>";
+            }
+            s += "</table";
             return s;
         }
         case ElfModel::FileRole:
