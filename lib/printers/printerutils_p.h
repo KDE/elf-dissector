@@ -19,6 +19,7 @@
 #define PRINTERUTILS_P_H
 
 #include <QByteArray>
+#include <QList>
 
 template <typename T>
 struct LookupTableEntry
@@ -39,5 +40,27 @@ QByteArray lookupLabelImpl(T value, const LookupTableEntry<T>* lookupTable, int 
 }
 
 #define lookupLabel(value, table) lookupLabelImpl(value, table, sizeof(table) / sizeof(LookupTableEntry<decltype(value)>))
+
+template <typename T>
+QByteArray lookupFlagsImpl(T flags, const LookupTableEntry<T>* lookupTable, int lookupTableSize)
+{
+    QList<QByteArray> l;
+    T handledFlags = 0;
+
+    for (int i = 0; i < lookupTableSize; ++i) {
+        if (flags & lookupTable[i].value)
+            l.push_back(QByteArray::fromRawData(lookupTable[i].label, strlen(lookupTable[i].label)));
+        handledFlags |= lookupTable[i].value;
+    }
+
+    if (flags & ~handledFlags)
+        l.push_back(QByteArray("unhandled flags 0x") + QByteArray::number(qulonglong(flags & ~handledFlags), 16));
+
+    if (l.isEmpty())
+        return "none";
+    return l.join(", ");
+}
+
+#define lookupFlags(flags, table) lookupFlagsImpl(flags, table, sizeof(table) / sizeof(LookupTableEntry<decltype(flags)>))
 
 #endif
