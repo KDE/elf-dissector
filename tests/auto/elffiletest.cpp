@@ -17,6 +17,7 @@
 
 #include <elf/elffile.h>
 #include <elf/elfsymboltablesection.h>
+#include <elf/elfheader.h>
 
 #include <QtTest/qtest.h>
 #include <QObject>
@@ -41,8 +42,17 @@ private slots:
         QVERIFY(f.open(QFile::ReadOnly));
         QCOMPARE(f.isValid(), true);
         QCOMPARE(f.byteOrder(), ELFDATA2LSB);
+
         QVERIFY(f.header());
+        QVERIFY(f.header()->programHeaderCount() > 0);
+        QVERIFY(f.header()->programHeaderEntrySize() > 0);
+        QVERIFY(f.header()->programHeaderTableOffset() > 0);
+        QVERIFY(f.header()->sectionHeaderCount() > 0);
+        QVERIFY(f.header()->sectionHeaderEntrySize() > 0);
+        QVERIFY(f.header()->sectionHeaderTableOffset() > 0);
+
         QCOMPARE(f.sectionHeaders().isEmpty(), false);
+        QCOMPARE((uint16_t)f.sectionHeaders().size(), f.header()->sectionHeaderCount());
         QVERIFY(f.size() > 0);
         QVERIFY(f.indexOfSection(".dynsym") >= 0);
         QCOMPARE(f.indexOfSection(".doesnotexist"), -1);
