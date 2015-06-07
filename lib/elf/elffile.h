@@ -32,6 +32,7 @@ class DwarfInfo;
 class ElfHashSection;
 class ElfHeader;
 class ElfSymbolTableSection;
+class ElfSegmentHeader;
 
 /** Represents a ELF file. */
 class ElfFile
@@ -73,6 +74,7 @@ public:
 
     /** Returns the ELF header. */
     ElfHeader* header() const;
+
     /** Returns a list of all available section headers. */
     QVector<ElfSectionHeader*> sectionHeaders() const;
     /** Returns the section at index @p index. */
@@ -98,10 +100,14 @@ public:
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;
 
+    /** Returns a lost of all available segment headers. */
+    QVector<ElfSegmentHeader*> segmentHeaders() const;
+
 private:
     void parse();
     void parseHeader();
     void parseSections();
+    void parseSegments();
 
 private:
     QFile m_file;
@@ -111,6 +117,7 @@ private:
     QVector<ElfSection*> m_sections;
     ElfDynamicSection* m_dynamicSection = nullptr;
     DwarfInfo *m_dwarfInfo = nullptr;
+    QVector<ElfSegmentHeader*> m_segmentHeaders;
 };
 
 Q_DECLARE_METATYPE(ElfFile*)

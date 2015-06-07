@@ -61,6 +61,8 @@ private slots:
         QVERIFY(f.dynamicSection()->size() > 0);
         QVERIFY(f.symbolTable());
         QVERIFY(f.symbolTable()->size() > 0);
+
+        QCOMPARE((uint16_t)f.segmentHeaders().size(), f.header()->programHeaderCount());
     }
 
     void testFailedLoad_data()

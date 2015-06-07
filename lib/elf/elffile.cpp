@@ -28,6 +28,7 @@
 #include "elfnotesection.h"
 #include "elfrelocationsection.h"
 #include "elfsysvhashsection.h"
+#include "elfsegmentheader_impl.h"
 
 #include <dwarf/dwarfinfo.h>
 
@@ -149,6 +150,7 @@ void ElfFile::parse()
 
     parseHeader();
     parseSections();
+    parseSegments();
 
     if (indexOfSection(".debug_info") >= 0)
         m_dwarfInfo = new DwarfInfo(this);
@@ -256,6 +258,25 @@ void ElfFile::parseSections()
     }
 }
 
+void ElfFile::parseSegments()
+{
+    m_segmentHeaders.reserve(m_header->programHeaderCount());
+    for (int i = 0; i < m_header->programHeaderCount(); ++i) {
+        ElfSegmentHeader* phdr = nullptr;
+        switch(type()) {
+            case ELFCLASS32:
+                phdr = new ElfSegmentHeaderImpl<Elf32_Phdr>(this, i);
+                break;
+            case ELFCLASS64:
+                phdr = new ElfSegmentHeaderImpl<Elf64_Phdr>(this, i);
+                break;
+            default:
+                throw ElfFileException();
+        }
+        m_segmentHeaders.push_back(phdr);
+    }
+}
+
 int ElfFile::indexOfSection(uint32_t type) const
 {
     for (int i = 0; i < m_sectionHeaders.size(); ++i) {
@@ -313,4 +334,9 @@ ElfHashSection* ElfFile::hash() const
 DwarfInfo* ElfFile::dwarfInfo() const
 {
     return m_dwarfInfo;
+}
+
+QVector< ElfSegmentHeader* > ElfFile::segmentHeaders() const
+{
+    return m_segmentHeaders;
 }
