@@ -36,6 +36,9 @@ namespace ElfPrinter
     QByteArray sectionType(uint32_t sectionType);
     /** Section flags. */
     QByteArray sectionFlags(uint64_t flags);
+
+    /** Segment type. */
+    QByteArray segmentType(uint32_t segmentType);
 }
 
 #endif // ELFPRINTER_H
