@@ -18,6 +18,7 @@
 #include <elf/elffile.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfheader.h>
+#include <elf/elfpltsection.h>
 
 #include <QtTest/qtest.h>
 #include <QObject>
@@ -61,6 +62,11 @@ private slots:
         QVERIFY(f.dynamicSection()->size() > 0);
         QVERIFY(f.symbolTable());
         QVERIFY(f.symbolTable()->size() > 0);
+
+        QVERIFY(f.indexOfSection(".plt") > 0);
+        auto pltSection = f.section<ElfPltSection>(f.indexOfSection(".plt"));
+        QVERIFY(pltSection);
+        QVERIFY(pltSection->header()->entryCount() > 0);
 
         QCOMPARE((uint16_t)f.segmentHeaders().size(), f.header()->programHeaderCount());
     }

@@ -26,6 +26,7 @@
 #include "elfgnusymbolversiondefinitionssection.h"
 #include "elfgnusymbolversionrequirementssection.h"
 #include "elfnotesection.h"
+#include "elfpltsection.h"
 #include "elfrelocationsection.h"
 #include "elfsysvhashsection.h"
 #include "elfsegmentheader_impl.h"
@@ -177,7 +178,7 @@ void ElfFile::parseSections()
     m_sectionHeaders.reserve(m_header->sectionHeaderCount());
     m_sections.resize(m_header->sectionHeaderCount());
 
-    // pass 1: create sections
+    // pass 1: create section headers
     for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
         ElfSectionHeader* shdr = nullptr;
         switch(type()) {
@@ -191,60 +192,25 @@ void ElfFile::parseSections()
                 throw ElfFileException();
         }
         m_sectionHeaders.push_back(shdr);
-
-        ElfSection* section = nullptr;
-        switch (shdr->type()) {
-            case SHT_STRTAB:
-                section = new ElfStringTableSection(this, shdr);
-                break;
-            case SHT_SYMTAB:
-            case SHT_DYNSYM:
-                section = new ElfSymbolTableSection(this, shdr);
-                break;
-            case SHT_DYNAMIC:
-                if (type() == ELFCLASS32)
-                    m_dynamicSection = new ElfDynamicSectionImpl<Elf32_Dyn>(this, shdr);
-                else if (type() == ELFCLASS64)
-                    m_dynamicSection = new ElfDynamicSectionImpl<Elf64_Dyn>(this, shdr);
-                section = m_dynamicSection;
-                break;
-            case SHT_REL:
-            case SHT_RELA:
-                section = new ElfRelocationSection(this, shdr);
-                break;
-            case SHT_NOTE:
-                section = new ElfNoteSection(this, shdr);
-                break;
-            case SHT_GNU_versym:
-                section = new ElfGNUSymbolVersionTable(this, shdr);
-                break;
-            case SHT_GNU_verdef:
-                section = new ElfGNUSymbolVersionDefinitionsSection(this, shdr);
-                break;
-            case SHT_GNU_verneed:
-                section = new ElfGNUSymbolVersionRequirementsSection(this, shdr);
-                break;
-            case SHT_HASH:
-                section = new ElfSysvHashSection(this, shdr);
-                break;
-            case SHT_GNU_HASH:
-                section = new ElfGnuHashSection(this, shdr);
-                break;
-            default:
-                section = new ElfSection(this, shdr);
-                break;
-        }
-        m_sections[i] = section;
     }
 
-    // pass 2: set section links
+    // pass 2: create sections
+    // make sure the string table section needed for section names is created first
+    parseSection(m_header->stringTableSectionHeader());
+    for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
+        if (i == m_header->stringTableSectionHeader())
+            continue;
+        parseSection(i);
+    }
+
+    // pass 3: set section links
     for (const auto shdr : m_sectionHeaders) {
         if (shdr->link()) {
             m_sections[shdr->sectionIndex()]->setLinkedSection(m_sections[shdr->link()]);
         }
     }
 
-    // pass 3: stuff that requires the full setup for parsing
+    // pass 4: stuff that requires the full setup for parsing
     // TODO can probably be done more efficient with on-demand parsing in those places
     for (auto section : m_sections) {
         switch (section->header()->type()) {
@@ -256,6 +222,60 @@ void ElfFile::parseSections()
                 continue;
         }
     }
+}
+
+void ElfFile::parseSection(uint16_t index)
+{
+    const auto shdr = m_sectionHeaders.at(index);
+    ElfSection* section = nullptr;
+    switch (shdr->type()) {
+        case SHT_STRTAB:
+            section = new ElfStringTableSection(this, shdr);
+            break;
+        case SHT_SYMTAB:
+        case SHT_DYNSYM:
+            section = new ElfSymbolTableSection(this, shdr);
+            break;
+        case SHT_DYNAMIC:
+            if (type() == ELFCLASS32)
+                m_dynamicSection = new ElfDynamicSectionImpl<Elf32_Dyn>(this, shdr);
+            else if (type() == ELFCLASS64)
+                m_dynamicSection = new ElfDynamicSectionImpl<Elf64_Dyn>(this, shdr);
+            section = m_dynamicSection;
+            break;
+        case SHT_REL:
+        case SHT_RELA:
+            section = new ElfRelocationSection(this, shdr);
+            break;
+        case SHT_NOTE:
+            section = new ElfNoteSection(this, shdr);
+            break;
+        case SHT_GNU_versym:
+            section = new ElfGNUSymbolVersionTable(this, shdr);
+            break;
+        case SHT_GNU_verdef:
+            section = new ElfGNUSymbolVersionDefinitionsSection(this, shdr);
+            break;
+        case SHT_GNU_verneed:
+            section = new ElfGNUSymbolVersionRequirementsSection(this, shdr);
+            break;
+        case SHT_HASH:
+            section = new ElfSysvHashSection(this, shdr);
+            break;
+        case SHT_GNU_HASH:
+            section = new ElfGnuHashSection(this, shdr);
+            break;
+        case SHT_PROGBITS:
+            if (shdr->name() && strcmp(shdr->name(), ".plt") == 0) {
+                section = new ElfPltSection(this, shdr);
+                break;
+            }
+            // else: fallthrough
+        default:
+            section = new ElfSection(this, shdr);
+            break;
+    }
+    m_sections[index] = section;
 }
 
 void ElfFile::parseSegments()

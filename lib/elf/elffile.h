@@ -107,6 +107,7 @@ private:
     void parse();
     void parseHeader();
     void parseSections();
+    void parseSection(uint16_t index);
     void parseSegments();
 
 private:
