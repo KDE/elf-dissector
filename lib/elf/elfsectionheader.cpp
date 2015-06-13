@@ -40,7 +40,10 @@ uint64_t ElfSectionHeader::headerOffset() const
 
 const char* ElfSectionHeader::name() const
 {
-    return m_file->section<ElfStringTableSection>(m_file->header()->stringTableSectionHeader())->string(nameIndex());
+    auto strTab = m_file->section<ElfStringTableSection>(m_file->header()->stringTableSectionHeader());
+    if (!strTab)
+        return nullptr;
+    return strTab->string(nameIndex());
 }
 
 bool ElfSectionHeader::isDebugInformation() const
