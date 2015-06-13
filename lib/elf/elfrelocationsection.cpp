@@ -16,7 +16,7 @@
 */
 
 #include "elfrelocationsection.h"
-#include "elfrelocationentry_impl.h"
+#include "elfrelocationentry.h"
 #include "elffile.h"
 
 #include <elf.h>
@@ -31,17 +31,6 @@ ElfRelocationSection::~ElfRelocationSection() = default;
 
 ElfRelocationEntry* ElfRelocationSection::createEntry(uint32_t index) const
 {
-    const auto elfType = file()->type();
     const auto secType = header()->type();
-
-    if (elfType == ELFCLASS64 && secType == SHT_REL)
-        return new ElfRelocationEntryImpl<Elf64_Rel>(this, index);
-    if (elfType == ELFCLASS64 && secType == SHT_RELA)
-        return new ElfRelocationEntryImplA<Elf64_Rela>(this, index);
-    if (elfType == ELFCLASS32 && secType == SHT_REL)
-        return new ElfRelocationEntryImpl<Elf32_Rel>(this, index);
-    if (elfType == ELFCLASS32 && secType == SHT_RELA)
-        return new ElfRelocationEntryImplA<Elf32_Rela>(this, index);
-
-    Q_UNREACHABLE();
+    return new ElfRelocationEntry(this, index, secType == SHT_RELA);
 }

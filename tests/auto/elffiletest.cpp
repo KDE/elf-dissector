@@ -19,6 +19,7 @@
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfheader.h>
 #include <elf/elfpltsection.h>
+#include <elf/elfrelocationsection.h>
 
 #include <QtTest/qtest.h>
 #include <QObject>
@@ -67,6 +68,15 @@ private slots:
         auto pltSection = f.section<ElfPltSection>(f.indexOfSection(".plt"));
         QVERIFY(pltSection);
         QVERIFY(pltSection->header()->entryCount() > 0);
+
+        for (int i = 0; i < f.header()->sectionHeaderCount(); ++i) {
+            auto shdr = f.sectionHeaders().at(i);
+            if (shdr->type() == SHT_REL || shdr->type() == SHT_RELA) {
+                auto section = f.section<ElfRelocationSection>(i);
+                QVERIFY(section);
+                QVERIFY(section->header()->entryCount() > 0);
+            }
+        }
 
         QCOMPARE((uint16_t)f.segmentHeaders().size(), f.header()->programHeaderCount());
     }

@@ -18,6 +18,7 @@
 #ifndef ELFRELOCATIONENTRY_H
 #define ELFRELOCATIONENTRY_H
 
+#include <QtGlobal>
 #include <cstdint>
 
 class ElfRelocationSection;
@@ -25,22 +26,26 @@ class ElfRelocationSection;
 class ElfRelocationEntry
 {
 public:
-    ElfRelocationEntry(const ElfRelocationEntry&) = delete;
-    virtual ~ElfRelocationEntry();
-    ElfRelocationEntry& operator=(const ElfRelocationEntry&) = delete;
+    ElfRelocationEntry();
+    explicit ElfRelocationEntry(const ElfRelocationSection *section, uint64_t index, bool withAddend);
+    ~ElfRelocationEntry();
 
     const ElfRelocationSection* relocationTable() const;
 
-    virtual uint64_t offset() const = 0;
-    virtual uint32_t symbol() const = 0;
-    virtual uint32_t type() const = 0;
-    virtual uint64_t addend() const = 0;
-
-protected:
-    explicit ElfRelocationEntry(const ElfRelocationSection *section);
-    const ElfRelocationSection * const m_section;
+    uint64_t offset() const;
+    uint32_t symbol() const;
+    uint32_t type() const;
+    uint64_t addend() const;
 
 private:
+    template <typename T> const T* entry() const;
+    bool is64() const;
+
+    const ElfRelocationSection * const m_section;
+    uint64_t m_index:63;
+    uint64_t m_withAddend:1;
 };
+
+Q_DECLARE_TYPEINFO(ElfRelocationEntry, Q_MOVABLE_TYPE);
 
 #endif // ELFRELOCATIONENTRY_H

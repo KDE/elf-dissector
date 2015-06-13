@@ -16,15 +16,103 @@
 */
 
 #include "elfrelocationentry.h"
+#include "elfrelocationsection.h"
+#include "elffile.h"
 
-ElfRelocationEntry::~ElfRelocationEntry() = default;
+#include <elf.h>
 
-ElfRelocationEntry::ElfRelocationEntry(const ElfRelocationSection* section) :
-    m_section(section)
+ElfRelocationEntry::ElfRelocationEntry() :
+    m_section(nullptr),
+    m_index(0),
+    m_withAddend(0)
 {
 }
+
+ElfRelocationEntry::ElfRelocationEntry(const ElfRelocationSection* section, uint64_t index, bool withAddend) :
+    m_section(section),
+    m_index(index),
+    m_withAddend(withAddend)
+{
+}
+
+ElfRelocationEntry::~ElfRelocationEntry() = default;
 
 const ElfRelocationSection* ElfRelocationEntry::relocationTable() const
 {
     return m_section;
+}
+
+uint64_t ElfRelocationEntry::offset() const
+{
+    if (is64()) {
+        if (m_withAddend)
+            return entry<Elf64_Rela>()->r_offset;
+        else
+            return entry<Elf64_Rel>()->r_offset;
+    } else {
+        if (m_withAddend)
+            return entry<Elf32_Rela>()->r_offset;
+        else
+            return entry<Elf32_Rel>()->r_offset;
+    }
+    Q_UNREACHABLE();
+}
+
+uint32_t ElfRelocationEntry::symbol() const
+{
+    if (is64()) {
+        if (m_withAddend)
+            return ELF64_R_SYM(entry<Elf64_Rela>()->r_info);
+        else
+            return ELF64_R_SYM(entry<Elf64_Rel>()->r_info);
+    } else {
+        if (m_withAddend)
+            return ELF32_R_SYM(entry<Elf32_Rela>()->r_info);
+        else
+            return ELF32_R_SYM(entry<Elf32_Rel>()->r_info);
+    }
+    Q_UNREACHABLE();
+}
+
+uint32_t ElfRelocationEntry::type() const
+{
+    if (is64()) {
+        if (m_withAddend)
+            return ELF64_R_TYPE(entry<Elf64_Rela>()->r_info);
+        else
+            return ELF64_R_TYPE(entry<Elf64_Rel>()->r_info);
+    } else {
+        if (m_withAddend)
+            return ELF32_R_TYPE(entry<Elf32_Rela>()->r_info);
+        else
+            return ELF32_R_TYPE(entry<Elf32_Rel>()->r_info);
+    }
+    Q_UNREACHABLE();
+}
+
+uint64_t ElfRelocationEntry::addend() const
+{
+    if (m_withAddend) {
+        if (is64()) {
+            return entry<Elf64_Rela>()->r_addend;
+        } else {
+            return entry<Elf32_Rela>()->r_addend;
+        }
+    } else {
+        // TODO
+        Q_ASSERT_X(false, "", "not yet implemented!");
+        return 0;
+    }
+    Q_UNREACHABLE();
+}
+
+template <typename T>
+const T* ElfRelocationEntry::entry() const
+{
+    return reinterpret_cast<const T*>(m_section->rawData() + m_index * m_section->header()->entrySize());
+}
+
+bool ElfRelocationEntry::is64() const
+{
+    return m_section->file()->type() == ELFCLASS64;
 }
