@@ -16,6 +16,8 @@
 */
 
 #include "elfgotentry.h"
+#include "elfgotsection.h"
+#include "elffile.h"
 
 ElfGotEntry::ElfGotEntry() :
     m_section(nullptr),
@@ -37,4 +39,9 @@ ElfGotSection* ElfGotEntry::section() const
 uint64_t ElfGotEntry::index() const
 {
     return m_index;
+}
+
+uint64_t ElfGotEntry::address() const
+{
+    return m_section->header()->virtualAddress() + m_index * m_section->file()->addressSize();
 }

@@ -31,6 +31,7 @@ public:
 
     ElfGotSection *section() const;
     uint64_t index() const;
+    uint64_t address() const;
 
 private:
     ElfGotSection *m_section;

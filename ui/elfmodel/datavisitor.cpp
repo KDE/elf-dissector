@@ -506,7 +506,11 @@ QVariant DataVisitor::doVisit(ElfGotEntry* entry, int role) const
         case ElfModel::SizeRole:
             return entry->section()->file()->addressSize();
         case ElfModel::DetailRole:
-            return "TODO";
+        {
+            QString s;
+            s += "Address: 0x" + QString::number(entry->address(), 16) + "<br/>";
+            return s;
+        }
     }
     return {};
 }
