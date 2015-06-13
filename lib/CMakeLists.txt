@@ -15,6 +15,8 @@ set(libelfdisector_srcs
     elf/elfheader.cpp
     elf/elfnoteentry.cpp
     elf/elfnotesection.cpp
+    elf/elfpltentry.cpp
+    elf/elfpltsection.cpp
     elf/elfrelocationentry.cpp
     elf/elfrelocationsection.cpp
     elf/elfsectionheader.cpp
