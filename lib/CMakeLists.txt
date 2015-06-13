@@ -11,6 +11,8 @@ set(libelfdisector_srcs
     elf/elfgnusymbolversionrequirement.cpp
     elf/elfgnusymbolversionrequirementauxiliaryentry.cpp
     elf/elfgnusymbolversionrequirementssection.cpp
+    elf/elfgotentry.cpp
+    elf/elfgotsection.cpp
     elf/elfhashsection.cpp
     elf/elfheader.cpp
     elf/elfnoteentry.cpp

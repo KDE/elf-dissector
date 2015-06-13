@@ -63,6 +63,9 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
             if (strcmp(section->header()->name(), ".plt") == 0) {
                 type = ElfNodeVariant::PltSection;
                 break;
+            } else if ((section->header()->flags() & SHF_WRITE) && strncmp(section->header()->name(), ".got", 4) == 0) {
+                type = ElfNodeVariant::GotSection;
+                break;
             }
             // else fallthrough
         default:
@@ -110,6 +113,12 @@ IndexVisitor::type IndexVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNeed
 {
     const auto auxEntry = verNeed->auxiliaryEntry(row);
     return qMakePair<void*, ElfNodeVariant::Type>(auxEntry, ElfNodeVariant::VersionRequirementAuxiliaryEntry);
+}
+
+IndexVisitor::type IndexVisitor::doVisit(ElfGotSection *section, int row) const
+{
+    const auto entry = section->entry(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::GotEntry);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(ElfNoteSection *section, int row) const

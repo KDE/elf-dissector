@@ -498,6 +498,19 @@ QVariant DataVisitor::doVisit(ElfGNUSymbolVersionRequirementAuxiliaryEntry* auxE
     return {};
 }
 
+QVariant DataVisitor::doVisit(ElfGotEntry* entry, int role) const
+{
+    switch (role) {
+        case Qt::DisplayRole:
+            return "GOT entry " + QString::number(entry->index());
+        case ElfModel::SizeRole:
+            return entry->section()->file()->addressSize();
+        case ElfModel::DetailRole:
+            return "TODO";
+    }
+    return {};
+}
+
 QVariant DataVisitor::doVisit(ElfNoteEntry* entry, int role) const
 {
     switch (role) {

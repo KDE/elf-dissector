@@ -32,6 +32,7 @@ protected:
     int doVisit(ElfGNUSymbolVersionDefinition *verDef, int arg) const override;
     int doVisit(ElfGNUSymbolVersionRequirementsSection* section, int) const override;
     int doVisit(ElfGNUSymbolVersionRequirement *verNeed, int) const override;
+    int doVisit(ElfGotSection* section, int arg) const override;
     int doVisit(ElfNoteSection* section, int arg) const override;
     int doVisit(ElfPltSection *section, int) const override;
     int doVisit(ElfRelocationSection* section, int arg) const override;

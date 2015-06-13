@@ -24,6 +24,7 @@
 #include <elf/elfgnusymbolversiondefinition.h>
 #include <elf/elfgnusymbolversiondefinitionssection.h>
 #include <elf/elfgnusymbolversionrequirementssection.h>
+#include <elf/elfgotsection.h>
 #include <elf/elfhashsection.h>
 #include <elf/elfgnuhashsection.h>
 #include <elf/elfnotesection.h>
@@ -72,6 +73,10 @@ public:
                 return doVisit(node->value<ElfDynamicSection>(), arg);
             case ElfNodeVariant::DynamicEntry:
                 return doVisit(node->value<ElfDynamicEntry>(), arg);
+            case ElfNodeVariant::GotSection:
+                return doVisit(node->value<ElfGotSection>(), arg);
+            case ElfNodeVariant::GotEntry:
+                return doVisit(node->value<ElfGotEntry>(), arg);
             case ElfNodeVariant::HashSection:
                 return doVisit(node->value<ElfHashSection>(), arg);
             case ElfNodeVariant::NoteSection:
@@ -170,6 +175,14 @@ protected:
         return T();
     }
     virtual T doVisit(ElfGNUSymbolVersionRequirementAuxiliaryEntry*, int) const
+    {
+        return T();
+    }
+    virtual T doVisit(ElfGotSection *section, int arg) const
+    {
+        return doVisit(static_cast<ElfSection*>(section), arg);
+    }
+    virtual T doVisit(ElfGotEntry*, int) const
     {
         return T();
     }

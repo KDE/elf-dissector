@@ -25,6 +25,7 @@
 #include "elfgnusymbolversiontable.h"
 #include "elfgnusymbolversiondefinitionssection.h"
 #include "elfgnusymbolversionrequirementssection.h"
+#include "elfgotsection.h"
 #include "elfnotesection.h"
 #include "elfpltsection.h"
 #include "elfrelocationsection.h"
@@ -268,6 +269,9 @@ void ElfFile::parseSection(uint16_t index)
         case SHT_PROGBITS:
             if (shdr->name() && strcmp(shdr->name(), ".plt") == 0) {
                 section = new ElfPltSection(this, shdr);
+                break;
+            } else if ((shdr->flags() & SHF_WRITE) && strncmp(shdr->name(), ".got", 4) == 0) {
+                section = new ElfGotSection(this, shdr);
                 break;
             }
             // else: fallthrough

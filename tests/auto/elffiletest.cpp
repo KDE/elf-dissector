@@ -20,6 +20,7 @@
 #include <elf/elfheader.h>
 #include <elf/elfpltsection.h>
 #include <elf/elfrelocationsection.h>
+#include <elf/elfgotsection.h>
 
 #include <QtTest/qtest.h>
 #include <QObject>
@@ -75,6 +76,11 @@ private slots:
                 auto section = f.section<ElfRelocationSection>(i);
                 QVERIFY(section);
                 QVERIFY(section->header()->entryCount() > 0);
+            }
+
+            if (QByteArray(shdr->name()).startsWith(".got")) {
+                auto section = f.section<ElfGotSection>(i);
+                QVERIFY(section);
             }
         }
 
