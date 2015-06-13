@@ -33,6 +33,7 @@ protected:
     int doVisit(ElfGNUSymbolVersionRequirementsSection* section, int) const override;
     int doVisit(ElfGNUSymbolVersionRequirement *verNeed, int) const override;
     int doVisit(ElfNoteSection* section, int arg) const override;
+    int doVisit(ElfPltSection *section, int) const override;
     int doVisit(ElfRelocationSection* section, int arg) const override;
     int doVisit(DwarfInfo* info, int arg) const override;
     int doVisit(DwarfDie* die, int) const override;

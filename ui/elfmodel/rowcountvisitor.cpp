@@ -65,6 +65,11 @@ int RowCountVisitor::doVisit(ElfNoteSection* section, int) const
     return section->entryCount();
 }
 
+int RowCountVisitor::doVisit(ElfPltSection* section, int) const
+{
+    return section->header()->entryCount();
+}
+
 int RowCountVisitor::doVisit(ElfRelocationSection* section, int) const
 {
     return section->header()->entryCount();

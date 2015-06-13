@@ -27,6 +27,7 @@
 #include <elf/elfhashsection.h>
 #include <elf/elfgnuhashsection.h>
 #include <elf/elfnotesection.h>
+#include <elf/elfpltsection.h>
 #include <elf/elfrelocationsection.h>
 #include <elf/elfrelocationentry.h>
 
@@ -43,6 +44,7 @@ class ElfDynamicEntry;
 class ElfFile;
 class ElfFileSet;
 class ElfGNUSymbolVersionRequirementAuxiliaryEntry;
+class ElfPltEntry;
 
 template <typename T>
 class ElfNodeVisitor
@@ -76,6 +78,10 @@ public:
                 return doVisit(node->value<ElfNoteSection>(), arg);
             case ElfNodeVariant::NoteEntry:
                 return doVisit(node->value<ElfNoteEntry>(), arg);
+            case ElfNodeVariant::PltSection:
+                return doVisit(node->value<ElfPltSection>(), arg);
+            case ElfNodeVariant::PltEntry:
+                return doVisit(node->value<ElfPltEntry>(), arg);
             case ElfNodeVariant::RelocationSection:
                 return doVisit(node->value<ElfRelocationSection>(), arg);
             case ElfNodeVariant::RelocationEntry:
@@ -172,6 +178,14 @@ protected:
         return doVisit(static_cast<ElfSection*>(section), arg);
     }
     virtual T doVisit(ElfNoteEntry*, int) const
+    {
+        return T();
+    }
+    virtual T doVisit(ElfPltSection *section, int arg) const
+    {
+        return doVisit(static_cast<ElfSection*>(section), arg);
+    }
+    virtual T doVisit(ElfPltEntry*, int) const
     {
         return T();
     }

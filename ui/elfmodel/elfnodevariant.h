@@ -32,6 +32,8 @@ struct ElfNodeVariant
         HashSection,
         NoteSection,
         NoteEntry,
+        PltSection,
+        PltEntry,
         RelocationSection,
         RelocationEntry,
         VersionDefinitionSection,

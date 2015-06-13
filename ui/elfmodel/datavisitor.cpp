@@ -510,6 +510,26 @@ QVariant DataVisitor::doVisit(ElfNoteEntry* entry, int role) const
     return QVariant();
 }
 
+QVariant DataVisitor::doVisit(ElfPltEntry* entry, int role) const
+{
+    switch (role) {
+        case Qt::DisplayRole:
+            return "PLT entry " + QString::number(entry->index());
+        case ElfModel::SizeRole:
+            return QVariant::fromValue<quint64>(entry->size());
+        case ElfModel::DetailRole:
+        {
+            QString s("Code:<br/><tt>");
+            Disassembler da;
+            s += da.disassemble(entry);
+            s += "</tt>";
+            return s;
+        }
+    }
+
+    return {};
+}
+
 QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
 {
     switch (arg) {

@@ -59,8 +59,14 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
         case SHT_GNU_HASH:
             type = ElfNodeVariant::HashSection;
             break;
+        case SHT_PROGBITS:
+            if (strcmp(section->header()->name(), ".plt") == 0) {
+                type = ElfNodeVariant::PltSection;
+                break;
+            }
+            // else fallthrough
         default:
-            if (qstrcmp(section->header()->name(), ".debug_info") == 0) {
+            if (strcmp(section->header()->name(), ".debug_info") == 0) {
                 type = ElfNodeVariant::DwarfInfo;
                 internalPointer = file->dwarfInfo();
             } else {
@@ -110,6 +116,12 @@ IndexVisitor::type IndexVisitor::doVisit(ElfNoteSection *section, int row) const
 {
     const auto entry = section->entry(row);
     return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::NoteEntry);
+}
+
+IndexVisitor::type IndexVisitor::doVisit(ElfPltSection *section, int row) const
+{
+    const auto entry = section->entry(row);
+    return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::PltEntry);
 }
 
 IndexVisitor::type IndexVisitor::doVisit(ElfRelocationSection* section, int row) const
