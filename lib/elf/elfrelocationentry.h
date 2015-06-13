@@ -41,7 +41,7 @@ private:
     template <typename T> const T* entry() const;
     bool is64() const;
 
-    const ElfRelocationSection * const m_section;
+    const ElfRelocationSection *m_section;
     uint64_t m_index:63;
     uint64_t m_withAddend:1;
 };

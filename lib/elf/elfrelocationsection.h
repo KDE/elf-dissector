@@ -18,18 +18,22 @@
 #ifndef ELFRELOCATIONSECTION_H
 #define ELFRELOCATIONSECTION_H
 
-#include "elfarraysection.h"
+#include "elfsection.h"
 #include "elfrelocationentry.h"
 
+#include <QVector>
+
 /** Relocation table sections. */
-class ElfRelocationSection : public ElfArraySection<ElfRelocationEntry>
+class ElfRelocationSection : public ElfSection
 {
 public:
     explicit ElfRelocationSection(ElfFile* file, ElfSectionHeader *shdr);
     ~ElfRelocationSection();
 
-protected:
-    ElfRelocationEntry* createEntry(uint32_t index) const override;
+    ElfRelocationEntry* entry(uint32_t index) const;
+
+private:
+    QVector<ElfRelocationEntry> m_entries;
 };
 
 #endif // ELFRELOCATIONSECTION_H
