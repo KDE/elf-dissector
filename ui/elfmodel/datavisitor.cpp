@@ -364,12 +364,24 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
                     s += DynamicSectionPrinter::flags1ToDescriptions(entry->value());
                     break;
                 default:
-                    if (entry->isStringValue())
+                    if (entry->isStringValue()) {
                         s+= entry->stringValue();
-                    else if (entry->isAddress())
+                    } else if (entry->isAddress()) {
                         s += QString("0x") + QString::number(entry->pointer(), 16);
-                    else
+                        const auto secIdx = entry->dynamicSection()->file()->indexOfSectionWidthVirtualAddress(entry->pointer());
+                        if (secIdx >= 0) {
+                            const auto section = entry->dynamicSection()->file()->section<ElfSection>(secIdx);
+                            assert(section);
+                            s += " (" + printSectionName(section);
+                            if (section->header()->virtualAddress() < entry->pointer())
+                                s += " + 0x" + QString::number(entry->pointer() - section->header()->virtualAddress(), 16);
+                            s += ')';
+                        }
+
+                        auto section = entry->dynamicSection()->file()->indexOfSectionWidthVirtualAddress(entry->pointer());
+                    } else {
                         s += QString::number(entry->value());
+                    }
             }
             s += "<br/>";
             return s;
