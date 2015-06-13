@@ -23,6 +23,7 @@
 class QString;
 
 class ElfFile;
+class ElfPltEntry;
 class ElfSection;
 class ElfSymbolTableEntry;
 
@@ -33,6 +34,7 @@ public:
 
     QString disassemble(ElfSymbolTableEntry *entry);
     QString disassemble(ElfSection *section);
+    QString disassemble(ElfPltEntry *entry);
 
     // internal
     ElfFile* file() const;

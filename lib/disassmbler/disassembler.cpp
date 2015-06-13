@@ -21,6 +21,8 @@
 #include <elf/elfsymboltablesection.h>
 #include <elf/elffile.h>
 #include <elf/elfheader.h>
+#include <elf/elfpltentry.h>
+#include <elf/elfpltsection.h>
 
 #include <QDebug>
 #include <QString>
@@ -86,6 +88,13 @@ QString Disassembler::disassemble(ElfSymbolTableEntry* entry)
     m_baseAddress = entry->value();
     return disassemble(entry->data(), entry->size());
 
+}
+
+QString Disassembler::disassemble(ElfPltEntry* entry)
+{
+    m_file = entry->section()->file();
+    m_baseAddress = entry->section()->header()->virtualAddress() + entry->index() * entry->size();
+    return disassemble(entry->rawData(), entry->size());
 }
 
 QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
