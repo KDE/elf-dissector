@@ -246,8 +246,12 @@ void ElfFile::parseSection(uint16_t index)
             break;
         case SHT_REL:
         case SHT_RELA:
-            section = new ElfRelocationSection(this, shdr);
+        {
+            auto relocSec = new ElfRelocationSection(this, shdr);
+            m_reverseReloc.addRelocationSection(relocSec);
+            section = relocSec;
             break;
+        }
         case SHT_NOTE:
             section = new ElfNoteSection(this, shdr);
             break;
@@ -353,6 +357,11 @@ ElfHashSection* ElfFile::hash() const
     if (index < 0)
         return nullptr;
     return section<ElfHashSection>(index);
+}
+
+const ElfReverseRelocator* ElfFile::reverseRelocator() const
+{
+    return &m_reverseReloc;
 }
 
 DwarfInfo* ElfFile::dwarfInfo() const

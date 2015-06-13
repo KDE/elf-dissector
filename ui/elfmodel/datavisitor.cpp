@@ -509,6 +509,14 @@ QVariant DataVisitor::doVisit(ElfGotEntry* entry, int role) const
         {
             QString s;
             s += "Address: 0x" + QString::number(entry->address(), 16) + "<br/>";
+            auto reloc = entry->section()->file()->reverseRelocator()->find(entry->address());
+            if (reloc) {
+                if (reloc->symbol() > 0)
+                    s += QString("Symbol: ") + printSymbolName(reloc->relocationTable()->linkedSection<ElfSymbolTableSection>()->entry(reloc->symbol())) + "<br/>";
+                else
+                    s += QString("Symbol: &lt;none&gt;<br/>");
+                s += "<br/>";
+            }
             return s;
         }
     }

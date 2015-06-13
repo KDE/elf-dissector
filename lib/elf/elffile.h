@@ -21,6 +21,7 @@
 #include "elfsectionheader.h"
 #include "elfsection.h"
 #include "elfdynamicsection.h"
+#include "elfreverserelocator.h"
 
 #include <QFile>
 #include <QMetaType>
@@ -96,6 +97,8 @@ public:
     ElfSymbolTableSection* symbolTable() const;
     /** Returns a symbol table hash section for fast lookup. */
     ElfHashSection* hash() const;
+    /** Reverse relocation lookup. */
+    const ElfReverseRelocator* reverseRelocator() const;
 
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;
@@ -117,6 +120,7 @@ private:
     QVector<ElfSectionHeader*> m_sectionHeaders;
     QVector<ElfSection*> m_sections;
     ElfDynamicSection* m_dynamicSection = nullptr;
+    ElfReverseRelocator m_reverseReloc;
     DwarfInfo *m_dwarfInfo = nullptr;
     QVector<ElfSegmentHeader*> m_segmentHeaders;
 };

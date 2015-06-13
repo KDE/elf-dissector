@@ -21,6 +21,7 @@ set(libelfdisector_srcs
     elf/elfpltsection.cpp
     elf/elfrelocationentry.cpp
     elf/elfrelocationsection.cpp
+    elf/elfreverserelocator.cpp
     elf/elfsectionheader.cpp
     elf/elfsection.cpp
     elf/elfsegmentheader.cpp

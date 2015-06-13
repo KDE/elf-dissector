@@ -70,6 +70,8 @@ private slots:
         QVERIFY(pltSection);
         QVERIFY(pltSection->header()->entryCount() > 0);
 
+        QVERIFY(f.reverseRelocator());
+
         for (int i = 0; i < f.header()->sectionHeaderCount(); ++i) {
             auto shdr = f.sectionHeaders().at(i);
             if (shdr->type() == SHT_REL || shdr->type() == SHT_RELA) {
@@ -81,6 +83,10 @@ private slots:
             if (QByteArray(shdr->name()).startsWith(".got")) {
                 auto section = f.section<ElfGotSection>(i);
                 QVERIFY(section);
+                for (uint i = 0; i < section->header()->entryCount(); ++i) {
+                    auto gotEntry = section->entry(i);
+                    QVERIFY(f.reverseRelocator()->find(gotEntry->address()));
+                }
             }
         }
 
