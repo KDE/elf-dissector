@@ -18,6 +18,8 @@
 #ifndef RELOCATIONPRINTER_H
 #define RELOCATIONPRINTER_H
 
+#include <cstdint>
+
 class ElfRelocationEntry;
 class QByteArray;
 
@@ -25,6 +27,7 @@ class QByteArray;
 namespace RelocationPrinter
 {
     QByteArray label(ElfRelocationEntry* entry);
+    QByteArray label(uint16_t machine, uint32_t type);
     QByteArray description(ElfRelocationEntry* entry);
 }
 

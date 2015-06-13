@@ -363,6 +363,9 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
                 case DT_FLAGS_1:
                     s += DynamicSectionPrinter::flags1ToDescriptions(entry->value());
                     break;
+                case DT_PLTREL:
+                    s += RelocationPrinter::label(entry->dynamicSection()->file()->header()->machine(), entry->value());
+                    break;
                 default:
                     if (entry->isStringValue()) {
                         s+= entry->stringValue();
@@ -377,8 +380,6 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
                                 s += " + 0x" + QString::number(entry->pointer() - section->header()->virtualAddress(), 16);
                             s += ')';
                         }
-
-                        auto section = entry->dynamicSection()->file()->indexOfSectionWidthVirtualAddress(entry->pointer());
                     } else {
                         s += QString::number(entry->value());
                     }

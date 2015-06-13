@@ -267,19 +267,24 @@ static const RelocTypeRepository reloc_type_repository[] {
 
 static const int reloc_type_repository_size = sizeof(reloc_type_repository) / sizeof(RelocTypeRepository);
 
-static const RelocType* relocTypeInfo(ElfRelocationEntry* entry)
+static const RelocType* relocTypeInfo(uint16_t machine, uint32_t type)
 {
     // TODO can be optimized, tables are sorted
     for (int i = 0; i < reloc_type_repository_size; ++i) {
-        if (reloc_type_repository[i].machine != entry->relocationTable()->file()->header()->machine())
+        if (reloc_type_repository[i].machine != machine)
             continue;
         for (int j = 0; j < reloc_type_repository[i].typeInfosSize; ++j) {
-            if (reloc_type_repository[i].typeInfos[j].id == entry->type())
+            if (reloc_type_repository[i].typeInfos[j].id == type)
                 return &reloc_type_repository[i].typeInfos[j];
         }
     }
 
     return nullptr;
+}
+
+static const RelocType* relocTypeInfo(ElfRelocationEntry* entry)
+{
+    return relocTypeInfo(entry->relocationTable()->file()->header()->machine(), entry->type());
 }
 
 namespace RelocationPrinter {
@@ -289,6 +294,14 @@ QByteArray label(ElfRelocationEntry* entry)
     const auto info = relocTypeInfo(entry);
     if (!info)
         return QByteArray("unknown relocation type ") + QByteArray::number(entry->type());
+    return QByteArray::fromRawData(info->label, strlen(info->label));
+}
+
+QByteArray label(uint16_t machine, uint32_t type)
+{
+    const auto info = relocTypeInfo(machine, type);
+    if (!info)
+        return QByteArray("unknown relocation type ") + QByteArray::number(type);
     return QByteArray::fromRawData(info->label, strlen(info->label));
 }
 
