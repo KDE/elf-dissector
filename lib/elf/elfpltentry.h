@@ -21,6 +21,7 @@
 #include <QtGlobal>
 
 class ElfPltSection;
+class ElfGotEntry;
 
 class ElfPltEntry
 {
@@ -34,6 +35,9 @@ public:
     uint64_t index() const;
     const uchar* rawData() const;
     uint64_t size() const;
+
+    /** The GOT entry used by this PLT entry. */
+    ElfGotEntry* gotEntry() const;
 
 private:
     ElfPltSection *m_section = nullptr;

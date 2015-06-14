@@ -69,6 +69,12 @@ private slots:
         auto pltSection = f.section<ElfPltSection>(f.indexOfSection(".plt"));
         QVERIFY(pltSection);
         QVERIFY(pltSection->header()->entryCount() > 0);
+        QVERIFY(pltSection->gotSection());
+        for (uint i = 1; i < pltSection->header()->entryCount(); ++i) {
+            auto pltEntry = pltSection->entry(i);
+            QVERIFY(pltEntry);
+            QVERIFY(pltEntry->gotEntry());
+        }
 
         QVERIFY(f.reverseRelocator());
 

@@ -23,6 +23,8 @@
 
 #include <QVector>
 
+class ElfGotSection;
+
 class ElfPltSection : public ElfSection
 {
 public:
@@ -31,8 +33,12 @@ public:
 
     ElfPltEntry* entry(uint64_t index) const;
 
+    /** The GOT section used by this PLT section. */
+    ElfGotSection* gotSection() const;
+
 private:
     QVector<ElfPltEntry> m_entries;
+    mutable ElfGotSection *m_gotSection;
 };
 
 #endif // ELFPLTSECTION_H

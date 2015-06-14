@@ -17,6 +17,7 @@
 
 #include "elfpltentry.h"
 #include "elfpltsection.h"
+#include "elfgotsection.h"
 
 ElfPltEntry::ElfPltEntry() = default;
 
@@ -46,4 +47,11 @@ const uchar* ElfPltEntry::rawData() const
 uint64_t ElfPltEntry::size() const
 {
     return m_section->header()->entrySize();
+}
+
+ElfGotEntry* ElfPltEntry::gotEntry() const
+{
+    if (!m_index)
+        return nullptr; // see i386/x86_64 psABI documentation for content of the first entry
+    return m_section->gotSection()->entry(m_index + 2);
 }
