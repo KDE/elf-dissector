@@ -154,6 +154,11 @@ QModelIndex ElfModel::indexForNode(ElfGotEntry* entry) const
     return indexForNode(entry, ElfNodeVariant::GotEntry);
 }
 
+QModelIndex ElfModel::indexForNode(ElfPltEntry* entry) const
+{
+    return indexForNode(entry, ElfNodeVariant::PltEntry);
+}
+
 QModelIndex ElfModel::indexForNode(DwarfDie* die) const
 {
     return indexForNode(die, ElfNodeVariant::DwarfDie);

@@ -35,6 +35,7 @@ protected:
     type doVisit(ElfGNUSymbolVersionDefinition* verDef, int) const override;
     type doVisit(ElfGNUSymbolVersionRequirement *verNeed, int) const override;
     type doVisit(ElfGotEntry *entry, int) const override;
+    type doVisit(ElfPltEntry *entry, int) const override;
     type doVisit(ElfSymbolTableEntry *symbold, int) const override;
     type doVisit(DwarfInfo* info, int) const override;
     type doVisit(DwarfDie* die, int) const override;

@@ -67,6 +67,17 @@ public:
         return s;
     }
 
+    QString printPltEntry(ElfPltEntry* entry) const override
+    {
+        QString s;
+        s += "<a href=\"";
+        s += m_v->m_model->indexForNode(entry).data(ElfModel::NodeUrl).toUrl().toEncoded();
+        s += "\">";
+        s += Disassembler::printPltEntry(entry);
+        s += "</a>";
+        return s;
+    }
+
 private:
     const DataVisitor* const m_v;
 };

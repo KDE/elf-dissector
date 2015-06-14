@@ -79,6 +79,11 @@ ParentVisitor::type ParentVisitor::doVisit(ElfGotEntry* entry, int) const
     return makeParent(entry->section(), ElfNodeVariant::GotSection, entry->index());
 }
 
+ParentVisitor::type ParentVisitor::doVisit(ElfPltEntry* entry, int) const
+{
+    return makeParent(entry->section(), ElfNodeVariant::PltSection, entry->index());
+}
+
 ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) const
 {
     int row = -1;

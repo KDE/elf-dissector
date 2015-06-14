@@ -74,6 +74,17 @@ static void print_address(bfd_vma addr, struct disassemble_info *info)
     const auto section = disasm->file()->section<ElfSection>(secIdx);
     assert(section);
 
+    const auto pltSection = dynamic_cast<ElfPltSection*>(section);
+    if (pltSection) {
+        const auto pltEntry = pltSection->entry((targetAddr - section->header()->virtualAddress()) / section->header()->entrySize());
+        assert(pltEntry);
+        auto s = static_cast<QString*>(info->stream);
+        s->append(" (");
+        s->append(disasm->printPltEntry(pltEntry));
+        s->append(')');
+        return;
+    }
+
     const auto gotSection = dynamic_cast<ElfGotSection*>(section);
     if (gotSection) {
         const auto gotEntry = gotSection->entry((targetAddr - section->header()->virtualAddress()) / disasm->file()->addressSize());
@@ -185,4 +196,9 @@ QString Disassembler::printGotEntry(ElfGotEntry* entry) const
     if (sym)
         return sym->name() + QLatin1String("@got");
     return entry->section()->header()->name() + QLatin1String(" + 0x") + QString::number(entry->index() * entry->section()->file()->addressSize());
+}
+
+QString Disassembler::printPltEntry(ElfPltEntry* entry) const
+{
+    return entry->section()->header()->name() + QLatin1String(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
 }

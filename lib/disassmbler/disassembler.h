@@ -45,6 +45,8 @@ public:
     virtual QString printSymbol(ElfSymbolTableEntry *entry) const;
     /** ditto, for .got entires. */
     virtual QString printGotEntry(ElfGotEntry *entry) const;
+    /** ditto, for .plt entries. */
+    virtual QString printPltEntry(ElfPltEntry *entry) const;
 
 private:
     QString disassemble(const unsigned char* data, uint64_t size);
