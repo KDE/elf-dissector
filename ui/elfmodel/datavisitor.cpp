@@ -575,7 +575,14 @@ QVariant DataVisitor::doVisit(ElfPltEntry* entry, int role) const
 {
     switch (role) {
         case Qt::DisplayRole:
+        {
+            const auto gotEntry = entry->gotEntry();
+            const auto reloc = gotEntry ? gotEntry->relocation() : nullptr;
+            const auto sym = reloc ? reloc->symbol() : nullptr;
+            if (sym)
+                return sym->name() + QLatin1String("@plt");
             return "PLT entry " + QString::number(entry->index());
+        }
         case ElfModel::SizeRole:
             return QVariant::fromValue<quint64>(entry->size());
         case ElfModel::DetailRole:
