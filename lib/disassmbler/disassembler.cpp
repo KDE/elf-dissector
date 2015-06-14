@@ -23,6 +23,8 @@
 #include <elf/elfheader.h>
 #include <elf/elfpltentry.h>
 #include <elf/elfpltsection.h>
+#include <elf/elfgotsection.h>
+#include <elf/elfrelocationentry.h>
 
 #include <QDebug>
 #include <QString>
@@ -66,11 +68,24 @@ static void print_address(bfd_vma addr, struct disassemble_info *info)
     }
 
     const auto secIdx = disasm->file()->indexOfSectionWidthVirtualAddress(targetAddr);
-    if (secIdx >= 0) {
-        const auto section = disasm->file()->section<ElfSection>(secIdx);
-        assert(section);
-        (*info->fprintf_func) (info->stream, " (%s + 0x%lx)", section->header()->name(), targetAddr - section->header()->virtualAddress());
+    if (secIdx < 0)
+        return;
+
+    const auto section = disasm->file()->section<ElfSection>(secIdx);
+    assert(section);
+
+    const auto gotSection = dynamic_cast<ElfGotSection*>(section);
+    if (gotSection) {
+        const auto gotEntry = gotSection->entry((targetAddr - section->header()->virtualAddress()) / disasm->file()->addressSize());
+        assert(gotEntry);
+        auto s = static_cast<QString*>(info->stream);
+        s->append(" (");
+        s->append(disasm->printGotEntry(gotEntry));
+        s->append(')');
+        return;
     }
+
+    (*info->fprintf_func) (info->stream, " (%s + 0x%lx)", section->header()->name(), targetAddr - section->header()->virtualAddress());
 }
 
 Disassembler::~Disassembler() = default;
@@ -161,4 +176,13 @@ uint64_t Disassembler::baseAddress() const
 QString Disassembler::printSymbol(ElfSymbolTableEntry* entry) const
 {
     return QLatin1String(entry->name());
+}
+
+QString Disassembler::printGotEntry(ElfGotEntry* entry) const
+{
+    const auto reloc = entry->relocation();
+    const auto sym = reloc ? reloc->symbol() : nullptr;
+    if (sym)
+        return sym->name() + QLatin1String("@got");
+    return entry->section()->header()->name() + QLatin1String(" + 0x") + QString::number(entry->index() * entry->section()->file()->addressSize());
 }

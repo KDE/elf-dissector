@@ -26,6 +26,7 @@ class ElfFile;
 class ElfPltEntry;
 class ElfSection;
 class ElfSymbolTableEntry;
+class ElfGotEntry;
 
 class Disassembler
 {
@@ -42,6 +43,8 @@ public:
 
     /** Pretty-print symbol name, override for adding navigation links etc. */
     virtual QString printSymbol(ElfSymbolTableEntry *entry) const;
+    /** ditto, for .got entires. */
+    virtual QString printGotEntry(ElfGotEntry *entry) const;
 
 private:
     QString disassemble(const unsigned char* data, uint64_t size);
