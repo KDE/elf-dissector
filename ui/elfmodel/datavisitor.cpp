@@ -514,14 +514,10 @@ QVariant DataVisitor::doVisit(ElfGotEntry* entry, int role) const
         case ElfModel::DetailRole:
         {
             QString s;
-            s += "Address: 0x" + QString::number(entry->address(), 16) + "<br/>";
+            s += "<b>GOT entry</b><br/>";
+            s += "Address: 0x" + QString::number(entry->address(), 16) + "<br/><br/>";
             const auto reloc = entry->relocation();
-            const auto sym = reloc ? reloc->symbol() : nullptr;
-            if (sym)
-                s += QString("Symbol: ") + printSymbolName(sym) + "<br/>";
-            else
-                s += QString("Symbol: &lt;none&gt;<br/>");
-            s += "<br/>";
+            s += printRelocation(reloc);
             return s;
         }
     }
@@ -580,30 +576,7 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
             return RelocationPrinter::label(entry) + " 0x" + QString::number(entry->offset(), 16);
             break;
         case ElfModel::DetailRole:
-        {
-            QString s;
-            s += "Offset: 0x" + QString::number(entry->offset(), 16);
-            const auto sym = entry->relocationTable()->file()->symbolTable()->entryContainingValue(entry->offset());
-            if (sym) {
-                s += QString(" (") + printSymbolName(sym) + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
-            } else {
-                for (const auto &shdr : entry->relocationTable()->file()->sectionHeaders()) {
-                    if (shdr->virtualAddress() <= entry->offset() && entry->offset() < shdr->virtualAddress() + shdr->size()) {
-                        s += QString(" (") + shdr->name() + " + 0x" + QString::number(entry->offset() - shdr->virtualAddress(), 16) + ')';
-                        break;
-                    }
-                }
-            }
-            s += "<br/>";
-            s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
-            const auto sourceSym = entry->symbol();
-            if (sourceSym)
-                s += QString("Symbol: ") + printSymbolName(sourceSym) + "<br/>";
-            else
-                s += QString("Symbol: &lt;none&gt;<br/>");
-            s += "Addend: 0x" + QString::number(entry->addend(), 16);
-            return s;
-        }
+            return printRelocation(entry);
     }
 
     return {};
@@ -665,6 +638,36 @@ QString DataVisitor::printSymbolName(ElfSymbolTableEntry* symbol) const
     s += symbol->name();
     s += "</a>";
 
+    return s;
+}
+
+QString DataVisitor::printRelocation(ElfRelocationEntry* entry) const
+{
+    QString s;
+    if (!entry)
+        return s;
+
+    s += "<b>Relocation</b><br/>";
+    s += "Offset: 0x" + QString::number(entry->offset(), 16);
+    const auto sym = entry->relocationTable()->file()->symbolTable()->entryContainingValue(entry->offset());
+    if (sym) {
+        s += QString(" (") + printSymbolName(sym) + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
+    } else {
+        for (const auto &shdr : entry->relocationTable()->file()->sectionHeaders()) {
+            if (shdr->virtualAddress() <= entry->offset() && entry->offset() < shdr->virtualAddress() + shdr->size()) {
+                s += QString(" (") + shdr->name() + " + 0x" + QString::number(entry->offset() - shdr->virtualAddress(), 16) + ')';
+                break;
+            }
+        }
+    }
+    s += "<br/>";
+    s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
+    const auto sourceSym = entry->symbol();
+    if (sourceSym)
+        s += QString("Symbol: ") + printSymbolName(sourceSym) + "<br/>";
+    else
+        s += QString("Symbol: &lt;none&gt;<br/>");
+    s += "Addend: 0x" + QString::number(entry->addend(), 16);
     return s;
 }
 

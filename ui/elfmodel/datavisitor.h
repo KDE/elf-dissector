@@ -51,6 +51,7 @@ private:
     friend class NavigatingDisassembler;
     QString printSectionName(ElfSection *section) const;
     QString printSymbolName(ElfSymbolTableEntry *symbol) const;
+    QString printRelocation(ElfRelocationEntry *entry) const;
     QString printDwarfDie(DwarfDie* die) const;
     QString printDwarfDieName(DwarfDie* die) const;
 
