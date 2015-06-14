@@ -67,7 +67,7 @@ static void print_address(bfd_vma addr, struct disassemble_info *info)
         return;
     }
 
-    const auto secIdx = disasm->file()->indexOfSectionWidthVirtualAddress(targetAddr);
+    const auto secIdx = disasm->file()->indexOfSectionWithVirtualAddress(targetAddr);
     if (secIdx < 0)
         return;
 

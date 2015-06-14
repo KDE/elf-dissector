@@ -393,7 +393,7 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
                         s+= entry->stringValue();
                     } else if (entry->isAddress()) {
                         s += QString("0x") + QString::number(entry->pointer(), 16);
-                        const auto secIdx = entry->dynamicSection()->file()->indexOfSectionWidthVirtualAddress(entry->pointer());
+                        const auto secIdx = entry->dynamicSection()->file()->indexOfSectionWithVirtualAddress(entry->pointer());
                         if (secIdx >= 0) {
                             const auto section = entry->dynamicSection()->file()->section<ElfSection>(secIdx);
                             assert(section);

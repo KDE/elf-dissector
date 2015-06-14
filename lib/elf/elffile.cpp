@@ -324,7 +324,7 @@ int ElfFile::indexOfSection(const char* name) const
     return -1;
 }
 
-int ElfFile::indexOfSectionWidthVirtualAddress(uint64_t virtAddr) const
+int ElfFile::indexOfSectionWithVirtualAddress(uint64_t virtAddr) const
 {
     for (int i = 0; i < m_sectionHeaders.size(); ++i) {
         const auto hdr = m_sectionHeaders.at(i);

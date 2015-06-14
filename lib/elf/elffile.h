@@ -89,7 +89,7 @@ public:
     /** Finds a section by name. */
     int indexOfSection(const char* name) const;
     /** Finds the section containing @p virtAddr. */
-    int indexOfSectionWidthVirtualAddress(uint64_t virtAddr) const;
+    int indexOfSectionWithVirtualAddress(uint64_t virtAddr) const;
 
     /** Returns the dynamic section. */
     ElfDynamicSection* dynamicSection() const;
