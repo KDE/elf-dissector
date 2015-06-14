@@ -18,6 +18,7 @@
 #include "elfrelocationentry.h"
 #include "elfrelocationsection.h"
 #include "elffile.h"
+#include "elfsymboltablesection.h"
 
 #include <elf.h>
 
@@ -58,7 +59,7 @@ uint64_t ElfRelocationEntry::offset() const
     Q_UNREACHABLE();
 }
 
-uint32_t ElfRelocationEntry::symbol() const
+uint32_t ElfRelocationEntry::symbolIndex() const
 {
     if (is64()) {
         if (m_withAddend)
@@ -115,4 +116,12 @@ const T* ElfRelocationEntry::entry() const
 bool ElfRelocationEntry::is64() const
 {
     return m_section->file()->type() == ELFCLASS64;
+}
+
+ElfSymbolTableEntry* ElfRelocationEntry::symbol() const
+{
+    const auto symIdx = symbolIndex();
+    if (symIdx > 0)
+        return m_section->linkedSection<ElfSymbolTableSection>()->entry(symIdx);
+    return nullptr;
 }

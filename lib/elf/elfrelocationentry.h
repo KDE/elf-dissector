@@ -22,6 +22,7 @@
 #include <cstdint>
 
 class ElfRelocationSection;
+class ElfSymbolTableEntry;
 
 class ElfRelocationEntry
 {
@@ -33,9 +34,12 @@ public:
     const ElfRelocationSection* relocationTable() const;
 
     uint64_t offset() const;
-    uint32_t symbol() const;
+    uint32_t symbolIndex() const;
     uint32_t type() const;
     uint64_t addend() const;
+
+    /** Symbol table entry referenced from this relocation, can be @c nullptr. */
+    ElfSymbolTableEntry* symbol() const;
 
 private:
     template <typename T> const T* entry() const;

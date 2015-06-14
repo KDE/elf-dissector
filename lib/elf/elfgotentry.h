@@ -21,6 +21,7 @@
 #include <QtGlobal>
 
 class ElfGotSection;
+class ElfRelocationEntry;
 
 /** Entry in the global offset table. */
 class ElfGotEntry
@@ -32,6 +33,9 @@ public:
     ElfGotSection *section() const;
     uint64_t index() const;
     uint64_t address() const;
+
+    /** Relocation information for this GOT entry, can be @c nullptr. */
+    ElfRelocationEntry* relocation() const;
 
 private:
     ElfGotSection *m_section;

@@ -45,3 +45,8 @@ uint64_t ElfGotEntry::address() const
 {
     return m_section->header()->virtualAddress() + m_index * m_section->file()->addressSize();
 }
+
+ElfRelocationEntry* ElfGotEntry::relocation() const
+{
+    return m_section->file()->reverseRelocator()->find(address());
+}
