@@ -502,7 +502,13 @@ QVariant DataVisitor::doVisit(ElfGotEntry* entry, int role) const
 {
     switch (role) {
         case Qt::DisplayRole:
+        {
+            const auto reloc = entry->relocation();
+            const auto sym = reloc ? reloc->symbol() : nullptr;
+            if (sym)
+                return sym->name() + QString("@got");
             return "GOT entry " + QString::number(entry->index());
+        }
         case ElfModel::SizeRole:
             return entry->section()->file()->addressSize();
         case ElfModel::DetailRole:
