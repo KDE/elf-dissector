@@ -200,5 +200,10 @@ QString Disassembler::printGotEntry(ElfGotEntry* entry) const
 
 QString Disassembler::printPltEntry(ElfPltEntry* entry) const
 {
+    const auto gotEntry = entry->gotEntry();
+    const auto reloc = gotEntry ? gotEntry->relocation() : nullptr;
+    const auto sym = reloc ? reloc->symbol() : nullptr;
+    if (sym)
+        return sym->name() + QLatin1String("@plt");
     return entry->section()->header()->name() + QLatin1String(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
 }
