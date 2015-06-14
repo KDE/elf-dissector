@@ -56,6 +56,17 @@ public:
         return m_v->printSymbolName(entry);
     }
 
+    QString printGotEntry(ElfGotEntry* entry) const override
+    {
+        QString s;
+        s += "<a href=\"";
+        s += m_v->m_model->indexForNode(entry).data(ElfModel::NodeUrl).toUrl().toEncoded();
+        s += "\">";
+        s += Disassembler::printGotEntry(entry);
+        s += "</a>";
+        return s;
+    }
+
 private:
     const DataVisitor* const m_v;
 };
@@ -559,7 +570,7 @@ QVariant DataVisitor::doVisit(ElfPltEntry* entry, int role) const
         case ElfModel::DetailRole:
         {
             QString s("Code:<br/><tt>");
-            Disassembler da;
+            NavigatingDisassembler da(this);
             s += da.disassemble(entry);
             s += "</tt>";
             return s;

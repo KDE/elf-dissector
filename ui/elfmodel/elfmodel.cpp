@@ -19,6 +19,7 @@
 
 #include <elf/elffile.h>
 #include <elf/elfheader.h>
+#include <elf/elfgotentry.h>
 
 #include "rowcountvisitor.h"
 #include "indexvisitor.h"
@@ -146,6 +147,11 @@ QModelIndex ElfModel::indexForNode(ElfSection* section) const
 QModelIndex ElfModel::indexForNode(ElfSymbolTableEntry* symbol) const
 {
     return indexForNode(symbol, ElfNodeVariant::SymbolTableEntry);
+}
+
+QModelIndex ElfModel::indexForNode(ElfGotEntry* entry) const
+{
+    return indexForNode(entry, ElfNodeVariant::GotEntry);
 }
 
 QModelIndex ElfModel::indexForNode(DwarfDie* die) const

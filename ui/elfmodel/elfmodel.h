@@ -25,6 +25,7 @@
 class ElfFileSet;
 class ElfSection;
 class ElfSymbolTableEntry;
+class ElfGotEntry;
 class DwarfDie;
 
 /** Model for the ELF structure.
@@ -58,6 +59,7 @@ public:
 
     QModelIndex indexForNode(ElfSection* section) const;
     QModelIndex indexForNode(ElfSymbolTableEntry* symbol) const;
+    QModelIndex indexForNode(ElfGotEntry *entry) const;
     QModelIndex indexForNode(DwarfDie* die) const;
     QModelIndex indexForUrl(const QUrl &url) const;
 

@@ -74,6 +74,11 @@ ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionRequirement *verNe
     return makeParent(verNeed->section(), ElfNodeVariant::VersionRequirementsSection, row);
 }
 
+ParentVisitor::type ParentVisitor::doVisit(ElfGotEntry* entry, int) const
+{
+    return makeParent(entry->section(), ElfNodeVariant::GotSection, entry->index());
+}
+
 ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) const
 {
     int row = -1;
