@@ -93,7 +93,7 @@ private slots:
             dieQueue += die->children();
 
             const auto lowPC = die->attribute(DW_AT_low_pc).toULongLong();
-            if (!lowPC > 0)
+            if (lowPC <= 0)
                 continue;
 
             const auto lookupCU = f.dwarfInfo()->addressRanges()->compilationUnitForAddress(lowPC);
