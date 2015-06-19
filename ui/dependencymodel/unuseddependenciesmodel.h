@@ -26,7 +26,7 @@ class UnusedDependenciesModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit UnusedDependenciesModel(QObject* parent = 0);
+    explicit UnusedDependenciesModel(QObject* parent = nullptr);
     ~UnusedDependenciesModel();
 
     void setFileSet(ElfFileSet *fileSet);

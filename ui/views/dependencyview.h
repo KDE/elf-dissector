@@ -37,7 +37,7 @@ class DependencyView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit DependencyView(QWidget* parent = 0);
+    explicit DependencyView(QWidget* parent = nullptr);
     ~DependencyView();
 
     void setFileSet(ElfFileSet *fileSet);

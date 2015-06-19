@@ -28,7 +28,7 @@ class UsedSymbolModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit UsedSymbolModel(QObject* parent = 0);
+    explicit UsedSymbolModel(QObject* parent = nullptr);
     ~UsedSymbolModel();
 
     void setFiles(ElfFile *user, ElfFile *provider);

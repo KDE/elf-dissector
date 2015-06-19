@@ -96,7 +96,7 @@ void SizeTreeMapView::reloadTreeMap()
         return;
 
     // TODO inefficient and leacky...
-    TreeMapItem *baseItem = new TreeMapItem;
+    auto baseItem = new TreeMapItem;
     baseItem->setText(0, file->displayName());
     baseItem->setSum(file->size());
 

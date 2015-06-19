@@ -24,7 +24,7 @@
 class SectionProxyModel : public KRecursiveFilterProxyModel
 {
 public:
-    explicit SectionProxyModel(QObject* parent = 0);
+    explicit SectionProxyModel(QObject* parent = nullptr);
     ~SectionProxyModel();
 
     bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const final;

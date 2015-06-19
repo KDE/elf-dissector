@@ -26,7 +26,7 @@ class GnuplotWidget : public QLabel
 {
     Q_OBJECT
 public:
-    explicit GnuplotWidget(QWidget *parent = 0);
+    explicit GnuplotWidget(QWidget *parent = nullptr);
     ~GnuplotWidget();
 
     void setPlotter(Gnuplotter &&plotter);

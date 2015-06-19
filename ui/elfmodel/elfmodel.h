@@ -78,7 +78,7 @@ private:
     QUrl urlForIndex(const QModelIndex &index) const;
 
 private:
-    ElfFileSet *m_fileSet = 0;
+    ElfFileSet *m_fileSet = nullptr;
     mutable QHash<void*, ElfNodeVariant*> m_internalPointerMap;
 
 };

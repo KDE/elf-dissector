@@ -37,7 +37,7 @@ class ElfStructureView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ElfStructureView(QWidget* parent = 0);
+    explicit ElfStructureView(QWidget* parent = nullptr);
     ~ElfStructureView();
 
     void setModel(ElfModel* model);

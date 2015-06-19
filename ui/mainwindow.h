@@ -34,7 +34,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget* parent = 0);
+    explicit MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
     void loadFile(const QString &fileName);
@@ -53,7 +53,7 @@ private:
 private:
     std::unique_ptr<Ui::MainWindow> ui;
     QString m_currentFileName;
-    ElfModel *m_elfModel = 0;
+    ElfModel *m_elfModel = nullptr;
     std::unique_ptr<ElfFileSet> m_fileSet;
 };
 

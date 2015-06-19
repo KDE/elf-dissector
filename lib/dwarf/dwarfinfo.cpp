@@ -102,25 +102,25 @@ DwarfInfoPrivate::DwarfInfoPrivate(DwarfInfo *qq) :
     objAccessMethods.get_section_count = callback_get_section_count;
     objAccessMethods.get_section_info = callback_get_section_info;
     objAccessMethods.load_section = callback_load_section;
-    objAccessMethods.relocate_a_section = 0;
+    objAccessMethods.relocate_a_section = nullptr;
 }
 
 DwarfInfoPrivate::~DwarfInfoPrivate()
 {
     qDeleteAll(compilationUnits);
-    dwarf_object_finish(dbg, 0);
+    dwarf_object_finish(dbg, nullptr);
 }
 
 void DwarfInfoPrivate::scanCompilationUnits()
 {
     Dwarf_Unsigned nextHeader = 0;
     forever {
-        auto res = dwarf_next_cu_header(dbg, 0, 0, 0, 0, &nextHeader, 0);
+        auto res = dwarf_next_cu_header(dbg, nullptr, nullptr, nullptr, nullptr, &nextHeader, nullptr);
         if (res != DW_DLV_OK)
             return;
 
         Dwarf_Die cuDie = nullptr;
-        res = dwarf_siblingof(dbg, 0, &cuDie, 0);
+        res = dwarf_siblingof(dbg, nullptr, &cuDie, nullptr);
         if(res != DW_DLV_OK)
             return;
 
@@ -146,7 +146,7 @@ DwarfInfo::DwarfInfo(ElfFile* elfFile) :
 {
     d->elfFile = elfFile;
 
-    if (dwarf_object_init(&d->objAccessIface, 0, 0, &d->dbg, 0) != DW_DLV_OK) {
+    if (dwarf_object_init(&d->objAccessIface, nullptr, nullptr, &d->dbg, nullptr) != DW_DLV_OK) {
         qDebug() << "error loading dwarf data";
     }
 }

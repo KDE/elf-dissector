@@ -33,7 +33,7 @@ class IssuesView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit IssuesView(QWidget* parent = 0);
+    explicit IssuesView(QWidget* parent = nullptr);
     ~IssuesView();
 
     void setFileSet(ElfFileSet *fileSet);

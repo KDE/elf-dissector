@@ -49,7 +49,7 @@ void ElfModel::setFileSet(ElfFileSet *fileSet)
     clearInternalPointerMap();
     m_fileSet = fileSet;
 
-    auto *v = new ElfNodeVariant;
+    auto v = new ElfNodeVariant;
     v->payload = m_fileSet;
     v->type = ElfNodeVariant::FileSet;
     m_internalPointerMap.insert(m_fileSet, v);
@@ -203,7 +203,7 @@ ElfNodeVariant* ElfModel::makeVariant(void* payload, ElfNodeVariant::Type type) 
     auto it = m_internalPointerMap.constFind(payload);
     if (it != m_internalPointerMap.cend())
         return it.value();
-    ElfNodeVariant *var = new ElfNodeVariant;
+    auto var = new ElfNodeVariant;
     var->payload = payload;
     var->type = type;
     m_internalPointerMap.insert(payload, var);

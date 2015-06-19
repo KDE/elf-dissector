@@ -24,7 +24,7 @@ class SidePane : public QListView
 {
     Q_OBJECT
 public:
-    explicit SidePane(QWidget* parent = 0);
+    explicit SidePane(QWidget* parent = nullptr);
     ~SidePane();
 
     QSize sizeHint() const override;

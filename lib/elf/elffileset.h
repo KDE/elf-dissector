@@ -27,7 +27,7 @@ class ElfFileSet : public QObject
 {
     Q_OBJECT
 public:
-    explicit ElfFileSet(QObject* parent = 0);
+    explicit ElfFileSet(QObject* parent = nullptr);
     ~ElfFileSet();
 
     int size() const;

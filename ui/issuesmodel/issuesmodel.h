@@ -27,7 +27,7 @@ class IssuesModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit IssuesModel(QObject* parent = 0);
+    explicit IssuesModel(QObject* parent = nullptr);
     ~IssuesModel();
 
     void setFileSet(ElfFileSet *fileSet);

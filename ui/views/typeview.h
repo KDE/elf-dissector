@@ -35,7 +35,7 @@ class TypeView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TypeView(QWidget* parent = 0);
+    explicit TypeView(QWidget* parent = nullptr);
     ~TypeView();
 
     void setFileSet(ElfFileSet *fileSet);

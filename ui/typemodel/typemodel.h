@@ -35,7 +35,7 @@ public:
         DetailRole = Qt::UserRole + 1
     };
 
-    explicit TypeModel(QObject* parent = 0);
+    explicit TypeModel(QObject* parent = nullptr);
     ~TypeModel();
 
     void setFileSet(ElfFileSet *fileSet);

@@ -30,7 +30,7 @@ class DependencyModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit DependencyModel(QObject* parent = 0);
+    explicit DependencyModel(QObject* parent = nullptr);
     ~DependencyModel();
 
     enum Role {

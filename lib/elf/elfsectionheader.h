@@ -58,7 +58,7 @@ protected:
     explicit ElfSectionHeader(ElfFile *file, uint16_t sectionIndex);
 
 private:
-    ElfFile *m_file = 0;
+    ElfFile *m_file = nullptr;
     uint16_t m_sectionIndex = 0;
 };
 

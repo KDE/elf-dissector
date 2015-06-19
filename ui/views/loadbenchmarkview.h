@@ -32,7 +32,7 @@ class LoadBenchmarkView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit LoadBenchmarkView(QWidget* parent = 0);
+    explicit LoadBenchmarkView(QWidget* parent = nullptr);
     ~LoadBenchmarkView();
 
     void setFileSet(ElfFileSet *fileSet);

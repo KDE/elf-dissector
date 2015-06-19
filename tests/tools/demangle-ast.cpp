@@ -413,7 +413,7 @@ int main(int argc, char** argv)
     if (argc < 2)
         return 1;
 
-    void *memory = 0;
+    void *memory = nullptr;
     demangle_component *component = cplus_demangle_v3_components(argv[1], DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, &memory);
 
     cout << "digraph ast {" << endl;

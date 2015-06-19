@@ -125,7 +125,7 @@ void ElfFileSet::topologicalSort()
 
         // we did not find one with unresolved dependencies, shouldn't happen, unless there's a cycle
         // so just take one and see how far we get
-        if (sorted.at(i) == 0)
+        if (sorted.at(i) == nullptr)
             sorted[i] = remaining.takeFirst();
     }
 
