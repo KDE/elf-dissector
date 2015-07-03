@@ -101,7 +101,11 @@ static double relocRatio(ElfSectionHeader *shdr)
 
 static QColor relocColor(double ratio)
 {
-    return QColor(ratio * 255, (1 - ratio) * 255, 0);
+    return QColor(
+        std::min(255.0, ratio * 510),
+        std::min(255.0, (1-ratio) * 510),
+        0
+    );
 }
 
 void SizeTreeMapView::setModel(QAbstractItemModel* model)
