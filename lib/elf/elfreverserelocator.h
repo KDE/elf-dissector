@@ -32,6 +32,9 @@ public:
      */
     ElfRelocationEntry* find(uint64_t vaddr) const;
 
+    /** Counts the amount of relocations within the given address range. */
+    int relocationCount(uint64_t beginVAddr, uint64_t length) const;
+
     // internal for ElfFile
     void addRelocationSection(ElfRelocationSection* section);
 

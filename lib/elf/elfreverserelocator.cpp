@@ -34,6 +34,24 @@ ElfRelocationEntry* ElfReverseRelocator::find(uint64_t vaddr) const
     return *it;
 }
 
+int ElfReverseRelocator::relocationCount(uint64_t beginVAddr, uint64_t length) const
+{
+    indexRelocations();
+
+    const auto beginIt = std::lower_bound(m_relocations.cbegin(), m_relocations.cend(), beginVAddr, [](ElfRelocationEntry *entry, uint64_t vaddr) {
+        return entry->offset() < vaddr;
+    });
+
+    if (beginIt == m_relocations.cend())
+        return 0;
+
+    const auto endIt = std::lower_bound(m_relocations.cbegin(), m_relocations.cend(), beginVAddr + length, [](ElfRelocationEntry *entry, uint64_t vaddr) {
+        return entry->offset() < vaddr;
+    });
+
+    return std::distance(beginIt, endIt);
+}
+
 void ElfReverseRelocator::addRelocationSection(ElfRelocationSection* section)
 {
     assert(m_relocations.isEmpty());
