@@ -186,8 +186,8 @@ void SizeTreeMapView::reloadTreeMap()
         auto item = new TreeMapItem(baseItem, section->header()->size(), section->header()->name(), QString::number(section->header()->size()));
         item->setSum(section->header()->size());
         item->setSorting(-2, true); // sort by value
-        if (ui->actionColorizeSections->isChecked() && section->header()->flags() & SHF_WRITE)
-            item->setBackColor(QColor(relocRatio(section->header()) * 255, 0, 0));
+        if (ui->actionRelocationHeatmap->isChecked() && section->header()->flags() & SHF_WRITE)
+            item->setBackColor(relocColor(relocRatio(section->header())));
         sectionItems[section->header()->sectionIndex()] = new SymbolNode;
         sectionItems[section->header()->sectionIndex()]->item = item;
     }
