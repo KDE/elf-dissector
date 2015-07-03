@@ -60,6 +60,17 @@ SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
         settings.setValue("View/ColorizeSymbols", ui->actionColorizeSymbols->isChecked());
         reloadTreeMap();
     });
+    connect(ui->actionRelocationHeatmap, &QAction::triggered, this, [this]{
+        QSettings settings;
+        settings.setValue("View/RelocationHeatmap", ui->actionRelocationHeatmap->isChecked());
+        reloadTreeMap();
+    });
+
+    auto colorizeGroup = new QActionGroup(this);
+    colorizeGroup->setExclusive(true);
+    colorizeGroup->addAction(ui->actionColorizeSections);
+    colorizeGroup->addAction(ui->actionColorizeSymbols);
+    colorizeGroup->addAction(ui->actionRelocationHeatmap);
 
     auto separator = new QAction(this);
     separator->setSeparator(true);
@@ -67,11 +78,31 @@ SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
         ui->actionHideDebugInformation,
         separator,
         ui->actionColorizeSections,
-        ui->actionColorizeSymbols
+        ui->actionColorizeSymbols,
+        ui->actionRelocationHeatmap
     });
 }
 
 SizeTreeMapView::~SizeTreeMapView() = default;
+
+static double relocRatio(ElfSymbolTableEntry *symbol)
+{
+    if (symbol->size() <= 0)
+        return 0;
+    return (double)(symbol->symbolTable()->file()->reverseRelocator()->relocationCount(symbol->value(), symbol->size()) * symbol->symbolTable()->file()->addressSize()) / symbol->size();
+}
+
+static double relocRatio(ElfSectionHeader *shdr)
+{
+    if (shdr->size() <= 0)
+        return 0;
+    return (double)(shdr->file()->reverseRelocator()->relocationCount(shdr->virtualAddress(), shdr->size()) * shdr->file()->addressSize()) / shdr->size();
+}
+
+static QColor relocColor(double ratio)
+{
+    return QColor(ratio * 255, (1 - ratio) * 255, 0);
+}
 
 void SizeTreeMapView::setModel(QAbstractItemModel* model)
 {
@@ -145,6 +176,8 @@ void SizeTreeMapView::reloadTreeMap()
             item->setSorting(-2, true); // sort by value
             if (ui->actionColorizeSections->isChecked())
                 item->setBackColor(sectionColorizer.nextColor());
+            if (ui->actionRelocationHeatmap->isChecked() && shdr->flags() & SHF_WRITE)
+                item->setBackColor(relocColor(relocRatio(shdr)));
             sectionItems[shdr->sectionIndex()] = new SymbolNode;
             sectionItems[shdr->sectionIndex()]->item = item;
         }
@@ -153,6 +186,8 @@ void SizeTreeMapView::reloadTreeMap()
         auto item = new TreeMapItem(baseItem, section->header()->size(), section->header()->name(), QString::number(section->header()->size()));
         item->setSum(section->header()->size());
         item->setSorting(-2, true); // sort by value
+        if (ui->actionColorizeSections->isChecked() && section->header()->flags() & SHF_WRITE)
+            item->setBackColor(QColor(relocRatio(section->header()) * 255, 0, 0));
         sectionItems[section->header()->sectionIndex()] = new SymbolNode;
         sectionItems[section->header()->sectionIndex()]->item = item;
     }
@@ -187,6 +222,8 @@ void SizeTreeMapView::reloadTreeMap()
             node->item->setField(1, QString::number(node->item->sum()));
             parentNode = node;
         }
+        if (ui->actionRelocationHeatmap->isChecked() && entry->sectionHeader()->flags() & SHF_WRITE)
+            parentNode->item->setBackColor(relocColor(relocRatio(entry)));
     }
 }
 
@@ -204,6 +241,7 @@ void SizeTreeMapView::restoreSettings()
 {
     QSettings settings;
     ui->actionHideDebugInformation->setChecked(settings.value("View/HideDebugInfo", false).toBool());
-    ui->actionColorizeSections->setChecked(settings.value("View/ColorizeSections", true).toBool());
-    ui->actionColorizeSymbols->setChecked(settings.value("View/ColorizeSymbols", false).toBool());
+    ui->actionColorizeSections->setChecked(settings.value("View/ColorizeSections", false).toBool());
+    ui->actionColorizeSymbols->setChecked(settings.value("View/ColorizeSymbols", true).toBool());
+    ui->actionRelocationHeatmap->setChecked(settings.value("View/RelocationHeatmap", false).toBool());
 }

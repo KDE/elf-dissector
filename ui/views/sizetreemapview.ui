@@ -60,7 +60,9 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="package_development_debugger"/>
+    <iconset theme="package_development_debugger">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Hide &amp;Debug Information</string>
@@ -74,7 +76,9 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="fill-color"/>
+    <iconset theme="fill-color">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Colorize &amp;Sections</string>
@@ -88,13 +92,26 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="fill-color"/>
+    <iconset theme="fill-color">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Colorize S&amp;ymbols</string>
    </property>
    <property name="toolTip">
     <string>Vary the color of symbols in the size tree map.</string>
+   </property>
+  </action>
+  <action name="actionRelocationHeatmap">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="fill-color"/>
+   </property>
+   <property name="text">
+    <string>&amp;Relocation Heatmap</string>
    </property>
   </action>
  </widget>
