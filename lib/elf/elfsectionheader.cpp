@@ -57,3 +57,8 @@ uint64_t ElfSectionHeader::entryCount() const
         return 0;
     return size() / entrySize();
 }
+
+ElfFile* ElfSectionHeader::file() const
+{
+    return m_file;
+}

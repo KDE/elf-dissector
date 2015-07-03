@@ -19,6 +19,7 @@
 #include "elfsymboltablesection.h"
 #include "elfstringtablesection.h"
 #include "elffile.h"
+#include "elfheader.h"
 
 
 #include <elf.h>
@@ -90,6 +91,21 @@ const ElfSymbolTableSection* ElfSymbolTableEntry::symbolTable() const
 const char* ElfSymbolTableEntry::name() const
 {
     return m_section->linkedSection<ElfStringTableSection>()->string(nameIndex());
+}
+
+bool ElfSymbolTableEntry::hasValidSection() const
+{
+    return sectionIndex() < symbolTable()->file()->header()->sectionHeaderCount();
+}
+
+ElfSectionHeader* ElfSymbolTableEntry::sectionHeader() const
+{
+    return symbolTable()->file()->sectionHeaders().at(sectionIndex());
+}
+
+ElfSection* ElfSymbolTableEntry::section() const
+{
+    return symbolTable()->file()->section<ElfSection>(sectionIndex());
 }
 
 uint8_t ElfSymbolTableEntry::bindType() const

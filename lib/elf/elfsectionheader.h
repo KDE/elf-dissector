@@ -54,6 +54,8 @@ public:
     /** Returns the amount of entries in this section if section is an array. */
     uint64_t entryCount() const;
 
+    ElfFile* file() const;
+
 protected:
     explicit ElfSectionHeader(ElfFile *file, uint16_t sectionIndex);
 

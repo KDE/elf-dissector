@@ -23,6 +23,8 @@
 #include <cstdint>
 #include <elf.h>
 
+class ElfSectionHeader;
+class ElfSection;
 class ElfSymbolTableSection;
 
 /** Symbol table entry. */
@@ -34,7 +36,6 @@ public:
 
     const ElfSymbolTableSection* symbolTable() const;
 
-    uint32_t nameIndex() const;
     uint16_t sectionIndex() const;
     uint64_t value() const;
     uint64_t size() const;
@@ -52,10 +53,18 @@ public:
     /** Mangled name from string table. */
     const char* name() const;
 
+    /** Returns true if this symbol is in a valid section. */
+    bool hasValidSection() const;
+    /** Header of the section this symbol is in. */
+    ElfSectionHeader* sectionHeader() const;
+    /** Section this symbol is in. */
+    ElfSection* section() const;
+
     /** Index in the symbol table. */
     uint32_t index() const;
 
 private:
+    uint32_t nameIndex() const;
     uint8_t info() const;
     uint8_t other() const;
 

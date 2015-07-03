@@ -294,12 +294,12 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             s += QStringLiteral("Visibility: ") + SymbolPrinter::visibility(entry->visibility()) + "<br/>";
             s += printVerSymInfo(entry);
 
-            const auto hasValidSectionIndex = entry->sectionIndex() < entry->symbolTable()->file()->header()->sectionHeaderCount();
+            const auto hasValidSectionIndex = entry->hasValidSection();
             if (hasValidSectionIndex) {
-                s += "Section: " + printSectionName(entry->symbolTable()->file()->section<ElfSection>(entry->sectionIndex())) + "<br/>";
+                s += "Section: " + printSectionName(entry->section()) + "<br/>";
             }
 
-            if (hasValidSectionIndex && entry->symbolTable()->file()->sectionHeaders().at(entry->sectionIndex())->type() == SHT_NOBITS) {
+            if (hasValidSectionIndex && entry->sectionHeader()->type() == SHT_NOBITS) {
                 // .bss, i.e. no content to display
             } else if (entry->type() == STT_FUNC && entry->size() > 0) {
                 NavigatingDisassembler da(this);
