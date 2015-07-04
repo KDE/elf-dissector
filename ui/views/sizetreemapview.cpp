@@ -41,6 +41,7 @@ SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
     ui->setupUi(this);
 
     ui->sectionView->setModel(m_sectionProxy);
+    m_sectionProxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
     connect(ui->searchLineEdit, &QLineEdit::textChanged, this, [this](const QString &text) {
         m_sectionProxy->setFilterFixedString(text);
     });
