@@ -70,13 +70,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
 
     ui->menuSettings->addAction(CodeNavigator::configMenu(this));
 
-    // ### temporary
-    connect(ui->actionCheckStructurePacking, &QAction::triggered, this, [this]() {
-        StructurePackingCheck checker;
-        checker.setElfFileSet(m_fileSet.get());
-        checker.checkAll(m_fileSet->file(0)->dwarfInfo());
-    });
-
     restoreSettings();
     currentViewChanged();
 }

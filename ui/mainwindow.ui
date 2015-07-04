@@ -11,7 +11,9 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="document-edit-decrypt-verify"/>
+   <iconset theme="document-edit-decrypt-verify">
+    <normaloff/>
+   </iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -45,12 +47,12 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="ElfStructureView" name="elfStructureView" native="true"/>
-      <widget class="SizeTreeMapView" name="sizeTreeMapView" native="true"/>
-      <widget class="DependencyView" name="dependencyView" native="true"/>
-      <widget class="TypeView" name="typeView" native="true"/>
-      <widget class="LoadBenchmarkView" name="loadTimeView" native="true"/>
-      <widget class="IssuesView" name="issuesView" native="true"/>
+      <widget class="ElfStructureView" name="elfStructureView"/>
+      <widget class="SizeTreeMapView" name="sizeTreeMapView"/>
+      <widget class="DependencyView" name="dependencyView"/>
+      <widget class="TypeView" name="typeView"/>
+      <widget class="LoadBenchmarkView" name="loadTimeView"/>
+      <widget class="IssuesView" name="issuesView"/>
      </widget>
     </item>
    </layout>
@@ -83,15 +85,8 @@
     </property>
     <addaction name="actionReopenPreviousFile"/>
    </widget>
-   <widget class="QMenu" name="menu_Checks">
-    <property name="title">
-     <string>&amp;Checks</string>
-    </property>
-    <addaction name="actionCheckStructurePacking"/>
-   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuView"/>
-   <addaction name="menu_Checks"/>
    <addaction name="menuSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -132,11 +127,6 @@
    </property>
    <property name="text">
     <string>Reopen &amp;Previously Loaded Files</string>
-   </property>
-  </action>
-  <action name="actionCheckStructurePacking">
-   <property name="text">
-    <string>&amp;Structure Packing</string>
    </property>
   </action>
  </widget>
