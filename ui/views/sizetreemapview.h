@@ -31,6 +31,8 @@ class TreeMapWidget;
 class QAbstractItemModel;
 class QSortFilterProxyModel;
 
+class ElfSectionHeader;
+
 class SizeTreeMapView : public QWidget
 {
     Q_OBJECT
@@ -41,14 +43,19 @@ public:
     void setModel(QAbstractItemModel *model);
     void restoreSettings();
 
+private:
+    bool isSectionHidden(ElfSectionHeader *shdr) const;
+
 private slots:
     void reloadTreeMap();
     void treeMapContextMenu(const QPoint &pos);
+    void viewActionToggled();
 
 private:
     std::unique_ptr<Ui::SizeTreeMapView> ui;
     QSortFilterProxyModel *m_sectionProxy;
     TreeMapWidget *m_treeMap = nullptr;
+    bool m_viewDirty = true;
 };
 
 #endif // SIZETREEMAPVIEW_H

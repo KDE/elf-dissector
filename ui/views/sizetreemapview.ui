@@ -108,10 +108,73 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="fill-color"/>
+    <iconset theme="fill-color">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Relocation Heatmap</string>
+   </property>
+  </action>
+  <action name="actionHideOccupiesMemory">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="view-filter">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Hide non-runtime</string>
+   </property>
+   <property name="toolTip">
+    <string>Do not show content from sections that are not loaded into memory at runtime.</string>
+   </property>
+  </action>
+  <action name="actionHideNonWritable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="view-filter">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Hide non-writable</string>
+   </property>
+   <property name="toolTip">
+    <string>Do not show content that is read-only/shared.</string>
+   </property>
+  </action>
+  <action name="actionHideNonExecutable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="view-filter">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Hide non-executable</string>
+   </property>
+   <property name="toolTip">
+    <string>Do not show non-executable data content.</string>
+   </property>
+  </action>
+  <action name="actionNoColorization">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="fill-color">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;No Colorization</string>
    </property>
   </action>
  </widget>

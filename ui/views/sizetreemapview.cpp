@@ -45,29 +45,19 @@ SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
         m_sectionProxy->setFilterFixedString(text);
     });
 
-    connect(ui->actionHideDebugInformation, &QAction::triggered, this, [this]{
-        QSettings settings;
-        settings.setValue("View/HideDebugInfo", ui->actionHideDebugInformation->isChecked());
-        reloadTreeMap();
-    });
-    connect(ui->actionColorizeSections, &QAction::triggered, this, [this]{
-        QSettings settings;
-        settings.setValue("View/ColorizeSections", ui->actionColorizeSections->isChecked());
-        reloadTreeMap();
-    });
-    connect(ui->actionColorizeSymbols, &QAction::triggered, this, [this]{
-        QSettings settings;
-        settings.setValue("View/ColorizeSymbols", ui->actionColorizeSymbols->isChecked());
-        reloadTreeMap();
-    });
-    connect(ui->actionRelocationHeatmap, &QAction::triggered, this, [this]{
-        QSettings settings;
-        settings.setValue("View/RelocationHeatmap", ui->actionRelocationHeatmap->isChecked());
-        reloadTreeMap();
-    });
+    ui->actionHideDebugInformation->setData("HideDebugInfo");
+    ui->actionHideOccupiesMemory->setData("HideOccupiesNoMemory");
+    ui->actionHideNonWritable->setData("HideNonWritable");
+    ui->actionHideNonExecutable->setData("HideNonExecutable");
+
+    ui->actionNoColorization->setData("NoColorize");
+    ui->actionColorizeSections->setData("ColorizeSections");
+    ui->actionColorizeSymbols->setData("ColorizeSymbols");
+    ui->actionRelocationHeatmap->setData("RelocationHeatmap");
 
     auto colorizeGroup = new QActionGroup(this);
     colorizeGroup->setExclusive(true);
+    colorizeGroup->addAction(ui->actionNoColorization);
     colorizeGroup->addAction(ui->actionColorizeSections);
     colorizeGroup->addAction(ui->actionColorizeSymbols);
     colorizeGroup->addAction(ui->actionRelocationHeatmap);
@@ -76,11 +66,20 @@ SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
     separator->setSeparator(true);
     addActions({
         ui->actionHideDebugInformation,
+        ui->actionHideOccupiesMemory,
+        ui->actionHideNonWritable,
+        ui->actionHideNonExecutable,
         separator,
+        ui->actionNoColorization,
         ui->actionColorizeSections,
         ui->actionColorizeSymbols,
         ui->actionRelocationHeatmap
     });
+
+    foreach (auto action, actions())
+        connect(action, &QAction::toggled, this, &SizeTreeMapView::viewActionToggled);
+
+    restoreSettings();
 }
 
 SizeTreeMapView::~SizeTreeMapView() = default;
@@ -113,11 +112,18 @@ void SizeTreeMapView::setModel(QAbstractItemModel* model)
     m_sectionProxy->setSourceModel(model);
     ui->sectionView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 
-    connect(ui->sectionView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &SizeTreeMapView::reloadTreeMap);
+    connect(ui->sectionView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this]() {
+        m_viewDirty = true;
+        reloadTreeMap();
+    });
 }
 
 void SizeTreeMapView::reloadTreeMap()
 {
+    if (!m_viewDirty)
+        return;
+    m_viewDirty = false;
+
     const auto selection = ui->sectionView->selectionModel()->selectedRows();
     if (selection.isEmpty())
         return;
@@ -171,7 +177,7 @@ void SizeTreeMapView::reloadTreeMap()
     if (!section) {
         Colorizer sectionColorizer(96, 255);
         for (const auto shdr : file->sectionHeaders()) {
-            if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation()) {
+            if (isSectionHidden(shdr)) {
                 baseItem->setSum(baseItem->sum() - shdr->size());
                 continue;
             }
@@ -241,11 +247,56 @@ void SizeTreeMapView::treeMapContextMenu(const QPoint& pos)
     settings.setValue("TreeMap/SplitMode", m_treeMap->splitModeString());
 }
 
+static void readCheckedState(QAction *action, bool def)
+{
+    const auto data = action->data().toString();
+    if (data.isEmpty())
+        return;
+    QSettings settings;
+    settings.beginGroup("View");
+    action->setChecked(settings.value(data, def).toBool());
+}
+
 void SizeTreeMapView::restoreSettings()
 {
+    readCheckedState(ui->actionHideDebugInformation, true);
+    readCheckedState(ui->actionHideOccupiesMemory, false);
+    readCheckedState(ui->actionHideNonExecutable, false);
+    readCheckedState(ui->actionHideNonWritable, false);
+
+    readCheckedState(ui->actionNoColorization, false);
+    readCheckedState(ui->actionColorizeSections, false);
+    readCheckedState(ui->actionColorizeSymbols, true);
+    readCheckedState(ui->actionRelocationHeatmap, false);
+}
+
+void SizeTreeMapView::viewActionToggled()
+{
+    const auto action = qobject_cast<QAction*>(sender());
+    if (!action)
+        return;
+
+    const auto data = action->data().toString();
+    if (data.isEmpty())
+        return;
     QSettings settings;
-    ui->actionHideDebugInformation->setChecked(settings.value("View/HideDebugInfo", false).toBool());
-    ui->actionColorizeSections->setChecked(settings.value("View/ColorizeSections", false).toBool());
-    ui->actionColorizeSymbols->setChecked(settings.value("View/ColorizeSymbols", true).toBool());
-    ui->actionRelocationHeatmap->setChecked(settings.value("View/RelocationHeatmap", false).toBool());
+    settings.beginGroup("View");
+    settings.setValue(data, action->isChecked());
+
+    // compress subsequent calls
+    m_viewDirty = true;
+    QMetaObject::invokeMethod(this, "reloadTreeMap", Qt::QueuedConnection);
+}
+
+bool SizeTreeMapView::isSectionHidden(ElfSectionHeader* shdr) const
+{
+    if (ui->actionHideDebugInformation->isChecked() && shdr->isDebugInformation())
+        return true;
+    if (ui->actionHideOccupiesMemory->isChecked() && !(shdr->flags() & SHF_ALLOC))
+        return true;
+    if (ui->actionHideNonWritable->isChecked() && !(shdr->flags() & SHF_WRITE))
+        return true;
+    if (ui->actionHideNonExecutable->isChecked() && !(shdr->flags() & SHF_EXECINSTR))
+        return true;
+    return false;
 }
