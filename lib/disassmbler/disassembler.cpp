@@ -31,6 +31,9 @@
 
 #include <cassert>
 #include <cstdarg>
+
+#define PACKAGE "elf-dissector"
+#define PACKAGE_VERSION "0.0.1"
 #include <dis-asm.h>
 #include <elf.h>
 #include <stdio.h>
