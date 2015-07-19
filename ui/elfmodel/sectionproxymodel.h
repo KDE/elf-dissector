@@ -18,7 +18,7 @@
 #ifndef SECTIONPROXYMODEL_H
 #define SECTIONPROXYMODEL_H
 
-#include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
+#include <KRecursiveFilterProxyModel>
 
 /** Restrict the structure model to just files and sections. */
 class SectionProxyModel : public KRecursiveFilterProxyModel

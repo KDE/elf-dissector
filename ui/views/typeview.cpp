@@ -18,9 +18,10 @@
 #include "typeview.h"
 #include "ui_typeview.h"
 
-#include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
 #include <typemodel/typemodel.h>
 #include <navigator/codenavigator.h>
+
+#include <KRecursiveFilterProxyModel>
 
 #include <QItemSelectionModel>
 #include <QMessageBox>

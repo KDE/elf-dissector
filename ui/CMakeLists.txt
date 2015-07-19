@@ -1,7 +1,6 @@
 # all code in a static library, for usage in unit tests
 set(libelfdissectorui_srcs
     ${CMAKE_SOURCE_DIR}/3rdparty/treemap/treemap.cpp
-    ${CMAKE_SOURCE_DIR}/3rdparty/kitemmodels/krecursivefilterproxymodel.cpp
 
     elfmodel/elfmodel.cpp
     elfmodel/datavisitor.cpp
@@ -39,7 +38,7 @@ set(libelfdissectorui_srcs
 )
 
 add_library(libelfdissectorui STATIC ${libelfdissectorui_srcs})
-target_link_libraries(libelfdissectorui Qt5::Widgets Dwarf::Dwarf libelfdissector)
+target_link_libraries(libelfdissectorui Qt5::Widgets Dwarf::Dwarf libelfdissector KF5::ItemModels)
 
 add_executable(elf-dissector main.cpp)
 target_link_libraries(elf-dissector libelfdissectorui)

@@ -20,7 +20,8 @@
 
 #include <elfmodel/elfmodel.h>
 #include <navigator/codenavigator.h>
-#include <3rdparty/kitemmodels/krecursivefilterproxymodel.h>
+
+#include <KRecursiveFilterProxyModel>
 
 #include <QDebug>
 #include <QMouseEvent>
