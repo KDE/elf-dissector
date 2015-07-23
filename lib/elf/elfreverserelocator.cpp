@@ -20,6 +20,12 @@
 
 #include <cassert>
 
+int ElfReverseRelocator::size() const
+{
+    indexRelocations();
+    return m_relocations.size();
+}
+
 ElfRelocationEntry* ElfReverseRelocator::find(uint64_t vaddr) const
 {
     indexRelocations();

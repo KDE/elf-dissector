@@ -27,6 +27,9 @@ class ElfRelocationSection;
 class ElfReverseRelocator
 {
 public:
+    /** Total amount of relocations. */
+    int size() const;
+
     /** Finds the relocation entry for the given virtual address.
      *  Returns @c nullptr if @p vaddr isn't relocated.
      */
