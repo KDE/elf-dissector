@@ -135,17 +135,17 @@ void LDBenchmark::writeCSV(const QString& fileName)
         const auto file = m_fileSet->file(m_results.size() - 1 - i);
         f.write(file->displayName().toUtf8());
         f.write("\t");
-        f.write(QByteArray::number(median(res.lazy)));
+        f.write(QByteArray::number(::median(res.lazy)));
         f.write("\t");
-        f.write(QByteArray::number(min(res.lazy)));
+        f.write(QByteArray::number(::min(res.lazy)));
         f.write("\t");
-        f.write(QByteArray::number(max(res.lazy)));
+        f.write(QByteArray::number(::max(res.lazy)));
         f.write("\t");
-        f.write(QByteArray::number(median(res.now)));
+        f.write(QByteArray::number(::median(res.now)));
         f.write("\t");
-        f.write(QByteArray::number(min(res.now)));
+        f.write(QByteArray::number(::min(res.now)));
         f.write("\t");
-        f.write(QByteArray::number(max(res.now)));
+        f.write(QByteArray::number(::max(res.now)));
         f.write("\n");
     }
 }
@@ -162,4 +162,26 @@ void LDBenchmark::dumpResults()
         now += average(res.now);
     }
     printf("Lazy: %.2f µs, immediate: %.2f µs\n", lazy, now);
+}
+
+int LDBenchmark::size() const
+{
+    return m_results.size();
+}
+
+double LDBenchmark::median(LoadMode mode, int index) const
+{
+    const auto &res = m_results.at(index);
+    return ::median(mode == LoadMode::Lazy ? res.lazy : res.now);
+}
+
+double LDBenchmark::min(LDBenchmark::LoadMode mode, int index) const
+{
+    const auto &res = m_results.at(index);
+    return ::min(mode == LoadMode::Lazy ? res.lazy : res.now);
+}
+
+ElfFile* LDBenchmark::file(int index) const
+{
+    return m_fileSet->file(size() - index - 1);
 }
