@@ -25,6 +25,8 @@
 namespace Ui {
 class LoadBenchmarkView;
 }
+class LoadBenchmarkModel;
+class LDBenchmark;
 
 class ElfFileSet;
 
@@ -43,6 +45,8 @@ private slots:
 private:
     std::unique_ptr<Ui::LoadBenchmarkView> ui;
     ElfFileSet *m_fileSet = nullptr;
+    LoadBenchmarkModel *m_model;
+    std::shared_ptr<LDBenchmark> m_benchmark;
 };
 
 #endif // LOADBENCHMARKVIEW_H

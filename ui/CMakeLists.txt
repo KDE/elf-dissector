@@ -15,6 +15,8 @@ set(libelfdissectorui_srcs
 
     issuesmodel/issuesmodel.cpp
 
+    loadbenchmarkmodel/loadbenchmarkmodel.cpp
+
     typemodel/typemodel.cpp
 
     navigator/codenavigator.cpp
