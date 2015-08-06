@@ -120,6 +120,7 @@ private:
     QVector<ElfSectionHeader*> m_sectionHeaders;
     QVector<ElfSection*> m_sections;
     ElfDynamicSection* m_dynamicSection = nullptr;
+    ElfHashSection* m_hashSection = nullptr;
     ElfReverseRelocator m_reverseReloc;
     DwarfInfo *m_dwarfInfo = nullptr;
     QVector<ElfSegmentHeader*> m_segmentHeaders;

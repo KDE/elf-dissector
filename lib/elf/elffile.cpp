@@ -266,9 +266,11 @@ void ElfFile::parseSection(uint16_t index)
             break;
         case SHT_HASH:
             section = new ElfSysvHashSection(this, shdr);
+            if (!m_hashSection)
+                m_hashSection = static_cast<ElfHashSection*>(section);
             break;
         case SHT_GNU_HASH:
-            section = new ElfGnuHashSection(this, shdr);
+            section = m_hashSection = new ElfGnuHashSection(this, shdr);
             break;
         case SHT_PROGBITS:
             if (shdr->name() && strcmp(shdr->name(), ".plt") == 0) {
@@ -351,12 +353,7 @@ ElfSymbolTableSection* ElfFile::symbolTable() const
 
 ElfHashSection* ElfFile::hash() const
 {
-    auto index = indexOfSection(SHT_GNU_HASH);
-    if (index < 0)
-        index = indexOfSection(SHT_HASH);
-    if (index < 0)
-        return nullptr;
-    return section<ElfHashSection>(index);
+    return m_hashSection;
 }
 
 const ElfReverseRelocator* ElfFile::reverseRelocator() const
