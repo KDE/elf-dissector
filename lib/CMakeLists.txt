@@ -46,6 +46,7 @@ set(libelfdisector_srcs
     checks/structurepackingcheck.cpp
     checks/dependenciescheck.cpp
     checks/virtualdtorcheck.cpp
+    checks/deadcodefinder.cpp
 
     printers/dwarfprinter.cpp
     printers/dynamicsectionprinter.cpp
