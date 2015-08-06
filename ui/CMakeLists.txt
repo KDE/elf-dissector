@@ -12,6 +12,8 @@ set(libelfdissectorui_srcs
     dependencymodel/dependencymodel.cpp
     dependencymodel/usedsymbolmodel.cpp
     dependencymodel/unuseddependenciesmodel.cpp
+    dependencymodel/filelistmodel.cpp
+    dependencymodel/fileusermodel.cpp
 
     issuesmodel/issuesmodel.cpp
 

@@ -30,6 +30,8 @@ class ElfFileSet;
 class DependencyModel;
 class UsedSymbolModel;
 class UnusedDependenciesModel;
+class FileListModel;
+class FileUserModel;
 
 class QItemSelection;
 
@@ -45,12 +47,17 @@ public:
 private slots:
     void search(const QString &text);
     void dependencySelected(const QItemSelection &selection);
+    void inverseFileSelected(const QItemSelection &selection);
+    void inverseUserSelected(const QItemSelection &selection);
 
 private:
     std::unique_ptr<Ui::DependencyView> ui;
     DependencyModel *m_dependencyModel;
     UsedSymbolModel *m_symbolModel;
     UnusedDependenciesModel *m_unusedDependenciesModel;
+    FileListModel *m_fileListModel;
+    FileUserModel *m_fileUserModel;
+    UsedSymbolModel *m_inverseSymbolModel;
 };
 
 #endif // DEPENDENCYVIEW_H
