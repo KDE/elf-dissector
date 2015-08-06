@@ -59,12 +59,27 @@ void DeadCodeFinder::scanUsage(ElfFile* file)
     }
 }
 
+void DeadCodeFinder::setExcludePrefixes(const QStringList& excludePrefixes)
+{
+    m_excludePrefixes = excludePrefixes;
+}
+
 void DeadCodeFinder::dumpResults()
 {
     for (int i = 0; i < m_fileSet->size(); ++i) {
         auto file = m_fileSet->file(i);
         // this only makes sense for libraries
         if (file->header()->type() == ET_EXEC)
+            continue;
+
+        bool skip = false;
+        foreach (const auto &excludePrefix, m_excludePrefixes) {
+            if (file->fileName().startsWith(excludePrefix)) {
+                skip = true;
+                break;
+            }
+        }
+        if (skip)
             continue;
 
         std::cout << "Unreferenced exported symbols in " << qPrintable(file->displayName()) << ":" << std::endl;

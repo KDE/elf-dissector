@@ -20,6 +20,7 @@
 
 #include <QHash>
 #include <QSet>
+#include <QStringList>
 
 class ElfFileSet;
 class ElfFile;
@@ -34,6 +35,7 @@ public:
     ~DeadCodeFinder();
 
     void findUnusedSymbols(ElfFileSet *fileSet);
+    void setExcludePrefixes(const QStringList &excludePrefixes);
 
     void dumpResults();
 
@@ -44,6 +46,7 @@ private:
 
     ElfFileSet *m_fileSet = nullptr;
     QHash<ElfFile*, QSet<ElfSymbolTableEntry*>> m_usedSymbols;
+    QStringList m_excludePrefixes;
 };
 
 #endif // DEADCODEFINDER_H
