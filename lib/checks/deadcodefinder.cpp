@@ -95,12 +95,16 @@ void DeadCodeFinder::dumpResultsForFile(ElfFile* file)
     if (!symTab)
         return;
 
+    QVector<QByteArray> unusedSyms;
     for (uint i = 0; i < symTab->header()->entryCount(); ++i) {
         auto sym = symTab->entry(i);
         if (sym->size() == 0 || sym->bindType() != STB_GLOBAL || sym->visibility() != STV_DEFAULT)
             continue;
         if (usedSyms.contains(sym))
             continue;
-        std::cout << Demangler::demangleFull(sym->name()).constData() << std::endl;
+        unusedSyms.push_back(Demangler::demangleFull(sym->name()).constData());
     }
+
+    std::sort(unusedSyms.begin(), unusedSyms.end());
+    std::for_each(unusedSyms.constBegin(), unusedSyms.constEnd(), [](const QByteArray& sym) { std::cout << sym.constData() << std::endl; });
 }
