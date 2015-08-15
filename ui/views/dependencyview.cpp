@@ -73,6 +73,7 @@ DependencyView::DependencyView(QWidget* parent):
     proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
     proxy->setSourceModel(m_inverseSymbolModel);
     ui->inverseSymbolList->setModel(proxy);
+    ui->inverseSymbolList->header()->setSortIndicator(0, Qt::AscendingOrder);
     connect(ui->inverseSymbolListSearchLine, &QLineEdit::textChanged, proxy, &QSortFilterProxyModel::setFilterFixedString);
 
     // unused dependencies tab
