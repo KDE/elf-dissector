@@ -150,7 +150,8 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             QVector<QByteArray> args;
             handleNameComponent(component->u.s_binary.right, args);
-            nameParts.last().append(args.last() + m_modifiers);
+            if (!nameParts.isEmpty() && !args.isEmpty())
+                nameParts.last().append(args.last() + m_modifiers);
             break;
         }
         case DEMANGLE_COMPONENT_TEMPLATE:
