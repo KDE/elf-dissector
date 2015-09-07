@@ -110,6 +110,7 @@ public:
         }
 
         assert(false);
+        Q_UNREACHABLE();
     }
 
 protected:
