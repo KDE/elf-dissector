@@ -96,6 +96,8 @@ private slots:
         QTest::newRow("cloned component") << "_ZN7QVectorIjE16defaultConstructEPjS1_.isra.2" << (VB << "QVector" << "QVector<unsigned int>" << "defaultConstruct(unsigned int*, unsigned int*) [clone .isra.2]");
 
         QTest::newRow("nested types") << "_ZN7QVectorIPZN10MainWindow8loadFileERK7QStringE10SymbolNodeE4dataEv" << (VB << "QVector" << "QVector<MainWindow::loadFile(QString const&)::SymbolNode*>" << "data()");
+
+        QTest::newRow("default argument") << "_ZZN8KDevelop18SourceFileTemplate22setTemplateDescriptionERK7QStringS3_Ed_NKUlvE_clEv" << (VB << "KDevelop" << "SourceFileTemplate" << "setTemplateDescription(QString const&, QString const&)" << "{default arg#1}" << "{lambda()#1}" << "operator()() const");
     }
 
     void testDemangler()

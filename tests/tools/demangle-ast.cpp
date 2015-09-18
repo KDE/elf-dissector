@@ -374,8 +374,8 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_unary_num.sub));
             break;
         case DEMANGLE_COMPONENT_DEFAULT_ARG:
-            writeNode("DEFAULT_ARG");
-            // TODO
+            writeNode(QByteArray("DEFAULT_ARG: ") + QByteArray::number((int)component->u.s_unary_num.num));
+            writeLink(sourceNode, handleNameComponent(component->u.s_unary_num.sub));
             break;
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
             writeNode(QByteArray("UNNAMED_TYPE: ") + QByteArray::number((int)component->u.s_number.number));

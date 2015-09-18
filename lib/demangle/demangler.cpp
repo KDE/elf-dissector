@@ -497,6 +497,10 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back("{lambda(" + join(args, ", ") + ")#" + QByteArray::number(component->u.s_unary_num.num + 1) + '}');
             break;
         }
+        case DEMANGLE_COMPONENT_DEFAULT_ARG:
+            nameParts.push_back(QByteArray("{default arg#") + QByteArray::number((int)component->u.s_unary_num.num + 1) + '}');
+            handleOptionalNameComponent(component->u.s_unary_num.sub, nameParts);
+            break;
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
             nameParts.push_back(QByteArray("{unnamed type#") + QByteArray::number((int)component->u.s_number.number + 1) + '}');
             break;
