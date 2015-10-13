@@ -89,7 +89,10 @@ private slots:
             if (QByteArray(shdr->name()).startsWith(".got")) {
                 auto section = f.section<ElfGotSection>(i);
                 QVERIFY(section);
-                for (uint i = 0; i < section->header()->entryCount(); ++i) {
+                uint startIndex = 0;
+                if (strcmp(shdr->name(), ".got.plt") == 0)
+                    startIndex = 3; // the first 3 entries are placeholders for lazy symbol resolution
+                for (uint i = startIndex; i < section->header()->entryCount(); ++i) {
                     auto gotEntry = section->entry(i);
                     QVERIFY(f.reverseRelocator()->find(gotEntry->address()));
                 }
