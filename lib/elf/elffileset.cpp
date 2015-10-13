@@ -69,17 +69,21 @@ void ElfFileSet::addFile(ElfFile* file)
     for (const auto &lib : file->dynamicSection()->neededLibraries()) {
         if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](ElfFile *file){ return file->dynamicSection()->soName() == lib; }) != m_files.cend())
             continue;
+        bool dependencyFound = false;
         for (const auto &dir : searchPaths) {
             const auto fullPath = dir + '/' + lib;
             if (!QFile::exists(fullPath))
                 continue;
             ElfFile *dep = new ElfFile(fullPath);
             if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
+                dependencyFound = true;
                 addFile(dep);
                 break;
             }
             delete dep;
         }
+        if (!dependencyFound)
+            qWarning() << "Unable to locate dependency" << lib;
     }
 }
 
@@ -132,7 +136,7 @@ void ElfFileSet::topologicalSort()
 #if 0
     qDebug() << "input";
     foreach(const auto f, m_files)
-        qDebug() << f->displayName();
+        qDebug() << f->displayName() << f->fileName();
     qDebug() << "sorted";
     foreach(const auto f, sorted)
         qDebug() << f->displayName();
