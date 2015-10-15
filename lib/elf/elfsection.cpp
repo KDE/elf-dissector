@@ -25,7 +25,6 @@ ElfSection::ElfSection(ElfFile* file, ElfSectionHeader *shdr) :
     m_sectionHeader(shdr),
     m_linkedSection(nullptr)
 {
-    assert(m_file->size() > m_sectionHeader->size());
 }
 
 ElfSection::~ElfSection()
