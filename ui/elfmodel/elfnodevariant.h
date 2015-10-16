@@ -27,6 +27,7 @@ struct ElfNodeVariant
         Section,
         SymbolTableSection,
         SymbolTableEntry,
+        DebugLinkSection,
         DynamicSection,
         DynamicEntry,
         GotSection,

@@ -21,6 +21,7 @@
 #include <elf/elfheader.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfdynamicsection.h>
+#include <elf/elfgnudebuglinksection.h>
 #include <elf/elfgnusymbolversiondefinition.h>
 #include <elf/elfgnusymbolversiondefinitionssection.h>
 #include <elf/elfgnusymbolversionrequirementssection.h>
@@ -69,6 +70,8 @@ public:
                 return doVisit(node->value<ElfSymbolTableSection>(), arg);
             case ElfNodeVariant::SymbolTableEntry:
                 return doVisit(node->value<ElfSymbolTableEntry>(), arg);
+            case ElfNodeVariant::DebugLinkSection:
+                return doVisit(node->value<ElfGnuDebugLinkSection>(), arg);
             case ElfNodeVariant::DynamicSection:
                 return doVisit(node->value<ElfDynamicSection>(), arg);
             case ElfNodeVariant::DynamicEntry:
@@ -142,6 +145,10 @@ protected:
         Q_UNUSED(entry);
         Q_UNUSED(arg);
         return T();
+    }
+    virtual T doVisit(ElfGnuDebugLinkSection *section, int arg) const
+    {
+        return doVisit(static_cast<ElfSection*>(section), arg);
     }
     virtual T doVisit(ElfDynamicSection* section, int arg) const
     {

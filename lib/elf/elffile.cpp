@@ -21,6 +21,7 @@
 #include "elfstringtablesection.h"
 #include "elfsymboltablesection.h"
 #include "elfdynamicsection_impl.h"
+#include "elfgnudebuglinksection.h"
 #include "elfgnuhashsection.h"
 #include "elfgnusymbolversiontable.h"
 #include "elfgnusymbolversiondefinitionssection.h"
@@ -279,6 +280,8 @@ void ElfFile::parseSection(uint16_t index)
             } else if ((shdr->flags() & SHF_WRITE) && strncmp(shdr->name(), ".got", 4) == 0) {
                 section = new ElfGotSection(this, shdr);
                 break;
+            } else if (strcmp(shdr->name(), ".gnu_debuglink") == 0) {
+                section = new ElfGnuDebugLinkSection(this, shdr);
             }
             // else: fallthrough
         default:

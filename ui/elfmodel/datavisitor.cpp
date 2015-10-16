@@ -368,6 +368,19 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
     return QVariant();
 }
 
+QVariant DataVisitor::doVisit(ElfGnuDebugLinkSection* section, int role) const
+{
+    auto baseData = doVisit(static_cast<ElfSection*>(section), role);
+    if (role == ElfModel::DetailRole) {
+        QString s = baseData.toString();
+        s += "<br/><b>Debug Link</b>";
+        s += "<br/>File name: " + section->fileName();
+        s += "<br/>CRC: 0x" + QString::number(section->crc(), 16);
+        return s;
+    }
+    return baseData;
+}
+
 QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
 {
     switch (arg) {

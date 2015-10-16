@@ -3,6 +3,7 @@ set(libelfdisector_srcs
     elf/elfdynamicsection.cpp
     elf/elffile.cpp
     elf/elffileset.cpp
+    elf/elfgnudebuglinksection.cpp
     elf/elfgnuhashsection.cpp
     elf/elfgnusymbolversiontable.cpp
     elf/elfgnusymbolversiondefinition.cpp

@@ -66,6 +66,9 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
             } else if ((section->header()->flags() & SHF_WRITE) && strncmp(section->header()->name(), ".got", 4) == 0) {
                 type = ElfNodeVariant::GotSection;
                 break;
+            } else if (strcmp(section->header()->name(), ".gnu_debuglink") == 0) {
+                type = ElfNodeVariant::DebugLinkSection;
+                break;
             }
             // else fallthrough
         default:
