@@ -282,6 +282,7 @@ void ElfFile::parseSection(uint16_t index)
                 break;
             } else if (strcmp(shdr->name(), ".gnu_debuglink") == 0) {
                 section = new ElfGnuDebugLinkSection(this, shdr);
+                break;
             }
             // else: fallthrough
         default:
