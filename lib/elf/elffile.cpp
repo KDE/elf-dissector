@@ -32,6 +32,7 @@
 #include "elfrelocationsection.h"
 #include "elfsysvhashsection.h"
 #include "elfsegmentheader_impl.h"
+#include "elfnoteentry.h"
 
 #include <dwarf/dwarfinfo.h>
 
@@ -363,6 +364,23 @@ ElfHashSection* ElfFile::hash() const
 const ElfReverseRelocator* ElfFile::reverseRelocator() const
 {
     return &m_reverseReloc;
+}
+
+QByteArray ElfFile::buildId() const
+{
+    auto buildIdIndex = indexOfSection(".note.gnu.build-id");
+    if (buildIdIndex < 0)
+        return {};
+    auto buildIdSection = section<ElfNoteSection>(buildIdIndex);
+    assert(buildIdSection);
+    assert(buildIdSection->entryCount() == 1);
+
+    auto buildIdEntry = buildIdSection->entry(0);
+    assert(buildIdEntry);
+    assert(buildIdEntry->isGNUVendorNote());
+    assert(buildIdEntry->type() == NT_GNU_BUILD_ID);
+
+    return QByteArray::fromRawData(buildIdEntry->descriptionData(), buildIdEntry->descriptionSize());
 }
 
 DwarfInfo* ElfFile::dwarfInfo() const

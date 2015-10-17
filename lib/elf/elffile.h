@@ -100,6 +100,9 @@ public:
     /** Reverse relocation lookup. */
     const ElfReverseRelocator* reverseRelocator() const;
 
+    /** Returns the build-id, if present. */
+    QByteArray buildId() const;
+
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;
 

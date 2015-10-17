@@ -99,6 +99,8 @@ private slots:
             }
         }
 
+        QVERIFY(f.buildId().size() >= 16);
+
         QCOMPARE((uint16_t)f.segmentHeaders().size(), f.header()->programHeaderCount());
     }
 
