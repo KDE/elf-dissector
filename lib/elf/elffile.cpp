@@ -383,6 +383,12 @@ QByteArray ElfFile::buildId() const
     return QByteArray::fromRawData(buildIdEntry->descriptionData(), buildIdEntry->descriptionSize());
 }
 
+void ElfFile::setSeparateDebugFile(const QString& fileName)
+{
+    qDebug() << "Found separate debug file for" <<  m_file.fileName() << "at" << fileName;
+    // TODO
+}
+
 DwarfInfo* ElfFile::dwarfInfo() const
 {
     return m_dwarfInfo;

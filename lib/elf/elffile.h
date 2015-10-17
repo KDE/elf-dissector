@@ -103,6 +103,8 @@ public:
     /** Returns the build-id, if present. */
     QByteArray buildId() const;
 
+    /** Sets the path to a separate file containing the DWARF debug information. */
+    void setSeparateDebugFile(const QString &fileName);
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;
 

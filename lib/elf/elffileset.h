@@ -40,10 +40,14 @@ private:
     void addFile(ElfFile* file);
     void parseLdConf();
     void parseLdConf(const QString &fileName);
+    void findSeparateDebugFile(ElfFile *file) const;
+    static bool isValidDebugLinkFile(const QString &fileName, uint32_t crc);
 
     QVector<ElfFile*> m_files;
     QVector<QByteArray> m_baseSearchPaths;
     QVector<QByteArray> m_ldLibraryPaths;
+
+    QVector<QString> m_globalDebugSearchPath;
 };
 
 #endif // ELFFILESET_H

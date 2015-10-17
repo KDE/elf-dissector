@@ -17,6 +17,7 @@
 
 #include "elffileset.h"
 #include "elfheader.h"
+#include "elfgnudebuglinksection.h"
 
 #include <QDebug>
 #include <QDir>
@@ -29,6 +30,8 @@ ElfFileSet::ElfFileSet(QObject* parent) : QObject(parent)
     parseLdConf();
     for (const auto &path : qgetenv("LD_LIBRARY_PATH").split(':'))
         m_baseSearchPaths.push_back(path);
+
+    m_globalDebugSearchPath.push_back("/usr/lib/debug"); // seems hardcoded?
 }
 
 ElfFileSet::~ElfFileSet()
@@ -77,6 +80,7 @@ void ElfFileSet::addFile(ElfFile* file)
             ElfFile *dep = new ElfFile(fullPath);
             if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
                 dependencyFound = true;
+                findSeparateDebugFile(dep);
                 addFile(dep);
                 break;
             }
@@ -196,4 +200,59 @@ void ElfFileSet::parseLdConf(const QString& fileName)
         }
         qWarning() << "unable to handle ld.so.conf line:" << line;
     }
+}
+
+void ElfFileSet::findSeparateDebugFile(ElfFile* file) const
+{
+    // (1) via build id
+    const auto buildId = file->buildId().toHex();
+    foreach (const auto &debugDir, m_globalDebugSearchPath) {
+        auto debugFile = debugDir + "/.build-id/" + buildId.left(2) + "/" + buildId.mid(2) + ".debug";
+        if (QFile::exists(debugFile)) {
+            file->setSeparateDebugFile(debugFile);
+            return;
+        }
+    }
+
+    // (2) via debug link
+    const auto debugLinkIndex = file->indexOfSection(".gnu_debuglink");
+    if (debugLinkIndex < 0)
+        return;
+    const auto debugLinkSection = file->section<ElfGnuDebugLinkSection>(debugLinkIndex);
+    assert(debugLinkSection);
+    if (debugLinkSection->fileName().isEmpty())
+        return;
+    const auto dir = QFileInfo(file->fileName()).absolutePath();
+
+    // (2a) next to file
+    auto debugFile = dir + "/" + debugLinkSection->fileName();
+    if (isValidDebugLinkFile(debugFile, debugLinkSection->crc())) {
+        file->setSeparateDebugFile(debugFile);
+        return;
+    }
+
+    // (2b) in .debug sub-folder next to file
+    debugFile = dir + "/.debug/" + debugLinkSection->fileName();
+    if (isValidDebugLinkFile(debugFile, debugLinkSection->crc())) {
+        file->setSeparateDebugFile(debugFile);
+        return;
+    }
+
+    // (2c) in global debug directories
+    foreach (const auto &debugDir, m_globalDebugSearchPath) {
+        debugFile = debugDir + dir + "/" + debugLinkSection->fileName();
+        if (isValidDebugLinkFile(debugFile, debugLinkSection->crc())) {
+            file->setSeparateDebugFile(debugFile);
+            return;
+        }
+    }
+}
+
+bool ElfFileSet::isValidDebugLinkFile(const QString& fileName, uint32_t crc)
+{
+    if (!QFile::exists(fileName))
+        return false;
+
+    // TODO check crc
+    return true;
 }
