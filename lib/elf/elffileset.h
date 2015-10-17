@@ -41,7 +41,7 @@ private:
     void parseLdConf();
     void parseLdConf(const QString &fileName);
     void findSeparateDebugFile(ElfFile *file) const;
-    static bool isValidDebugLinkFile(const QString &fileName, uint32_t crc);
+    static bool isValidDebugLinkFile(const QString& fileName, uint32_t expectedCrc);
 
     QVector<ElfFile*> m_files;
     QVector<QByteArray> m_baseSearchPaths;
