@@ -399,6 +399,8 @@ ElfFile* ElfFile::separateDebugFile() const
 
 DwarfInfo* ElfFile::dwarfInfo() const
 {
+    if (m_separateDebugFile)
+        return m_separateDebugFile->dwarfInfo();
     return m_dwarfInfo;
 }
 
