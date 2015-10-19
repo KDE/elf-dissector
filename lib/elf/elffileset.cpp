@@ -54,6 +54,7 @@ void ElfFileSet::addFile(ElfFile* file)
     assert(file);
     assert(file->isValid());
 
+    findSeparateDebugFile(file);
     m_files.push_back(file);
 
     if (!file->dynamicSection())
@@ -80,7 +81,6 @@ void ElfFileSet::addFile(ElfFile* file)
             ElfFile *dep = new ElfFile(fullPath);
             if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
                 dependencyFound = true;
-                findSeparateDebugFile(dep);
                 addFile(dep);
                 break;
             }
