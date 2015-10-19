@@ -385,8 +385,16 @@ QByteArray ElfFile::buildId() const
 
 void ElfFile::setSeparateDebugFile(const QString& fileName)
 {
-    qDebug() << "Found separate debug file for" <<  m_file.fileName() << "at" << fileName;
-    // TODO
+    m_separateDebugFile.reset(new ElfFile(fileName));
+    if (!m_separateDebugFile->open(QIODevice::ReadOnly) || !m_separateDebugFile->isValid()) {
+        qWarning() << "Invalid separate debug file for" << m_file.fileName() << ":" << fileName;
+        m_separateDebugFile.reset();
+    }
+}
+
+ElfFile* ElfFile::separateDebugFile() const
+{
+    return m_separateDebugFile.get();
 }
 
 DwarfInfo* ElfFile::dwarfInfo() const

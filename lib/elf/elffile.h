@@ -105,6 +105,8 @@ public:
 
     /** Sets the path to a separate file containing the DWARF debug information. */
     void setSeparateDebugFile(const QString &fileName);
+    /** Returns the separate debug file, if present. */
+    ElfFile* separateDebugFile() const;
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;
 
@@ -127,6 +129,7 @@ private:
     ElfDynamicSection* m_dynamicSection = nullptr;
     ElfHashSection* m_hashSection = nullptr;
     ElfReverseRelocator m_reverseReloc;
+    std::unique_ptr<ElfFile> m_separateDebugFile;
     DwarfInfo *m_dwarfInfo = nullptr;
     QVector<ElfSegmentHeader*> m_segmentHeaders;
 };

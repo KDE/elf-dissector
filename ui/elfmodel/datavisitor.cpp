@@ -111,6 +111,8 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
                 if (entry)
                     s += " (" + printSymbolName(entry) + ')';
             }
+            if (file->separateDebugFile())
+                s += "<br/>Separate debug file: " + file->separateDebugFile()->fileName();
             s += "<br/><br/>";
 
             s += "<b>Segments</b></br>";
