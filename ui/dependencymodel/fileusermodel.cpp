@@ -43,7 +43,7 @@ void FileUserModel::setFile(ElfFileSet* fileSet, ElfFile *usedFile)
         return;
     auto soName = usedFile->dynamicSection()->soName();
     if (soName.isEmpty())
-        return;
+        soName = usedFile->fileName().toUtf8();
 
     for (int i = 0; i < fileSet->size(); ++i) {
         const auto file = fileSet->file(i);

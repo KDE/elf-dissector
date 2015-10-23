@@ -66,6 +66,8 @@ void DependencyModel::setFileSet(ElfFileSet* fileSet)
         const auto soName = file->dynamicSection()->soName();
         if (!soName.isEmpty())
             m_fileIndex.insert(soName, i);
+        else
+            m_fileIndex.insert(file->fileName().toUtf8(), i);
     }
 
     // setup root

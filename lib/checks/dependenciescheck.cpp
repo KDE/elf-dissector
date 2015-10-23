@@ -39,6 +39,8 @@ DependenciesCheck::UnusedDependencies DependenciesCheck::unusedDependencies(ElfF
         const auto soName = file->dynamicSection()->soName();
         if (!soName.isEmpty())
             fileIndex.insert(soName, i);
+        else
+            fileIndex.insert(file->fileName().toUtf8(), i);
     }
 
     UnusedDependencies unusedDeps;
