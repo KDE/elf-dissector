@@ -56,6 +56,7 @@ private slots:
 
         QCOMPARE(f.sectionHeaders().isEmpty(), false);
         QCOMPARE((uint16_t)f.sectionHeaders().size(), f.header()->sectionHeaderCount());
+        QCOMPARE((uint16_t)f.sectionCount(), f.header()->sectionHeaderCount());
         QVERIFY(f.size() > 0);
         QVERIFY(f.indexOfSection(".dynsym") >= 0);
         QCOMPARE(f.indexOfSection(".doesnotexist"), -1);

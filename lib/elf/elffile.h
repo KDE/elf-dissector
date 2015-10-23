@@ -76,6 +76,11 @@ public:
     /** Returns the ELF header. */
     ElfHeader* header() const;
 
+    /** Returns the number of sections.
+     *  Use this rather than header()->sectionHeaderCount() to include sections merged
+     *  from separate debug files.
+     */
+    int sectionCount() const;
     /** Returns a list of all available section headers. */
     QVector<ElfSectionHeader*> sectionHeaders() const;
     /** Returns the section at index @p index. */

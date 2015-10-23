@@ -27,7 +27,7 @@ int RowCountVisitor::doVisit(ElfFileSet* fileSet, int) const
 
 int RowCountVisitor::doVisit(ElfFile* file, int) const
 {
-    return file->header()->sectionHeaderCount();
+    return file->sectionCount();
 }
 
 int RowCountVisitor::doVisit(ElfSymbolTableSection* symtab, int) const

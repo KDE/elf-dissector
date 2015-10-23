@@ -109,6 +109,12 @@ ElfHeader* ElfFile::header() const
     return m_header.get();
 }
 
+int ElfFile::sectionCount() const
+{
+    assert(m_sectionHeaders.size() == m_sections.size());
+    return m_sectionHeaders.size();
+}
+
 QVector<ElfSectionHeader*> ElfFile::sectionHeaders() const
 {
     return m_sectionHeaders;
