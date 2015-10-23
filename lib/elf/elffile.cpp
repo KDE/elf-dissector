@@ -402,6 +402,14 @@ void ElfFile::setSeparateDebugFile(const QString& fileName)
     }
 
     m_separateDebugFile->m_contentFile = this;
+    // merge sections from separate debug file
+    for (int i = 0; i < m_separateDebugFile->sectionHeaders().size(); ++i) {
+        auto debugHdr = m_separateDebugFile->sectionHeaders().at(i);
+        if (indexOfSection(debugHdr->name()) >= 0)
+            continue;
+        m_sectionHeaders.push_back(debugHdr);
+        m_sections.push_back(m_separateDebugFile->section<ElfSection>(i));
+    }
 }
 
 ElfFile* ElfFile::separateDebugFile() const
