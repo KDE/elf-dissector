@@ -430,9 +430,11 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.last().prepend("operator ");
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_NULLARY:
             handleNameComponent(component->u.s_binary.left, nameParts);
             break;
+#endif
         case DEMANGLE_COMPONENT_UNARY:
         {
             handleOperatorComponent(component->u.s_binary.left, nameParts);
@@ -508,6 +510,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_CLONE:
         {
             QVector<QByteArray> args;
@@ -517,6 +520,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             nameParts.push_back(n + " [clone " + args.last() + ']');
             break;
         }
+#endif
         default:
             qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type;
     }

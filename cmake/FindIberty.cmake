@@ -9,7 +9,18 @@ find_package_handle_standard_args(Iberty DEFAULT_MSG Iberty_LIBRARY Iberty_INCLU
 
 # TODO improve this version check
 set(Binutils_VERSION_MAJOR 2)
-set(Binutils_VERSION_MINOR 23)
+set(Binutils_VERSION_MINOR 22)
+
+check_c_source_compiles("
+    #include <demangle.h>
+    int main(int argc, char **argv) {
+        return DEMANGLE_COMPONENT_INITIALIZER_LIST;
+    }"
+    Binutils_HAVE_DEMANGLE_COMPONENT_INITIALIZER_LIST
+)
+if(Binutils_HAVE_DEMANGLE_COMPONENT_INITIALIZER_LIST)
+  set(Binutils_VERSION_MINOR 23)
+endif()
 
 check_c_source_compiles("
     #include <demangle.h>

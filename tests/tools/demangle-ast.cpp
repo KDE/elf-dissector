@@ -277,11 +277,13 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_INITIALIZER_LIST:
             writeNode("INITIALIZER_LIST");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
+#endif
         case DEMANGLE_COMPONENT_OPERATOR:
             writeNode(QByteArray("OPERATOR ") + QByteArray(component->u.s_operator.op->name, component->u.s_operator.op->len));
             break;
@@ -295,10 +297,12 @@ static int handleNameComponent(demangle_component* component)
             writeNode("CAST");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_NULLARY:
             writeNode("NULLARY");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
+#endif
         case DEMANGLE_COMPONENT_UNARY:
             writeNode("UNARY");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
@@ -380,6 +384,7 @@ static int handleNameComponent(demangle_component* component)
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
             writeNode(QByteArray("UNNAMED_TYPE: ") + QByteArray::number((int)component->u.s_number.number));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_TRANSACTION_CLONE:
             writeNode("TRANSACTION_CLONE");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
@@ -388,6 +393,7 @@ static int handleNameComponent(demangle_component* component)
             writeNode("NONTRANSACTION_CLONE");
             // WTF?
             break;
+#endif
         case DEMANGLE_COMPONENT_PACK_EXPANSION:
             writeNode("PACK_EXPANSION");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
@@ -399,11 +405,13 @@ static int handleNameComponent(demangle_component* component)
             // content??
             break;
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_CLONE:
             writeNode("COMPONENT_CLONE");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
+#endif
     }
     return sourceNode;
 }
