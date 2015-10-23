@@ -146,8 +146,11 @@ bool ElfFile::open(QIODevice::OpenMode openMode)
 void ElfFile::close()
 {
     delete m_dwarfInfo;
-    qDeleteAll(m_sectionHeaders);
-    qDeleteAll(m_sections);
+    assert(m_sectionHeaders.size() == m_sections.size());
+    for (int i = 0; header() && i < header()->sectionHeaderCount(); ++i) { // don't delete sections merged from separate debug files
+        delete m_sectionHeaders.at(i);
+        delete m_sections.at(i);
+    }
     m_file.close();
     m_data = nullptr;
 }
