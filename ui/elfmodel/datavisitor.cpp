@@ -42,6 +42,7 @@
 #include <printers/symbolprinter.h>
 
 #include <QDebug>
+#include <QIcon>
 #include <QUrl>
 
 #include <cassert>
@@ -82,7 +83,9 @@ private:
     const DataVisitor* const m_v;
 };
 
-DataVisitor::DataVisitor(const ElfModel* model) : m_model(model)
+DataVisitor::DataVisitor(const ElfModel* model, int column) :
+    m_model(model),
+    m_column(column)
 {
 }
 
@@ -147,6 +150,10 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             if (*section->header()->name() == 0)
                 return QObject::tr("<null>");
             return section->header()->name();
+        case Qt::DecorationRole:
+            if (m_column == 0 && section->file()->isSeparateDebugFile())
+                return QIcon::fromTheme("package_development_debugger");
+            return {};
         case ElfModel::SizeRole:
             return QVariant::fromValue<uint64_t>(section->size());
         case ElfModel::DetailRole:

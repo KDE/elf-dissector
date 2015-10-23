@@ -27,7 +27,7 @@ class ElfModel;
 class DataVisitor : public ElfNodeVisitor<QVariant>
 {
 public:
-    explicit DataVisitor(const ElfModel* model);
+    explicit DataVisitor(const ElfModel* model, int column);
 
 protected:
     QVariant doVisit(ElfFile* file, int arg) const override;
@@ -58,6 +58,7 @@ private:
 
 private:
     const ElfModel* const m_model;
+    int m_column;
 };
 
 #endif // DATAVISITOR_H
