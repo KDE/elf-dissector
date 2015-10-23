@@ -389,12 +389,25 @@ void ElfFile::setSeparateDebugFile(const QString& fileName)
     if (!m_separateDebugFile->open(QIODevice::ReadOnly) || !m_separateDebugFile->isValid()) {
         qWarning() << "Invalid separate debug file for" << m_file.fileName() << ":" << fileName;
         m_separateDebugFile.reset();
+        return;
     }
+
+    m_separateDebugFile->m_contentFile = this;
 }
 
 ElfFile* ElfFile::separateDebugFile() const
 {
     return m_separateDebugFile.get();
+}
+
+bool ElfFile::isSeparateDebugFile() const
+{
+    return m_contentFile;
+}
+
+ElfFile* ElfFile::contentFile() const
+{
+    return m_contentFile;
 }
 
 DwarfInfo* ElfFile::dwarfInfo() const

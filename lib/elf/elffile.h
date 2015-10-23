@@ -107,6 +107,11 @@ public:
     void setSeparateDebugFile(const QString &fileName);
     /** Returns the separate debug file, if present. */
     ElfFile* separateDebugFile() const;
+    /** Returns @c true if this is a separate debug file. */
+    bool isSeparateDebugFile() const;
+    /** Returns the file with the actual content if this is a separate debug file. */
+    ElfFile* contentFile() const;
+
     /** DWARF debug information, if present. */
     DwarfInfo* dwarfInfo() const;
 
@@ -130,6 +135,7 @@ private:
     ElfHashSection* m_hashSection = nullptr;
     ElfReverseRelocator m_reverseReloc;
     std::unique_ptr<ElfFile> m_separateDebugFile;
+    ElfFile *m_contentFile = nullptr; // the counter part for a separate debug file
     DwarfInfo *m_dwarfInfo = nullptr;
     QVector<ElfSegmentHeader*> m_segmentHeaders;
 };
