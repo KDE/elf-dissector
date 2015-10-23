@@ -86,6 +86,22 @@ void ElfFileSet::addFile(ElfFile* file)
             }
             delete dep;
         }
+
+        // deal with NEEDED entries containing absolute paths
+        if (!dependencyFound && lib.startsWith('/')) {
+            if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](ElfFile *file){ return file->fileName() == lib; }) != m_files.cend())
+                continue;
+            if (QFile::exists(lib)) {
+                ElfFile *dep = new ElfFile(lib);
+                if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
+                    dependencyFound = true;
+                    addFile(dep);
+                } else {
+                    delete dep;
+                }
+            }
+        }
+
         if (!dependencyFound)
             qWarning() << "Unable to locate dependency" << lib;
     }
