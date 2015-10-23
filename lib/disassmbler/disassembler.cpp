@@ -137,6 +137,7 @@ QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
     info.flavour = bfd_target_elf_flavour;
     info.endian = m_file->byteOrder() == ELFDATA2LSB ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
     switch (m_file->header()->machine()) {
+#if defined(__x86_64__) || defined(__i386__)
         case EM_386:
             info.arch = bfd_arch_i386;
             info.mach = bfd_mach_i386_i386;
@@ -147,7 +148,8 @@ QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
             info.mach = bfd_mach_x86_64;
             disassemble_fn = print_insn_i386;
             break;
-#if 0 // TODO this would need an ARM binutils library, ie. we need to build this against a cross-compile toolchain...
+#endif
+#if defined(__arm__)
         case EM_ARM:
             info.arch = bfd_arch_arm;
             info.mach = bfd_mach_arm_unknown;
