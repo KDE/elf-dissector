@@ -28,6 +28,8 @@ ElfSectionHeader::ElfSectionHeader(ElfFile* file, uint16_t sectionIndex) :
     assert(file);
 }
 
+ElfSectionHeader::~ElfSectionHeader() = default;
+
 uint16_t ElfSectionHeader::sectionIndex() const
 {
     return m_sectionIndex;

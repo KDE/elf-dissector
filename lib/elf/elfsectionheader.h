@@ -27,6 +27,7 @@ class ElfSectionHeader
 {
 public:
     ElfSectionHeader(const ElfSectionHeader &other) = delete;
+    virtual ~ElfSectionHeader();
     ElfSectionHeader& operator=(const ElfSectionHeader &other) = delete;
 
     uint16_t sectionIndex() const;
