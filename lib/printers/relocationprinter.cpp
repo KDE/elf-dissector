@@ -72,7 +72,9 @@ static const RelocType reloc_types_i386[] {
     RT(R_386_TLS_DTPMOD32, "ID of module containing symbol"),
     RT(R_386_TLS_DTPOFF32, "Offset in TLS block"),
     RT(R_386_TLS_TPOFF32, "Negated offset in static TLS block"),
+#ifdef R_386_SIZE32
     RT(R_386_SIZE32, "32-bit symbol size"),
+#endif
     RT(R_386_TLS_GOTDESC, "GOT offset for TLS descriptor."),
     RT(R_386_TLS_DESC_CALL, "Marker of call through TLS descriptor for relaxation."),
     RT(R_386_TLS_DESC, "TLS descriptor containing pointer to code and to argument, returning the TLS offset for the symbol."),
@@ -93,8 +95,11 @@ static const RelocType reloc_types_arm[] {
     RT(R_ARM_THM_PC22, "PC relative 24 bit (Thumb32 BL)"),
     RT(R_ARM_THM_PC8, "PC relative & 0x3FC (Thumb16 LDR, ADD, ADR)"),
     RT(R_ARM_AMP_VCALL9, "VCALL9"),
+#ifndef R_ARM_TLS_DESC
     RT(R_ARM_SWI24, "Obsolete static relocation"),
+#else
     RT(R_ARM_TLS_DESC, "Dynamic relocation"),
+#endif
     RT(R_ARM_THM_SWI8, "SWI8"),
     RT(R_ARM_XPC25, "XPC25"),
     RT(R_ARM_THM_XPC22, "XPC22 (Thumb)"),
@@ -109,16 +114,19 @@ static const RelocType reloc_types_arm[] {
     RT(R_ARM_GOTPC, "32 bit PC relative offset to GOT"),
     RT(R_ARM_GOT32, "32 bit GOT entry"),
     RT(R_ARM_PLT32, "Deprecated, 32 bit PLT address"),
+#if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_CALL, "PC relative 24 bit (BL, BLX)"),
     RT(R_ARM_JUMP24, "PC relative 24 bit (B, BL<cond>)"),
     RT(R_ARM_THM_JUMP24, "PC relative 24 bit (Thumb32 B.W)"),
     RT(R_ARM_BASE_ABS, "Adjust by program base"),
+#endif
     RT(R_ARM_ALU_PCREL_7_0, "ALU RCREL 7 0"),
     RT(R_ARM_ALU_PCREL_15_8, "ALU PCREL 15 8"),
     RT(R_ARM_ALU_PCREL_23_15, "ALU RCREL 23 15"),
     RT(R_ARM_LDR_SBREL_11_0, "Program base relative (LDR 11 0)"),
     RT(R_ARM_ALU_SBREL_19_12, "Program base relative (ALU 19 12)"),
     RT(R_ARM_ALU_SBREL_27_20, "Program base relative (ALU 27 20)"),
+#if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_TARGET1, "TARGET1"),
     RT(R_ARM_SBREL31, "Program base relative"),
     RT(R_ARM_V4BX, "V4BX"),
@@ -171,16 +179,21 @@ static const RelocType reloc_types_arm[] {
     RT(R_ARM_THM_MOVW_BREL_NC, "Program base relative 16 bit (Thumb32 MOVW)"),
     RT(R_ARM_THM_MOVT_BREL, "Program base relative high 16 bit (Thumb32 MOVT)"),
     RT(R_ARM_THM_MOVW_BREL, "Program base relative 16 bit (Thumb32 MOVW)"),
+#endif
+#if __GLIBC_PREREQ(2, 14)
     RT(R_ARM_TLS_GOTDESC, "TLS GOTDESC"),
     RT(R_ARM_TLS_CALL, "TLS CALL"),
     RT(R_ARM_TLS_DESCSEQ, "TLS relaxation"),
     RT(R_ARM_THM_TLS_CALL, "TLS CALL (Thumb)"),
+#endif
+#if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_PLT32_ABS, "PLT32 ABS"),
     RT(R_ARM_GOT_ABS, "GOT entry"),
     RT(R_ARM_GOT_PREL, "PC relative GOT entry"),
     RT(R_ARM_GOT_BREL12, "GOT entry relative to GOT origin (LDR)"),
     RT(R_ARM_GOTOFF12, "12 bit, GOT entry relative to GOT origin (LDR, STR)"),
     RT(R_ARM_GOTRELAX, "GOTRELAX"),
+#endif
     RT(R_ARM_GNU_VTENTRY, "GNU VTENTRY"),
     RT(R_ARM_GNU_VTINHERIT, "GNU VTINHERIT"),
     RT(R_ARM_THM_PC11, "PC relative & 0xFFE (Thumb16 B)"),
@@ -190,15 +203,23 @@ static const RelocType reloc_types_arm[] {
     RT(R_ARM_TLS_LDO32, "32 bit offset relative to TLS block"),
     RT(R_ARM_TLS_IE32, "PC-rel 32 bit for GOT entry of static TLS block offset"),
     RT(R_ARM_TLS_LE32, "32 bit offset relative to static TLS block"),
+#if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_TLS_LDO12, "12 bit relative to TLS block (LDR, STR)"),
     RT(R_ARM_TLS_LE12, "12 bit relative to static TLS block (LDR, STR)"),
     RT(R_ARM_TLS_IE12GP, "12 bit GOT entry relative to GOT origin (LDR)"),
     RT(R_ARM_ME_TOO, "ME TOO"),
+#endif
+#ifdef R_ARM_THM_TLS_DESCSEQ
     RT(R_ARM_THM_TLS_DESCSEQ, "TLS DESCSEQ (Thumb)"),
+#endif
+#if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_THM_TLS_DESCSEQ16, "TLS DESCSEQ16 (Thumb)"),
     RT(R_ARM_THM_TLS_DESCSEQ32, "TLS DESCSEQ32 (Thumb)"),
     RT(R_ARM_THM_GOT_BREL12, "GOT entry relative to GOT origin, 12 bit (Thumb32 LDR)"),
+#endif
+#ifdef R_ARM_IRELATIVE
     RT(R_ARM_IRELATIVE, "IRELATIVE"),
+#endif
     RT(R_ARM_RXPC25, "RXPC25"),
     RT(R_ARM_RSBREL32, "RSBREL32"),
     RT(R_ARM_THM_RPC22, "RPC22 (Thumb)"),
@@ -247,7 +268,9 @@ static const RelocType reloc_types_x86_64[] {
     RT(R_X86_64_TLSDESC_CALL, "Marker for call through TLS descriptor"),
     RT(R_X86_64_TLSDESC, "TLS descriptor. "),
     RT(R_X86_64_IRELATIVE, "Adjust indirectly by program base"),
+#ifdef R_X86_64_RELATIVE64
     RT(R_X86_64_RELATIVE64, "64-bit adjust by program base")
+#endif
 };
 
 #undef RT

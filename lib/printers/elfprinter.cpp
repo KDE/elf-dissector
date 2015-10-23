@@ -45,7 +45,9 @@ QByteArray ElfPrinter::machine(uint16_t machineType)
         M(ARM)
         M(X86_64)
         M(AVR)
+#ifdef EM_AARCH64
         M(AARCH64)
+#endif
     }
     return QByteArray("Unknown machine type (" ) + QByteArray::number(machineType) + ')';
 }

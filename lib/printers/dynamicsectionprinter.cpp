@@ -49,6 +49,7 @@ static const LookupTableEntry<uint64_t> dt_flag_1_infos[] {
     { DF_1_ENDFILTEE, "filtee terminates filters search" },
     { DF_1_DISPRELDNE, "disp reloc applied at build time" },
     { DF_1_DISPRELPND, "disp reloc applied at run-time" },
+#if __GLIBC_PREREQ(2, 17)
     { DF_1_NODIRECT, "object has no-direct binding" },
     { DF_1_IGNMULDEF, "DF_1_IGNMULDEF" },
     { DF_1_NOKSYMS, "DF_1_NOKSYMS" },
@@ -58,6 +59,7 @@ static const LookupTableEntry<uint64_t> dt_flag_1_infos[] {
     { DF_1_SYMINTPOSE, "Object has individual interposers" },
     { DF_1_GLOBAUDIT, "Global auditing required" },
     { DF_1_SINGLETON, "Singleton symbols are used" }
+#endif
 };
 
 namespace DynamicSectionPrinter {
