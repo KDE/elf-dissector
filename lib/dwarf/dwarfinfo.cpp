@@ -159,6 +159,8 @@ DwarfInfo::~DwarfInfo()
 
 ElfFile* DwarfInfo::elfFile() const
 {
+    if (d->elfFile->isSeparateDebugFile())
+        return d->elfFile->contentFile();
     return d->elfFile;
 }
 

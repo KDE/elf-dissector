@@ -45,7 +45,10 @@ ParentVisitor::type ParentVisitor::doVisit(ElfFile* file, int) const
 
 ParentVisitor::type ParentVisitor::doVisit(ElfSection* section, int) const
 {
-    return makeParent(section->file(), ElfNodeVariant::File, section->header()->sectionIndex());
+    auto file = section->file();
+    if (file->isSeparateDebugFile())
+        file = file->contentFile();
+    return makeParent(file, ElfNodeVariant::File, section->header()->sectionIndex());
 }
 
 ParentVisitor::type ParentVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int) const
