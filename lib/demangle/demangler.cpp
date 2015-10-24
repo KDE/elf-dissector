@@ -62,7 +62,7 @@ QByteArray Demangler::demangleFull(const char* name)
 
     size_t size;
     char * fullName = cplus_demangle_print(DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, component, strlen(name), &size);
-    const QByteArray b(fullName, size);
+    const QByteArray b(fullName);
 
     free(fullName);
     free(memory);
