@@ -16,6 +16,7 @@
 */
 
 #include "dwarfcudie.h"
+#include "dwarfline.h"
 
 #include <libdwarf.h>
 
@@ -31,6 +32,11 @@ DwarfCuDie::~DwarfCuDie()
     }
     dwarf_dealloc(dwarfHandle(), m_srcFiles, DW_DLA_LIST);
 
+    for (int i = 0; i < m_lineCount; ++i) {
+        dwarf_dealloc(dwarfHandle(), m_lines[i], DW_DLA_LINE);
+    }
+    dwarf_dealloc(dwarfHandle(), m_lines, DW_DLA_LIST);
+
     dwarf_dealloc(dwarfHandle(), m_die, DW_DLA_DIE);
 }
 
@@ -45,4 +51,36 @@ const char* DwarfCuDie::sourceFileForIndex(int sourceIndex) const
     Q_ASSERT(sourceIndex >= 0);
     Q_ASSERT(sourceIndex < m_srcFileCount);
     return m_srcFiles[sourceIndex];
+}
+
+void DwarfCuDie::loadLines() const
+{
+    if (m_lines)
+        return;
+
+    dwarf_srclines(m_die, &m_lines, &m_lineCount, nullptr);
+}
+
+DwarfLine DwarfCuDie::lineForAddress(Dwarf_Addr addr) const
+{
+    loadLines();
+    // ### is this sorted in any way?
+    for (int i = 0; i < m_lineCount; ++i) {
+        DwarfLine line(m_lines[i]);
+        if (line.address() == addr)
+            return line;
+    }
+
+    return {};
+}
+
+QByteArray DwarfCuDie::sourceFileForLine(DwarfLine line) const
+{
+    char* srcFile = nullptr;
+    auto res = dwarf_linesrc(line.handle(), &srcFile, nullptr);
+    if (res != DW_DLV_OK)
+        return {};
+    QByteArray b(srcFile);
+    dwarf_dealloc(dwarfHandle(), srcFile, DW_DLA_STRING);
+    return b;
 }

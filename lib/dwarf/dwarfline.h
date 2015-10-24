@@ -15,38 +15,33 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DWARFCUDIE_H
-#define DWARFCUDIE_H
+#ifndef DWARFLINE_H
+#define DWARFLINE_H
 
-#include "dwarfdie.h"
+#include <libdwarf.h>
 
-class DwarfInfo;
-class DwarfLine;
+class QByteArray;
 
-class DwarfCuDie : public DwarfDie
+/** Represents one line information entry in the .debug_lines section. */
+class DwarfLine
 {
 public:
-    ~DwarfCuDie();
+    DwarfLine();
+    ~DwarfLine();
 
-    DwarfLine lineForAddress(Dwarf_Addr addr) const;
-    QByteArray sourceFileForLine(DwarfLine line) const;
+    bool isNull() const;
+
+    Dwarf_Unsigned line() const;
+    Dwarf_Signed column() const;
+    Dwarf_Addr address() const;
 
 protected:
-    friend class DwarfDie;
-    friend class DwarfInfoPrivate;
-    explicit DwarfCuDie(Dwarf_Die die, DwarfInfo* info);
-
-    const char* sourceFileForIndex(int i) const;
+    friend class DwarfCuDie;
+    DwarfLine(Dwarf_Line line);
+    Dwarf_Line handle() const;
 
 private:
-    void loadLines() const;
-
-private:
-    mutable char** m_srcFiles = nullptr;
-    mutable Dwarf_Signed m_srcFileCount = 0;
-
-    mutable Dwarf_Line* m_lines = nullptr;
-    mutable Dwarf_Signed m_lineCount = 0;
+    Dwarf_Line m_line = nullptr;
 };
 
-#endif // DWARFCUDIE_H
+#endif // DWARFLINE_H
