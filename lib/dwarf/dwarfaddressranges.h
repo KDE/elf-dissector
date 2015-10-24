@@ -23,6 +23,7 @@
 #include <cstdint>
 
 class DwarfInfo;
+class DwarfCuDie;
 class DwarfDie;
 
 /** Representation of the .debug_aranges section. */
@@ -39,7 +40,7 @@ public:
     bool isValid() const;
 
     /** Looks up the CU DIE for the given address. */
-    DwarfDie* compilationUnitForAddress(uint64_t addr) const;
+    DwarfCuDie* compilationUnitForAddress(uint64_t addr) const;
     /** Looks up the DIE for the given address. */
     DwarfDie* dieForAddress(uint64_t addr) const;
 

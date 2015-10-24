@@ -17,7 +17,7 @@
 
 #include "dwarfaddressranges.h"
 #include "dwarfinfo.h"
-#include "dwarfdie.h"
+#include "dwarfcudie.h"
 
 #include <dwarf.h>
 
@@ -45,7 +45,7 @@ bool DwarfAddressRanges::isValid() const
     return m_aranges;
 }
 
-DwarfDie* DwarfAddressRanges::compilationUnitForAddress(uint64_t addr) const
+DwarfCuDie* DwarfAddressRanges::compilationUnitForAddress(uint64_t addr) const
 {
     if (!isValid())
         return nullptr;
@@ -60,7 +60,9 @@ DwarfDie* DwarfAddressRanges::compilationUnitForAddress(uint64_t addr) const
     if (res != DW_DLV_OK)
         return nullptr;
 
-    return m_info->dieAtOffset(offset);
+    auto die = m_info->dieAtOffset(offset);
+    assert(die->isCompilationUnit());
+    return static_cast<DwarfCuDie*>(die);
 }
 
 static DwarfDie* findByLowPCRecursive(DwarfDie *die, uint64_t addr)
