@@ -28,6 +28,8 @@ class ElfSection;
 class ElfSymbolTableEntry;
 class ElfGotEntry;
 
+class DwarfLine;
+
 class Disassembler
 {
 public:
@@ -50,6 +52,9 @@ public:
 
 private:
     QString disassemble(const unsigned char* data, uint64_t size);
+
+    DwarfLine lineForAddress(uint64_t addr);
+    QString printSourceLine(DwarfLine line);
 
     ElfFile *m_file = nullptr;
     uint64_t m_baseAddress = 0;

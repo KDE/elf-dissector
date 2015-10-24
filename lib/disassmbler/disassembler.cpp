@@ -25,6 +25,10 @@
 #include <elf/elfpltsection.h>
 #include <elf/elfgotsection.h>
 #include <elf/elfrelocationentry.h>
+#include <dwarf/dwarfinfo.h>
+#include <dwarf/dwarfaddressranges.h>
+#include <dwarf/dwarfcudie.h>
+#include <dwarf/dwarfline.h>
 
 #include <QDebug>
 #include <QString>
@@ -171,6 +175,9 @@ QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
 
     uint32_t bytes = 0;
     while (bytes < size) {
+        auto line = lineForAddress(baseAddress() + bytes);
+        if (!line.isNull())
+            result += printSourceLine(line) + "<br/>";
         result += QString::fromLatin1("%1: ").arg(bytes, 8, 10);
         bytes += (*disassemble_fn)(bytes, &info);
         result += "<br/>";
@@ -211,4 +218,27 @@ QString Disassembler::printPltEntry(ElfPltEntry* entry) const
     if (sym)
         return sym->name() + QLatin1String("@plt");
     return entry->section()->header()->name() + QLatin1String(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
+}
+
+DwarfLine Disassembler::lineForAddress(uint64_t addr)
+{
+    if (!file()->dwarfInfo())
+        return {};
+
+    auto cu = file()->dwarfInfo()->addressRanges()->compilationUnitForAddress(addr);
+    if (!cu)
+        return {};
+    return cu->lineForAddress(addr);
+}
+
+QString Disassembler::printSourceLine(DwarfLine line)
+{
+    assert(!line.isNull());
+    auto cu = file()->dwarfInfo()->addressRanges()->compilationUnitForAddress(line.address());
+    assert(cu);
+
+    QString s;
+    s += "<i>Source: " + QString::fromUtf8(cu->sourceFileForLine(line));
+    s += ':' + QString::number(line.line()) + "</i>";
+    return s;
 }
