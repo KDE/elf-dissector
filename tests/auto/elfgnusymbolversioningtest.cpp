@@ -23,7 +23,9 @@
 #include <elf/elfgnusymbolversiondefinition.h>
 #include <elf/elfgnusymbolversionrequirementssection.h>
 #include <elf/elfgnusymbolversionrequirement.h>
+#include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
 
+#include <QDebug>
 #include <QtTest/qtest.h>
 #include <QObject>
 
@@ -82,6 +84,76 @@ private slots:
         const auto verNeed = symbolVersionNeeds->requirement(0);
         QVERIFY(verNeed);
         QVERIFY(verNeed->auxiliarySize() > 0);
+    }
+
+    void testSymbolVersionDefinitions()
+    {
+        ElfFileSet set;
+        set.addFile(LIBDIR "libversioned-symbols.so");
+        QVERIFY(set.size() > 1);
+
+        auto f = set.file(0);
+        QVERIFY(f);
+
+        const auto symDefIndex = f->indexOfSection(".gnu.version_d");
+        const auto symbolVersionDefs = f->section<ElfGNUSymbolVersionDefinitionsSection>(symDefIndex);
+        QVERIFY(symbolVersionDefs);
+        QCOMPARE(symbolVersionDefs->entryCount(), 3u);
+
+        auto def = symbolVersionDefs->definition(1);
+        QVERIFY(def);
+        QCOMPARE(def->versionIndex(), (uint16_t)2);
+        QCOMPARE(def->auxiliarySize(), (uint16_t)2);
+
+        auto defEntry = def->auxiliaryEntry(0);
+        QVERIFY(defEntry);
+        QCOMPARE(defEntry->name(), "VER2");
+        defEntry = def->auxiliaryEntry(1);
+        QVERIFY(defEntry);
+        QCOMPARE(defEntry->name(), "VER1");
+
+        def = symbolVersionDefs->definition(2);
+        QVERIFY(def);
+        QCOMPARE(def->versionIndex(), (uint16_t)3);
+        QCOMPARE(def->auxiliarySize(), (uint16_t)1);
+
+        defEntry = def->auxiliaryEntry(0);
+        QVERIFY(defEntry);
+        QCOMPARE(defEntry->name(), "VER1");
+
+        const auto symVerIndex = f->indexOfSection(".gnu.version");
+        const auto symbolVersionTable = f->section<ElfGNUSymbolVersionTable>(symVerIndex);
+        QVERIFY(symbolVersionTable);
+
+        const auto dynTabIndex = f->indexOfSection(".dynsym");
+        QVERIFY(dynTabIndex > 0);
+        const auto symTab = f->section<ElfSymbolTableSection>(dynTabIndex);
+        QVERIFY(symTab);
+        QCOMPARE(symTab->header()->entryCount(), symbolVersionTable->header()->entryCount());
+
+        ElfSymbolTableEntry *f1 = nullptr, *f2 = nullptr, *f_ver1 = nullptr, *f_ver2 = nullptr;
+        for (uint i = 0; i < symTab->header()->entryCount(); ++i) {
+            auto sym = symTab->entry(i);
+            QVERIFY(sym);
+            if (strcmp(sym->name(), "function1") == 0)
+                f1 = sym;
+            else if (strcmp(sym->name(), "function2") == 0)
+                f2 = sym;
+            else if (strcmp(sym->name(), "function") == 0) {
+                qDebug() << symbolVersionTable->versionIndex(i);
+                if (symbolVersionTable->versionIndex(i) == 2)
+                    f_ver2 = sym;
+                else if ((symbolVersionTable->versionIndex(i) & (0xfff)) == 3) // TODO fix this in ElfGNUSymbolVersionTable
+                    f_ver1 = sym;
+            }
+        }
+
+        QVERIFY(f1);
+        QVERIFY(f2);
+        QVERIFY(f_ver1);
+        QVERIFY(f_ver2);
+        QCOMPARE(f1->value(), f_ver1->value());
+        QCOMPARE(f2->value(), f_ver2->value());
     }
 };
 

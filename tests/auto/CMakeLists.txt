@@ -2,7 +2,9 @@ add_executable(demangler_test demangler_test.cpp)
 target_link_libraries(demangler_test Qt5::Test libelfdissector)
 add_test(NAME test-demangle COMMAND demangler_test)
 
-add_definitions(-DBINDIR="${CMAKE_BINARY_DIR}/bin/")
+add_definitions(-DBINDIR="${CMAKE_BINARY_DIR}/${BIN_INSTALL_DIR}/")
+add_definitions(-DLIBDIR="${CMAKE_BINARY_DIR}/${LIB_INSTALL_DIR}/")
+
 add_executable(elffiletest elffiletest.cpp)
 target_link_libraries(elffiletest Qt5::Test libelfdissector)
 add_test(NAME elffiletest COMMAND elffiletest)
