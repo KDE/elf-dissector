@@ -1,9 +1,9 @@
-VER2 {
-    global:
-        function;
-} VER1;
-
 VER1 {
     global:
         function;
 };
+
+VER2 {
+    global:
+        function;
+} VER1;
