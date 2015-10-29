@@ -143,7 +143,7 @@ private slots:
                 qDebug() << symbolVersionTable->versionIndex(i);
                 if (symbolVersionTable->versionIndex(i) == 2)
                     f_ver2 = sym;
-                else if ((symbolVersionTable->versionIndex(i) & (0xfff)) == 3) // TODO fix this in ElfGNUSymbolVersionTable
+                else if (symbolVersionTable->versionIndex(i) == 3)
                     f_ver1 = sym;
             }
         }

@@ -36,5 +36,11 @@ ElfGNUSymbolVersionTable::~ElfGNUSymbolVersionTable() = default;
 uint16_t ElfGNUSymbolVersionTable::versionIndex(uint32_t index) const
 {
     assert(index < header()->entryCount());
-    return *(reinterpret_cast<const uint16_t*>(rawData()) + index);
+    return *(reinterpret_cast<const uint16_t*>(rawData()) + index) & 0x7FFF;
+}
+
+bool ElfGNUSymbolVersionTable::isHidden(uint32_t index) const
+{
+    assert(index < header()->entryCount());
+    return *(reinterpret_cast<const uint16_t*>(rawData()) + index) & 0x8000;
 }

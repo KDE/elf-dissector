@@ -29,6 +29,9 @@ public:
 
     /** Index into the version definition table. */
     uint16_t versionIndex(uint32_t index) const;
+
+    /** Returns whether the hidden flag (bit 15) is set on this entry. */
+    bool isHidden(uint32_t index) const;
 };
 
 #endif // ELFGNUSYMBOLVERSIONTABLE_H

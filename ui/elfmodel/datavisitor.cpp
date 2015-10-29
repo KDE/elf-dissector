@@ -263,6 +263,8 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
             // TODO
             s += QString::number(versionIndex);
     };
+    if (verSymTab->isHidden(entry->index()))
+        s += " (hidden)";
     s += "<br/>";
     return s;
 }
