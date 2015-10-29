@@ -41,6 +41,15 @@ ElfGNUSymbolVersionDefinition* ElfGNUSymbolVersionDefinitionsSection::definition
     return m_versionDefinitions.at(index);
 }
 
+ElfGNUSymbolVersionDefinition* ElfGNUSymbolVersionDefinitionsSection::definitionForVersionIndex(uint16_t index) const
+{
+    foreach (auto def, m_versionDefinitions) {
+        if ((def->versionIndex() & 0x7FFF) == (index & 0x7FFF))
+            return def;
+    }
+    return nullptr;
+}
+
 void ElfGNUSymbolVersionDefinitionsSection::parse()
 {
     // TODO parse until nextOffset() is 0 might be an alternative, removes dependency on dynamicSection() being avaiable here

@@ -104,6 +104,7 @@ private slots:
         QVERIFY(def);
         QCOMPARE(def->versionIndex(), (uint16_t)2);
         QCOMPARE(def->auxiliarySize(), (uint16_t)2);
+        QCOMPARE(symbolVersionDefs->definitionForVersionIndex(2), def);
 
         auto defEntry = def->auxiliaryEntry(0);
         QVERIFY(defEntry);
@@ -116,6 +117,7 @@ private slots:
         QVERIFY(def);
         QCOMPARE(def->versionIndex(), (uint16_t)3);
         QCOMPARE(def->auxiliarySize(), (uint16_t)1);
+        QCOMPARE(symbolVersionDefs->definitionForVersionIndex(3), def);
 
         defEntry = def->auxiliaryEntry(0);
         QVERIFY(defEntry);

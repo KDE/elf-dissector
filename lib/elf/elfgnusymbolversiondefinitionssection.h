@@ -32,7 +32,14 @@ public:
     ~ElfGNUSymbolVersionDefinitionsSection();
 
     uint32_t entryCount() const;
+    /** This returns the definition at position @p index in the file.
+     *  Ie. @p index is a 0-based array index, unlike in the method below.
+     */
     ElfGNUSymbolVersionDefinition* definition(uint32_t index) const;
+    /** This returns the definition with version index @p index.
+     *  Ie. @p index is the number referenced in the various version entires.
+     */
+    ElfGNUSymbolVersionDefinition* definitionForVersionIndex(uint16_t index) const;
 
 protected:
     // parsing needs to be delayed until file()->dynamicSection() works
