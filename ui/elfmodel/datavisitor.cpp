@@ -37,6 +37,7 @@
 #include <printers/dwarfprinter.h>
 #include <printers/dynamicsectionprinter.h>
 #include <printers/elfprinter.h>
+#include <printers/gnuversionprinter.h>
 #include <printers/notesectionprinter.h>
 #include <printers/relocationprinter.h>
 #include <printers/symbolprinter.h>
@@ -473,7 +474,7 @@ QVariant DataVisitor::doVisit(ElfGNUSymbolVersionDefinition* verDef, int role) c
         case ElfModel::DetailRole:
         {
             QString s;
-            s += "Flags: " + QString::number(verDef->flags()) + "<br/>";
+            s += "Flags: " + GnuVersionPrinter::versionFlags(verDef->flags()) + "<br/>";
             s += "Index: " + QString::number(verDef->versionIndex()) + "<br/>";
             s += "Aux count: " + QString::number(verDef->auxiliarySize()) + "<br/>";
             s += "Hash: " + QString::number(verDef->hash()) + "<br/>";

@@ -53,6 +53,7 @@ set(libelfdisector_srcs
     printers/dwarfprinter.cpp
     printers/dynamicsectionprinter.cpp
     printers/elfprinter.cpp
+    printers/gnuversionprinter.cpp
     printers/notesectionprinter.cpp
     printers/relocationprinter.cpp
     printers/symbolprinter.cpp
