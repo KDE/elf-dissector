@@ -85,22 +85,22 @@ QByteArray ElfPrinter::sectionType(uint32_t sectionType)
     return lookupLabel(sectionType, section_type_table);
 }
 
+static const LookupTableEntry<uint64_t> section_flags_table[] {
+    { SHF_WRITE, "writable" },
+    { SHF_ALLOC, "occupies memory during execution" },
+    { SHF_EXECINSTR, "executable" },
+    { SHF_MERGE, "might be merged" },
+    { SHF_STRINGS, "contains nul-terminated strings" },
+    { SHF_INFO_LINK, "sh_info contains SHT index" },
+    { SHF_LINK_ORDER, "preserve order after combining" },
+    { SHF_OS_NONCONFORMING, "non-standard OS specific handling required" },
+    { SHF_GROUP, "group member" },
+    { SHF_TLS, "holds thread-local data" }
+};
+
 QByteArray ElfPrinter::sectionFlags(uint64_t flags)
 {
-    QByteArrayList s;
-    if (flags & SHF_WRITE) s.push_back("writable");
-    if (flags & SHF_ALLOC) s.push_back("occupies memory during execution");
-    if (flags & SHF_EXECINSTR) s.push_back("executable");
-    if (flags & SHF_MERGE) s.push_back("might be merged");
-    if (flags & SHF_STRINGS) s.push_back("contains nul-terminated strings");
-    if (flags & SHF_INFO_LINK) s.push_back("sh_info contains SHT index");
-    if (flags & SHF_LINK_ORDER) s.push_back("preserve order after combining");
-    if (flags & SHF_OS_NONCONFORMING) s.push_back("non-standard OS specific handling required");
-    if (flags & SHF_GROUP) s.push_back("group member");
-    if (flags & SHF_TLS) s.push_back("holds thread-local data");
-    if (s.isEmpty())
-        return "none";
-    return s.join(", ");
+    return lookupFlags(flags, section_flags_table);
 }
 
 static const LookupTableEntry<uint8_t> os_abi_table[] {
