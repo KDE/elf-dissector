@@ -21,6 +21,7 @@
 #include <elf/elffile.h>
 #include <elf/elfnoteentry.h>
 #include <elf/elfgnusymbolversiontable.h>
+#include <elf/elfgnusymbolversiondefinitionssection.h>
 #include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
 #include <elf/elfgnusymbolversionrequirement.h>
 #include <elf/elfgnusymbolversionrequirementauxiliaryentry.h>
@@ -261,8 +262,18 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
             s += "&lt;global&gt;";
             break;
         default:
-            // TODO
+        {
+            auto f = entry->symbolTable()->file();
+            if (entry->value()) { // definition
+                const auto verDefIdx = f->indexOfSection(SHT_GNU_verdef);
+                auto verDefSection = f->section<ElfGNUSymbolVersionDefinitionsSection>(verDefIdx);
+                assert(verDefSection);
+                s += verDefSection->definitionForVersionIndex(versionIndex)->auxiliaryEntry(0)->name();
+            } else { // requirement
+                // TODO
+            }
             s += QString::number(versionIndex);
+        }
     };
     if (verSymTab->isHidden(entry->index()))
         s += " (hidden)";
