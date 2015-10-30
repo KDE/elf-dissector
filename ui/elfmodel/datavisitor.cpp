@@ -269,6 +269,7 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
                 auto verDefSection = f->section<ElfGNUSymbolVersionDefinitionsSection>(verDefIdx);
                 assert(verDefSection);
                 s += verDefSection->definitionForVersionIndex(versionIndex)->auxiliaryEntry(0)->name();
+                break;
             } else { // requirement
                 // TODO
             }
