@@ -271,7 +271,11 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
                 s += verDefSection->definitionForVersionIndex(versionIndex)->auxiliaryEntry(0)->name();
                 break;
             } else { // requirement
-                // TODO
+                const auto verReqIdx = f->indexOfSection(SHT_GNU_verneed);
+                auto verReqSection = f->section<ElfGNUSymbolVersionRequirementsSection>(verReqIdx);
+                assert(verReqSection);
+                s += verReqSection->requirementForVersionIndex(versionIndex)->name();
+                break;
             }
             s += QString::number(versionIndex);
         }

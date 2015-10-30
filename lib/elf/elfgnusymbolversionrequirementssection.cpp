@@ -17,6 +17,7 @@
 
 #include "elfgnusymbolversionrequirementssection.h"
 #include "elfgnusymbolversionrequirement.h"
+#include "elfgnusymbolversionrequirementauxiliaryentry.h"
 #include "elfdynamicsection.h"
 #include "elffile.h"
 
@@ -38,6 +39,19 @@ uint32_t ElfGNUSymbolVersionRequirementsSection::entryCount() const
 ElfGNUSymbolVersionRequirement* ElfGNUSymbolVersionRequirementsSection::requirement(uint32_t index) const
 {
     return m_versionRequirements.at(index);
+}
+
+ElfGNUSymbolVersionRequirementAuxiliaryEntry* ElfGNUSymbolVersionRequirementsSection::requirementForVersionIndex(uint16_t index) const
+{
+    for (uint32_t i = 0; i < entryCount(); ++i) {
+        auto req = m_versionRequirements.at(i);
+        for (uint16_t j = 0; j < req->auxiliarySize(); ++j) {
+            auto reqAux = req->auxiliaryEntry(j);
+            if ((reqAux->other() & 0x7FFF) == (index & 0x7FFF))
+                return reqAux;
+        }
+    }
+    return nullptr;
 }
 
 void ElfGNUSymbolVersionRequirementsSection::parse()
