@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=ELF Dissector
 Name[ca]=ELF Dissector
+Name[ca@valencia]=ELF Dissector
 Name[cs]=ELF Dissector
 Name[es]=Disector ELF
 Name[gl]=Disector de ELF
@@ -15,6 +16,7 @@ Name[uk]=ELF Dissector
 Name[x-test]=xxELF Dissectorxx
 Comment=Tool for analyzing ELF binary files.
 Comment[ca]=Eina per analitzar fitxers executables ELF.
+Comment[ca@valencia]=Eina per analitzar fitxers executables ELF.
 Comment[cs]=Nástroj pro analýzu binárních souborů ELF.
 Comment[es]=Herramienta para analizar archivos binarios ELF.
 Comment[gl]=Ferramenta para analizar ficheiros binarios ELF.
@@ -29,6 +31,7 @@ Comment[uk]=Інструмент для аналізу двійкових фай
 Comment[x-test]=xxTool for analyzing ELF binary files.xx
 GenericName=ELF binary inspector
 GenericName[ca]=Inspector d'executables ELF
+GenericName[ca@valencia]=Inspector d'executables ELF
 GenericName[es]=Inspector de binarios ELF
 GenericName[gl]=Inspector de binarios ELF
 GenericName[nl]=Inspectieprogramma voor ELF-binair
