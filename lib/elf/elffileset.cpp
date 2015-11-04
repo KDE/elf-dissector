@@ -31,7 +31,7 @@ ElfFileSet::ElfFileSet(QObject* parent) : QObject(parent)
     for (const auto &path : qgetenv("LD_LIBRARY_PATH").split(':'))
         m_baseSearchPaths.push_back(path);
 
-    m_globalDebugSearchPath.push_back("/usr/lib/debug"); // seems hardcoded?
+    m_globalDebugSearchPath.push_back(QStringLiteral("/usr/lib/debug")); // seems hardcoded?
 }
 
 ElfFileSet::~ElfFileSet()
@@ -173,7 +173,7 @@ void ElfFileSet::topologicalSort()
 
 void ElfFileSet::parseLdConf()
 {
-    parseLdConf("/etc/ld.so.conf");
+    parseLdConf(QStringLiteral("/etc/ld.so.conf"));
 
     // built-in defaults
     m_baseSearchPaths.push_back("/lib64");

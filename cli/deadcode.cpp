@@ -25,9 +25,9 @@
 
 int main(int argc, char** argv)
 {
-    QCoreApplication::setApplicationName("ELF Dead Code Finder");
-    QCoreApplication::setOrganizationName("KDE");
-    QCoreApplication::setOrganizationDomain("kde.org");
+    QCoreApplication::setApplicationName(QStringLiteral("ELF Dead Code Finder"));
+    QCoreApplication::setOrganizationName(QStringLiteral("KDE"));
+    QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
     QCoreApplication::setApplicationVersion(ELF_DISSECTOR_VERSION_STRING);
 
     QCoreApplication app(argc, argv);
@@ -35,9 +35,9 @@ int main(int argc, char** argv)
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
-    QCommandLineOption excludePrefixOpt("exclude-prefix", "Exclude ELF files in this prefix.", "exclude");
+    QCommandLineOption excludePrefixOpt(QStringLiteral("exclude-prefix"), QStringLiteral("Exclude ELF files in this prefix."), QStringLiteral("exclude"));
     parser.addOption(excludePrefixOpt);
-    parser.addPositionalArgument("elf", "ELF objects to analyze", "<elf>");
+    parser.addPositionalArgument(QStringLiteral("elf"), QStringLiteral("ELF objects to analyze"), QStringLiteral("<elf>"));
     parser.process(app);
 
     ElfFileSet set;

@@ -165,7 +165,7 @@ void SizeTreeMapView::reloadTreeMap()
         ui->splitter->setSizes({ ui->sectionView->header()->sectionSize(0), width() - ui->sectionView->header()->sectionSize(0) });
 
     QSettings settings;
-    m_treeMap->setSplitMode(settings.value("TreeMap/SplitMode", "Bisection").toString());
+    m_treeMap->setSplitMode(settings.value(QStringLiteral("TreeMap/SplitMode"), "Bisection").toString());
 
     struct SymbolNode {
         TreeMapItem *item;
@@ -245,7 +245,7 @@ void SizeTreeMapView::treeMapContextMenu(const QPoint& pos)
     menu.exec(m_treeMap->mapToGlobal(pos));
 
     QSettings settings;
-    settings.setValue("TreeMap/SplitMode", m_treeMap->splitModeString());
+    settings.setValue(QStringLiteral("TreeMap/SplitMode"), m_treeMap->splitModeString());
 }
 
 static void readCheckedState(QAction *action, bool def)
@@ -254,7 +254,7 @@ static void readCheckedState(QAction *action, bool def)
     if (data.isEmpty())
         return;
     QSettings settings;
-    settings.beginGroup("View");
+    settings.beginGroup(QStringLiteral("View"));
     action->setChecked(settings.value(data, def).toBool());
 }
 
@@ -281,7 +281,7 @@ void SizeTreeMapView::viewActionToggled()
     if (data.isEmpty())
         return;
     QSettings settings;
-    settings.beginGroup("View");
+    settings.beginGroup(QStringLiteral("View"));
     settings.setValue(data, action->isChecked());
 
     // compress subsequent calls

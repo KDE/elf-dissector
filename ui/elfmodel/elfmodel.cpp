@@ -218,7 +218,7 @@ QUrl ElfModel::urlForIndex(const QModelIndex& index) const
 
     const auto parentIdx = parent(index);
     if (!parentIdx.isValid()) {
-        url.setScheme("elfmodel");
+        url.setScheme(QStringLiteral("elfmodel"));
         url.setPath(QString::number(index.row()));
         return url;
     }
@@ -232,7 +232,7 @@ QUrl ElfModel::urlForIndex(const QModelIndex& index) const
 QModelIndex ElfModel::indexForUrl(const QUrl& url) const
 {
     Q_ASSERT(url.scheme() == "elfmodel");
-    const auto rows = url.path().split("/", QString::SkipEmptyParts);
+    const auto rows = url.path().split(QStringLiteral("/"), QString::SkipEmptyParts);
 
     QModelIndex idx;
     for (const auto r : rows) {

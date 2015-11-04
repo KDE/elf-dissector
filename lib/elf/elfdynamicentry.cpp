@@ -40,39 +40,39 @@ const ElfDynamicSection* ElfDynamicEntry::dynamicSection() const
 QString ElfDynamicEntry::tagName() const
 {
     switch (tag()) {
-        case DT_NULL: return "<null>";
-        case DT_NEEDED: return "Needed library";
-        case DT_PLTRELSZ: return "PLT reloc size";
-        case DT_PLTGOT: return "PLTGOT";
-        case DT_HASH: return "Symbol hash table address";
-        case DT_STRTAB: return "String table address";
-        case DT_SYMTAB: return "Symbol table address";
-        case DT_RELA: return "Rela reloc address";
-        case DT_RELASZ: return "Rela reloc size";
-        case DT_RELAENT: return "Rela reloc entry size";
-        case DT_STRSZ: return "String table size";
-        case DT_SYMENT: return "Symbol table entry size";
-        case DT_INIT: return "Init function address";
-        case DT_FINI: return "Termination function address";
-        case DT_SONAME: return "Shared object name";
-        case DT_RPATH: return "RPATH";
-        case DT_SYMBOLIC: return "Symbol search start";
-        case DT_REL: return "Rel reloc address";
-        case DT_RELSZ: return "Rel reloc size";
-        case DT_RELENT: return "Rel reloc entry size";
-        case DT_PLTREL: return "Reloc type in PLT";
-        case DT_DEBUG: return "Debug";
-        case DT_TEXTREL: return "Reloc might modify .text";
-        case DT_JMPREL: return "PLT reloc address";
-        case DT_BIND_NOW: return "BIND_NOW";
-        case DT_INIT_ARRAY: return "Init function address array";
-        case DT_FINI_ARRAY: return "Termination function address array";
-        case DT_INIT_ARRAYSZ: return "Init function address array size";
-        case DT_FINI_ARRAYSZ: return "Termination function address array size";
-        case DT_RUNPATH: return "RUNPATH";
-        case DT_FLAGS: return "Flags";
-        case DT_PREINIT_ARRAY: return "Preinit function address array";
-        case DT_PREINIT_ARRAYSZ: return "Preinit function address array size";
+        case DT_NULL: return QStringLiteral("<null>");
+        case DT_NEEDED: return QStringLiteral("Needed library");
+        case DT_PLTRELSZ: return QStringLiteral("PLT reloc size");
+        case DT_PLTGOT: return QStringLiteral("PLTGOT");
+        case DT_HASH: return QStringLiteral("Symbol hash table address");
+        case DT_STRTAB: return QStringLiteral("String table address");
+        case DT_SYMTAB: return QStringLiteral("Symbol table address");
+        case DT_RELA: return QStringLiteral("Rela reloc address");
+        case DT_RELASZ: return QStringLiteral("Rela reloc size");
+        case DT_RELAENT: return QStringLiteral("Rela reloc entry size");
+        case DT_STRSZ: return QStringLiteral("String table size");
+        case DT_SYMENT: return QStringLiteral("Symbol table entry size");
+        case DT_INIT: return QStringLiteral("Init function address");
+        case DT_FINI: return QStringLiteral("Termination function address");
+        case DT_SONAME: return QStringLiteral("Shared object name");
+        case DT_RPATH: return QStringLiteral("RPATH");
+        case DT_SYMBOLIC: return QStringLiteral("Symbol search start");
+        case DT_REL: return QStringLiteral("Rel reloc address");
+        case DT_RELSZ: return QStringLiteral("Rel reloc size");
+        case DT_RELENT: return QStringLiteral("Rel reloc entry size");
+        case DT_PLTREL: return QStringLiteral("Reloc type in PLT");
+        case DT_DEBUG: return QStringLiteral("Debug");
+        case DT_TEXTREL: return QStringLiteral("Reloc might modify .text");
+        case DT_JMPREL: return QStringLiteral("PLT reloc address");
+        case DT_BIND_NOW: return QStringLiteral("BIND_NOW");
+        case DT_INIT_ARRAY: return QStringLiteral("Init function address array");
+        case DT_FINI_ARRAY: return QStringLiteral("Termination function address array");
+        case DT_INIT_ARRAYSZ: return QStringLiteral("Init function address array size");
+        case DT_FINI_ARRAYSZ: return QStringLiteral("Termination function address array size");
+        case DT_RUNPATH: return QStringLiteral("RUNPATH");
+        case DT_FLAGS: return QStringLiteral("Flags");
+        case DT_PREINIT_ARRAY: return QStringLiteral("Preinit function address array");
+        case DT_PREINIT_ARRAYSZ: return QStringLiteral("Preinit function address array size");
 #if 0
         #define DT_GNU_PRELINKED 0x6ffffdf5     /* Prelinking timestamp */
         #define DT_GNU_CONFLICTSZ 0x6ffffdf6    /* Size of conflict section */
@@ -84,13 +84,13 @@ QString ElfDynamicEntry::tagName() const
         #define DT_FEATURE_1    0x6ffffdfc      /* Feature selection (DTF_*).  */
         #define DT_POSFLAG_1    0x6ffffdfd      /* Flags for DT_* entries, effecting the following DT_* entry.  */
 #endif
-        case DT_SYMINSZ: return "Syminfo table size";
-        case DT_SYMINENT: return "Syminfo table entry size";
-        case DT_GNU_HASH: return "GNU hash table address";
-        case DT_TLSDESC_PLT: return "TLS description PLT";
-        case DT_TLSDESC_GOT: return "TLS description GOT";
-        case DT_GNU_CONFLICT: return "GNU conflict section";
-        case DT_GNU_LIBLIST: return "GNU library list";
+        case DT_SYMINSZ: return QStringLiteral("Syminfo table size");
+        case DT_SYMINENT: return QStringLiteral("Syminfo table entry size");
+        case DT_GNU_HASH: return QStringLiteral("GNU hash table address");
+        case DT_TLSDESC_PLT: return QStringLiteral("TLS description PLT");
+        case DT_TLSDESC_GOT: return QStringLiteral("TLS description GOT");
+        case DT_GNU_CONFLICT: return QStringLiteral("GNU conflict section");
+        case DT_GNU_LIBLIST: return QStringLiteral("GNU library list");
 #if 0
         #define DT_CONFIG       0x6ffffefa      /* Configuration information.  */
         #define DT_DEPAUDIT     0x6ffffefb      /* Dependency auditing.  */
@@ -99,14 +99,14 @@ QString ElfDynamicEntry::tagName() const
         #define DT_MOVETAB      0x6ffffefe      /* Move table.  */
         #define DT_SYMINFO      0x6ffffeff      /* Syminfo table.  */
 #endif
-        case DT_VERSYM: return "GNU version symbol";
-        case DT_RELACOUNT: return "Rela count";
-        case DT_RELCOUNT: return "Rel count";
-        case DT_FLAGS_1: return "State flags";
-        case DT_VERDEF: return "Address of version definition table";
-        case DT_VERDEFNUM: return "Number of version definitions";
-        case DT_VERNEED: return "Needed versions table address";
-        case DT_VERNEEDNUM: return "Number of needed versions";
+        case DT_VERSYM: return QStringLiteral("GNU version symbol");
+        case DT_RELACOUNT: return QStringLiteral("Rela count");
+        case DT_RELCOUNT: return QStringLiteral("Rel count");
+        case DT_FLAGS_1: return QStringLiteral("State flags");
+        case DT_VERDEF: return QStringLiteral("Address of version definition table");
+        case DT_VERDEFNUM: return QStringLiteral("Number of version definitions");
+        case DT_VERNEED: return QStringLiteral("Needed versions table address");
+        case DT_VERNEEDNUM: return QStringLiteral("Number of needed versions");
         default:
             return QObject::tr("unknown (%1)").arg(tag());
     }

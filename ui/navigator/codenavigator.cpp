@@ -51,8 +51,8 @@ bool CodeNavigator::isValid()
 void CodeNavigator::goTo(const QString& filePath, int line)
 {
     QSettings settings;
-    settings.beginGroup("CodeNavigator");
-    const auto ideIdx = settings.value("IDE", -1).toInt();
+    settings.beginGroup(QStringLiteral("CodeNavigator"));
+    const auto ideIdx = settings.value(QStringLiteral("IDE"), -1).toInt();
 
     QString command;
     if (ideIdx >= 0 && ideIdx < ide_settings_size) {
@@ -60,11 +60,11 @@ void CodeNavigator::goTo(const QString& filePath, int line)
         command += ' ';
         command += ide_settings[ideIdx].args;
     } else {
-        command = settings.value("CustomCommand").toString();
+        command = settings.value(QStringLiteral("CustomCommand")).toString();
     }
 
-    command.replace("%f", filePath);
-    command.replace("%l", QString::number(std::max(0, line)));
+    command.replace(QLatin1String("%f"), filePath);
+    command.replace(QLatin1String("%l"), QString::number(std::max(0, line)));
 
     if (!command.isEmpty())
         QProcess::startDetached(command);
@@ -79,14 +79,14 @@ QAction* CodeNavigator::configMenu(QWidget *parent)
 {
     static QAction *configAction = nullptr;
     if (!configAction) {
-        configAction = new QAction(QIcon::fromTheme("applications-development"), QObject::tr("Code Navigation"), parent);
+        configAction = new QAction(QIcon::fromTheme(QStringLiteral("applications-development")), QObject::tr("Code Navigation"), parent);
         auto menu = new QMenu(parent);
         auto group = new QActionGroup(parent);
         group->setExclusive(true);
 
         QSettings settings;
-        settings.beginGroup("CodeNavigator");
-        const auto currentIdx = settings.value("IDE", -1).toInt();
+        settings.beginGroup(QStringLiteral("CodeNavigator"));
+        const auto currentIdx = settings.value(QStringLiteral("IDE"), -1).toInt();
 
         for (int i = 0; i < ide_settings_size; ++i) {
             auto action = new QAction(menu);
@@ -111,23 +111,23 @@ QAction* CodeNavigator::configMenu(QWidget *parent)
 
         QObject::connect(group, &QActionGroup::triggered, [parent](QAction *action) {
             QSettings settings;
-            settings.beginGroup("CodeNavigator");
+            settings.beginGroup(QStringLiteral("CodeNavigator"));
 
             if (!action->data().isValid()) {
                 const auto customCmd = QInputDialog::getText(
                     parent, QObject::tr("Custom Code Navigation"),
                     QObject::tr("Specify command to use for code navigation, '%f' will be replaced by the file name, '%l' by the line number."),
-                    QLineEdit::Normal, settings.value("CustomCommand").toString()
+                    QLineEdit::Normal, settings.value(QStringLiteral("CustomCommand")).toString()
                 );
                 if (!customCmd.isEmpty()) {
-                    settings.setValue("CustomCommand", customCmd);
-                    settings.setValue("IDE", -1);
+                    settings.setValue(QStringLiteral("CustomCommand"), customCmd);
+                    settings.setValue(QStringLiteral("IDE"), -1);
                 }
                 return;
             }
 
             const auto defaultIdx = action->data().toInt();
-            settings.setValue("IDE", defaultIdx);
+            settings.setValue(QStringLiteral("IDE"), defaultIdx);
         });
 
         configAction->setMenu(menu);

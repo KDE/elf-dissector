@@ -60,7 +60,7 @@ void LoadBenchmarkView::runBenchmark()
 
     Gnuplotter plotter;
     plotter.setSize(ui->plotter->size());
-    plotter.setTemplate(":/ldbenchmark.gnuplot");
+    plotter.setTemplate(QStringLiteral(":/ldbenchmark.gnuplot"));
 
     m_benchmark->writeCSV(plotter.workingDir() + "/ldbenchmark.csv");
     ui->plotter->setPlotter(std::move(plotter));

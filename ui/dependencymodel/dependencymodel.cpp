@@ -126,9 +126,9 @@ QVariant DependencyModel::data(const QModelIndex& index, int role) const
             if (index.column())
                 break;
             if (file == InvalidFile)
-                return QIcon::fromTheme("dialog-error");
+                return QIcon::fromTheme(QStringLiteral("dialog-error"));
             if (hasCycle(index))
-                return QIcon::fromTheme("dialog-warning");
+                return QIcon::fromTheme(QStringLiteral("dialog-warning"));
             break;
         case Qt::ToolTipRole:
             if (hasCycle(index))

@@ -30,8 +30,8 @@ private slots:
     void modelTest_data()
     {
         QTest::addColumn<QString>("file");
-        QTest::newRow("simple") << QString(BINDIR "single-executable");
-        QTest::newRow("complex") << QString(BINDIR "elf-dissector");
+        QTest::newRow("simple") << QStringLiteral(BINDIR "single-executable");
+        QTest::newRow("complex") << QStringLiteral(BINDIR "elf-dissector");
     }
 
     void modelTest()

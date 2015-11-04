@@ -310,11 +310,11 @@ QString DwarfDie::displayName() const
 
     if (n.isEmpty()) {
         n = tagName();
-        n += " (offset ";
+        n += QLatin1String(" (offset ");
     } else {
-        n += " (";
+        n += QLatin1String(" (");
         n += tagName();
-        n += ", offset ";
+        n += QLatin1String(", offset ");
     }
     n += QString::number(offset());
     n += QLatin1Char(')');
@@ -514,7 +514,7 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
             res = dwarf_get_FORM_name(formType, &formName);
             if (res != DW_DLV_OK)
                 return {};
-            value = QString("TODO: ") + QString::fromLocal8Bit(formName);
+            value = QStringLiteral("TODO: ") + QString::fromLocal8Bit(formName);
             break;
         }
     }

@@ -91,7 +91,7 @@ void LDBenchmark::measure(LDBenchmark::LoadMode mode, int iterations)
     for (int i = 0; i < iterations; ++i) {
         QProcess proc;
         proc.setProcessChannelMode(QProcess::QProcess::ForwardedErrorChannel);
-        proc.start("ldbenchmark-runner", m_args); // TODO find in libexec
+        proc.start(QStringLiteral("ldbenchmark-runner"), m_args); // TODO find in libexec
         proc.waitForFinished();
         if (proc.exitStatus() == QProcess::CrashExit)
             qWarning() << "Benchmark runner crashed!";

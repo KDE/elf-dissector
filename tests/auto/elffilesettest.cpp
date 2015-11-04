@@ -30,9 +30,9 @@ private slots:
     void testFindDependencies_data()
     {
         QTest::addColumn<QString>("executable");
-        QTest::newRow("single-executable") << QString(BINDIR "single-executable");
-        QTest::newRow("structures") << QString(BINDIR "structures");
-        QTest::newRow("elf-dissector") << QString(BINDIR "elf-dissector");
+        QTest::newRow("single-executable") << QStringLiteral(BINDIR "single-executable");
+        QTest::newRow("structures") << QStringLiteral(BINDIR "structures");
+        QTest::newRow("elf-dissector") << QStringLiteral(BINDIR "elf-dissector");
     }
 
     void testFindDependencies()
@@ -47,8 +47,8 @@ private slots:
     void testInvalid_data()
     {
         QTest::addColumn<QString>("executable");
-        QTest::newRow("not existing") << QString("not-existing");
-        QTest::newRow("text file") << QString(BINDIR "../CMakeCache.txt");
+        QTest::newRow("not existing") << QStringLiteral("not-existing");
+        QTest::newRow("text file") << QStringLiteral(BINDIR "../CMakeCache.txt");
     }
 
     void testInvalid()

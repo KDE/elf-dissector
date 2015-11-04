@@ -37,23 +37,23 @@ QString CodeNavigatorPrinter::sourceLocationRichText(DwarfDie* die)
     const auto lineNum = die->attribute(DW_AT_decl_line).toInt();
     const auto hasCodeNavigation = CodeNavigator::isValid() && QFileInfo(fileName).isAbsolute();
 
-    s += "Source location: ";
+    s += QLatin1String("Source location: ");
     if (hasCodeNavigation) {
         QUrl url;
-        url.setScheme("code");
+        url.setScheme(QStringLiteral("code"));
         url.setPath(fileName);
         url.setFragment(QString::number(lineNum));
-        s += "<a href=\"";
+        s += QLatin1String("<a href=\"");
         s += url.toEncoded();
-        s += "\">";
+        s += QLatin1String("\">");
     }
     s += fileName;
     if (lineNum > 0)
         s += ':' + QString::number(lineNum);
     if (hasCodeNavigation) {
-        s += "</a>";
+        s += QLatin1String("</a>");
     }
-    s += "<br/>";
+    s += QLatin1String("<br/>");
 
     return s;
 }

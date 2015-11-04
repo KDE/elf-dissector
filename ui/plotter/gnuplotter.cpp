@@ -39,7 +39,7 @@ bool Gnuplotter::isValid() const
 
 bool Gnuplotter::hasGnuplot()
 {
-    return !QStandardPaths::findExecutable("gnuplot").isEmpty();
+    return !QStandardPaths::findExecutable(QStringLiteral("gnuplot")).isEmpty();
 }
 
 void Gnuplotter::setTemplate(const QString& templateFileName)
@@ -69,7 +69,7 @@ void Gnuplotter::plot() const
     QProcess proc;
     proc.setProcessChannelMode(QProcess::ForwardedChannels);
     proc.setWorkingDirectory(m_tempDir->path());
-    proc.start(QStandardPaths::findExecutable("gnuplot"), { "plot.gnuplot" });
+    proc.start(QStandardPaths::findExecutable(QStringLiteral("gnuplot")), { QStringLiteral("plot.gnuplot") });
     proc.waitForFinished();
 }
 

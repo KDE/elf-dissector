@@ -39,7 +39,7 @@ static void addView(QStandardItemModel *model, const QString& iconName, const QS
 {
     auto icon = QIcon::fromTheme(iconName);
     if (icon.isNull())
-        icon = QIcon::fromTheme("dialog-information"); // fallback
+        icon = QIcon::fromTheme(QStringLiteral("dialog-information")); // fallback
         model->appendRow(new QStandardItem(icon, title));
 }
 
@@ -57,12 +57,12 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionReopenPreviousFile, &QAction::triggered, this, &MainWindow::reloadFileOnStartup);
 
     auto viewModel = new QStandardItemModel(this);
-    addView(viewModel, "document-preview", "ELF Structure");
-    addView(viewModel, "table", "Size Tree Map");
-    addView(viewModel, "view-list-tree", "Dependencies");
-    addView(viewModel, "code-class", "Data Types");
-    addView(viewModel, "chronometer", "Performance");
-    addView(viewModel, "dialog-warning", "Issues");
+    addView(viewModel, QStringLiteral("document-preview"), QStringLiteral("ELF Structure"));
+    addView(viewModel, QStringLiteral("table"), QStringLiteral("Size Tree Map"));
+    addView(viewModel, QStringLiteral("view-list-tree"), QStringLiteral("Dependencies"));
+    addView(viewModel, QStringLiteral("code-class"), QStringLiteral("Data Types"));
+    addView(viewModel, QStringLiteral("chronometer"), QStringLiteral("Performance"));
+    addView(viewModel, QStringLiteral("dialog-warning"), QStringLiteral("Issues"));
     ui->viewSelector->setModel(viewModel);
     connect(ui->viewSelector, &SidePane::currentIndexChanged, this, [this](int index){
         ui->stackedWidget->setCurrentIndex(index);
@@ -81,10 +81,10 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     QSettings settings;
-    settings.beginGroup("MainWindow");
-    settings.setValue("geometry", saveGeometry());
-    settings.setValue("windowState", saveState());
-    settings.setValue("currentView", ui->stackedWidget->currentIndex());
+    settings.beginGroup(QStringLiteral("MainWindow"));
+    settings.setValue(QStringLiteral("geometry"), saveGeometry());
+    settings.setValue(QStringLiteral("windowState"), saveState());
+    settings.setValue(QStringLiteral("currentView"), ui->stackedWidget->currentIndex());
     settings.endGroup();
     QMainWindow::closeEvent(event);
 }
@@ -104,16 +104,16 @@ void MainWindow::fileOpen()
 void MainWindow::reloadFileOnStartup()
 {
     QSettings settings;
-    settings.setValue("Settings/ReloadPreviousFile", ui->actionReopenPreviousFile->isChecked());
+    settings.setValue(QStringLiteral("Settings/ReloadPreviousFile"), ui->actionReopenPreviousFile->isChecked());
 }
 
 void MainWindow::restoreSettings()
 {
     QSettings settings;
     ui->sizeTreeMapView->restoreSettings();
-    ui->actionReopenPreviousFile->setChecked(settings.value("Settings/ReloadPreviousFile", false).toBool());
+    ui->actionReopenPreviousFile->setChecked(settings.value(QStringLiteral("Settings/ReloadPreviousFile"), false).toBool());
     if (ui->actionReopenPreviousFile->isChecked()) {
-        const auto fileName = settings.value("Recent/PreviousFile").toString();
+        const auto fileName = settings.value(QStringLiteral("Recent/PreviousFile")).toString();
         const QFileInfo fi(fileName);
         if (!fi.isReadable() || !fi.isFile())
             return;
@@ -121,10 +121,10 @@ void MainWindow::restoreSettings()
         loadFile(m_currentFileName);
     }
 
-    settings.beginGroup("MainWindow");
-    restoreGeometry(settings.value("geometry").toByteArray());
-    restoreState(settings.value("windowState").toByteArray());
-    const auto currentViewIndex = settings.value("currentView", 0).toInt();
+    settings.beginGroup(QStringLiteral("MainWindow"));
+    restoreGeometry(settings.value(QStringLiteral("geometry")).toByteArray());
+    restoreState(settings.value(QStringLiteral("windowState")).toByteArray());
+    const auto currentViewIndex = settings.value(QStringLiteral("currentView"), 0).toInt();
     const auto currentIdx = ui->viewSelector->model()->index(currentViewIndex, 0);
     ui->viewSelector->selectionModel()->select(currentIdx, QItemSelectionModel::ClearAndSelect);
     ui->viewSelector->selectionModel()->setCurrentIndex(currentIdx, QItemSelectionModel::ClearAndSelect);
@@ -150,7 +150,7 @@ void MainWindow::loadFile(const QString& fileName)
         m_fileSet->topologicalSort();
 
         QSettings settings;
-        settings.setValue("Recent/PreviousFile", fileName);
+        settings.setValue(QStringLiteral("Recent/PreviousFile"), fileName);
 
         statusBar()->showMessage(tr("Loaded %1.").arg(fileName));
     }

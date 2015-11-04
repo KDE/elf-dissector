@@ -62,22 +62,22 @@ public:
     QString printGotEntry(ElfGotEntry* entry) const override
     {
         QString s;
-        s += "<a href=\"";
+        s += QLatin1String("<a href=\"");
         s += m_v->m_model->indexForNode(entry).data(ElfModel::NodeUrl).toUrl().toEncoded();
-        s += "\">";
+        s += QLatin1String("\">");
         s += Disassembler::printGotEntry(entry);
-        s += "</a>";
+        s += QLatin1String("</a>");
         return s;
     }
 
     QString printPltEntry(ElfPltEntry* entry) const override
     {
         QString s;
-        s += "<a href=\"";
+        s += QLatin1String("<a href=\"");
         s += m_v->m_model->indexForNode(entry).data(ElfModel::NodeUrl).toUrl().toEncoded();
-        s += "\">";
+        s += QLatin1String("\">");
         s += Disassembler::printPltEntry(entry);
-        s += "</a>";
+        s += QLatin1String("</a>");
         return s;
     }
 
@@ -118,14 +118,14 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             }
             if (file->separateDebugFile())
                 s += "<br/>Separate debug file: " + file->separateDebugFile()->fileName();
-            s += "<br/><br/>";
+            s += QLatin1String("<br/><br/>");
 
-            s += "<b>Segments</b></br>";
-            s += "<table border=\"1\" border-style=\"solid\" cellspacing=\"0\">";
-            s += "<tr><th>Type</th><th>Flags</th><th>Offset</th><th>Virtual Address</th>";
-            s += "<th>Physical Address</th><th>File Size</th><th>Memory Size</th><th>Alignment</th></tr>";
+            s += QLatin1String("<b>Segments</b></br>");
+            s += QLatin1String("<table border=\"1\" border-style=\"solid\" cellspacing=\"0\">");
+            s += QLatin1String("<tr><th>Type</th><th>Flags</th><th>Offset</th><th>Virtual Address</th>");
+            s += QLatin1String("<th>Physical Address</th><th>File Size</th><th>Memory Size</th><th>Alignment</th></tr>");
             for (auto phdr : file->segmentHeaders()) {
-                s += "<tr>";
+                s += QLatin1String("<tr>");
                 s += "<td>" + ElfPrinter::segmentType(phdr->type()) + "</td>";
                 s += "<td>" + ElfPrinter::segmentFlags(phdr->flags()) + "</td>";
                 s += "<td>0x" + QString::number(phdr->offset(), 16) + "</td>";
@@ -134,9 +134,9 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
                 s += "<td>" + QString::number(phdr->fileSize()) + "</td>";
                 s += "<td>" + QString::number(phdr->memorySize()) + "</td>";
                 s += "<td>0x" + QString::number(phdr->alignment(), 16) + "</td>";
-                s += "</tr>";
+                s += QLatin1String("</tr>");
             }
-            s += "</table";
+            s += QLatin1String("</table");
             return s;
         }
         case ElfModel::FileRole:
@@ -154,13 +154,13 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             return section->header()->name();
         case Qt::DecorationRole:
             if (m_column == 0 && section->file()->isSeparateDebugFile())
-                return QIcon::fromTheme("package_development_debugger");
+                return QIcon::fromTheme(QStringLiteral("package_development_debugger"));
             return {};
         case ElfModel::SizeRole:
             return QVariant::fromValue<uint64_t>(section->size());
         case ElfModel::DetailRole:
         {
-            QString s("<b>Section</b><br/>");
+            QString s(QStringLiteral("<b>Section</b><br/>"));
             s += QStringLiteral("Name: ") + section->header()->name() + "<br/>";
             s += QStringLiteral("Size: ") + QString::number(section->header()->size()) + " bytes<br/>";
             s += QStringLiteral("Flags: ") + ElfPrinter::sectionFlags(section->header()->flags()) + "<br/>";
@@ -176,7 +176,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                   + " x " + QString::number(section->header()->entrySize()) + " byte<br/>";
             }
             if (section->header()->flags() & SHF_STRINGS && section->size() < 100000) { // QTextBrowser fails on too large input
-                s += "Strings:<br/>";
+                s += QLatin1String("Strings:<br/>");
                 uint prevIndex = 0, index = 0;
                 do {
                     if (section->rawData()[index] == 0) {
@@ -195,7 +195,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
             }
             if (section->header()->type() == SHT_INIT_ARRAY || section->header()->type() == SHT_FINI_ARRAY) {
                 const auto addrSize = section->file()->addressSize();
-                s += "Content:<br/>";
+                s += QLatin1String("Content:<br/>");
                 for (uint i = 0; i < section->header()->size() / addrSize; ++i) {
                     uint64_t value = 0;
                     memcpy(&value, section->rawData() + i * addrSize, addrSize);
@@ -203,7 +203,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                     const auto ref = section->file()->symbolTable()->entryWithValue(value);
                     if (ref)
                         s += QLatin1Char(' ') + printSymbolName(ref);
-                    s += "<br/>";
+                    s += QLatin1String("<br/>");
                 }
             }
             return s;
@@ -221,10 +221,10 @@ QVariant DataVisitor::doVisit(ElfSymbolTableSection* symtab, int arg) const
     if (arg != ElfModel::DetailRole)
         return base;
     QString s = base.toString();
-    s += "<br/><b>Symbol Table</b>";
+    s += QLatin1String("<br/><b>Symbol Table</b>");
     s += "<br/>Exported symbols: " + QString::number(symtab->exportCount());
     s += "<br/>Imported symbols: " + QString::number(symtab->importCount());
-    s += "<br/>";
+    s += QLatin1String("<br/>");
     return s;
 }
 
@@ -253,13 +253,13 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
     const auto verSymTab = file->section<ElfGNUSymbolVersionTable>(verSymIdx);
     const auto versionIndex = verSymTab->versionIndex(entry->index());
 
-    QString s("GNU version: ");
+    QString s(QStringLiteral("GNU version: "));
     switch (versionIndex) {
         case VER_NDX_LOCAL:
-            s += "&lt;local&gt;";
+            s += QLatin1String("&lt;local&gt;");
             break;
         case VER_NDX_GLOBAL:
-            s += "&lt;global&gt;";
+            s += QLatin1String("&lt;global&gt;");
             break;
         default:
         {
@@ -281,8 +281,8 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
         }
     };
     if (verSymTab->isHidden(entry->index()))
-        s += " (hidden)";
-    s += "<br/>";
+        s += QLatin1String(" (hidden)");
+    s += QLatin1String("<br/>");
     return s;
 }
 
@@ -311,7 +311,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
             return QVariant::fromValue<uint64_t>(entry->size());
         case ElfModel::DetailRole:
         {
-            QString s("<b>Symbol</b><br/>");
+            QString s(QStringLiteral("<b>Symbol</b><br/>"));
             s += QStringLiteral("Mangled name: ") + entry->name() + "<br/>";
             Demangler demangler;
             s += QStringLiteral("Demangled name: ") + QString(demangler.demangleFull(entry->name())).toHtmlEscaped() + "<br/>";
@@ -340,21 +340,21 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                     case Demangler::SymbolType::ConstructionVTable:
                     {
                         s += symbolType == Demangler::SymbolType::ConstructionVTable ? "Construction VTable" : "VTable";
-                        s += ":<br/><tt>";
+                        s += QLatin1String(":<br/><tt>");
                         for (uint i = 0; i < entry->size() / addrSize; ++i) {
                             const uint64_t v = virtualTableEntry(entry, i);
                             s += QString::number(i) + ": 0x" + QString::number(v, 16);
                             const auto ref = entry->symbolTable()->entryWithValue(v);
                             if (ref)
-                                s += QLatin1Char(' ') + printSymbolName(ref) + QLatin1String(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
-                            s += "<br/>";
+                                s += QLatin1Char(' ') + printSymbolName(ref) + QStringLiteral(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
+                            s += QLatin1String("<br/>");
                         }
-                        s += "</tt><br/>";
+                        s += QLatin1String("</tt><br/>");
                         break;
                     }
                     case Demangler::SymbolType::VTT:
                     {
-                        s += "VTT:<br/><tt>";
+                        s += QLatin1String("VTT:<br/><tt>");
                         for (uint i = 0; i < entry->size() / addrSize; ++i) {
                             const uint64_t v = virtualTableEntry(entry, i);
                             s += QString::number(i) + ": 0x" + QString::number(v, 16);
@@ -363,12 +363,12 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                             const auto ref = entry->symbolTable()->entryContainingValue(v - addrSize);
                             if (ref) {
                                 const auto offset = v - ref->value();
-                                s += QLatin1String(" entry ") + QString::number(offset / addrSize) + QLatin1String(" in ") + printSymbolName(ref);
-                                s += QLatin1String(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
+                                s += QStringLiteral(" entry ") + QString::number(offset / addrSize) + QStringLiteral(" in ") + printSymbolName(ref);
+                                s += QStringLiteral(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
                             }
-                            s += "<br/>";
+                            s += QLatin1String("<br/>");
                         }
-                        s += "</tt><br/>";
+                        s += QLatin1String("</tt><br/>");
                         break;
                     }
                     case Demangler::SymbolType::TypeInfoName:
@@ -379,14 +379,14 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                         s += QStringLiteral("Data:<br/><tt>");
                         const unsigned char* data = entry->data();
                         s += QByteArray::fromRawData((const char*)data, entry->size()).toHex();
-                        s += "</tt><br/>";
+                        s += QLatin1String("</tt><br/>");
                 }
             }
 
             const auto die = findDwarfDie(entry);
             if (die) {
                 s += CodeNavigatorPrinter::sourceLocationRichText(die);
-                s += "<br/><b>DWARF DIE</b><br/>";
+                s += QLatin1String("<br/><b>DWARF DIE</b><br/>");
                 s += printDwarfDie(die);
             }
             return s;
@@ -401,7 +401,7 @@ QVariant DataVisitor::doVisit(ElfGnuDebugLinkSection* section, int role) const
     auto baseData = doVisit(static_cast<ElfSection*>(section), role);
     if (role == ElfModel::DetailRole) {
         QString s = baseData.toString();
-        s += "<br/><b>Debug Link</b>";
+        s += QLatin1String("<br/><b>Debug Link</b>");
         s += "<br/>File name: " + section->fileName();
         s += "<br/>CRC: 0x" + QString::number(section->crc(), 16);
         return s;
@@ -433,7 +433,7 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
                     if (entry->isStringValue()) {
                         s+= entry->stringValue();
                     } else if (entry->isAddress()) {
-                        s += QString("0x") + QString::number(entry->pointer(), 16);
+                        s += QStringLiteral("0x") + QString::number(entry->pointer(), 16);
                         const auto secIdx = entry->dynamicSection()->file()->indexOfSectionWithVirtualAddress(entry->pointer());
                         if (secIdx >= 0) {
                             const auto section = entry->dynamicSection()->file()->section<ElfSection>(secIdx);
@@ -447,7 +447,7 @@ QVariant DataVisitor::doVisit(ElfDynamicEntry *entry, int arg) const
                         s += QString::number(entry->value());
                     }
             }
-            s += "<br/>";
+            s += QLatin1String("<br/>");
             return s;
         }
     }
@@ -460,7 +460,7 @@ QVariant DataVisitor::doVisit(ElfHashSection* section, int role) const
     const auto base = doVisit(static_cast<ElfSection*>(section), role);
     if (role == ElfModel::DetailRole) {
         QString s = base.toString();
-        s += "<br/><b>Hash Table</b><br/>";
+        s += QLatin1String("<br/><b>Hash Table</b><br/>");
         s += "Buckets: " + QString::number(section->bucketCount()) + "<br/>";
         s += "Chains: " + QString::number(section->chainCount()) + "<br/>";
         if (ElfGnuHashSection *gnuHash = dynamic_cast<ElfGnuHashSection*>(section)) {
@@ -469,7 +469,7 @@ QVariant DataVisitor::doVisit(ElfHashSection* section, int role) const
             s += "Shift count: " + QString::number(gnuHash->shift2()) + "<br/>";
         }
 
-        s += "Chain length histogram<br/>";
+        s += QLatin1String("Chain length histogram<br/>");
         const auto hist = section->histogram();
         for (int i = 0; i < hist.size(); ++i) {
             s += "&nbsp;&nbsp;" + QString::number(i) + ": " + QString::number(hist.at(i)) + "<br/>";
@@ -512,7 +512,7 @@ QVariant DataVisitor::doVisit(ElfGNUSymbolVersionDefinitionAuxiliaryEntry* auxEn
         case ElfModel::DetailRole:
         {
             QString s;
-            s += QString("Name: ") + auxEntry->name() + "<br/>";
+            s += QStringLiteral("Name: ") + auxEntry->name() + "<br/>";
             s += "Next: " + QString::number(auxEntry->nextAuxiliaryEntryOffset()) + "<br/>";
             return s;
         }
@@ -550,7 +550,7 @@ QVariant DataVisitor::doVisit(ElfGNUSymbolVersionRequirementAuxiliaryEntry* auxE
         case ElfModel::DetailRole:
         {
             QString s;
-            s += QString("Name: ") + auxEntry->name() + "<br/>";
+            s += QStringLiteral("Name: ") + auxEntry->name() + "<br/>";
             s += "Hash: " + QString::number(auxEntry->hash()) + "<br/>";
             s += "Flags: " + QString::number(auxEntry->flags()) + "<br/>";
             s += "Other: " + QString::number(auxEntry->other()) + "<br/>";
@@ -569,7 +569,7 @@ QVariant DataVisitor::doVisit(ElfGotEntry* entry, int role) const
             const auto reloc = entry->relocation();
             const auto sym = reloc ? reloc->symbol() : nullptr;
             if (sym)
-                return sym->name() + QString("@got");
+                return sym->name() + QStringLiteral("@got");
             return "GOT entry " + QString::number(entry->index());
         }
         case ElfModel::SizeRole:
@@ -577,7 +577,7 @@ QVariant DataVisitor::doVisit(ElfGotEntry* entry, int role) const
         case ElfModel::DetailRole:
         {
             QString s;
-            s += "<b>GOT entry</b><br/>";
+            s += QLatin1String("<b>GOT entry</b><br/>");
             s += "Address: 0x" + QString::number(entry->address(), 16) + "<br/><br/>";
             const auto reloc = entry->relocation();
             s += printRelocation(reloc);
@@ -596,8 +596,8 @@ QVariant DataVisitor::doVisit(ElfNoteEntry* entry, int role) const
             return QVariant::fromValue<quint64>(entry->size());
         case ElfModel::DetailRole:
         {
-            QString s("Name: ");
-            s += entry->name() + QString("<br/>Description: ");
+            QString s(QStringLiteral("Name: "));
+            s += entry->name() + QStringLiteral("<br/>Description: ");
             if (entry->isGNUVendorNote() && entry->type() == NT_GNU_ABI_TAG) {
                 s += NoteSectionPrinter::abi(entry);
             } else if (entry->isGNUVendorNote() && entry->type() == NT_GNU_GOLD_VERSION) {
@@ -621,17 +621,17 @@ QVariant DataVisitor::doVisit(ElfPltEntry* entry, int role) const
             const auto reloc = gotEntry ? gotEntry->relocation() : nullptr;
             const auto sym = reloc ? reloc->symbol() : nullptr;
             if (sym)
-                return sym->name() + QLatin1String("@plt");
+                return sym->name() + QStringLiteral("@plt");
             return "PLT entry " + QString::number(entry->index());
         }
         case ElfModel::SizeRole:
             return QVariant::fromValue<quint64>(entry->size());
         case ElfModel::DetailRole:
         {
-            QString s("Code:<br/><tt>");
+            QString s(QStringLiteral("Code:<br/><tt>"));
             NavigatingDisassembler da(this);
             s += da.disassemble(entry);
-            s += "</tt>";
+            s += QLatin1String("</tt>");
             return s;
         }
     }
@@ -670,11 +670,11 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
             s += CodeNavigatorPrinter::sourceLocationRichText(die);
 
             if ((die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) && die->typeSize() > 0) {
-                s += "<tt><pre>";
+                s += QLatin1String("<tt><pre>");
                 StructurePackingCheck check;
                 check.setElfFileSet(m_model->fileSet());
                 s += check.checkOneStructure(die).toHtmlEscaped();
-                s += "</pre></tt><br/>";
+                s += QLatin1String("</pre></tt><br/>");
             }
 
             return s;
@@ -688,11 +688,11 @@ QString DataVisitor::printSectionName(ElfSection* section) const
     const auto idx = m_model->indexForNode(section);
     const auto url = idx.data(ElfModel::NodeUrl).toUrl();
 
-    QString s("<a href=\"");
+    QString s(QStringLiteral("<a href=\""));
     s += url.toEncoded();
-    s += "\">";
+    s += QLatin1String("\">");
     s += section->header()->name();
-    s += "</a>";
+    s += QLatin1String("</a>");
 
     return s;
 }
@@ -702,11 +702,11 @@ QString DataVisitor::printSymbolName(ElfSymbolTableEntry* symbol) const
     const auto idx = m_model->indexForNode(symbol);
     const auto url = idx.data(ElfModel::NodeUrl).toUrl();
 
-    QString s("<a href=\"");
+    QString s(QStringLiteral("<a href=\""));
     s += url.toEncoded();
-    s += "\">";
+    s += QLatin1String("\">");
     s += symbol->name();
-    s += "</a>";
+    s += QLatin1String("</a>");
 
     return s;
 }
@@ -717,26 +717,26 @@ QString DataVisitor::printRelocation(ElfRelocationEntry* entry) const
     if (!entry)
         return s;
 
-    s += "<b>Relocation</b><br/>";
+    s += QLatin1String("<b>Relocation</b><br/>");
     s += "Offset: 0x" + QString::number(entry->offset(), 16);
     const auto sym = entry->relocationTable()->file()->symbolTable()->entryContainingValue(entry->offset());
     if (sym) {
-        s += QString(" (") + printSymbolName(sym) + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
+        s += QStringLiteral(" (") + printSymbolName(sym) + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
     } else {
         for (const auto &shdr : entry->relocationTable()->file()->sectionHeaders()) {
             if (shdr->virtualAddress() <= entry->offset() && entry->offset() < shdr->virtualAddress() + shdr->size()) {
-                s += QString(" (") + shdr->name() + " + 0x" + QString::number(entry->offset() - shdr->virtualAddress(), 16) + ')';
+                s += QStringLiteral(" (") + shdr->name() + " + 0x" + QString::number(entry->offset() - shdr->virtualAddress(), 16) + ')';
                 break;
             }
         }
     }
-    s += "<br/>";
+    s += QLatin1String("<br/>");
     s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
     const auto sourceSym = entry->symbol();
     if (sourceSym)
-        s += QString("Symbol: ") + printSymbolName(sourceSym) + "<br/>";
+        s += QStringLiteral("Symbol: ") + printSymbolName(sourceSym) + "<br/>";
     else
-        s += QString("Symbol: &lt;none&gt;<br/>");
+        s += QStringLiteral("Symbol: &lt;none&gt;<br/>");
     s += "Addend: 0x" + QString::number(entry->addend(), 16);
     return s;
 }
@@ -765,11 +765,11 @@ QString DataVisitor::printDwarfDieName(DwarfDie* die) const
     const auto idx = m_model->indexForNode(die);
     const auto url = idx.data(ElfModel::NodeUrl).toUrl();
 
-    QString s("<a href=\"");
+    QString s(QStringLiteral("<a href=\""));
     s += url.toEncoded();
-    s += "\">";
+    s += QLatin1String("\">");
     s += die->displayName().toHtmlEscaped();
-    s += "</a>";
+    s += QLatin1String("</a>");
 
     return s;
 }

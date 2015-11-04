@@ -34,8 +34,8 @@ private slots:
     void testLoad_data()
     {
         QTest::addColumn<QString>("executable");
-        QTest::newRow("single-executable") << QString(BINDIR "single-executable");
-        QTest::newRow("structures") << QString(BINDIR "structures");
+        QTest::newRow("single-executable") << QStringLiteral(BINDIR "single-executable");
+        QTest::newRow("structures") << QStringLiteral(BINDIR "structures");
     }
     void testLoad()
     {
@@ -108,8 +108,8 @@ private slots:
     void testFailedLoad_data()
     {
         QTest::addColumn<QString>("executable");
-        QTest::newRow("not existing") << QString("not-existing");
-        QTest::newRow("text file") << QString(BINDIR "../CMakeCache.txt");
+        QTest::newRow("not existing") << QStringLiteral("not-existing");
+        QTest::newRow("text file") << QStringLiteral(BINDIR "../CMakeCache.txt");
     }
 
     void testFailedLoad()

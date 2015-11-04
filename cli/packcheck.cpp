@@ -26,9 +26,9 @@
 
 int main(int argc, char** argv)
 {
-    QCoreApplication::setApplicationName("ELF Dissector");
-    QCoreApplication::setOrganizationName("KDE");
-    QCoreApplication::setOrganizationDomain("kde.org");
+    QCoreApplication::setApplicationName(QStringLiteral("ELF Dissector"));
+    QCoreApplication::setOrganizationName(QStringLiteral("KDE"));
+    QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
     QCoreApplication::setApplicationVersion(ELF_DISSECTOR_VERSION_STRING);
 
     QCoreApplication app(argc, argv);
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addPositionalArgument("elf", "ELF library to open", "<elf>");
+    parser.addPositionalArgument(QStringLiteral("elf"), QStringLiteral("ELF library to open"), QStringLiteral("<elf>"));
     parser.process(app);
 
     StructurePackingCheck checker;

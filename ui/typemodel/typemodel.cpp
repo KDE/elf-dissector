@@ -199,11 +199,11 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
             s += CodeNavigatorPrinter::sourceLocationRichText(node.die);
 
             if ((node.die->tag() == DW_TAG_structure_type || node.die->tag() == DW_TAG_class_type) && node.die->typeSize() > 0) {
-                s += "<tt><pre>";
+                s += QLatin1String("<tt><pre>");
                 StructurePackingCheck check;
                 check.setElfFileSet(m_fileSet);
                 s += check.checkOneStructure(node.die).toHtmlEscaped();
-                s += "</pre></tt><br/>";
+                s += QLatin1String("</pre></tt><br/>");
             }
 
             return s;
@@ -213,12 +213,12 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
                 return {};
             switch (node.die->tag()) {
                 case DW_TAG_namespace:
-                    return QIcon::fromTheme("code-context");
+                    return QIcon::fromTheme(QStringLiteral("code-context"));
                 case DW_TAG_class_type:
                 case DW_TAG_structure_type:
-                    return QIcon::fromTheme("code-class");
+                    return QIcon::fromTheme(QStringLiteral("code-class"));
                 case DW_TAG_subprogram:
-                    return QIcon::fromTheme("code-function");
+                    return QIcon::fromTheme(QStringLiteral("code-function"));
             }
             return {};
     };

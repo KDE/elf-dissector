@@ -178,9 +178,9 @@ QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
         auto line = lineForAddress(baseAddress() + bytes);
         if (!line.isNull())
             result += printSourceLine(line) + "<br/>";
-        result += QString::fromLatin1("%1: ").arg(bytes, 8, 10);
+        result += QStringLiteral("%1: ").arg(bytes, 8, 10);
         bytes += (*disassemble_fn)(bytes, &info);
-        result += "<br/>";
+        result += QLatin1String("<br/>");
     }
 
     return result;
@@ -206,8 +206,8 @@ QString Disassembler::printGotEntry(ElfGotEntry* entry) const
     const auto reloc = entry->relocation();
     const auto sym = reloc ? reloc->symbol() : nullptr;
     if (sym)
-        return sym->name() + QLatin1String("@got");
-    return entry->section()->header()->name() + QLatin1String(" + 0x") + QString::number(entry->index() * entry->section()->file()->addressSize());
+        return sym->name() + QStringLiteral("@got");
+    return entry->section()->header()->name() + QStringLiteral(" + 0x") + QString::number(entry->index() * entry->section()->file()->addressSize());
 }
 
 QString Disassembler::printPltEntry(ElfPltEntry* entry) const
@@ -216,8 +216,8 @@ QString Disassembler::printPltEntry(ElfPltEntry* entry) const
     const auto reloc = gotEntry ? gotEntry->relocation() : nullptr;
     const auto sym = reloc ? reloc->symbol() : nullptr;
     if (sym)
-        return sym->name() + QLatin1String("@plt");
-    return entry->section()->header()->name() + QLatin1String(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
+        return sym->name() + QStringLiteral("@plt");
+    return entry->section()->header()->name() + QStringLiteral(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
 }
 
 DwarfLine Disassembler::lineForAddress(uint64_t addr)
