@@ -264,11 +264,15 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
         default:
         {
             auto f = entry->symbolTable()->file();
-            if (entry->value()) { // definition
+            if (entry->hasValidSection()) { // definition
                 const auto verDefIdx = f->indexOfSection(SHT_GNU_verdef);
-                auto verDefSection = f->section<ElfGNUSymbolVersionDefinitionsSection>(verDefIdx);
-                assert(verDefSection);
-                s += verDefSection->definitionForVersionIndex(versionIndex)->auxiliaryEntry(0)->name();
+                if (verDefIdx <= 0) {
+                    s += QString::number(versionIndex);
+                } else {
+                    auto verDefSection = f->section<ElfGNUSymbolVersionDefinitionsSection>(verDefIdx);
+                    assert(verDefSection);
+                    s += verDefSection->definitionForVersionIndex(versionIndex)->auxiliaryEntry(0)->name();
+                }
                 break;
             } else { // requirement
                 const auto verReqIdx = f->indexOfSection(SHT_GNU_verneed);
