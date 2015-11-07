@@ -79,7 +79,8 @@ void ElfFileSet::addFile(ElfFile* file)
             if (!QFile::exists(fullPath))
                 continue;
             ElfFile *dep = new ElfFile(fullPath);
-            if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
+            ElfFile *firstFile = m_files.at(0);
+            if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == firstFile->type() && dep->header()->machine() == firstFile->header()->machine()) {
                 dependencyFound = true;
                 addFile(dep);
                 break;
@@ -93,7 +94,8 @@ void ElfFileSet::addFile(ElfFile* file)
                 continue;
             if (QFile::exists(lib)) {
                 ElfFile *dep = new ElfFile(lib);
-                if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == m_files.first()->type() && dep->header()->machine() == m_files.first()->header()->machine()) {
+                ElfFile *firstFile = m_files.at(0);
+                if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == firstFile->type() && dep->header()->machine() == firstFile->header()->machine()) {
                     dependencyFound = true;
                     addFile(dep);
                 } else {

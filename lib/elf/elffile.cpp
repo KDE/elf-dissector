@@ -218,7 +218,7 @@ void ElfFile::parseSections()
     // pass 3: set section links
     foreach (const auto shdr, m_sectionHeaders) {
         if (shdr->link()) {
-            m_sections[shdr->sectionIndex()]->setLinkedSection(m_sections[shdr->link()]);
+            m_sections.at(shdr->sectionIndex())->setLinkedSection(m_sections.at(shdr->link()));
         }
     }
 
