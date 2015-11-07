@@ -100,26 +100,38 @@ private slots:
         QVERIFY(symbolVersionDefs);
         QCOMPARE(symbolVersionDefs->entryCount(), 3u);
 
+        ElfGNUSymbolVersionDefinition *defV1 = nullptr, *defV2 = nullptr;
         auto def = symbolVersionDefs->definition(1);
         QVERIFY(def);
         QCOMPARE(def->versionIndex(), (uint16_t)2);
-        QCOMPARE(def->auxiliarySize(), (uint16_t)2);
         QCOMPARE(symbolVersionDefs->definitionForVersionIndex(2), def);
-
-        auto defEntry = def->auxiliaryEntry(0);
-        QVERIFY(defEntry);
-        QCOMPARE(defEntry->name(), "VER2");
-        defEntry = def->auxiliaryEntry(1);
-        QVERIFY(defEntry);
-        QCOMPARE(defEntry->name(), "VER1");
+        if (def->auxiliarySize() == 1)
+            defV1 = def;
+        else
+            defV2 = def;
 
         def = symbolVersionDefs->definition(2);
         QVERIFY(def);
         QCOMPARE(def->versionIndex(), (uint16_t)3);
-        QCOMPARE(def->auxiliarySize(), (uint16_t)1);
         QCOMPARE(symbolVersionDefs->definitionForVersionIndex(3), def);
+        if (def->auxiliarySize() == 1)
+            defV1 = def;
+        else
+            defV2 = def;
 
-        defEntry = def->auxiliaryEntry(0);
+        QVERIFY(defV1);
+        QVERIFY(defV2);
+
+        QCOMPARE(defV2->auxiliarySize(), (uint16_t)2);
+        auto defEntry = defV2->auxiliaryEntry(0);
+        QVERIFY(defEntry);
+        QCOMPARE(defEntry->name(), "VER2");
+        defEntry = defV2->auxiliaryEntry(1);
+        QVERIFY(defEntry);
+        QCOMPARE(defEntry->name(), "VER1");
+
+        QCOMPARE(defV1->auxiliarySize(), (uint16_t)1);
+        defEntry = defV1->auxiliaryEntry(0);
         QVERIFY(defEntry);
         QCOMPARE(defEntry->name(), "VER1");
 
@@ -143,9 +155,9 @@ private slots:
                 f2 = sym;
             else if (strcmp(sym->name(), "function") == 0) {
                 qDebug() << symbolVersionTable->versionIndex(i);
-                if (symbolVersionTable->versionIndex(i) == 2)
+                if (symbolVersionTable->versionIndex(i) == defV2->versionIndex())
                     f_ver2 = sym;
-                else if (symbolVersionTable->versionIndex(i) == 3)
+                else if (symbolVersionTable->versionIndex(i) == defV1->versionIndex())
                     f_ver1 = sym;
             }
         }
