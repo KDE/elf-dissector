@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "config-elf-dissector.h"
 #include <elf/elffile.h>
 #include <elf/elfgnuhashsection.h>
 #include <elf/elfhashsection.h>
@@ -50,13 +51,15 @@ private slots:
 
         QVERIFY(hashSection->bucketCount() > 0);
         QCOMPARE((uint64_t)hashSection->chainCount(), symTab->header()->entryCount());
-        // EXPECTED_FAIL: the .hash section seem broken with --hash-style=both and gold of binutils <= 2.24 (works with the old ld, fixed in 2.25)
+        // EXPECTED_FAIL: the .hash section is broken with --hash-style=both and gold of binutils <= 2.24 (works with the old ld, fixed in 2.25)
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 25)
         for (uint32_t i = 0; i < symTab->header()->entryCount(); ++i) {
             const auto entry = symTab->entry(i);
             if (strcmp(entry->name(), "") == 0)
                 continue;
             QCOMPARE(hashSection->lookup(entry->name()), entry);
         }
+#endif
 
         const auto hist = hashSection->histogram();
         const uint32_t sum = std::accumulate(hist.begin(), hist.end(), 0);
