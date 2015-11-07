@@ -39,7 +39,7 @@ private slots:
         QVERIFY(f.dwarfInfo()->compilationUnits().size() > 0);
 
         DwarfDie *cu = nullptr;
-        for (auto die : f.dwarfInfo()->compilationUnits()) {
+        foreach (auto die, f.dwarfInfo()->compilationUnits()) {
             if (die->name().contains("single-executable")) {
                 cu = die;
                 break;
@@ -59,7 +59,7 @@ private slots:
         QVERIFY(f.dwarfInfo());
         QVERIFY(f.dwarfInfo()->compilationUnits().size() > 0);
 
-        for (auto cu : f.dwarfInfo()->compilationUnits()) {
+        foreach (auto cu, f.dwarfInfo()->compilationUnits()) {
             const auto lowPC = cu->attribute(DW_AT_low_pc);
             const auto ranges = cu->attribute(DW_AT_ranges);
             if (lowPC.isNull() && ranges.isNull())

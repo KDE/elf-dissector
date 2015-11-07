@@ -177,7 +177,7 @@ void SizeTreeMapView::reloadTreeMap()
 
     if (!section) {
         Colorizer sectionColorizer(96, 255);
-        for (const auto shdr : file->sectionHeaders()) {
+        foreach (const auto shdr, file->sectionHeaders()) {
             if (isSectionHidden(shdr)) {
                 baseItem->setSum(baseItem->sum() - shdr->size());
                 continue;

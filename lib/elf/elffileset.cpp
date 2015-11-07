@@ -28,7 +28,7 @@
 ElfFileSet::ElfFileSet(QObject* parent) : QObject(parent)
 {
     parseLdConf();
-    for (const auto &path : qgetenv("LD_LIBRARY_PATH").split(':'))
+    foreach (const auto &path, qgetenv("LD_LIBRARY_PATH").split(':'))
         m_baseSearchPaths.push_back(path);
 
     m_globalDebugSearchPath.push_back(QStringLiteral("/usr/lib/debug")); // seems hardcoded?
@@ -70,11 +70,11 @@ void ElfFileSet::addFile(ElfFile* file)
     searchPaths += runpaths;
     searchPaths += m_baseSearchPaths;
 
-    for (const auto &lib : file->dynamicSection()->neededLibraries()) {
+    foreach (const auto &lib, file->dynamicSection()->neededLibraries()) {
         if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](ElfFile *file){ return file->dynamicSection()->soName() == lib; }) != m_files.cend())
             continue;
         bool dependencyFound = false;
-        for (const auto &dir : searchPaths) {
+        foreach (const auto &dir, searchPaths) {
             const auto fullPath = dir + '/' + lib;
             if (!QFile::exists(fullPath))
                 continue;
@@ -122,7 +122,7 @@ static bool hasUnresolvedDependencies(ElfFile *file, const QVector<ElfFile*> &re
     if (!file->dynamicSection())
         return false;
 
-    for (const auto &lib : file->dynamicSection()->neededLibraries()) {
+    foreach (const auto &lib, file->dynamicSection()->neededLibraries()) {
         const auto it = std::find_if(resolved.constBegin() + startIndex, resolved.constEnd(), [lib](ElfFile *file){ return file->dynamicSection()->soName() == lib; });
         if (it == resolved.constEnd()) {
             return true;
@@ -204,7 +204,7 @@ void ElfFileSet::parseLdConf(const QString& fileName)
                 const auto idx = fileGlob.lastIndexOf('/');
                 assert(idx >= 0);
                 QDir dir(fileGlob.left(idx));
-                for (const auto &file : dir.entryList(QStringList() << fileGlob.mid(idx + 1)))
+                foreach (const auto &file, dir.entryList(QStringList() << fileGlob.mid(idx + 1)))
                     parseLdConf(dir.absolutePath() + '/' + file);
             }
             continue;

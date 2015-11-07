@@ -133,7 +133,7 @@ DwarfDie* DwarfInfoPrivate::dieForMangledSymbolRecursive(const QByteArray& symbo
 {
     if (die->attribute(DW_AT_linkage_name).toByteArray() == symbol)
         return die;
-    for (auto childDie : die->children()) {
+    foreach (auto childDie, die->children()) {
         const auto hit = dieForMangledSymbolRecursive(symbol, childDie);
         if (hit)
             return hit;
@@ -198,7 +198,7 @@ DwarfDie* DwarfInfo::dieAtOffset(Dwarf_Off offset) const
 
 DwarfDie* DwarfInfo::dieForMangledSymbol(const QByteArray& symbol) const
 {
-    for (auto die : compilationUnits()) {
+    foreach (auto die, compilationUnits()) {
         const auto hit = d->dieForMangledSymbolRecursive(symbol, die);
         if (hit)
             return hit;

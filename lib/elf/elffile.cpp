@@ -216,7 +216,7 @@ void ElfFile::parseSections()
     }
 
     // pass 3: set section links
-    for (const auto shdr : m_sectionHeaders) {
+    foreach (const auto shdr, m_sectionHeaders) {
         if (shdr->link()) {
             m_sections[shdr->sectionIndex()]->setLinkedSection(m_sections[shdr->link()]);
         }
@@ -224,7 +224,7 @@ void ElfFile::parseSections()
 
     // pass 4: stuff that requires the full setup for parsing
     // TODO can probably be done more efficient with on-demand parsing in those places
-    for (auto section : m_sections) {
+    foreach (auto section, m_sections) {
         switch (section->header()->type()) {
             case SHT_GNU_verdef:
                 dynamic_cast<ElfGNUSymbolVersionDefinitionsSection*>(section)->parse();

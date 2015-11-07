@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     parser.process(app);
 
     StructurePackingCheck checker;
-    for (const auto &fileName : parser.positionalArguments()) {
+    foreach (const auto &fileName, parser.positionalArguments()) {
         ElfFileSet set;
         set.addFile(fileName);
         if (set.size() == 0)

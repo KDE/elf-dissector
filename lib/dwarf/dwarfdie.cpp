@@ -114,7 +114,7 @@ Dwarf_Off DwarfDie::offset() const
 static QVector<int> arrayDimensions(const DwarfDie *die)
 {
     QVector<int> dims;
-    for (const auto *child : die->children()) {
+    foreach (const auto child, die->children()) {
         if (child->tag() != DW_TAG_subrange_type)
             continue;
         const auto attr = child->attribute(DW_AT_upper_bound);
@@ -129,7 +129,7 @@ static QVector<int> arrayDimensions(const DwarfDie *die)
 static QByteArrayList argumentList(const DwarfDie *die)
 {
     QByteArrayList args;
-    for (const auto *child : die->children()) {
+    foreach (const auto child, die->children()) {
         if (child->tag() == DW_TAG_formal_parameter) {
             args.push_back(child->typeName());
         }
@@ -239,7 +239,7 @@ int DwarfDie::typeSize() const
             const auto typeDie = attribute(DW_AT_type).value<DwarfDie*>();
             assert(typeDie);
             int s = typeDie->typeSize();
-            for (int d : arrayDimensions(this))
+            foreach (auto d, arrayDimensions(this))
                 s *= d;
             return s;
         }
@@ -273,7 +273,7 @@ int DwarfDie::typeAlignment() const
         case DW_TAG_union_type:
         {
             int align = 1;
-            for (const DwarfDie* child : children()) {
+            foreach (const auto child, children()) {
                 if (child->tag() != DW_TAG_member && child->tag() != DW_TAG_inheritance)
                     continue;
                 if (child->isStaticMember())

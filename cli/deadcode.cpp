@@ -41,7 +41,7 @@ int main(int argc, char** argv)
     parser.process(app);
 
     ElfFileSet set;
-    for (const auto &fileName : parser.positionalArguments()) {
+    foreach (const auto &fileName, parser.positionalArguments()) {
         set.addFile(fileName);
     }
 

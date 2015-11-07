@@ -67,8 +67,8 @@ void TypeModel::addFile(ElfFile* file)
     if (!dwarf)
         return;
 
-    for (const auto cu : dwarf->compilationUnits()) {
-        for (const auto die : cu->children())
+    foreach (const auto cu, dwarf->compilationUnits()) {
+        foreach (const auto die, cu->children())
             addDwarfDieRecursive(die, 0);
     }
 }
@@ -150,7 +150,7 @@ bool TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
     }
 
     bool childCreated = false;
-    for (auto child : die->children())
+    foreach (auto child, die->children())
         childCreated |= addDwarfDieRecursive(child, nodeId);
 
     if (!nodeExits && (childCreated || die->tag() == DW_TAG_class_type || die->tag() == DW_TAG_structure_type)) {
