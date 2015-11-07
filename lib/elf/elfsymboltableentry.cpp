@@ -95,7 +95,10 @@ const char* ElfSymbolTableEntry::name() const
 
 bool ElfSymbolTableEntry::hasValidSection() const
 {
-    return sectionIndex() < symbolTable()->file()->header()->sectionHeaderCount();
+    const auto index = sectionIndex();
+    if (index < 0 || index >= symbolTable()->file()->header()->sectionHeaderCount())
+        return false;
+    return symbolTable()->file()->sectionHeaders().at(index)->type() != SHT_NULL;
 }
 
 ElfSectionHeader* ElfSymbolTableEntry::sectionHeader() const
