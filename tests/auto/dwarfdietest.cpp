@@ -87,7 +87,8 @@ private slots:
 
         QVector<DwarfDie*> dieQueue;
         dieQueue.resize(f.dwarfInfo()->compilationUnits().size());
-        std::copy(f.dwarfInfo()->compilationUnits().constBegin(), f.dwarfInfo()->compilationUnits().constEnd(), dieQueue.begin());
+        auto cus = f.dwarfInfo()->compilationUnits();
+        std::copy(cus.constBegin(), cus.constEnd(), dieQueue.begin());
         while (!dieQueue.isEmpty()) {
             const auto die = dieQueue.takeFirst();
             dieQueue += die->children();
