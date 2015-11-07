@@ -30,7 +30,7 @@ class ElfNoteSectionTest : public QObject
 private slots:
     void testABISection()
     {
-        ElfFile f(BINDIR "single-executable");
+        ElfFile f(QStringLiteral(BINDIR "single-executable"));
         QVERIFY(f.open(QFile::ReadOnly));
         QCOMPARE(f.isValid(), true);
 

@@ -339,7 +339,7 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                     case Demangler::SymbolType::VTable:
                     case Demangler::SymbolType::ConstructionVTable:
                     {
-                        s += symbolType == Demangler::SymbolType::ConstructionVTable ? "Construction VTable" : "VTable";
+                        s += symbolType == Demangler::SymbolType::ConstructionVTable ? QObject::tr("Construction VTable") : QObject::tr("VTable");
                         s += QLatin1String(":<br/><tt>");
                         for (uint i = 0; i < entry->size() / addrSize; ++i) {
                             const uint64_t v = virtualTableEntry(entry, i);

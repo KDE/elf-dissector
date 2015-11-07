@@ -63,7 +63,7 @@ private slots:
     void testFindQt()
     {
         ElfFileSet f;
-        f.addFile(BINDIR "elf-dissector");
+        f.addFile(QStringLiteral(BINDIR "elf-dissector"));
         bool foundQtCore = false;
         for (int i = 1; i < f.size(); ++i) {
             ElfFile *file = f.file(i);

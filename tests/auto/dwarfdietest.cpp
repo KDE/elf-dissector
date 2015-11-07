@@ -33,7 +33,7 @@ class DwarfDieTest : public QObject
 private slots:
     void testCU()
     {
-        ElfFile f(BINDIR "single-executable");
+        ElfFile f(QStringLiteral(BINDIR "single-executable"));
         QVERIFY(f.open(QFile::ReadOnly));
         QVERIFY(f.dwarfInfo());
         QVERIFY(f.dwarfInfo()->compilationUnits().size() > 0);
@@ -54,7 +54,7 @@ private slots:
 
     void testAttribute_AT_ranges()
     {
-        ElfFile f(BINDIR "single-executable");
+        ElfFile f(QStringLiteral(BINDIR "single-executable"));
         QVERIFY(f.open(QFile::ReadOnly));
         QVERIFY(f.dwarfInfo());
         QVERIFY(f.dwarfInfo()->compilationUnits().size() > 0);
@@ -80,7 +80,7 @@ private slots:
 
     void testArange()
     {
-        ElfFile f(BINDIR "single-executable");
+        ElfFile f(QStringLiteral(BINDIR "single-executable"));
         QVERIFY(f.open(QFile::ReadOnly));
         QVERIFY(f.dwarfInfo());
         QVERIFY(f.dwarfInfo()->addressRanges()->isValid());

@@ -38,7 +38,7 @@ private slots:
     void testSymbolVersioning()
     {
         ElfFileSet set;
-        set.addFile(BINDIR "elf-dissector");
+        set.addFile(QStringLiteral(BINDIR "elf-dissector"));
         QVERIFY(set.size() > 1);
 
         // we need a full library for this, not just an executable
@@ -89,7 +89,7 @@ private slots:
     void testSymbolVersionDefinitions()
     {
         ElfFileSet set;
-        set.addFile(LIBDIR "libversioned-symbols.so");
+        set.addFile(QStringLiteral(LIBDIR "libversioned-symbols.so"));
         QVERIFY(set.size() > 1);
 
         auto f = set.file(0);

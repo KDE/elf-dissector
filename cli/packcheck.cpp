@@ -29,7 +29,7 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationName(QStringLiteral("ELF Dissector"));
     QCoreApplication::setOrganizationName(QStringLiteral("KDE"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
-    QCoreApplication::setApplicationVersion(ELF_DISSECTOR_VERSION_STRING);
+    QCoreApplication::setApplicationVersion(QStringLiteral(ELF_DISSECTOR_VERSION_STRING));
 
     QCoreApplication app(argc, argv);
 

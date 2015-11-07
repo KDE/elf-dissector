@@ -32,7 +32,7 @@ class ElfHashTest: public QObject
 private slots:
     void testHashSection()
     {
-        ElfFile f(BINDIR "/elf-dissector");
+        ElfFile f(QStringLiteral(BINDIR "/elf-dissector"));
         QVERIFY(f.open(QFile::ReadOnly));
         QVERIFY(f.isValid());
 
@@ -65,7 +65,7 @@ private slots:
 
     void testGnuHashSection()
     {
-        ElfFile f(BINDIR "/elf-dissector");
+        ElfFile f(QStringLiteral(BINDIR "/elf-dissector"));
         QVERIFY(f.open(QFile::ReadOnly));
         QVERIFY(f.isValid());
 

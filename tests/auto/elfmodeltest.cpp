@@ -33,7 +33,7 @@ private slots:
     void modelTest()
     {
         ElfFileSet s;
-        s.addFile(BINDIR "single-executable");
+        s.addFile(QStringLiteral(BINDIR "single-executable"));
         QVERIFY(s.size() > 1);
 
         ElfModel model;
@@ -47,7 +47,7 @@ private slots:
     void navigationTest()
     {
         ElfFileSet s;
-        s.addFile(BINDIR "elf-dissector");
+        s.addFile(QStringLiteral(BINDIR "elf-dissector"));
         QVERIFY(s.size() > 1);
 
         ElfModel model;

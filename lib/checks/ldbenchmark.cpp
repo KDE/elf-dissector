@@ -87,7 +87,7 @@ void LDBenchmark::measureFileSet(ElfFileSet* fileSet)
 
 void LDBenchmark::measure(LDBenchmark::LoadMode mode, int iterations)
 {
-    m_args[0] = mode == LoadMode::Lazy ? "RTLD_LAZY" : "RTLD_NOW";
+    m_args[0] = mode == LoadMode::Lazy ? QStringLiteral("RTLD_LAZY") : QStringLiteral("RTLD_NOW");
     for (int i = 0; i < iterations; ++i) {
         QProcess proc;
         proc.setProcessChannelMode(QProcess::QProcess::ForwardedErrorChannel);
