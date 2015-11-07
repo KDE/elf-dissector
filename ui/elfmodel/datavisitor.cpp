@@ -349,8 +349,16 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                             const uint64_t v = virtualTableEntry(entry, i);
                             s += QString::number(i) + ": 0x" + QString::number(v, 16);
                             const auto ref = entry->symbolTable()->entryWithValue(v);
-                            if (ref)
+                            if (ref) {
                                 s += QLatin1Char(' ') + printSymbolName(ref) + QStringLiteral(" (") + Demangler::demangleFull(ref->name()) + QLatin1Char(')');
+                            } else {
+                                auto reloc = entry->symbolTable()->file()->reverseRelocator()->find(entry->value() + i * addrSize);
+                                if (reloc) {
+                                    const auto relocSym = reloc->symbol();
+                                    if (relocSym)
+                                        s += QStringLiteral(" relocation: ") + printSymbolName(relocSym);
+                                }
+                            }
                             s += QLatin1String("<br/>");
                         }
                         s += QLatin1String("</tt><br/>");
