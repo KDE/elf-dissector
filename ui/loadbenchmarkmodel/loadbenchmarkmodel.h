@@ -29,7 +29,7 @@ class LoadBenchmarkModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit LoadBenchmarkModel(QObject* parent = 0);
+    explicit LoadBenchmarkModel(QObject* parent = nullptr);
     ~LoadBenchmarkModel();
 
     void setBenchmark(const std::shared_ptr<LDBenchmark> &data);

@@ -148,7 +148,7 @@ void DependencyView::dependencySelected(const QItemSelection& selection)
 void DependencyView::inverseFileSelected(const QItemSelection& selection)
 {
     if (selection.isEmpty()) {
-        m_fileUserModel->setFile(nullptr, 0);
+        m_fileUserModel->setFile(nullptr, nullptr);
         return;
     }
 

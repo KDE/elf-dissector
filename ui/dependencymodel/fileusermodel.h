@@ -31,7 +31,7 @@ public:
     enum Role {
         FileRole = Qt::UserRole + 1
     };
-    explicit FileUserModel(QObject* parent = 0);
+    explicit FileUserModel(QObject* parent = nullptr);
     ~FileUserModel();
 
     void setFile(ElfFileSet *fileSet, ElfFile *usedFile);

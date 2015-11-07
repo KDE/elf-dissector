@@ -31,7 +31,7 @@ public:
         FileIndexRole = Qt::UserRole + 1,
         FileRole
     };
-    explicit FileListModel(QObject* parent = 0);
+    explicit FileListModel(QObject* parent = nullptr);
     ~FileListModel();
 
     ElfFileSet *fileSet() const;
