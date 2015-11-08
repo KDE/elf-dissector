@@ -225,7 +225,7 @@ DwarfLine Disassembler::lineForAddress(uint64_t addr)
     if (!file()->dwarfInfo())
         return {};
 
-    auto cu = file()->dwarfInfo()->addressRanges()->compilationUnitForAddress(addr);
+    auto cu = file()->dwarfInfo()->compilationUnitForAddress(addr);
     if (!cu)
         return {};
     return cu->lineForAddress(addr);
@@ -234,7 +234,7 @@ DwarfLine Disassembler::lineForAddress(uint64_t addr)
 QString Disassembler::printSourceLine(DwarfLine line)
 {
     assert(!line.isNull());
-    auto cu = file()->dwarfInfo()->addressRanges()->compilationUnitForAddress(line.address());
+    auto cu = file()->dwarfInfo()->compilationUnitForAddress(line.address());
     assert(cu);
 
     QString s;

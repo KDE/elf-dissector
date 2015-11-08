@@ -18,6 +18,7 @@
 #include "dwarfinfo.h"
 #include "dwarfcudie.h"
 #include "dwarfaddressranges.h"
+#include "dwarfranges.h"
 
 #include <QDebug>
 
@@ -181,6 +182,25 @@ QVector< DwarfCuDie* > DwarfInfo::compilationUnits() const
     if (d->compilationUnits.isEmpty())
         d->scanCompilationUnits();
     return d->compilationUnits;
+}
+
+DwarfCuDie* DwarfInfo::compilationUnitForAddress(uint64_t address) const
+{
+    auto cu = addressRanges()->compilationUnitForAddress(address);
+    if (cu)
+        return cu;
+
+    foreach (auto cu, compilationUnits()) {
+        auto ranges = cu->attribute(DW_AT_ranges).value<DwarfRanges>();
+        for (int i = 0; i < ranges.size(); ++i) {
+            auto range = ranges.entry(i);
+            if (range->dwr_type == DW_RANGES_ENTRY && range->dwr_addr1 <= address && address < range->dwr_addr2)
+                return cu;
+            // TODO DW_RANGES_ADDRESS_SELECTION
+        }
+    }
+
+    return nullptr;
 }
 
 DwarfDie* DwarfInfo::dieAtOffset(Dwarf_Off offset) const
