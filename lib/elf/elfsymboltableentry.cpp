@@ -96,7 +96,7 @@ const char* ElfSymbolTableEntry::name() const
 bool ElfSymbolTableEntry::hasValidSection() const
 {
     const auto index = sectionIndex();
-    if (index < 0 || index >= symbolTable()->file()->header()->sectionHeaderCount())
+    if (index >= symbolTable()->file()->header()->sectionHeaderCount())
         return false;
     return symbolTable()->file()->sectionHeaders().at(index)->type() != SHT_NULL;
 }
