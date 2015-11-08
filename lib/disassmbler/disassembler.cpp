@@ -238,7 +238,7 @@ QString Disassembler::printSourceLine(DwarfLine line)
     assert(cu);
 
     QString s;
-    s += "<i>Source: " + QString::fromUtf8(cu->sourceFileForLine(line));
+    s += "<i>Source: " + cu->sourceFileForLine(line);
     s += ':' + QString::number(line.line()) + "</i>";
     return s;
 }

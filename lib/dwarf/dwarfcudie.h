@@ -29,7 +29,7 @@ public:
     ~DwarfCuDie();
 
     DwarfLine lineForAddress(Dwarf_Addr addr) const;
-    QByteArray sourceFileForLine(DwarfLine line) const;
+    QString sourceFileForLine(DwarfLine line) const;
 
 protected:
     friend class DwarfDie;

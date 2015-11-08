@@ -20,6 +20,8 @@
 
 #include <libdwarf.h>
 
+#include <QFileInfo>
+
 DwarfCuDie::DwarfCuDie(Dwarf_Die die, DwarfInfo* info) : DwarfDie(die, info)
 {
 
@@ -74,13 +76,17 @@ DwarfLine DwarfCuDie::lineForAddress(Dwarf_Addr addr) const
     return {};
 }
 
-QByteArray DwarfCuDie::sourceFileForLine(DwarfLine line) const
+QString DwarfCuDie::sourceFileForLine(DwarfLine line) const
 {
     char* srcFile = nullptr;
     auto res = dwarf_linesrc(line.handle(), &srcFile, nullptr);
     if (res != DW_DLV_OK)
         return {};
-    QByteArray b(srcFile);
+    auto fileName = QString::fromUtf8(srcFile);
     dwarf_dealloc(dwarfHandle(), srcFile, DW_DLA_STRING);
-    return b;
+
+    QFileInfo fi(fileName);
+    if (fi.exists())
+        return fi.canonicalFilePath();
+    return fileName;
 }
