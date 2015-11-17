@@ -15,6 +15,7 @@ Name[sv]=ELF-analysator
 Name[uk]=ELF Dissector
 Name[x-test]=xxELF Dissectorxx
 Comment=Tool for analyzing ELF binary files.
+Comment[ast]=Ferramienta p'analizar ficheros binarios ELF.
 Comment[ca]=Eina per analitzar fitxers executables ELF.
 Comment[ca@valencia]=Eina per analitzar fitxers executables ELF.
 Comment[cs]=Nástroj pro analýzu binárních souborů ELF.
