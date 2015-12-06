@@ -47,6 +47,7 @@ public:
     QModelIndex parent(const QModelIndex& child) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
+    bool hasInvalidDies() const { return m_hasInvalidDies; }
 private:
     void addFile(ElfFile *file);
     bool addDwarfDieRecursive(DwarfDie* die, uint32_t parentId);
@@ -60,6 +61,7 @@ private:
     QVector<Node> m_nodes;
 
     ElfFileSet *m_fileSet = nullptr;
+    bool m_hasInvalidDies;
 };
 
 #endif // TYPEMODEL_H

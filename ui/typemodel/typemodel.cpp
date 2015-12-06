@@ -51,6 +51,7 @@ void TypeModel::setFileSet(ElfFileSet* fileSet)
     m_nodes.clear();
     m_nodes.resize(1);
     m_childMap.resize(1);
+    m_hasInvalidDies = false;
 
     if (!fileSet)
         return;
@@ -111,6 +112,11 @@ bool isBetterDie(DwarfDie *prevDie, DwarfDie *newDie)
 
 bool TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
 {
+    if (!die->dwarfInfo()->isValid()) {
+        m_hasInvalidDies = true;
+        return false;
+    }
+
     switch (die->tag()) {
         case DW_TAG_class_type:
         case DW_TAG_namespace:

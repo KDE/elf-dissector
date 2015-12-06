@@ -55,16 +55,24 @@ TypeView::~TypeView() = default;
 void TypeView::setFileSet(ElfFileSet* fileSet)
 {
     m_fileSet = fileSet;
-    if (isVisible())
+    if (isVisible()) {
         m_model->setFileSet(m_fileSet);
+        if (m_model->hasInvalidDies())
+            QMessageBox::warning(this, tr("Invalid DWARF entries"),
+                                 tr("An error occured while reading DWARF data of some ELF objects, the tree will be incomplete."));
+    }
 }
 
 void TypeView::showEvent(QShowEvent* event)
 {
     if (isVisible() && m_model->rowCount() == 0 && m_fileSet) {
         const auto res = QMessageBox::question(this, tr("Compute Type Tree"), tr("Computing the type tree from DWARF data can take up to several minutes in which the application will not respond, and use up to 1.5GB of memory. Proceed anyway?"), QMessageBox::Yes, QMessageBox::Cancel);
-        if (res == QMessageBox::Yes)
+        if (res == QMessageBox::Yes) {
             m_model->setFileSet(m_fileSet);
+            if (m_model->hasInvalidDies())
+                QMessageBox::warning(this, tr("Invalid DWARF entries"),
+                                     tr("An error occured while reading DWARF data of some ELF objects, the tree will be incomplete."));
+        }
     }
     QWidget::showEvent(event);
 }

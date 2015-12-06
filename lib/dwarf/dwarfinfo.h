@@ -58,6 +58,7 @@ public:
 
     DwarfDie* dieAtOffset(Dwarf_Off offset) const;
 
+    bool isValid() const;
 private:
     std::unique_ptr<DwarfInfoPrivate> d;
 };

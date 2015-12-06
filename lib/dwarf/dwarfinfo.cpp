@@ -44,6 +44,8 @@ public:
 
     DwarfInfo *q;
     DwarfAddressRanges *aranges = nullptr;
+
+    bool isValid;
 };
 
 
@@ -71,6 +73,23 @@ static Dwarf_Unsigned callback_get_section_count(void *obj)
     return d->elfFile->sectionHeaders().size();
 }
 
+static void callback_dwarf_handler(Dwarf_Error error, Dwarf_Ptr errarg)
+{
+    DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(errarg);
+
+    const char *errmsg = dwarf_errmsg(error);
+    const Dwarf_Unsigned errcode = dwarf_errno(error);
+    if (d->elfFile->isSeparateDebugFile()) {
+        qWarning("DWARF error in debug file for %s: %s (errno %llu)",
+                 qPrintable(d->elfFile->contentFile()->fileName()), errmsg, errcode);
+    } else {
+        qWarning("DWARF error in %s: %s (errno %llu)",
+                 qPrintable(d->elfFile->fileName()), errmsg, errcode);
+    }
+
+    d->isValid = false;
+}
+
 static int callback_get_section_info(void *obj, Dwarf_Half index, Dwarf_Obj_Access_Section *sectionInfo, int *error)
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
@@ -93,7 +112,8 @@ static int callback_load_section(void *obj, Dwarf_Half index, Dwarf_Small **retu
 
 
 DwarfInfoPrivate::DwarfInfoPrivate(DwarfInfo *qq) :
-    q(qq)
+    q(qq),
+    isValid(true)
 {
     objAccessIface.object = this;
     objAccessIface.methods = &objAccessMethods;
@@ -147,7 +167,7 @@ DwarfInfo::DwarfInfo(ElfFile* elfFile) :
 {
     d->elfFile = elfFile;
 
-    if (dwarf_object_init(&d->objAccessIface, nullptr, nullptr, &d->dbg, nullptr) != DW_DLV_OK) {
+    if (dwarf_object_init(&d->objAccessIface, &callback_dwarf_handler, d.get(), &d->dbg, nullptr) != DW_DLV_OK) {
         qDebug() << "error loading dwarf data";
     }
 }
@@ -224,4 +244,9 @@ DwarfDie* DwarfInfo::dieForMangledSymbol(const QByteArray& symbol) const
             return hit;
     }
     return nullptr;
+}
+
+bool DwarfInfo::isValid() const
+{
+    return d->isValid;
 }
