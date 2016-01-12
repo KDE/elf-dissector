@@ -10,7 +10,7 @@ cmake_push_check_state()
 set(CMAKE_REQUIRED_INCLUDES ${Dwarf_INCLUDE_DIR})
 set(CMAKE_REQUIRED_LIBRARIES ${Dwarf_LIBRARY})
 check_c_source_compiles("
-#include <libdwarf/libdwarf.h>
+#include <libdwarf.h>
 int main(int argc, char** argv) {
     Dwarf_Die die;
     return dwarf_tag(die, 0, 0);
@@ -23,7 +23,7 @@ if(NOT DWARF_LINKS_WITHOUT_LIBELF)
     endif()
     set(CMAKE_REQUIRED_LIBRARIES ${Dwarf_LIBRARY} ${elf_LIBRARY})
     check_c_source_compiles("
-    #include <libdwarf/libdwarf.h>
+    #include <libdwarf.h>
     int main(int argc, char** argv) {
         Dwarf_Die die;
         return dwarf_tag(die, 0, 0);
