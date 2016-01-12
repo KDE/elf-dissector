@@ -7,6 +7,7 @@ find_library(Dwarf_LIBRARY NAMES dwarf)
 
 # test if libdwarf requires libelf to link
 cmake_push_check_state()
+set(CMAKE_REQUIRED_INCLUDES ${Dwarf_INCLUDE_DIR})
 set(CMAKE_REQUIRED_LIBRARIES ${Dwarf_LIBRARY})
 check_c_source_compiles("
 #include <libdwarf/libdwarf.h>
@@ -16,7 +17,11 @@ int main(int argc, char** argv) {
 }" DWARF_LINKS_WITHOUT_LIBELF)
 
 if(NOT DWARF_LINKS_WITHOUT_LIBELF)
-    set(CMAKE_REQUIRED_LIBRARIES ${Dwarf_LIBRARY} elf)
+    find_library(elf_LIBRARY NAMES elf)
+    if (NOT elf_LIBRARY)
+       message(WARNING "elf library not found")
+    endif()
+    set(CMAKE_REQUIRED_LIBRARIES ${Dwarf_LIBRARY} ${elf_LIBRARY})
     check_c_source_compiles("
     #include <libdwarf/libdwarf.h>
     int main(int argc, char** argv) {
@@ -27,7 +32,7 @@ endif()
 cmake_pop_check_state()
 
 if(NOT DWARF_LINKS_WITHOUT_LIBELF AND NOT DWARF_NEEDS_LIBELF)
-    message(FATAL "Can't get libdwarf to link!?")
+    message(FATAL_ERROR "Can't get libdwarf to link!?")
 endif()
 
 include(FindPackageHandleStandardArgs)
@@ -40,7 +45,7 @@ if(DWARF_FOUND AND NOT TARGET Dwarf::Dwarf)
         INTERFACE_INCLUDE_DIRECTORIES "${Dwarf_INCLUDE_DIR}"
     )
     if(DWARF_NEEDS_LIBELF)
-        set_target_properties(Dwarf::Dwarf PROPERTIES INTERFACE_LINK_LIBRARIES elf)
+        set_target_properties(Dwarf::Dwarf PROPERTIES INTERFACE_LINK_LIBRARIES ${elf_LIBRARY})
     endif()
 endif()
 
