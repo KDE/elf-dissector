@@ -29,7 +29,7 @@ namespace DependenciesCheck
 {
     using UnusedDependencies = QVector<QPair<int, int>>;
     /** Find all unused DT_NEEDED entries in the entire file set. */
-    UnusedDependencies unusedDependencies(ElfFileSet *fileSet);
+    UnusedDependencies unusedDependencies(ElfFileSet *fileSet, int fileToCheck = -1);
 
     /** Dump unused dependencies to stdout, for use in CLI tools. */
     void printUnusedDependencies(ElfFileSet *fileSet, const UnusedDependencies &unusedDeps);

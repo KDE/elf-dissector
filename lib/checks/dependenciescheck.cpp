@@ -29,7 +29,7 @@
 #include <cassert>
 #include <iostream>
 
-DependenciesCheck::UnusedDependencies DependenciesCheck::unusedDependencies(ElfFileSet* fileSet)
+DependenciesCheck::UnusedDependencies DependenciesCheck::unusedDependencies(ElfFileSet* fileSet, int fileToCheck)
 {
     QHash<QByteArray, int> fileIndex;
     for (int i = 0; i < fileSet->size(); ++i) {
@@ -45,6 +45,8 @@ DependenciesCheck::UnusedDependencies DependenciesCheck::unusedDependencies(ElfF
 
     UnusedDependencies unusedDeps;
     for (int i = 0; i < fileSet->size(); ++i) {
+        if (i != fileToCheck && fileToCheck >= 0)
+            continue;
         foreach (const auto &needed, fileSet->file(i)->dynamicSection()->neededLibraries()) {
             const auto depIdx = fileIndex.value(needed);
             const auto depFile = fileSet->file(depIdx);

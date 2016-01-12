@@ -36,6 +36,8 @@ int main(int argc, char** argv)
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
+    QCommandLineOption recursiveOption(QStringList() << QStringLiteral("r") << QStringLiteral("recursive"), QStringLiteral("Check all dependencies recursively as well"));
+    parser.addOption(recursiveOption);
     parser.addPositionalArgument(QStringLiteral("elf"), QStringLiteral("ELF library to open"), QStringLiteral("<elf>"));
     parser.process(app);
 
@@ -44,7 +46,7 @@ int main(int argc, char** argv)
         set.addFile(fileName);
         if (set.size() == 0)
             continue;
-        const auto unusedDeps = DependenciesCheck::unusedDependencies(&set);
+        const auto unusedDeps = DependenciesCheck::unusedDependencies(&set, parser.isSet(recursiveOption) ? -1 : 0);
         DependenciesCheck::printUnusedDependencies(&set, unusedDeps);
     }
 
