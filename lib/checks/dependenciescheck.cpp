@@ -70,7 +70,7 @@ QVector<ElfSymbolTableEntry*> DependenciesCheck::usedSymbols(ElfFile* userFile, 
 {
     QVector<ElfSymbolTableEntry*> symbols;
 
-    const auto symtab = userFile->symbolTable();
+    const auto symtab = userFile->section<ElfSymbolTableSection>(userFile->indexOfSection(SHT_DYNSYM));
     if (!symtab)
         return symbols;
     const auto symtabSize = symtab->header()->entryCount();
@@ -92,7 +92,7 @@ QVector<ElfSymbolTableEntry*> DependenciesCheck::usedSymbols(ElfFile* userFile, 
 
 int DependenciesCheck::usedSymbolCount(ElfFile* userFile, ElfFile* providerFile)
 {
-    const auto symtab = userFile->symbolTable();
+    const auto symtab = userFile->section<ElfSymbolTableSection>(userFile->indexOfSection(SHT_DYNSYM));
     if (!symtab)
         return 0;
     const auto symtabSize = symtab->header()->entryCount();
