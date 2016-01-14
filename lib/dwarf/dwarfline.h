@@ -26,8 +26,11 @@ class QByteArray;
 class DwarfLine
 {
 public:
-    DwarfLine();
-    ~DwarfLine();
+    DwarfLine() = default;
+    DwarfLine(const DwarfLine &other) = default;
+    ~DwarfLine() = default;
+
+    DwarfLine& operator=(const DwarfLine &other) = default;
 
     bool isNull() const;
 

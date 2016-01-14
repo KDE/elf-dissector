@@ -28,8 +28,11 @@ class ElfRelocationEntry
 {
 public:
     ElfRelocationEntry();
+    ElfRelocationEntry(const ElfRelocationEntry&);
     explicit ElfRelocationEntry(const ElfRelocationSection *section, uint64_t index, bool withAddend);
     ~ElfRelocationEntry();
+
+    ElfRelocationEntry& operator=(const ElfRelocationEntry&);
 
     const ElfRelocationSection* relocationTable() const;
 

@@ -54,6 +54,10 @@ class ElfNodeVisitor
 public:
     typedef T type;
 
+    ElfNodeVisitor() = default;
+    ElfNodeVisitor(const ElfNodeVisitor&) = delete;
+    ElfNodeVisitor& operator=(ElfNodeVisitor&) = delete;
+
     inline T visit(ElfNodeVariant *node, int arg = 0) const
     {
         switch (node->type) {

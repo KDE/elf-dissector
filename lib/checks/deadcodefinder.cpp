@@ -28,7 +28,9 @@
 #include <iostream>
 
 DeadCodeFinder::DeadCodeFinder() = default;
+DeadCodeFinder::DeadCodeFinder(const DeadCodeFinder&) = default;
 DeadCodeFinder::~DeadCodeFinder() = default;
+DeadCodeFinder& DeadCodeFinder::operator=(const DeadCodeFinder&) = default;
 
 void DeadCodeFinder::findUnusedSymbols(ElfFileSet* fileSet)
 {

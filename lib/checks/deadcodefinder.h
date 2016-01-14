@@ -32,7 +32,10 @@ class DeadCodeFinder
 {
 public:
     DeadCodeFinder();
+    DeadCodeFinder(const DeadCodeFinder&);
     ~DeadCodeFinder();
+
+    DeadCodeFinder& operator=(const DeadCodeFinder&);
 
     void findUnusedSymbols(ElfFileSet *fileSet);
     void setExcludePrefixes(const QStringList &excludePrefixes);

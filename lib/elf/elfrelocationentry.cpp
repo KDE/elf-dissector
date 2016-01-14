@@ -29,6 +29,8 @@ ElfRelocationEntry::ElfRelocationEntry() :
 {
 }
 
+ElfRelocationEntry::ElfRelocationEntry(const ElfRelocationEntry&) = default;
+
 ElfRelocationEntry::ElfRelocationEntry(const ElfRelocationSection* section, uint64_t index, bool withAddend) :
     m_section(section),
     m_index(index),
@@ -37,6 +39,8 @@ ElfRelocationEntry::ElfRelocationEntry(const ElfRelocationSection* section, uint
 }
 
 ElfRelocationEntry::~ElfRelocationEntry() = default;
+
+ElfRelocationEntry& ElfRelocationEntry::operator=(const ElfRelocationEntry&) = default;
 
 const ElfRelocationSection* ElfRelocationEntry::relocationTable() const
 {

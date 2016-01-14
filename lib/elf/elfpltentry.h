@@ -26,8 +26,10 @@ class ElfGotEntry;
 class ElfPltEntry
 {
 public:
-    ElfPltEntry();
+    ElfPltEntry() = default;
+    ElfPltEntry(const ElfPltEntry&);
     explicit ElfPltEntry(ElfPltSection* section, uint64_t index);
+    ~ElfPltEntry() = default;
 
     ElfPltEntry& operator=(const ElfPltEntry&);
 

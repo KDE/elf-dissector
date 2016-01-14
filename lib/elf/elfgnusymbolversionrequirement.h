@@ -28,8 +28,11 @@ class ElfGNUSymbolVersionRequirementAuxiliaryEntry;
 class ElfGNUSymbolVersionRequirement
 {
 public:
+    ElfGNUSymbolVersionRequirement(const ElfGNUSymbolVersionRequirement&) = delete;
     explicit ElfGNUSymbolVersionRequirement(ElfGNUSymbolVersionRequirementsSection *section, uint32_t offset);
     ~ElfGNUSymbolVersionRequirement();
+
+    ElfGNUSymbolVersionRequirement& operator=(const ElfGNUSymbolVersionRequirement&) = delete;
 
     ElfGNUSymbolVersionRequirementsSection* section() const;
 

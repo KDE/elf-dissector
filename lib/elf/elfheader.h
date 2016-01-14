@@ -24,7 +24,12 @@
 class ElfHeader
 {
 public:
+    ElfHeader() = default;
+    ElfHeader(const ElfHeader&) = delete;
     virtual ~ElfHeader();
+
+    ElfHeader& operator=(const ElfHeader&) = delete;
+
     virtual uint16_t type() const = 0;
     virtual uint16_t machine() const = 0;
 //     virtual uint32_t version() const = 0;

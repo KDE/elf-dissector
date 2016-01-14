@@ -33,10 +33,6 @@
 #include <cassert>
 #include <iostream>
 
-StructurePackingCheck::~StructurePackingCheck()
-{
-}
-
 void StructurePackingCheck::setElfFileSet(ElfFileSet* fileSet)
 {
     m_fileSet = fileSet;

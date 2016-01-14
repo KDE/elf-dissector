@@ -19,18 +19,11 @@
 
 #include <cassert>
 
-DwarfLine::DwarfLine()
-{
-
-}
-
 DwarfLine::DwarfLine(Dwarf_Line line) :
     m_line(line)
 {
     assert(line);
 }
-
-DwarfLine::~DwarfLine() = default;
 
 bool DwarfLine::isNull() const
 {

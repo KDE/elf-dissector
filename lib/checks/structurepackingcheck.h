@@ -31,7 +31,10 @@ class StructurePackingCheck
 {
 public:
     StructurePackingCheck() = default;
-    ~StructurePackingCheck();
+    StructurePackingCheck(const StructurePackingCheck&) = default;
+    ~StructurePackingCheck() = default;
+
+    StructurePackingCheck& operator=(const StructurePackingCheck&) = default;
 
     /** Set the ELF file set the checked DWARF info belongs to.*/
     void setElfFileSet(ElfFileSet *fileSet);

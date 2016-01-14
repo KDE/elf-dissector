@@ -19,7 +19,7 @@
 #include "elfpltsection.h"
 #include "elfgotsection.h"
 
-ElfPltEntry::ElfPltEntry() = default;
+ElfPltEntry::ElfPltEntry(const ElfPltEntry&) = default;
 
 ElfPltEntry::ElfPltEntry(ElfPltSection* section, uint64_t index) :
     m_section(section),

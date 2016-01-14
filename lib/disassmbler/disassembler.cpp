@@ -106,6 +106,8 @@ static void print_address(bfd_vma addr, struct disassemble_info *info)
     (*info->fprintf_func) (info->stream, " (%s + 0x%lx)", section->header()->name(), targetAddr - section->header()->virtualAddress());
 }
 
+Disassembler::Disassembler() = default;
+
 Disassembler::~Disassembler() = default;
 
 QString Disassembler::disassemble(ElfSection* section)

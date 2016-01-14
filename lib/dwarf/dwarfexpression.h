@@ -31,8 +31,11 @@ class DwarfExpression
 {
 public:
     DwarfExpression();
+    DwarfExpression(const DwarfExpression&) = default;
     explicit DwarfExpression(Dwarf_Ptr block, Dwarf_Unsigned len, uint8_t addrSize);
-    ~DwarfExpression();
+    ~DwarfExpression() = default;
+
+    DwarfExpression& operator=(const DwarfExpression&) = default;
 
     QString displayString() const;
 

@@ -239,10 +239,6 @@ DwarfExpression::DwarfExpression(Dwarf_Ptr block, Dwarf_Unsigned len, uint8_t ad
     m_block = QByteArray::fromRawData(static_cast<const char*>(block), len);
 }
 
-DwarfExpression::~DwarfExpression()
-{
-}
-
 QString DwarfExpression::displayString() const
 {
     if (m_block.isEmpty())

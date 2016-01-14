@@ -26,7 +26,10 @@ class ElfNoteSection;
 class ElfNoteEntry
 {
 public:
+    ElfNoteEntry(const ElfNoteEntry&) = delete;
     virtual ~ElfNoteEntry();
+
+    ElfNoteEntry& operator=(const ElfNoteEntry&) = delete;
 
     /** Note type. */
     virtual uint64_t type() const = 0;

@@ -26,8 +26,11 @@ class ElfGNUSymbolVersionDefinition;
 class ElfGNUSymbolVersionDefinitionAuxiliaryEntry
 {
 public:
+    ElfGNUSymbolVersionDefinitionAuxiliaryEntry(const ElfGNUSymbolVersionDefinitionAuxiliaryEntry&) = delete;
     explicit ElfGNUSymbolVersionDefinitionAuxiliaryEntry(ElfGNUSymbolVersionDefinition *verDef, uint32_t offset);
     ~ElfGNUSymbolVersionDefinitionAuxiliaryEntry();
+
+    ElfGNUSymbolVersionDefinitionAuxiliaryEntry& operator=(const ElfGNUSymbolVersionDefinitionAuxiliaryEntry&) = delete;
 
     const ElfGNUSymbolVersionDefinition* versionDefinition() const;
 

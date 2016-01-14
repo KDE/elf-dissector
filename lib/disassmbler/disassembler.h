@@ -33,7 +33,11 @@ class DwarfLine;
 class Disassembler
 {
 public:
+    Disassembler();
+    Disassembler(const Disassembler&) = delete;
     virtual ~Disassembler();
+
+    Disassembler& operator=(const Disassembler&) = delete;
 
     QString disassemble(ElfSymbolTableEntry *entry);
     QString disassemble(ElfSection *section);
