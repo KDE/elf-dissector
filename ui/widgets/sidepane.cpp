@@ -22,6 +22,7 @@
 
 class Delegate : public QStyledItemDelegate
 {
+    Q_OBJECT
 public:
     explicit Delegate(QObject *parent = nullptr) :
         QStyledItemDelegate(parent)
@@ -40,6 +41,7 @@ public:
 
 class NonEmptySelectionModel : public QItemSelectionModel
 {
+    Q_OBJECT
 public:
     explicit NonEmptySelectionModel(QAbstractItemModel* model) :
         QItemSelectionModel(model)
@@ -101,3 +103,5 @@ void SidePane::selectionChanged()
         return;
     emit currentIndexChanged(selection.first().row());
 }
+
+#include "sidepane.moc"

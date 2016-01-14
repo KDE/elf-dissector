@@ -23,6 +23,7 @@
 /** Restrict the structure model to just files and sections. */
 class SectionProxyModel : public KRecursiveFilterProxyModel
 {
+    Q_OBJECT
 public:
     explicit SectionProxyModel(QObject* parent = nullptr);
     ~SectionProxyModel();
