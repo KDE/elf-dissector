@@ -19,6 +19,7 @@
 #include "demangler.h"
 
 #include <QDebug>
+#include <QScopedValueRollback>
 
 // workarounds for conflicting declaration in libiberty.h
 #define HAVE_DECL_BASENAME 1
@@ -26,16 +27,6 @@
 #define HAVE_DECL_VASPRINTF 1
 
 #include <demangle.h>
-
-template <typename T> class StateResetter
-{
-public:
-    explicit StateResetter(T& var) : m_variable(var) { m_oldValue = var; }
-    ~StateResetter() { m_variable = m_oldValue; }
-private:
-    T &m_variable;
-    T m_oldValue;
-};
 
 
 QVector<QByteArray> Demangler::demangle(const char* name)
@@ -137,13 +128,11 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_TYPED_NAME:
         {
             // template parameters are indexed per enclosing type name, so push that on the stack here
-            StateResetter<int> indexRestter(m_templateParamIndex);
-            StateResetter<QHash<int, QByteArray> > paramsResetter(m_templateParams);
-            StateResetter<bool> shouldIndexResetter(m_indexTemplateArgs);
-            StateResetter<QByteArray> modifierResetter(m_modifiers);
-            m_templateParamIndex = 0;
+            QScopedValueRollback<int> indexRestter(m_templateParamIndex, 0);
+            QScopedValueRollback<QHash<int, QByteArray>> paramsResetter(m_templateParams);
+            QScopedValueRollback<bool> shouldIndexResetter(m_indexTemplateArgs, true);
+            QScopedValueRollback<QByteArray> modifierResetter(m_modifiers);
             m_templateParams.clear();
-            m_indexTemplateArgs = true;
             m_modifiers.clear();
 
             // left is the name of the function, right is the return type (ignored here) and arguments
@@ -157,8 +146,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_TEMPLATE:
         {
             {
-                StateResetter<bool> indexRestter(m_indexTemplateArgs);
-                m_indexTemplateArgs = false;
+                QScopedValueRollback<bool> indexRestter(m_indexTemplateArgs, false);
                 handleNameComponent(component->u.s_binary.left, nameParts);
             }
             QVector<QByteArray> args;
@@ -288,8 +276,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_POINTER:
         {
-            StateResetter<bool> resetter(m_pendingPointer);
-            m_pendingPointer = true;
+            QScopedValueRollback<bool> resetter(m_pendingPointer, true);
             handleNameComponent(component->u.s_binary.left, nameParts);
             if (m_pendingPointer) // not consumed by a function pointer
                 nameParts.last().append('*');
@@ -297,8 +284,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_REFERENCE:
         {
-            StateResetter<bool> resetter(m_pendingReference);
-            m_pendingReference = true;
+            QScopedValueRollback<bool> resetter(m_pendingReference, true);
             handleNameComponent(component->u.s_binary.left, nameParts);
             if (m_pendingReference && !nameParts.last().endsWith('&')) // not consumed by the array type, and primitive reference collapsing
                 nameParts.last().append('&');
@@ -363,7 +349,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_PTRMEM_TYPE:
         {
-            StateResetter<QByteArray> ptrmemTypeResetter(m_ptrmemType);
+            QScopedValueRollback<QByteArray> ptrmemTypeResetter(m_ptrmemType);
             m_ptrmemType.clear();
             QVector<QByteArray> tmp;
             handleNameComponent(component->u.s_binary.left, tmp);
@@ -382,8 +368,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_ARGLIST:
         {
-            StateResetter<bool> resetter(m_inArgList);
-            m_inArgList = true;
+            QScopedValueRollback<bool> resetter(m_inArgList, true);
             if (!component->u.s_binary.left && !component->u.s_binary.right) {
                 nameParts.push_back(QByteArray("")); // empty arg list
             } else {
@@ -394,8 +379,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_TEMPLATE_ARGLIST:
         {
-            StateResetter<bool> resetter(m_inArgList);
-            m_inArgList = true;
+            QScopedValueRollback<bool> resetter(m_inArgList, true);
 
             if (component->u.s_binary.left) {
                 int currentIndex = -1;
@@ -403,8 +387,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
                     currentIndex = m_templateParamIndex++;
                 QVector<QByteArray> left;
                 {
-                    StateResetter<bool> resetter(m_indexTemplateArgs);
-                    m_indexTemplateArgs = false;
+                    QScopedValueRollback<bool> resetter(m_indexTemplateArgs, false);
                     handleNameComponent(component->u.s_binary.left, left);
                 }
                 nameParts += left;
