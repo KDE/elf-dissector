@@ -38,7 +38,7 @@ void UnusedDependenciesModel::setFileSet(ElfFileSet* fileSet)
 
 void UnusedDependenciesModel::findUnusedDependencies()
 {
-    if (!m_fileSet || m_unusedDeps.size())
+    if (!m_fileSet || !m_unusedDeps.isEmpty())
         return;
 
     beginResetModel();

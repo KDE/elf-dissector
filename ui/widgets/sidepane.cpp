@@ -48,7 +48,7 @@ public:
 
     void select(const QItemSelection& selection, SelectionFlags command) override
     {
-        if (!selection.count() && (command & QItemSelectionModel::Clear))
+        if (selection.isEmpty() && (command & QItemSelectionModel::Clear))
             return;
         QItemSelectionModel::select(selection, command);
     }
