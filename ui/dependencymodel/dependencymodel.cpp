@@ -179,7 +179,7 @@ int DependencyModel::rowCount(const QModelIndex& parent) const
     if (needed.isEmpty())
         return 0;
 
-    for (const auto need : needed) {
+    for (const auto &need : needed) {
         const uint64_t childNode = makeId(++m_uniqueIndex, fileIndex(need));
         m_parentMap.push_back(parent.internalId());
         m_childMap.push_back({});

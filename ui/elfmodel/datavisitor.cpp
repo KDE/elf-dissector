@@ -735,7 +735,7 @@ QString DataVisitor::printRelocation(ElfRelocationEntry* entry) const
     if (sym) {
         s += QStringLiteral(" (") + printSymbolName(sym) + " + 0x" + QString::number(entry->offset() - sym->value(), 16) + ')';
     } else {
-        foreach (const auto &shdr, entry->relocationTable()->file()->sectionHeaders()) {
+        foreach (const auto shdr, entry->relocationTable()->file()->sectionHeaders()) {
             if (shdr->virtualAddress() <= entry->offset() && entry->offset() < shdr->virtualAddress() + shdr->size()) {
                 s += QStringLiteral(" (") + shdr->name() + " + 0x" + QString::number(entry->offset() - shdr->virtualAddress(), 16) + ')';
                 break;

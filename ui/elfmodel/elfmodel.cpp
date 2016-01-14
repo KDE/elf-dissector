@@ -235,7 +235,7 @@ QModelIndex ElfModel::indexForUrl(const QUrl& url) const
     const auto rows = url.path().split(QStringLiteral("/"), QString::SkipEmptyParts);
 
     QModelIndex idx;
-    for (const auto r : rows) {
+    for (const auto &r : rows) {
         idx = index(r.toInt(), 0, idx);
     }
     return idx;
