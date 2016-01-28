@@ -1,9 +1,12 @@
-set title "Cumulative Dynamic Linking/Loading Time"
+set title "Cumulative Dynamic Linking/Loading Time" textcolor rgb "@TEXTCOLOR@"
+set xlabel textcolor rgb "@TEXTCOLOR@"
 set xtics rotate
-set ylabel "µs"
+set ylabel "µs" textcolor rgb "@TEXTCOLOR@"
 set yrange [0:]
 set grid
 set style data lines
+set border linecolor rgb "@TEXTCOLOR@"
+set key textcolor rgb "@TEXTCOLOR@"
 
 lazySum=0
 nowSum=0

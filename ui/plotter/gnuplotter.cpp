@@ -18,6 +18,8 @@
 #include "gnuplotter.h"
 
 #include <QDebug>
+#include <QGuiApplication>
+#include <QPalette>
 #include <QProcess>
 #include <QStandardPaths>
 #include <QTemporaryDir>
@@ -94,5 +96,9 @@ void Gnuplotter::processTemplate() const
         qWarning() << "Failed to read" << m_templateFileName << ":" << in.errorString();
         return;
     }
-    out.write(in.readAll());
+
+    auto t = in.readAll();
+    t.replace("@TEXTCOLOR@", QGuiApplication::palette().color(QPalette::Text).name().toUtf8());
+
+    out.write(t);
 }
