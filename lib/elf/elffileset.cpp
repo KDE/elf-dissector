@@ -49,6 +49,12 @@ void ElfFileSet::addFile(const QString& fileName)
     addFile(f);
 }
 
+static void resolvePlaceholder(QVector<QByteArray> &paths, const QByteArray &originPath)
+{
+    for (auto it = paths.begin(); it != paths.end(); ++it)
+        (*it).replace("$ORIGIN", originPath);
+}
+
 void ElfFileSet::addFile(ElfFile* file)
 {
     assert(file);
@@ -60,8 +66,12 @@ void ElfFileSet::addFile(ElfFile* file)
     if (!file->dynamicSection())
         return;
 
-    const auto rpaths = file->dynamicSection()->rpaths();
-    const auto runpaths = file->dynamicSection()->runpaths();
+    auto rpaths = file->dynamicSection()->rpaths();
+    auto runpaths = file->dynamicSection()->runpaths();
+    auto originPath = QFileInfo(file->fileName()).absolutePath().toUtf8();
+    resolvePlaceholder(rpaths, originPath);
+    resolvePlaceholder(runpaths, originPath);
+
     QVector<QByteArray> searchPaths;
     searchPaths.reserve(rpaths.size() + m_ldLibraryPaths.size() + runpaths.size() + m_baseSearchPaths.size());
     if (runpaths.isEmpty()) // DT_RPATH is supposed to be ignored if DT_RUNPATH is present
