@@ -29,38 +29,34 @@ struct LookupTableEntry
 };
 
 // TODO optimize for sorted tables
-template <typename T>
-QByteArray lookupLabelImpl(T value, const LookupTableEntry<T>* lookupTable, int lookupTableSize)
+template <typename T, std::size_t N>
+QByteArray lookupLabel(T value, const LookupTableEntry<T> (&lookupTable)[N])
 {
-    for (int i = 0; i < lookupTableSize; ++i) {
+    for (std::size_t i = 0; i < N; ++i) {
         if (lookupTable[i].value == value)
             return QByteArray::fromRawData(lookupTable[i].label, strlen(lookupTable[i].label));
     }
     return QByteArray("unknown (") + QByteArray::number(value) + ')';
 }
 
-#define lookupLabel(value, table) lookupLabelImpl(value, table, sizeof(table) / sizeof(LookupTableEntry<decltype(value)>))
-
-template <typename T>
-QByteArray lookupFlagsImpl(T flags, const LookupTableEntry<T>* lookupTable, int lookupTableSize)
+template <typename T, std::size_t N>
+QByteArray lookupFlags(T flags, const LookupTableEntry<T> (&lookupTable)[N])
 {
     QList<QByteArray> l;
     T handledFlags = 0;
 
-    for (int i = 0; i < lookupTableSize; ++i) {
+    for (std::size_t i = 0; i < N; ++i) {
         if (flags & lookupTable[i].value)
             l.push_back(QByteArray::fromRawData(lookupTable[i].label, strlen(lookupTable[i].label)));
         handledFlags |= lookupTable[i].value;
     }
 
     if (flags & ~handledFlags)
-        l.push_back(QByteArray("unhandled flags 0x") + QByteArray::number(qulonglong(flags & ~handledFlags), 16));
+        l.push_back(QByteArray("unhandled flag 0x") + QByteArray::number(qulonglong(flags & ~handledFlags), 16));
 
     if (l.isEmpty())
         return "none";
     return l.join(", ");
 }
-
-#define lookupFlags(flags, table) lookupFlagsImpl(flags, table, sizeof(table) / sizeof(LookupTableEntry<decltype(flags)>))
 
 #endif
