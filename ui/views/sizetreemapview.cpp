@@ -184,7 +184,6 @@ void SizeTreeMapView::reloadTreeMap()
             }
             auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
             item->setSum(shdr->size());
-            item->setSorting(-2, true); // sort by value
             if (ui->actionColorizeSections->isChecked())
                 item->setBackColor(sectionColorizer.nextColor());
             if (ui->actionRelocationHeatmap->isChecked() && shdr->flags() & SHF_WRITE)
@@ -196,7 +195,6 @@ void SizeTreeMapView::reloadTreeMap()
         baseItem->setSum(section->header()->size());
         auto item = new TreeMapItem(baseItem, section->header()->size(), section->header()->name(), QString::number(section->header()->size()));
         item->setSum(section->header()->size());
-        item->setSorting(-2, true); // sort by value
         if (ui->actionRelocationHeatmap->isChecked() && section->header()->flags() & SHF_WRITE)
             item->setBackColor(relocColor(relocRatio(section->header())));
         sectionItems[section->header()->sectionIndex()] = new SymbolNode;
@@ -207,35 +205,37 @@ void SizeTreeMapView::reloadTreeMap()
     Demangler demangler;
 
     const auto symtab = file->symbolTable();
-    if (!symtab)
-        return;
-    for (unsigned int j = 0; j < symtab->header()->entryCount(); ++j) {
-        const auto entry = symtab->entry(j);
-        if (entry->size() == 0 || !sectionItems.at(entry->sectionIndex()))
-            continue;
-        SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
-        const QVector<QByteArray> demangledNames = demangler.demangle(entry->name());
-        for (const QByteArray &demangledName : demangledNames) {
-            SymbolNode *node = parentNode->children.value(demangledName);
-            if (!node) {
-                node = new SymbolNode;
-                node->item = new TreeMapItem(parentNode->item);
-                node->item->setField(0, demangledName);
-                if (ui->actionColorizeSymbols->isChecked() && parentNode->item->parent() == baseItem) {
-                    node->item->setBackColor(symbolColorizer.nextColor());
-                } else {
-                    node->item->setBackColor(parentNode->item->backColor());
+    if (symtab) {
+        for (unsigned int j = 0; j < symtab->header()->entryCount(); ++j) {
+            const auto entry = symtab->entry(j);
+            if (entry->size() == 0 || !sectionItems.at(entry->sectionIndex()))
+                continue;
+            SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
+            const QVector<QByteArray> demangledNames = demangler.demangle(entry->name());
+            for (const QByteArray &demangledName : demangledNames) {
+                SymbolNode *node = parentNode->children.value(demangledName);
+                if (!node) {
+                    node = new SymbolNode;
+                    node->item = new TreeMapItem(parentNode->item);
+                    node->item->setField(0, demangledName);
+                    if (ui->actionColorizeSymbols->isChecked() && parentNode->item->parent() == baseItem) {
+                        node->item->setBackColor(symbolColorizer.nextColor());
+                    } else {
+                        node->item->setBackColor(parentNode->item->backColor());
+                    }
+                    parentNode->children.insert(demangledName, node);
                 }
-                parentNode->children.insert(demangledName, node);
+                node->item->setSum(node->item->sum() + entry->size());
+                node->item->setValue(node->item->sum());
+                node->item->setField(1, QString::number(node->item->sum()));
+                parentNode = node;
             }
-            node->item->setSum(node->item->sum() + entry->size());
-            node->item->setValue(node->item->sum());
-            node->item->setField(1, QString::number(node->item->sum()));
-            parentNode = node;
+            if (ui->actionRelocationHeatmap->isChecked() && entry->sectionHeader()->flags() & SHF_WRITE)
+                parentNode->item->setBackColor(relocColor(relocRatio(entry)));
         }
-        if (ui->actionRelocationHeatmap->isChecked() && entry->sectionHeader()->flags() & SHF_WRITE)
-            parentNode->item->setBackColor(relocColor(relocRatio(entry)));
     }
+
+    baseItem->setSorting(-2, true, true); // sort recursively by value
 }
 
 void SizeTreeMapView::treeMapContextMenu(const QPoint& pos)

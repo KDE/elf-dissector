@@ -346,7 +346,7 @@ public:
    * For fast sorting, set this to -1 before child insertions and call
    * again after inserting all children.
    */
-  void setSorting(int textNo, bool ascending = true);
+  void setSorting(int textNo, bool ascending = true, bool recursive = false);
 
   /**
    * Resort according to the already set sorting.

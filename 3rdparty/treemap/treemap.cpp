@@ -1045,8 +1045,13 @@ int TreeMapItem::sorting(bool* ascending) const
 }
 
 // do *not* set sorting recursively
-void TreeMapItem::setSorting(int textNo, bool ascending)
+void TreeMapItem::setSorting(int textNo, bool ascending, bool recursive)
 {
+    if (recursive && _children) {
+        foreach(TreeMapItem* child, *_children) {
+            child->setSorting(textNo, ascending, recursive);
+        }
+    }
     if (_sortTextNo == textNo) {
 	if(_sortAscending == ascending) return;
 	if (textNo == -1) {
