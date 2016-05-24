@@ -178,7 +178,9 @@ void ElfFileSet::topologicalSort()
 #endif
 
     Q_ASSERT(remaining.isEmpty());
-    Q_ASSERT(sorted.first() == m_files.first());
+    if (sorted.first() != m_files.first()) {
+        qWarning() << "FILE SET ORDER IS MESSED UP\nThis mostly happens due to missing dependencies. Let's try to ignore it for now...";
+    }
 
     m_files = sorted;
 }
