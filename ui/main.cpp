@@ -16,7 +16,6 @@
 */
 
 #include <config-elf-dissector-version.h>
-#include <config-elf-dissector.h>
 
 #include <ui/mainwindow.h>
 #include <printers/dwarfprinter.h>
@@ -31,11 +30,7 @@ int main(int argc, char** argv)
     QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
     QCoreApplication::setApplicationVersion(QStringLiteral(ELF_DISSECTOR_VERSION_STRING));
 
-#if CMAKE_NEWER_THAN_3_6 // see commit 84946c7 in cmake
-    Q_INIT_RESOURCE(plotter_plotter);
-#else
     Q_INIT_RESOURCE(plotter);
-#endif
     DwarfPrinter::registerConverterFunctions();
 
     QApplication app(argc, argv);
