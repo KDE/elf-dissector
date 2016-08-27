@@ -40,7 +40,7 @@ static void addView(QStandardItemModel *model, const QString& iconName, const QS
     auto icon = QIcon::fromTheme(iconName);
     if (icon.isNull())
         icon = QIcon::fromTheme(QStringLiteral("dialog-information")); // fallback
-        model->appendRow(new QStandardItem(icon, title));
+    model->appendRow(new QStandardItem(icon, title));
 }
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow), m_elfModel(new ElfModel(this))
