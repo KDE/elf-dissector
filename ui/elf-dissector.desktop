@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=ELF Dissector
-Name[ast]=Diseutor d'ELFs
 Name[ca]=ELF Dissector
 Name[ca@valencia]=ELF Dissector
 Name[cs]=ELF Dissector
@@ -36,7 +35,6 @@ Comment[uk]=Інструмент для аналізу двійкових фай
 Comment[x-test]=xxTool for analyzing ELF binary files.xx
 Comment[zh_TW]=分析 ELF 二進位檔案的工具。
 GenericName=ELF binary inspector
-GenericName[ast]=Inspeutor de binarios ELF
 GenericName[ca]=Inspector d'executables ELF
 GenericName[ca@valencia]=Inspector d'executables ELF
 GenericName[de]=ELF-Binärüberprüfung
