@@ -47,6 +47,8 @@ DependenciesCheck::UnusedDependencies DependenciesCheck::unusedDependencies(ElfF
     for (int i = 0; i < fileSet->size(); ++i) {
         if (i != fileToCheck && fileToCheck >= 0)
             continue;
+        if (fileSet->file(i)->dynamicSection() == nullptr)
+            continue;
         foreach (const auto &needed, fileSet->file(i)->dynamicSection()->neededLibraries()) {
             const auto depIdx = fileIndex.value(needed);
             const auto depFile = fileSet->file(depIdx);

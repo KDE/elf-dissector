@@ -206,13 +206,15 @@ void ElfFile::parseSections()
         m_sectionHeaders.push_back(shdr);
     }
 
-    // pass 2: create sections
+    // pass 2: create sections, if any
     // make sure the string table section needed for section names is created first
-    parseSection(m_header->stringTableSectionHeader());
-    for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
-        if (i == m_header->stringTableSectionHeader())
-            continue;
-        parseSection(i);
+    if (m_header->sectionHeaderCount() > 0) {
+        parseSection(m_header->stringTableSectionHeader());
+        for (int i = 0; i < m_header->sectionHeaderCount(); ++i) {
+            if (i == m_header->stringTableSectionHeader())
+                continue;
+            parseSection(i);
+        }
     }
 
     // pass 3: set section links
