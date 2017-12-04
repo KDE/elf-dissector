@@ -57,6 +57,20 @@ if(OPCODES_FOUND AND NOT TARGET Binutils::Opcodes)
     )
 endif()
 
+
+set(CMAKE_REQUIRED_LIBRARIES ${Opcodes_LIBRARY})
+check_c_source_compiles("
+    #include <dis-asm.h>
+    int main(int argc, char **argv) {
+        disassembler_ftype ftype = print_insn_i386;
+        return 0;
+     }"
+     Binutils_HAVE_PRINT_INSN_I386
+)
+if(NOT Binutils_HAVE_PRINT_INSN_I386)
+  set(Binutils_VERSION_MINOR 29)
+endif()
+
 mark_as_advanced(Opcodes_LIBRARY Opcodes_INCLUDE_DIR)
 
 

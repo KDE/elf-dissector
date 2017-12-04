@@ -16,6 +16,7 @@
 */
 
 #include "disassembler.h"
+#include "config-elf-dissector.h"
 
 #include <elf/elfsymboltableentry.h>
 #include <elf/elfsymboltablesection.h>
@@ -41,6 +42,12 @@
 #include <dis-asm.h>
 #include <elf.h>
 #include <stdio.h>
+
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 29)
+    // in binutils 2.29 print_insn_i386 disappeared from the dis-asm.h header,
+    // not sure what the proper replacement for it is, so define it here
+    extern "C" int print_insn_i386 (bfd_vma, disassemble_info *);
+#endif
 
 static int qstring_printf(void *data, const char *format, ...)
 {
