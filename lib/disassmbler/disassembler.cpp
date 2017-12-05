@@ -72,13 +72,15 @@ static void print_address(bfd_vma addr, struct disassemble_info *info)
     (*info->fprintf_func) (info->stream, "0x%lx", addr);
 
     const uint64_t targetAddr = disasm->baseAddress() + addr;
-    const auto target = disasm->file()->symbolTable()->entryWithValue(targetAddr);
-    if (target) {
-        auto s = static_cast<QString*>(info->stream);
-        s->append(" (");
-        s->append(disasm->printSymbol(target));
-        s->append(')');
-        return;
+    if (auto symbolTable = disasm->file()->symbolTable()) {
+        const auto target = symbolTable->entryWithValue(targetAddr);
+        if (target) {
+            auto s = static_cast<QString*>(info->stream);
+            s->append(" (");
+            s->append(disasm->printSymbol(target));
+            s->append(')');
+            return;
+        }
     }
 
     const auto secIdx = disasm->file()->indexOfSectionWithVirtualAddress(targetAddr);

@@ -111,7 +111,7 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             s += QStringLiteral("OS ABI: ") + ElfPrinter::osAbi(file->osAbi()) + "<br/>";
             s += "Flags: " + QString::number(file->header()->flags()) + "<br/>";
             s += QStringLiteral("Entry point: 0x") + QString::number(file->header()->entryPoint(), 16);
-            if (file->header()->entryPoint()) {
+            if (file->header()->entryPoint() && file->symbolTable()) {
                 const auto entry = file->symbolTable()->entryWithValue(file->header()->entryPoint());
                 if (entry)
                     s += " (" + printSymbolName(entry) + ')';
