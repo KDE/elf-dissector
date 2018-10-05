@@ -296,7 +296,7 @@ void ElfFile::parseSection(uint16_t index)
                 section = new ElfGnuDebugLinkSection(this, shdr);
                 break;
             }
-            // else: fallthrough
+            // fall-through
         default:
             section = new ElfSection(this, shdr);
             break;
