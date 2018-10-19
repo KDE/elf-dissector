@@ -501,6 +501,17 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
+        case DEMANGLE_COMPONENT_TAGGED_NAME:
+        {
+            QVector<QByteArray> args;
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            handleNameComponent(component->u.s_binary.right, args);
+            const auto n = nameParts.takeLast();
+            nameParts.push_back(n + "[abi:" + args.last() + ']');
+            break;
+        }
+#endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_CLONE:
         {

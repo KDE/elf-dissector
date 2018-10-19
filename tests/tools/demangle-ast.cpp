@@ -408,7 +408,9 @@ static int handleNameComponent(demangle_component* component)
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
         case DEMANGLE_COMPONENT_TAGGED_NAME:
             writeNode("TAGGED_NAME");
-            // content??
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
             break;
 #endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)

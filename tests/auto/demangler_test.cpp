@@ -98,6 +98,8 @@ private slots:
         QTest::newRow("nested types") << "_ZN7QVectorIPZN10MainWindow8loadFileERK7QStringE10SymbolNodeE4dataEv" << (VB << "QVector" << "QVector<MainWindow::loadFile(QString const&)::SymbolNode*>" << "data()");
 
         QTest::newRow("default argument") << "_ZZN8KDevelop18SourceFileTemplate22setTemplateDescriptionERK7QStringS3_Ed_NKUlvE_clEv" << (VB << "KDevelop" << "SourceFileTemplate" << "setTemplateDescription(QString const&, QString const&)" << "{default arg#1}" << "{lambda()#1}" << "operator()() const");
+
+        QTest::newRow("abi tag") << "_ZNK5ZXing6Result4textB5cxx11Ev" << (VB << "ZXing" << "Result" << "text[abi:cxx11]() const");
     }
 
     void testDemangler()
