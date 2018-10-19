@@ -411,6 +411,11 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
+#endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 27)
+        case DEMANGLE_COMPONENT_TRANSACTION_SAFE:
+            writeNode("TRANSACTION_SAFE");
+            // ??
             break;
 #endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
@@ -418,6 +423,16 @@ static int handleNameComponent(demangle_component* component)
             writeNode("COMPONENT_CLONE");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+#endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
+        case DEMANGLE_COMPONENT_NOEXCEPT:
+            writeNode("NOEXCEPT");
+            // ??
+            break;
+        case DEMANGLE_COMPONENT_THROW_SPEC:
+            writeNode("THROW_SPEC");
+            // ??
             break;
 #endif
     }
