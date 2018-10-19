@@ -56,6 +56,7 @@ private:
     void handleOptionalNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
     void handleOperatorComponent(demangle_component *component, QVector<QByteArray> &nameParts);
 
+    const char *m_mangledName = nullptr;
     int m_templateParamIndex = 0;
     QHash<int, QByteArray> m_templateParams;
     QByteArray m_modifiers;

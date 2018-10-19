@@ -31,6 +31,8 @@
 
 QVector<QByteArray> Demangler::demangle(const char* name)
 {
+    QScopedValueRollback<const char*> mangledName(m_mangledName, name);
+
     void *memory = nullptr;
     demangle_component *component = cplus_demangle_v3_components(name, DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, &memory);
 
@@ -505,7 +507,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
 #endif
         default:
-            qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type;
+            qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type << m_mangledName;
     }
 }
 
