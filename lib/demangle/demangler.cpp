@@ -415,6 +415,12 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.last().prepend("operator ");
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 26)
+        case DEMANGLE_COMPONENT_CONVERSION:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().prepend("operator ");
+            break;
+#endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_NULLARY:
             handleNameComponent(component->u.s_binary.left, nameParts);

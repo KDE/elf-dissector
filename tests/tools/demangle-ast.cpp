@@ -297,6 +297,12 @@ static int handleNameComponent(demangle_component* component)
             writeNode("CAST");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 26)
+        case DEMANGLE_COMPONENT_CONVERSION:
+            writeNode("CONVERSION");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            break;
+#endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_NULLARY:
             writeNode("NULLARY");
