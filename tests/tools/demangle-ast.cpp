@@ -241,7 +241,7 @@ static int handleNameComponent(demangle_component* component)
             break;
         case DEMANGLE_COMPONENT_VENDOR_TYPE:
             writeNode("VENDOR_TYPE");
-            // TODO name
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
         case DEMANGLE_COMPONENT_FUNCTION_TYPE:
             writeNode("FUNCTION_TYPE");
