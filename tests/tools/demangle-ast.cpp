@@ -397,7 +397,7 @@ static int handleNameComponent(demangle_component* component)
             break;
         case DEMANGLE_COMPONENT_NONTRANSACTION_CLONE:
             writeNode("NONTRANSACTION_CLONE");
-            // WTF?
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
 #endif
         case DEMANGLE_COMPONENT_PACK_EXPANSION:

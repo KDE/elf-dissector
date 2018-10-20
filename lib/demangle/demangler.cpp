@@ -497,6 +497,16 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_UNNAMED_TYPE:
             nameParts.push_back(QByteArray("{unnamed type#") + QByteArray::number((int)component->u.s_number.number + 1) + '}');
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
+        case DEMANGLE_COMPONENT_TRANSACTION_CLONE:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().prepend("transaction clone for ");
+            break;
+        case DEMANGLE_COMPONENT_NONTRANSACTION_CLONE:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().prepend("non-transaction clone for ");
+            break;
+#endif
         case DEMANGLE_COMPONENT_PACK_EXPANSION:
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
