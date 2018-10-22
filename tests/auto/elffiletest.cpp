@@ -66,15 +66,16 @@ private slots:
         QVERIFY(f.symbolTable());
         QVERIFY(f.symbolTable()->size() > 0);
 
-        QVERIFY(f.indexOfSection(".plt") > 0);
-        auto pltSection = f.section<ElfPltSection>(f.indexOfSection(".plt"));
-        QVERIFY(pltSection);
-        QVERIFY(pltSection->header()->entryCount() > 0);
-        QVERIFY(pltSection->gotSection());
-        for (uint i = 1; i < pltSection->header()->entryCount(); ++i) {
-            auto pltEntry = pltSection->entry(i);
-            QVERIFY(pltEntry);
-            QVERIFY(pltEntry->gotEntry());
+        if (f.indexOfSection(".plt") > 0) {
+            auto pltSection = f.section<ElfPltSection>(f.indexOfSection(".plt"));
+            QVERIFY(pltSection);
+            QVERIFY(pltSection->header()->entryCount() > 0);
+            QVERIFY(pltSection->gotSection());
+            for (uint i = 1; i < pltSection->header()->entryCount(); ++i) {
+                auto pltEntry = pltSection->entry(i);
+                QVERIFY(pltEntry);
+                QVERIFY(pltEntry->gotEntry());
+            }
         }
 
         QVERIFY(f.reverseRelocator());
