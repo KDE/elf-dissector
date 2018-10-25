@@ -107,7 +107,7 @@ private slots:
                 continue;
 
             const auto lookupDie = f.dwarfInfo()->addressRanges()->dieForAddress(lowPC);
-            QCOMPARE(die, lookupDie);
+            QVERIFY(die == lookupDie || lowPC == lookupDie->attribute(DW_AT_low_pc).toULongLong());
         }
     }
 };
