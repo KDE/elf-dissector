@@ -19,6 +19,7 @@
 
 #include <QByteArray>
 #include <QVector>
+#include <QList>
 
 #include <elf.h>
 
