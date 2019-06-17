@@ -405,6 +405,22 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
         }
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 32)
+        case DEMANGLE_COMPONENT_TPARM_OBJ:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().prepend(QByteArray("template parameter object for "));
+            break;
+#endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
+        case DEMANGLE_COMPONENT_INITIALIZER_LIST:
+	{
+            QVector<QByteArray> parts;
+	    handleNameComponent(component->u.s_binary.left, parts);
+            handleNameComponent(component->u.s_binary.right, parts);
+	    nameParts.push_back(parts.at(0) + "{" + parts.at(1) + "}");
+	    break;
+	}
+#endif
         case DEMANGLE_COMPONENT_OPERATOR:
             nameParts.push_back(QByteArray("operator") + QByteArray(component->u.s_operator.op->name, component->u.s_operator.op->len));
             break;

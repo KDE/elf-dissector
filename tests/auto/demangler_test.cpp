@@ -102,6 +102,9 @@ private slots:
         QTest::newRow("abi tag") << "_ZNK5ZXing6Result4textB5cxx11Ev" << (VB << "ZXing" << "Result" << "text[abi:cxx11]() const");
 
         QTest::newRow("transaction clone") << "_ZGTtNSt11logic_errorC1EPKc.cold.14" << (VB << "std" << "logic_error" << "transaction clone for logic_error(char const*) [clone .cold.14]");
+
+	QTest::newRow("initializer list") << "_Z1fP1BIXtl1ALi1EEEE" << (VB << "f(B<A{1}>*)");
+	QTest::newRow("template parameter object") << "_ZTAXtl1ALi1EEE" << (VB << "template parameter object for A{1}");
     }
 
     void testDemangler()

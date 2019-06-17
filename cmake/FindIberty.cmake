@@ -73,6 +73,16 @@ endif()
 
 mark_as_advanced(Opcodes_LIBRARY Opcodes_INCLUDE_DIR)
 
+check_c_source_compiles("
+    #include <demangle.h>
+    int main(int argc, char **argv) {
+        return DEMANGLE_COMPONENT_TPARM_OBJ;
+    }"
+    Binutils_HAVE_DEMANGLE_COMPONENT_TPARM_OBJ
+)
+if(Binutils_HAVE_DEMANGLE_COMPONENT_TPARM_OBJ)
+  set(Binutils_VERSION_MINOR 32)
+endif()
 
 include(FeatureSummary)
 set_package_properties(binutils-devel PROPERTIES URL http://www.gcc.org/

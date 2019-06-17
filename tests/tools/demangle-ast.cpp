@@ -277,6 +277,12 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 32)
+        case DEMANGLE_COMPONENT_TPARM_OBJ:
+            writeNode("TPARM_OBJ");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+	    break;
+#endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_INITIALIZER_LIST:
             writeNode("INITIALIZER_LIST");
