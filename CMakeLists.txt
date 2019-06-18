@@ -45,7 +45,7 @@ if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME STREQUAL GNU)
 endif()
 
 # dependencies
-find_package(Qt5 5.4 COMPONENTS Widgets Test NO_MODULE REQUIRED)
+find_package(Qt5 5.11 COMPONENTS Widgets Test NO_MODULE REQUIRED)
 find_package(KF5ItemModels NO_MODULE REQUIRED)
 
 find_package(Iberty REQUIRED)

@@ -18,9 +18,8 @@
 #include <elf/elffileset.h>
 #include <ui/dependencymodel/dependencymodel.h>
 
-#include <3rdparty/qt/modeltest.h>
-
 #include <QtTest/qtest.h>
+#include <QAbstractItemModelTester>
 #include <QObject>
 
 class DependencyModelTest : public QObject
@@ -42,7 +41,7 @@ private slots:
         QVERIFY(s.size() > 1);
 
         DependencyModel model;
-        ModelTest modelTest(&model);
+        QAbstractItemModelTester modelTest(&model);
 
         model.setFileSet(&s);
 

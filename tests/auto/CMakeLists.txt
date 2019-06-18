@@ -37,14 +37,14 @@ add_executable(dwarfdietest dwarfdietest.cpp)
 target_link_libraries(dwarfdietest Qt5::Test Dwarf::Dwarf libelfdissector)
 add_test(NAME dwarfdietest COMMAND dwarfdietest)
 
-add_executable(elfmodeltest elfmodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
+add_executable(elfmodeltest elfmodeltest.cpp)
 target_link_libraries(elfmodeltest Qt5::Test libelfdissectorui)
 add_test(NAME elfmodeltest COMMAND elfmodeltest)
 
-add_executable(dependencymodeltest dependencymodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
+add_executable(dependencymodeltest dependencymodeltest.cpp)
 target_link_libraries(dependencymodeltest Qt5::Test libelfdissectorui)
 add_test(NAME dependencymodeltest COMMAND dependencymodeltest)
 
-add_executable(typemodeltest typemodeltest.cpp ${CMAKE_SOURCE_DIR}/3rdparty/qt/modeltest.cpp)
+add_executable(typemodeltest typemodeltest.cpp)
 target_link_libraries(typemodeltest Qt5::Test libelfdissectorui)
 add_test(NAME typemodeltest COMMAND typemodeltest)

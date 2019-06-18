@@ -18,9 +18,8 @@
 #include <elf/elffileset.h>
 #include <ui/typemodel/typemodel.h>
 
-#include <3rdparty/qt/modeltest.h>
-
 #include <QtTest/qtest.h>
+#include <QAbstractItemModelTester>
 #include <QObject>
 
 class TypeModelTest : public QObject
@@ -42,7 +41,7 @@ private slots:
         QVERIFY(s.size() > 1);
 
         TypeModel model;
-        ModelTest modelTest(&model);
+        QAbstractItemModelTester modelTest(&model);
 
         model.setFileSet(&s);
 

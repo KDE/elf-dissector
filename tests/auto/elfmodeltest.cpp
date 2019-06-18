@@ -19,9 +19,8 @@
 #include <elf/elfsymboltablesection.h>
 #include <ui/elfmodel/elfmodel.h>
 
-#include <3rdparty/qt/modeltest.h>
-
 #include <QtTest/qtest.h>
+#include <QAbstractItemModelTester>
 #include <QObject>
 
 #include <elf.h>
@@ -37,7 +36,7 @@ private slots:
         QVERIFY(s.size() > 1);
 
         ElfModel model;
-        ModelTest modelTest(&model);
+        QAbstractItemModelTester modelTest(&model);
 
         model.setFileSet(&s);
 
