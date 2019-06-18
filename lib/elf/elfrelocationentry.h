@@ -44,6 +44,11 @@ public:
     /** Symbol table entry referenced from this relocation, can be @c nullptr. */
     ElfSymbolTableEntry* symbol() const;
 
+    /** Returns the address the relocation actually points too in the end.
+     *  How this is computed depends on the type of relocation and the platform.
+     */
+    uint64_t relocationTarget() const;
+
 private:
     template <typename T> const T* entry() const;
     bool is64() const;

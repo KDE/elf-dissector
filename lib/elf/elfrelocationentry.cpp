@@ -129,3 +129,20 @@ ElfSymbolTableEntry* ElfRelocationEntry::symbol() const
         return m_section->linkedSection<ElfSymbolTableSection>()->entry(symIdx);
     return nullptr;
 }
+
+uint64_t ElfRelocationEntry::relocationTarget() const
+{
+    // ### TODO ### this is utterly incomplete and largely incorrect!!
+    // this would need to implement the platform-specific relocation logic for all types
+    // the below approximation just barely covers the current uses of this function
+
+    if (symbolIndex() && addend()) {
+        Q_ASSERT_X(false, "", "not yet implemented!");
+        return 0;
+    }
+
+    if (symbolIndex()) {
+        return symbol()->value();
+    }
+    return addend();
+}

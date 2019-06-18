@@ -200,9 +200,19 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                     uint64_t value = 0;
                     memcpy(&value, section->rawData() + i * addrSize, addrSize);
                     s += QString::number(i) + ": 0x" + QString::number(value, 16);
-                    const auto ref = section->file()->symbolTable()->entryWithValue(value);
-                    if (ref)
-                        s += QLatin1Char(' ') + printSymbolName(ref);
+                    if (value) {
+                        const auto ref = section->file()->symbolTable()->entryWithValue(value);
+                        if (ref)
+                            s += QLatin1Char(' ') + printSymbolName(ref);
+                    } else { // check for relocation
+                        const auto relocEntry = section->file()->reverseRelocator()->find(section->header()->virtualAddress() + i * addrSize);
+                        if (relocEntry) {
+                            const auto sym = section->file()->symbolTable()->entryContainingValue(relocEntry->relocationTarget());
+                            if (sym)
+                                s += " relocated to: " + printSymbolName(sym);
+                        }
+                    }
+
                     s += QLatin1String("<br/>");
                 }
             }
