@@ -33,6 +33,7 @@
 
 #include <QDebug>
 #include <QString>
+#include <QUrl>
 
 #include <cassert>
 #include <cstdarg>
@@ -348,7 +349,7 @@ QString Disassembler::printPltEntry(ElfPltEntry* entry) const
     return entry->section()->header()->name() + QStringLiteral(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
 }
 
-DwarfLine Disassembler::lineForAddress(uint64_t addr)
+DwarfLine Disassembler::lineForAddress(uint64_t addr) const
 {
     if (!file()->dwarfInfo())
         return {};
@@ -359,14 +360,19 @@ DwarfLine Disassembler::lineForAddress(uint64_t addr)
     return cu->lineForAddress(addr);
 }
 
-QString Disassembler::printSourceLine(DwarfLine line)
+QString Disassembler::printSourceLine(DwarfLine line) const
 {
     assert(!line.isNull());
     auto cu = file()->dwarfInfo()->compilationUnitForAddress(line.address());
     assert(cu);
 
+    QUrl url;
+    url.setScheme(QStringLiteral("code"));
+    url.setPath(cu->sourceFileForLine(line));
+    url.setFragment(QString::number(line.line()));
+
     QString s;
-    s += "<i>Source: " + cu->sourceFileForLine(line);
-    s += ':' + QString::number(line.line()) + "</i>";
+    s += "<i>Source: <a href=\"" + url.toEncoded() + "\">" + cu->sourceFileForLine(line);
+    s += ':' + QString::number(line.line()) + "</a></i>";
     return s;
 }

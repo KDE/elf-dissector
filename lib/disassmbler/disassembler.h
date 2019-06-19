@@ -60,8 +60,8 @@ private:
     QString disassembleBinutils(const unsigned char* data, uint64_t size);
     QString disassembleCapstone(const unsigned char* data, uint64_t size);
 
-    DwarfLine lineForAddress(uint64_t addr);
-    QString printSourceLine(DwarfLine line);
+    DwarfLine lineForAddress(uint64_t addr) const;
+    QString printSourceLine(DwarfLine line) const;
 
     ElfFile *m_file = nullptr;
     uint64_t m_baseAddress = 0;
