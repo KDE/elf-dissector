@@ -62,6 +62,9 @@ set(libelfdisector_srcs
 )
 
 add_library(libelfdissector STATIC ${libelfdisector_srcs})
-target_link_libraries(libelfdissector LINK_PUBLIC Qt5::Core LINK_PRIVATE Binutils::Iberty Binutils::Opcodes Dwarf::Dwarf)
+target_link_libraries(libelfdissector PUBLIC Qt5::Core PRIVATE Binutils::Iberty Binutils::Opcodes Dwarf::Dwarf)
+if (Capstone_FOUND)
+    target_link_libraries(libelfdissector PRIVATE PkgConfig::Capstone)
+endif()
 
 add_subdirectory(checks)

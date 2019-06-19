@@ -46,6 +46,7 @@ public:
     // internal
     ElfFile* file() const;
     uint64_t baseAddress() const;
+    void printAddress(uint64_t addr, QString *s) const;
 
     /** Pretty-print symbol name, override for adding navigation links etc. */
     virtual QString printSymbol(ElfSymbolTableEntry *entry) const;
@@ -56,6 +57,8 @@ public:
 
 private:
     QString disassemble(const unsigned char* data, uint64_t size);
+    QString disassembleBinutils(const unsigned char* data, uint64_t size);
+    QString disassembleCapstone(const unsigned char* data, uint64_t size);
 
     DwarfLine lineForAddress(uint64_t addr);
     QString printSourceLine(DwarfLine line);

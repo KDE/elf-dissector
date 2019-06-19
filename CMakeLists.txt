@@ -53,6 +53,10 @@ find_package(Dwarf REQUIRED)
 if (NOT OPCODES_FOUND)
     message(FATAL_ERROR "Binutils::Opcodes library not found")
 endif()
+find_package(Capstone)
+if (Capstone_FOUND)
+    set(HAVE_CAPSTONE TRUE)
+endif()
 
 # Installation settings
 set(BIN_INSTALL_DIR "bin")

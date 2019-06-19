@@ -49,6 +49,10 @@
     extern "C" int print_insn_i386 (bfd_vma, disassemble_info *);
 #endif
 
+#ifdef HAVE_CAPSTONE
+#include <capstone.h>
+#endif
+
 static int qstring_printf(void *data, const char *format, ...)
 {
     QString buffer;
@@ -70,49 +74,10 @@ static void print_address(bfd_vma addr, struct disassemble_info *info)
     // TODO handle relocations/PLT/etc
 
     (*info->fprintf_func) (info->stream, "0x%lx", addr);
+    auto s = static_cast<QString*>(info->stream);
 
     const uint64_t targetAddr = disasm->baseAddress() + addr;
-    if (auto symbolTable = disasm->file()->symbolTable()) {
-        const auto target = symbolTable->entryWithValue(targetAddr);
-        if (target) {
-            auto s = static_cast<QString*>(info->stream);
-            s->append(" (");
-            s->append(disasm->printSymbol(target));
-            s->append(')');
-            return;
-        }
-    }
-
-    const auto secIdx = disasm->file()->indexOfSectionWithVirtualAddress(targetAddr);
-    if (secIdx < 0)
-        return;
-
-    const auto section = disasm->file()->section<ElfSection>(secIdx);
-    assert(section);
-
-    const auto pltSection = dynamic_cast<ElfPltSection*>(section);
-    if (pltSection) {
-        const auto pltEntry = pltSection->entry((targetAddr - section->header()->virtualAddress()) / section->header()->entrySize());
-        assert(pltEntry);
-        auto s = static_cast<QString*>(info->stream);
-        s->append(" (");
-        s->append(disasm->printPltEntry(pltEntry));
-        s->append(')');
-        return;
-    }
-
-    const auto gotSection = dynamic_cast<ElfGotSection*>(section);
-    if (gotSection) {
-        const auto gotEntry = gotSection->entry((targetAddr - section->header()->virtualAddress()) / disasm->file()->addressSize());
-        assert(gotEntry);
-        auto s = static_cast<QString*>(info->stream);
-        s->append(" (");
-        s->append(disasm->printGotEntry(gotEntry));
-        s->append(')');
-        return;
-    }
-
-    (*info->fprintf_func) (info->stream, " (%s + 0x%lx)", section->header()->name(), targetAddr - section->header()->virtualAddress());
+    disasm->printAddress(targetAddr, s);
 }
 
 Disassembler::Disassembler() = default;
@@ -142,6 +107,17 @@ QString Disassembler::disassemble(ElfPltEntry* entry)
 }
 
 QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
+{
+#if defined(__x86_64__) || defined(__i386__)
+    if (file()->header()->machine() == EM_386 || file()->header()->machine() == EM_X86_64) {
+        return disassembleBinutils(data, size);
+    }
+#endif
+
+    return disassembleCapstone(data, size);
+}
+
+QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t size)
 {
     QString result;
     disassembler_ftype disassemble_fn;
@@ -197,6 +173,102 @@ QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
     return result;
 }
 
+#ifdef HAVE_CAPSTONE
+static bool isInsnGroup(cs_insn *insn, uint8_t group)
+{
+    for (uint8_t i = 0; i < insn->detail->groups_count; ++i) {
+        if (insn->detail->groups[i] == group)
+            return true;
+    }
+    return false;
+}
+#endif
+
+QString Disassembler::disassembleCapstone(const unsigned char* data, uint64_t size)
+{
+#ifdef HAVE_CAPSTONE
+    csh handle;
+    cs_err err;
+    switch (file()->header()->machine()) {
+        case EM_386:
+            err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
+            break;
+        case EM_X86_64:
+            err = cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
+            break;
+        case EM_ARM:
+            err = cs_open(CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, &handle);
+            break;
+        case EM_AARCH64:
+            err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
+            break;
+        default:
+            qWarning() << "Unsupported architecture!";
+            return {};
+    }
+    if (err != CS_ERR_OK) {
+        qWarning() << "Error opening Capstone handle:" << err;
+        return {};
+    }
+    std::unique_ptr<csh, decltype(&cs_close)> handleGuard(&handle, &cs_close);
+    cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
+    cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+    cs_insn *insn = cs_malloc(handle);
+    const auto insnFree = [](cs_insn *insn) { cs_free(insn, 1); };
+    std::unique_ptr<cs_insn, decltype(insnFree)> insnGuard(insn, insnFree);
+
+    auto address = baseAddress();
+    QString result;
+
+    while (size > 0) {
+        if (!cs_disasm_iter(handle, &data, &size, &address, insn)) {
+            return result;
+        }
+
+        const auto line = lineForAddress(insn->address);
+        if (!line.isNull())
+            result += printSourceLine(line) + "<br/>";
+
+        result += QString::number(insn->address - baseAddress()) + ": " + insn->mnemonic + " " + insn->op_str;
+        switch (file()->header()->machine()) {
+            case EM_386:
+            case EM_X86_64:
+                for (int i = 0; i < insn->detail->x86.op_count; ++i) {
+                    const auto op = insn->detail->x86.operands[i];
+                    if (op.type == X86_OP_MEM) {
+                        result += QLatin1String(" # 0x") + QString::number(op.mem.disp + address, 16);
+                        printAddress(op.mem.disp + address, &result);
+                    } else if (op.type == X86_OP_IMM) {
+                        result += QLatin1String(" # 0x") + QString::number(op.imm, 16);
+                        printAddress(op.imm, &result);
+                    }
+                }
+                break;
+            case EM_AARCH64:
+                for (int i = 0; i < insn->detail->arm64.op_count; ++i) {
+                    const auto op = insn->detail->arm64.operands[i];
+                    if (op.type == ARM64_OP_MEM && (isInsnGroup(insn, CS_GRP_CALL) || isInsnGroup(insn, CS_GRP_JUMP))) {
+                        result += QLatin1String(" # 0x") + QString::number(op.mem.disp + address, 16);
+                        printAddress(op.mem.disp + address, &result);
+                    } else if (op.type == ARM64_OP_IMM && (isInsnGroup(insn, CS_GRP_CALL) || isInsnGroup(insn, CS_GRP_JUMP) || insn->id == ARM64_INS_ADRP)) {
+                        result += QLatin1String(" # 0x") + QString::number(op.imm, 16);
+                        printAddress(op.imm, &result);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        result += "<br/>";
+    }
+
+    return result;
+#else
+    return {};
+#endif
+}
+
 ElfFile* Disassembler::file() const
 {
     return m_file;
@@ -205,6 +277,51 @@ ElfFile* Disassembler::file() const
 uint64_t Disassembler::baseAddress() const
 {
     return m_baseAddress;
+}
+
+void Disassembler::printAddress(uint64_t addr, QString *s) const
+{
+    if (auto symbolTable = file()->symbolTable()) {
+        const auto target = symbolTable->entryContainingValue(addr);
+        if (target) {
+            s->append(" (");
+            s->append(printSymbol(target));
+            if (target->value() < addr) {
+                s->append(QLatin1String("+0x") + QString::number(addr - target->value(), 16));
+            }
+            s->append(')');
+            return;
+        }
+    }
+
+    const auto secIdx = file()->indexOfSectionWithVirtualAddress(addr);
+    if (secIdx < 0)
+        return;
+
+    const auto section = file()->section<ElfSection>(secIdx);
+    assert(section);
+
+    const auto pltSection = dynamic_cast<ElfPltSection*>(section);
+    if (pltSection) {
+        const auto pltEntry = pltSection->entry((addr - section->header()->virtualAddress()) / section->header()->entrySize());
+        assert(pltEntry);
+        s->append(" (");
+        s->append(printPltEntry(pltEntry));
+        s->append(')');
+        return;
+    }
+
+    const auto gotSection = dynamic_cast<ElfGotSection*>(section);
+    if (gotSection) {
+        const auto gotEntry = gotSection->entry((addr - section->header()->virtualAddress()) / file()->addressSize());
+        assert(gotEntry);
+        s->append(" (");
+        s->append(printGotEntry(gotEntry));
+        s->append(')');
+        return;
+    }
+
+    s->append(QLatin1String(" (") + section->header()->name() + QLatin1String(" + 0x") + QString::number(addr - section->header()->virtualAddress(), 16) + QLatin1Char(')'));
 }
 
 QString Disassembler::printSymbol(ElfSymbolTableEntry* entry) const
