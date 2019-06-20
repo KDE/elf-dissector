@@ -650,10 +650,22 @@ QVariant DataVisitor::doVisit(ElfPltEntry* entry, int role) const
             return QVariant::fromValue<quint64>(entry->size());
         case ElfModel::DetailRole:
         {
-            QString s(QStringLiteral("Code:<br/><tt>"));
+            QString s(QStringLiteral("<b>PLT Entry</b><br/>Virtual address: 0x"));
+            s += QString::number(entry->section()->header()->virtualAddress() + entry->index() * entry->size(), 16);
+            s += QLatin1String("<br/>Code:<br/><tt>");
             NavigatingDisassembler da(this);
             s += da.disassemble(entry);
-            s += QLatin1String("</tt>");
+            s += QLatin1String("</tt><br/>");
+
+            const auto got = entry->gotEntry();
+            if (got) {
+                // TODO add navigation link
+                s += QLatin1String("<b>Corresponding GOT entry</b><br/>");
+                s += "Address: 0x" + QString::number(got->address(), 16) + "<br/><br/>";
+                const auto reloc = got->relocation();
+                s += printRelocation(reloc);
+            }
+
             return s;
         }
     }
@@ -755,10 +767,12 @@ QString DataVisitor::printRelocation(ElfRelocationEntry* entry) const
     s += QLatin1String("<br/>");
     s += "Type: " + RelocationPrinter::description(entry) + " (" + RelocationPrinter::label(entry) + ")<br/>";
     const auto sourceSym = entry->symbol();
-    if (sourceSym)
+    if (sourceSym) {
         s += QStringLiteral("Symbol: ") + printSymbolName(sourceSym) + "<br/>";
-    else
+        s += QStringLiteral("Demangled symbol: ") + QString(Demangler::demangleFull(sourceSym->name())).toHtmlEscaped() + "<br/>";
+    } else {
         s += QStringLiteral("Symbol: &lt;none&gt;<br/>");
+    }
     s += "Addend: 0x" + QString::number(entry->addend(), 16);
     return s;
 }
