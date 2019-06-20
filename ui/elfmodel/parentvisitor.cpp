@@ -89,15 +89,7 @@ ParentVisitor::type ParentVisitor::doVisit(ElfPltEntry* entry, int) const
 
 ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) const
 {
-    int row = -1;
-    for (uint i = 0; i < symbol->symbolTable()->header()->entryCount(); ++i) {
-        if (symbol->symbolTable()->entry(i) == symbol) {
-            row = i;
-            break;
-        }
-    }
-    assert(row >= 0);
-    return makeParent(const_cast<ElfSymbolTableSection*>(symbol->symbolTable()), ElfNodeVariant::SymbolTableSection, row);
+    return makeParent(const_cast<ElfSymbolTableSection*>(symbol->symbolTable()), ElfNodeVariant::SymbolTableSection, symbol->index());
 }
 
 ParentVisitor::type ParentVisitor::doVisit(DwarfInfo* info, int) const
