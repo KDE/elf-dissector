@@ -84,3 +84,4 @@ Icon=document-edit-decrypt-verify
 Type=Application
 Categories=Development;
 X-KDE-StartupNotify=true
+MimeType=application/x-elf;application/x-executable;application/x-sharedlib;
