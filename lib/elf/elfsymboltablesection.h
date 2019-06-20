@@ -21,7 +21,7 @@
 #include "elfarraysection.h"
 #include "elfsymboltableentry.h"
 
-#include <QVector>
+#include <vector>
 
 /** Represents a symbol table sections (.symtab or .dynsym). */
 class ElfSymbolTableSection : public ElfSection
@@ -40,7 +40,6 @@ public:
     ElfSymbolTableEntry* entry(uint32_t index) const;
 
     /** Finds the first symbol table entry with the given value.
-     *  @note: This does exhaustive search, and thus is expected to be slow.
      *  @return @c 0 if there is no matching entry.
      */
     ElfSymbolTableEntry* entryWithValue(uint64_t value) const;
@@ -49,7 +48,10 @@ public:
     ElfSymbolTableEntry* entryContainingValue(uint64_t value) const;
 
 private:
-    QVector<ElfSymbolTableEntry> m_entries;
+    // entries in order of occurence
+    std::vector<ElfSymbolTableEntry> m_entries;
+    // entry pointers in order of their virtual address, for fast reverse lookup
+    std::vector<ElfSymbolTableEntry*> m_entriesByValue;
 };
 
 #endif // ELFSYMBOLTABLESECTION_H

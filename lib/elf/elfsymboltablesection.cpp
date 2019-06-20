@@ -23,9 +23,22 @@
 ElfSymbolTableSection::ElfSymbolTableSection(ElfFile* file, ElfSectionHeader *shdr): ElfSection(file, shdr)
 {
     m_entries.reserve(header()->entryCount());
-    const auto entryCount = header()->entryCount();
-    for (uint i = 0; i < entryCount; ++i)
+    m_entriesByValue.reserve(header()->entryCount());
+
+    const uint64_t entryCount = header()->entryCount();
+    for (uint64_t i = 0; i < entryCount; ++i) {
         m_entries.push_back(ElfSymbolTableEntry(this, i));
+
+        const auto entry = m_entries.data() + i;
+        if (entry->size() == 0 || entry->value() == 0) {
+            continue;
+        }
+        m_entriesByValue.push_back(entry);
+    }
+
+    std::sort(m_entriesByValue.begin(), m_entriesByValue.end(), [](auto *lhs, auto *rhs) {
+        return lhs->value() < rhs->value();
+    });
 }
 
 ElfSymbolTableSection::~ElfSymbolTableSection() = default;
@@ -38,8 +51,8 @@ ElfSymbolTableEntry* ElfSymbolTableSection::entry(uint32_t index) const
 int ElfSymbolTableSection::exportCount() const
 {
     int count = 0;
-    for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
-        if (it->bindType() == STB_GLOBAL && it->size() > 0)
+    for (const auto &entry : m_entries) {
+        if (entry.bindType() == STB_GLOBAL && entry.size() > 0)
             ++count;
     }
     return count;
@@ -48,8 +61,8 @@ int ElfSymbolTableSection::exportCount() const
 int ElfSymbolTableSection::importCount() const
 {
     int count = 0;
-    for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
-        if (it->bindType() == STB_GLOBAL && it->size() == 0)
+    for (const auto &entry : m_entries) {
+        if (entry.bindType() == STB_GLOBAL && entry.size() == 0)
             ++count;
     }
     return count;
@@ -60,23 +73,36 @@ ElfSymbolTableEntry* ElfSymbolTableSection::entryWithValue(uint64_t value) const
     if (value == 0)
         return nullptr;
 
-    for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
-        if (it->value() == value)
-            return const_cast<ElfSymbolTableEntry*>(static_cast<const ElfSymbolTableEntry*>(it));
+    const auto it = std::lower_bound(m_entriesByValue.begin(), m_entriesByValue.end(), value, [](auto *lhs, uint64_t rhs) {
+        return lhs->value() < rhs;
+    });
+    if (it != m_entriesByValue.end() && (*it)->value() == value) {
+        return (*it);
     }
     return nullptr;
 }
+
 
 ElfSymbolTableEntry* ElfSymbolTableSection::entryContainingValue(uint64_t value) const
 {
     if (value == 0)
         return nullptr;
 
-    for (auto it = m_entries.constBegin(); it != m_entries.constEnd(); ++it) {
-        if (it->value() == 0 || it->size() == 0)
-            continue;
-        if (it->value() <= value && value < it->value() + it->size())
-            return const_cast<ElfSymbolTableEntry*>(static_cast<const ElfSymbolTableEntry*>(it));
+    auto it = std::lower_bound(m_entriesByValue.begin(), m_entriesByValue.end(), value, [](auto *lhs, uint64_t rhs) {
+        return lhs->value() < rhs;
+    });
+    if (it == m_entriesByValue.end()) { --it; }
+
+    while (it != m_entriesByValue.end() && value < (*it)->value() + (*it)->size()) {
+        if ((*it)->value() <= value) {
+            return *it;
+        }
+
+        if (it == m_entriesByValue.begin()) {
+            return nullptr;
+        }
+        --it;
     }
+
     return nullptr;
 }

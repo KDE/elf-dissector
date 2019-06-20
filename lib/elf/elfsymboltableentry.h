@@ -18,8 +18,6 @@
 #ifndef ELFSYMBOLTABLEENTRY_H
 #define ELFSYMBOLTABLEENTRY_H
 
-#include <qglobal.h>
-
 #include <cstdint>
 #include <elf.h>
 
@@ -74,7 +72,5 @@ private:
         Elf64_Sym* sym64;
     } m_symbol;
 };
-
-Q_DECLARE_TYPEINFO(ElfSymbolTableEntry, Q_MOVABLE_TYPE);
 
 #endif // ELFSYMBOLTABLEENTRY_H

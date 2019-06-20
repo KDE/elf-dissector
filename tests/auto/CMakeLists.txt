@@ -13,6 +13,10 @@ add_executable(elffilesettest elffilesettest.cpp)
 target_link_libraries(elffilesettest Qt5::Test libelfdissector)
 add_test(NAME elffilesettest COMMAND elffilesettest)
 
+add_executable(elfsymboltabletest elfsymboltabletest.cpp)
+target_link_libraries(elfsymboltabletest Qt5::Test libelfdissector)
+add_test(NAME elfsymboltabletest COMMAND elfsymboltabletest)
+
 add_executable(elfnotesectiontest elfnotesectiontest.cpp)
 target_link_libraries(elfnotesectiontest Qt5::Test libelfdissector)
 add_test(NAME elfnotesectiontest COMMAND elfnotesectiontest)
