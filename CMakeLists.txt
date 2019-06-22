@@ -1,19 +1,24 @@
 # CMake setup
-cmake_minimum_required(VERSION 3.0.2)
-cmake_policy(SET CMP0048 NEW)
+cmake_minimum_required(VERSION 3.1)
 if(POLICY CMP0063)
   cmake_policy(SET CMP0063 NEW)
 endif()
 project(elf-dissector VERSION 0.0.1)
+
+find_package(ECM 5.38 REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_SOURCE_DIR}/cmake)
+
+#include(KDECompilerSettings NO_POLICY_SCOPE)
+include(ECMSetupVersion)
 include(FeatureSummary)
-set(CMAKE_INCLUDE_CURRENT_DIR on)
-set(CMAKE_AUTOMOC on)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+
 set(CMAKE_AUTOUIC on)
 set(CMAKE_AUTORCC on)
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(CMAKE_CXX_VISIBILITY_PRESET "hidden")
 set(CMAKE_VISIBILITY_INLINES_HIDDEN on)
+set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 14)
 enable_testing()
 
@@ -58,23 +63,6 @@ find_package(Capstone)
 if (Capstone_FOUND)
     set(HAVE_CAPSTONE TRUE)
 endif()
-
-# Installation settings
-set(BIN_INSTALL_DIR "bin")
-set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)")
-set(LIB_INSTALL_DIR "lib${LIB_SUFFIX}")
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${BIN_INSTALL_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${LIB_INSTALL_DIR})
-
-list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}" _isSystemPlatformLibDir)
-list(FIND CMAKE_C_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}" _isSystemCLibDir)
-list(FIND CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}" _isSystemCxxLibDir)
-if(${_isSystemPlatformLibDir} EQUAL -1 AND ${_isSystemCLibDir} EQUAL -1 AND ${_isSystemCxxLibDir} EQUAL -1)
-  set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
-endif()
-
-set(INSTALL_TARGETS_DEFAULT_ARGS RUNTIME DESTINATION ${BIN_INSTALL_DIR} LIBRARY DESTINATION ${LIB_INSTALL_DIR} ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT Devel)
 
 # config files
 configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector.h)

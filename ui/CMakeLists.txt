@@ -48,4 +48,5 @@ add_executable(elf-dissector main.cpp)
 target_link_libraries(elf-dissector libelfdissectorui)
 install(TARGETS elf-dissector ${INSTALL_TARGETS_DEFAULT_ARGS})
 
-install(FILES elf-dissector.desktop DESTINATION share/applications)
+install(PROGRAMS org.kde.elf-dissector.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(FILES org.kde.elf-dissector.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})

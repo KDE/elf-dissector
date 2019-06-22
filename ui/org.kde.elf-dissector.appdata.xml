@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop">
+  <id>org.kde.elf-dissector</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LGPL-2.0+</project_license>
+  <name>ELF Dissector</name>
+  <summary>Static analysis tool for ELF files</summary>
+  <description>
+    <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
+    <ul>
+        <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
+        <li>Identifying load-time performance bottlenecks such as expensive static contructors or excessive relocations.</li>
+        <li>Size profiling of ELF files.</li>
+    </ul>
+    <p>Main features:</p>
+    <ul>
+        <li>ELF structure browser.</li>
+        <li>Tree map visualization of the size of the various parts of an ELF file.</li>
+        <li>Relocation heatmap.</li>
+        <li>Built-in disassmbler for x86 and AArch64.</li>
+        <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
+        <li>Forward and backward dependency viewer.</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">org.kde.elf-dissector.desktop</launchable>
+  <project_group>KDE</project_group>
+  <provides>
+    <binary>elf-dissector</binary>
+  </provides>
+</component>

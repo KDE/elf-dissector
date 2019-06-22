@@ -89,7 +89,7 @@ private slots:
     void testSymbolVersionDefinitions()
     {
         ElfFileSet set;
-        set.addFile(QStringLiteral(LIBDIR "libversioned-symbols.so"));
+        set.addFile(QStringLiteral(BINDIR "libversioned-symbols.so"));
         QVERIFY(set.size() > 1);
 
         auto f = set.file(0);
