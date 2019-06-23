@@ -9,7 +9,7 @@
     <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <ul>
         <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
-        <li>Identifying load-time performance bottlenecks such as expensive static contructors or excessive relocations.</li>
+        <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
         <li>Size profiling of ELF files.</li>
     </ul>
     <p>Main features:</p>
