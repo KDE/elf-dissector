@@ -50,7 +50,7 @@ public:
 
     /** Pretty-print symbol name, override for adding navigation links etc. */
     virtual QString printSymbol(ElfSymbolTableEntry *entry) const;
-    /** ditto, for .got entires. */
+    /** ditto, for .got entries. */
     virtual QString printGotEntry(ElfGotEntry *entry) const;
     /** ditto, for .plt entries. */
     virtual QString printPltEntry(ElfPltEntry *entry) const;

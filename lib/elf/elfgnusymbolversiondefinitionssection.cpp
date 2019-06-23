@@ -52,7 +52,7 @@ ElfGNUSymbolVersionDefinition* ElfGNUSymbolVersionDefinitionsSection::definition
 
 void ElfGNUSymbolVersionDefinitionsSection::parse()
 {
-    // TODO parse until nextOffset() is 0 might be an alternative, removes dependency on dynamicSection() being avaiable here
+    // TODO parse until nextOffset() is 0 might be an alternative, removes dependency on dynamicSection() being available here
     const auto verDefNum = file()->dynamicSection()->entryWithTag(DT_VERDEFNUM);
     if (!verDefNum)
         return;

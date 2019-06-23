@@ -59,7 +59,7 @@ void TypeView::setFileSet(ElfFileSet* fileSet)
         m_model->setFileSet(m_fileSet);
         if (m_model->hasInvalidDies())
             QMessageBox::warning(this, tr("Invalid DWARF entries"),
-                                 tr("An error occured while reading DWARF data of some ELF objects, the tree will be incomplete."));
+                                 tr("An error occurred while reading DWARF data of some ELF objects, the tree will be incomplete."));
     }
 }
 
@@ -71,7 +71,7 @@ void TypeView::showEvent(QShowEvent* event)
             m_model->setFileSet(m_fileSet);
             if (m_model->hasInvalidDies())
                 QMessageBox::warning(this, tr("Invalid DWARF entries"),
-                                     tr("An error occured while reading DWARF data of some ELF objects, the tree will be incomplete."));
+                                     tr("An error occurred while reading DWARF data of some ELF objects, the tree will be incomplete."));
         }
     }
     QWidget::showEvent(event);

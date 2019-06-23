@@ -56,7 +56,7 @@ ElfGNUSymbolVersionRequirementAuxiliaryEntry* ElfGNUSymbolVersionRequirementsSec
 
 void ElfGNUSymbolVersionRequirementsSection::parse()
 {
-    // TODO parse until nextOffset() is 0 might be an alternative, removes dependency on dynamicSection() being avaiable here
+    // TODO parse until nextOffset() is 0 might be an alternative, removes dependency on dynamicSection() being available here
     const auto verNeedNum = file()->dynamicSection()->entryWithTag(DT_VERNEEDNUM);
     if (!verNeedNum)
         return;

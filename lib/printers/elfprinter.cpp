@@ -74,7 +74,7 @@ static const LookupTableEntry<uint32_t> section_type_table[] {
     { SHT_GNU_ATTRIBUTES, "GNU object attributes" },
     { SHT_GNU_HASH, "GNU-style hash table" },
     { SHT_GNU_LIBLIST, "GNU prelink library list" },
-    { SHT_CHECKSUM, "checksum for DSO conent" },
+    { SHT_CHECKSUM, "checksum for DSO content" },
     { SHT_GNU_verdef, "GNU version definition" },
     { SHT_GNU_verneed, "GNU version needs" },
     { SHT_GNU_versym, "GNU version symbol table" }

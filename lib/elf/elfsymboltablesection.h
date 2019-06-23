@@ -33,7 +33,7 @@ public:
     /** Number of exported entries. */
     int exportCount() const;
 
-    /** Number of undefined symbols, ie. symbols needed to be provided from other libraries. */
+    /** Number of undefined symbols, i.e. symbols needed to be provided from other libraries. */
     int importCount() const;
 
     /** Returns the symbol table at @p index. */
@@ -48,7 +48,7 @@ public:
     ElfSymbolTableEntry* entryContainingValue(uint64_t value) const;
 
 private:
-    // entries in order of occurence
+    // entries in order of occurrence
     std::vector<ElfSymbolTableEntry> m_entries;
     // entry pointers in order of their virtual address, for fast reverse lookup
     std::vector<ElfSymbolTableEntry*> m_entriesByValue;

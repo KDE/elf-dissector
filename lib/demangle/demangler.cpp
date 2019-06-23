@@ -37,7 +37,7 @@ QVector<QByteArray> Demangler::demangle(const char* name)
     demangle_component *component = cplus_demangle_v3_components(name, DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, &memory);
 
     QVector<QByteArray> result;
-    if (!memory || !component) { // demange failed, likely not mangled
+    if (!memory || !component) { // demangle failed, likely not mangled
         result.push_back(name);
         return result;
     }

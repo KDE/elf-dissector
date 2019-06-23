@@ -38,7 +38,7 @@ public:
      */
     ElfGNUSymbolVersionRequirement* requirement(uint32_t index) const;
     /** This returns the requirement with version index @p index.
-     *  Ie. @p index is the number referenced in the various version entires.
+     *  Ie. @p index is the number referenced in the various version entries.
      */
     ElfGNUSymbolVersionRequirementAuxiliaryEntry* requirementForVersionIndex(uint16_t index) const;
 

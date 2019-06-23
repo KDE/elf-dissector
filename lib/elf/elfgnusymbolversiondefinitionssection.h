@@ -37,7 +37,7 @@ public:
      */
     ElfGNUSymbolVersionDefinition* definition(uint32_t index) const;
     /** This returns the definition with version index @p index.
-     *  Ie. @p index is the number referenced in the various version entires.
+     *  Ie. @p index is the number referenced in the various version entries.
      */
     ElfGNUSymbolVersionDefinition* definitionForVersionIndex(uint16_t index) const;
 

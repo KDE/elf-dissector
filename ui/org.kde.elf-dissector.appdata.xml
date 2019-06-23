@@ -17,7 +17,7 @@
         <li>ELF structure browser.</li>
         <li>Tree map visualization of the size of the various parts of an ELF file.</li>
         <li>Relocation heatmap.</li>
-        <li>Built-in disassmbler for x86 and AArch64.</li>
+        <li>Built-in disassembler for x86 and AArch64.</li>
         <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
         <li>Forward and backward dependency viewer.</li>
     </ul>

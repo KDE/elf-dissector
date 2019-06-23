@@ -428,7 +428,7 @@ DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
     if (!hasUnknownSize(typeDie))
         return typeDie;
 
-    // deterine the full identifier of the type
+    // determine the full identifier of the type
     QVector<QByteArray> fullId;
     DwarfDie *parentDie = typeDie;
     do {
