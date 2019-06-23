@@ -4,22 +4,57 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LGPL-2.0+</project_license>
   <name>ELF Dissector</name>
+  <name xml:lang="sv">ELF-dissektor</name>
+  <name xml:lang="uk">ELF Dissector</name>
+  <name xml:lang="x-test">xxELF Dissectorxx</name>
   <summary>Static analysis tool for ELF files</summary>
+  <summary xml:lang="sv">Statiskt analysverktyg av ELF-filer</summary>
+  <summary xml:lang="uk">Інструмент статичного аналізу файлів ELF</summary>
+  <summary xml:lang="x-test">xxStatic analysis tool for ELF filesxx</summary>
   <description>
     <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
+    <p xml:lang="sv">ELF-dissektor är användbar om du behöver utföra en eller fler av följande uppgifter:</p>
+    <p xml:lang="uk">ELF Dissector стане у пригоді, коли вам захочеться виконати одне з таких завдань:</p>
+    <p xml:lang="x-test">xxELF Dissector is useful if you need to do one or more of the following tasks:xx</p>
     <ul>
-        <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
-        <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
-        <li>Size profiling of ELF files.</li>
+      <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
+      <li xml:lang="sv">Inspektera framåt- och bakåtberoenden på biblioteks- och symbolnivå.</li>
+      <li xml:lang="uk">Інспектування прямих і зворотних залежностей на рівні бібліотек і символів.</li>
+      <li xml:lang="x-test">xxInspecting forward and backward dependencies, on library and symbol level.xx</li>
+      <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
+      <li xml:lang="uk">Визначення вузьких місць у швидкодії під час завантаження, зокрема вартісних статичних конструкторів або надмірних пересувань даних.</li>
+      <li>Size profiling of ELF files.</li>
+      <li xml:lang="sv">Storleksprofilering av ELF-filer.</li>
+      <li xml:lang="uk">Профілювання за розміром файлів ELF.</li>
+      <li xml:lang="x-test">xxSize profiling of ELF files.xx</li>
     </ul>
     <p>Main features:</p>
+    <p xml:lang="sv">Huvudfunktionalitet:</p>
+    <p xml:lang="uk">Основні можливості:</p>
+    <p xml:lang="x-test">xxMain features:xx</p>
     <ul>
-        <li>ELF structure browser.</li>
-        <li>Tree map visualization of the size of the various parts of an ELF file.</li>
-        <li>Relocation heatmap.</li>
-        <li>Built-in disassembler for x86 and AArch64.</li>
-        <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
-        <li>Forward and backward dependency viewer.</li>
+      <li>ELF structure browser.</li>
+      <li xml:lang="sv">ELF-strukturbläddrare.</li>
+      <li xml:lang="uk">Навігація структурою ELF.</li>
+      <li xml:lang="x-test">xxELF structure browser.xx</li>
+      <li>Tree map visualization of the size of the various parts of an ELF file.</li>
+      <li xml:lang="sv">Visualisering av storleken för de olika delarna av en ELF-file med en trädavbildning.</li>
+      <li xml:lang="uk">Візуалізація у вигляді деревоподібної структури для розмірів різних частин файла ELF.</li>
+      <li xml:lang="x-test">xxTree map visualization of the size of the various parts of an ELF file.xx</li>
+      <li>Relocation heatmap.</li>
+      <li xml:lang="sv">Färgdiagram för relokeringar.</li>
+      <li xml:lang="uk">«Теплова» карта пересувань.</li>
+      <li xml:lang="x-test">xxRelocation heatmap.xx</li>
+      <li>Built-in disassembler for x86 and AArch64.</li>
+      <li xml:lang="uk">Вбудований дизасемблер для x86 та AArch64.</li>
+      <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
+      <li xml:lang="sv">Bläddrare för minneslayout av datatyper extraherad från DWARF avlusningsinformation.</li>
+      <li xml:lang="uk">Навігатор компонуваннями пам'яті для типів даних на основі діагностичних даних DWARF.</li>
+      <li xml:lang="x-test">xxBrowser for data type memory layouts extracted from DWARF debug information.xx</li>
+      <li>Forward and backward dependency viewer.</li>
+      <li xml:lang="sv">Visning av framåt- och bakåtberoenden.</li>
+      <li xml:lang="uk">Прямий і зворотний перегляд залежностей.</li>
+      <li xml:lang="x-test">xxForward and backward dependency viewer.xx</li>
     </ul>
   </description>
   <launchable type="desktop-id">org.kde.elf-dissector.desktop</launchable>
