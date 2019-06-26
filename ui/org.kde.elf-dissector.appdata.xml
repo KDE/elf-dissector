@@ -5,6 +5,7 @@
   <project_license>LGPL-2.0+</project_license>
   <name>ELF Dissector</name>
   <name xml:lang="ca">ELF Dissector</name>
+  <name xml:lang="de">ELF Dissector</name>
   <name xml:lang="nl">ELF-dissector</name>
   <name xml:lang="pt">Análise do ELF</name>
   <name xml:lang="sv">ELF-dissektor</name>
@@ -12,6 +13,7 @@
   <name xml:lang="x-test">xxELF Dissectorxx</name>
   <summary>Static analysis tool for ELF files</summary>
   <summary xml:lang="ca">Eina d'anàlisi estàtica per als fitxers ELF</summary>
+  <summary xml:lang="de">Statische Analyse für ELF-Dateien</summary>
   <summary xml:lang="nl">Statisch analysehulpmiddel voor ELF-bestanden</summary>
   <summary xml:lang="pt">Ferramenta de análise estática de ficheiros ELF</summary>
   <summary xml:lang="sv">Statiskt analysverktyg av ELF-filer</summary>
@@ -50,6 +52,7 @@
     </ul>
     <p>Main features:</p>
     <p xml:lang="ca">Característiques principals:</p>
+    <p xml:lang="de">Kernfunktionen:</p>
     <p xml:lang="nl">Hoofdkenmerken:</p>
     <p xml:lang="pt">Funcionalidades principais:</p>
     <p xml:lang="sv">Huvudfunktionalitet:</p>
@@ -79,6 +82,7 @@
       <li xml:lang="x-test">xxRelocation heatmap.xx</li>
       <li>Built-in disassembler for x86 and AArch64.</li>
       <li xml:lang="ca">Desassemblador incorporat per a x86 i AArch64.</li>
+      <li xml:lang="de">Eingebauter Disassembler für x86 und AArch64.</li>
       <li xml:lang="nl">Ingebouwde disassembler voor x86 en AArch64.</li>
       <li xml:lang="pt">Descodificação para Assembly incorporada para o x86 e o AArch64.</li>
       <li xml:lang="sv">Inbyggd disassembler för x86 och AArch64.</li>
