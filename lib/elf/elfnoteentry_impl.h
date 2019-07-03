@@ -30,34 +30,34 @@ public:
     {
     }
 
-    uint64_t type() const final
+    uint64_t type() const final override
     {
         return m_note->n_type;
     }
 
-    uint64_t size() const final
+    uint64_t size() const final override
     {
         const uint64_t nameszSize = sizeof(((T*)nullptr)->n_namesz);
         return alignTo(nameSize(), nameszSize) + alignTo(descriptionSize(), nameszSize) + sizeof(T);
     }
 
-    const char* name() const final
+    const char* name() const final override
     {
         return reinterpret_cast<const char*>(m_note) + sizeof(T);
     }
 
-    uint64_t descriptionSize() const final
+    uint64_t descriptionSize() const final override
     {
         return m_note->n_descsz;
     }
 
-    const char* descriptionData() const final
+    const char* descriptionData() const final override
     {
         return reinterpret_cast<const char*>(m_note) + sizeof(T) + alignTo(nameSize(), sizeof(((T*)nullptr)->n_namesz));
     }
 
 protected:
-    uint64_t nameSize() const final
+    uint64_t nameSize() const final override
     {
         return m_note->n_namesz;
     }

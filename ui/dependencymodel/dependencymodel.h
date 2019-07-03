@@ -41,12 +41,12 @@ public:
     ElfFileSet* fileSet() const;
     void setFileSet(ElfFileSet *fileSet);
 
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const final;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const final;
-    int rowCount(const QModelIndex& parent = QModelIndex()) const final;
-    QModelIndex parent(const QModelIndex& child) const final;
-    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const final;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const final;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const final override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const final override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const final override;
+    QModelIndex parent(const QModelIndex& child) const final override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const final override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const final override;
 
 private:
     // we use an sequential int for the unique node index, the second have of the QMI internalId is the index of the file

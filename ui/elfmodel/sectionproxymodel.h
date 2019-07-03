@@ -28,7 +28,7 @@ public:
     explicit SectionProxyModel(QObject* parent = nullptr);
     ~SectionProxyModel();
 
-    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const final;
+    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const final override;
 };
 
 #endif // SECTIONPROXYMODEL_H

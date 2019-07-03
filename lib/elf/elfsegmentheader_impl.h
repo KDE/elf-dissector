@@ -32,14 +32,14 @@ public:
 
     ~ElfSegmentHeaderImpl() = default;
 
-    uint32_t type() const final { return m_hdr->p_type; }
-    uint32_t flags() const final { return m_hdr->p_flags; }
-    uint64_t offset() const final { return m_hdr->p_offset; }
-    uint64_t virtualAddress() const final { return m_hdr->p_vaddr; }
-    uint64_t physicalAddress() const final { return m_hdr->p_paddr; }
-    uint64_t fileSize() const final { return m_hdr->p_filesz; }
-    uint64_t memorySize() const final { return m_hdr->p_memsz; }
-    uint64_t alignment() const final { return m_hdr->p_align; }
+    uint32_t type() const final override { return m_hdr->p_type; }
+    uint32_t flags() const final override { return m_hdr->p_flags; }
+    uint64_t offset() const final override { return m_hdr->p_offset; }
+    uint64_t virtualAddress() const final override { return m_hdr->p_vaddr; }
+    uint64_t physicalAddress() const final override { return m_hdr->p_paddr; }
+    uint64_t fileSize() const final override { return m_hdr->p_filesz; }
+    uint64_t memorySize() const final override { return m_hdr->p_memsz; }
+    uint64_t alignment() const final override { return m_hdr->p_align; }
 
 private:
     const T* m_hdr = 0;

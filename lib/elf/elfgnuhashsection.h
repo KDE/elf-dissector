@@ -31,18 +31,18 @@ public:
     explicit ElfGnuHashSection(ElfFile* file, ElfSectionHeader* shdr);
     ~ElfGnuHashSection();
 
-    uint32_t bucketCount() const final;
-    uint32_t chainCount() const final;
+    uint32_t bucketCount() const final override;
+    uint32_t chainCount() const final override;
 
     uint32_t symbolIndex() const;
     uint32_t maskWordsCount() const;
     uint32_t shift2() const;
 
     static uint32_t hash(const char* name);
-    ElfSymbolTableEntry *lookup(const char* name) const final;
+    ElfSymbolTableEntry *lookup(const char* name) const final override;
 
-    QVector<uint32_t> histogram() const final;
-    double averagePrefixLength() const final;
+    QVector<uint32_t> histogram() const final override;
+    double averagePrefixLength() const final override;
 
 private:
     uint32_t bucket(uint32_t index) const;
