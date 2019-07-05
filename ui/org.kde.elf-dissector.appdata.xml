@@ -8,6 +8,7 @@
   <name xml:lang="de">ELF Dissector</name>
   <name xml:lang="nl">ELF-dissector</name>
   <name xml:lang="pt">Análise do ELF</name>
+  <name xml:lang="sk">ELF Dissector</name>
   <name xml:lang="sv">ELF-dissektor</name>
   <name xml:lang="uk">ELF Dissector</name>
   <name xml:lang="x-test">xxELF Dissectorxx</name>
@@ -55,6 +56,7 @@
     <p xml:lang="de">Kernfunktionen:</p>
     <p xml:lang="nl">Hoofdkenmerken:</p>
     <p xml:lang="pt">Funcionalidades principais:</p>
+    <p xml:lang="sk">Hlavné funkcie:</p>
     <p xml:lang="sv">Huvudfunktionalitet:</p>
     <p xml:lang="uk">Основні можливості:</p>
     <p xml:lang="x-test">xxMain features:xx</p>
