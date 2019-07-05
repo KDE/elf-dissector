@@ -30,6 +30,7 @@ public:
     explicit DataVisitor(const ElfModel* model, int column);
 
 protected:
+    using ElfNodeVisitor<QVariant>::doVisit;
     QVariant doVisit(ElfFile* file, int arg) const override;
     QVariant doVisit(ElfSection* section, int arg) const override;
     QVariant doVisit(ElfSymbolTableSection* symtab, int arg) const override;

@@ -56,6 +56,7 @@ public:
 
     ElfNodeVisitor() = default;
     ElfNodeVisitor(const ElfNodeVisitor&) = delete;
+    virtual ~ElfNodeVisitor() = default;
     ElfNodeVisitor& operator=(ElfNodeVisitor&) = delete;
 
     inline T visit(ElfNodeVariant *node, int arg = 0) const

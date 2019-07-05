@@ -30,6 +30,7 @@ public:
     explicit ParentVisitor(const ElfModel* model);
 
 protected:
+    using ElfNodeVisitor<QPair<ElfNodeVariant*, int>>::doVisit;
     type doVisit(ElfFile* file, int) const override;
     type doVisit(ElfSection* section, int) const override;
     type doVisit(ElfGNUSymbolVersionDefinition* verDef, int) const override;

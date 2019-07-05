@@ -26,6 +26,7 @@
 class IndexVisitor : public ElfNodeVisitor<QPair<void*, ElfNodeVariant::Type>>
 {
 public:
+    using ElfNodeVisitor<QPair<void*, ElfNodeVariant::Type>>::doVisit;
     type doVisit(ElfFileSet* fileSet, int row) const override;
     type doVisit(ElfFile* file, int row) const override;
     type doVisit(ElfSymbolTableSection* symtab, int row) const override;
