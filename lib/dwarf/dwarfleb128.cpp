@@ -12,14 +12,14 @@
     License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include "dwarfleb128.h"
 
 namespace DwarfLEB128 {
 
-// see http://en.wikipedia.org/wiki/LEB128
+// see https://en.wikipedia.org/wiki/LEB128
 
 uint64_t decodeUnsigned(const char* data, int* size)
 {

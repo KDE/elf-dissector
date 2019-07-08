@@ -85,5 +85,5 @@ if(Binutils_HAVE_DEMANGLE_COMPONENT_TPARM_OBJ)
 endif()
 
 include(FeatureSummary)
-set_package_properties(binutils-devel PROPERTIES URL http://www.gcc.org/
+set_package_properties(binutils-devel PROPERTIES URL https://www.gcc.org/
   DESCRIPTION "Development files of binutils.")
