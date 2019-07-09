@@ -70,15 +70,13 @@ configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector-version.h.cmake ${CMAKE_
 
 # build things
 include_directories(
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/3rdparty
-    ${CMAKE_SOURCE_DIR}/lib
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/3rdparty
+    ${CMAKE_SOURCE_DIR}/src/lib
     ${CMAKE_BINARY_DIR}
 )
 
-add_subdirectory(lib)
-add_subdirectory(cli)
-add_subdirectory(ui)
+add_subdirectory(src)
 add_subdirectory(tests)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

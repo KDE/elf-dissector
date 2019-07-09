@@ -1,6 +1,6 @@
 # all code in a static library, for usage in unit tests
 set(libelfdissectorui_srcs
-    ${CMAKE_SOURCE_DIR}/3rdparty/treemap/treemap.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/treemap/treemap.cpp
 
     elfmodel/elfmodel.cpp
     elfmodel/datavisitor.cpp
