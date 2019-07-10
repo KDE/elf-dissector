@@ -17,7 +17,7 @@
 
 
 __asm__(".symver function1, function@VER1");
-int function1() { return 1; }
+ __attribute__((visibility("default"))) int function1() { return 1; }
 
 __asm__(".symver function2, function@@VER2");
-int function2() { return 2; }
+ __attribute__((visibility("default"))) int function2() { return 2; }
