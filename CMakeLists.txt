@@ -10,6 +10,7 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_SOURCE_DI
 
 #include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMSetupVersion)
+include(ECMPoQmTools)
 include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)

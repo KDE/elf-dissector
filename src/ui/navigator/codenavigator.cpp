@@ -34,10 +34,10 @@ struct ide_settings_t {
 };
 
 static const ide_settings_t ide_settings[] {
-    { "kdevelop", "%f:%l", QT_TR_NOOP("KDevelop"), "kdevelop" },
-    { "kate", "%f --line %l", QT_TR_NOOP("Kate"), "kate" },
-    { "kwrite", "%f --line %l", QT_TR_NOOP("KWrite"), nullptr },
-    { "qtcreator", "%f", QT_TR_NOOP("Qt Creator"), nullptr }
+    { "kdevelop", "%f:%l", QT_TRANSLATE_NOOP("CodeNavigator", "KDevelop"), "kdevelop" },
+    { "kate", "%f --line %l", QT_TRANSLATE_NOOP("CodeNavigator", "Kate"), "kate" },
+    { "kwrite", "%f --line %l", QT_TRANSLATE_NOOP("CodeNavigator", "KWrite"), nullptr },
+    { "qtcreator", "%f", QT_TRANSLATE_NOOP("CodeNavigator", "Qt Creator"), nullptr }
 };
 
 static const int ide_settings_size = sizeof(ide_settings) / sizeof(ide_settings_t);
