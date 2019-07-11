@@ -24,5 +24,6 @@ int function(int i)
 
 int main (int argc, char **argv)
 {
+    (void*) argv;
     return argc + function(0) + roData[2];
 }

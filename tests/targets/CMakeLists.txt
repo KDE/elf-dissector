@@ -1,7 +1,13 @@
 set(CMAKE_AUTOMOC OFF)
 add_executable(single-executable single-executable.c)
 add_executable(structures structures.cpp)
+
 add_executable(virtual-methods virtual-methods.cpp)
+if (CMAKE_COMPILER_IS_GNUCXX)
+    # we explicitly want this error in the test binary, so silence the corresponding warning
+    target_compile_options(virtual-methods PRIVATE "-Wno-non-virtual-dtor")
+endif()
+
 add_executable(virtual-inheritance virtual-inheritance.cpp)
 
 add_executable(qtstructures qtstructures.cpp)
