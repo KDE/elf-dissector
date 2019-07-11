@@ -43,7 +43,7 @@ ElfStructureView::ElfStructureView(QWidget* parent):
     connect(ui->elfDetailView, &QTextBrowser::anchorClicked, this, &ElfStructureView::anchorClicked);
 
     ui->actionBack->setShortcut(QKeySequence::Back);
-    ui->actionFordward->setShortcut(QKeySequence::Forward);
+    ui->actionForward->setShortcut(QKeySequence::Forward);
 
     connect(ui->actionBack, &QAction::triggered, this, [this]() {
         --m_historyIndex;
@@ -52,14 +52,14 @@ ElfStructureView::ElfStructureView(QWidget* parent):
         m_historyLock = false;
         updateActionState();
     });
-    connect(ui->actionFordward, &QAction::triggered, this, [this]() {
+    connect(ui->actionForward, &QAction::triggered, this, [this]() {
         ++m_historyIndex;
         m_historyLock = true;
         selectUrl(m_history.at(m_historyIndex));
         m_historyLock = false;
         updateActionState();
     });
-    addActions({ ui->actionBack, ui->actionFordward });
+    addActions({ ui->actionBack, ui->actionForward });
     updateActionState();
 
     installEventFilter(this);
@@ -102,7 +102,7 @@ void ElfStructureView::anchorClicked(const QUrl& url)
 void ElfStructureView::updateActionState()
 {
     ui->actionBack->setEnabled(m_historyIndex > 0);
-    ui->actionFordward->setEnabled(m_historyIndex + 1 < m_history.size());
+    ui->actionForward->setEnabled(m_historyIndex + 1 < m_history.size());
 }
 
 void ElfStructureView::selectUrl(const QUrl& url)
@@ -123,8 +123,8 @@ bool ElfStructureView::eventFilter(QObject *receiver, QEvent *event)
                 ui->actionBack->trigger();
             return true;
         } else if (mouseEv->button() == Qt::ForwardButton) {
-            if (ui->actionFordward->isEnabled())
-                ui->actionFordward->trigger();
+            if (ui->actionForward->isEnabled())
+                ui->actionForward->trigger();
             return true;
         }
     }

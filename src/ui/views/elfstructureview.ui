@@ -68,12 +68,12 @@
     <string>&amp;Back</string>
    </property>
   </action>
-  <action name="actionFordward">
+  <action name="actionForward">
    <property name="icon">
     <iconset theme="go-next"/>
    </property>
    <property name="text">
-    <string>&amp;Fordward</string>
+    <string>&amp;Forward</string>
    </property>
   </action>
  </widget>
