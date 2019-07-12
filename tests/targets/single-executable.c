@@ -22,8 +22,7 @@ int function(int i)
     return i + 42;
 }
 
-int main (int argc, char **argv)
+int main (int argc, __attribute__((unused)) char **argv)
 {
-    (void*) argv;
     return argc + function(0) + roData[2];
 }
