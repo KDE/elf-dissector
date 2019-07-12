@@ -32,9 +32,6 @@ public:
 
 signals:
     void currentIndexChanged(int index);
-
-private slots:
-    void selectionChanged();
 };
 
 #endif // SIDEPANE_H

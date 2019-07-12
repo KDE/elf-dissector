@@ -92,16 +92,13 @@ void SidePane::setModel(QAbstractItemModel* model)
     if (model) {
         auto selModel = new NonEmptySelectionModel(model);
         setSelectionModel(selModel);
-        connect(selModel, &QItemSelectionModel::selectionChanged, this, &SidePane::selectionChanged);
+        connect(selModel, &QItemSelectionModel::selectionChanged, this, [this]() {
+            const auto selection = selectionModel()->selectedRows();
+            if (selection.isEmpty())
+                return;
+            emit currentIndexChanged(selection.first().row());
+        });
     }
-}
-
-void SidePane::selectionChanged()
-{
-    const auto selection = selectionModel()->selectedRows();
-    if (selection.isEmpty())
-        return;
-    emit currentIndexChanged(selection.first().row());
 }
 
 #include "sidepane.moc"
