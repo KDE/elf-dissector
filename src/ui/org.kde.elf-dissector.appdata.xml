@@ -6,6 +6,7 @@
   <name>ELF Dissector</name>
   <name xml:lang="ca">ELF Dissector</name>
   <name xml:lang="de">ELF Dissector</name>
+  <name xml:lang="es">Disector ELF</name>
   <name xml:lang="nl">ELF-dissector</name>
   <name xml:lang="pt">Análise do ELF</name>
   <name xml:lang="sk">ELF Dissector</name>
@@ -15,6 +16,7 @@
   <summary>Static analysis tool for ELF files</summary>
   <summary xml:lang="ca">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="de">Statische Analyse für ELF-Dateien</summary>
+  <summary xml:lang="es">Herramienta de análisis estático para archivos ELF</summary>
   <summary xml:lang="nl">Statisch analysehulpmiddel voor ELF-bestanden</summary>
   <summary xml:lang="pt">Ferramenta de análise estática de ficheiros ELF</summary>
   <summary xml:lang="sv">Statiskt analysverktyg av ELF-filer</summary>
@@ -23,6 +25,7 @@
   <description>
     <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="ca">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
+    <p xml:lang="es">El disector ELF es útil cuando necesita hacer una o más de las siguientes tareas:</p>
     <p xml:lang="nl">ELF Dissector is nuttig als u een of meer van de volgende taken moet doen:</p>
     <p xml:lang="pt">A Análise do ELF é útil se precisar de fazer uma ou mais das seguintes tarefas:</p>
     <p xml:lang="sv">ELF-dissektor är användbar om du behöver utföra en eller fler av följande uppgifter:</p>
@@ -31,6 +34,7 @@
     <ul>
       <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="ca">Inspeccionar les dependències cap endavant i cap enrere, a nivell de biblioteca i símbols.</li>
+      <li xml:lang="es">Inspeccionar dependencias adelante y atrás a nivel de biblioteca y símbolos.</li>
       <li xml:lang="nl">Inspecteren van voorwaartse en achterwaartse afhankelijkheden, op niveau van bibliotheek en symbool.</li>
       <li xml:lang="pt">Inspecção das dependências anteriores e posteriores, ao nível da biblioteca e do símbolo.</li>
       <li xml:lang="sv">Inspektera framåt- och bakåtberoenden på biblioteks- och symbolnivå.</li>
@@ -38,6 +42,7 @@
       <li xml:lang="x-test">xxInspecting forward and backward dependencies, on library and symbol level.xx</li>
       <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="ca">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocacions excessives.</li>
+      <li xml:lang="es">Identificar cuellos de botella de rendimiento en tiempo de carga, como constructores estáticos costosos o excesivas reubicaciones.</li>
       <li xml:lang="nl">Identificeren van prestatie-bottlenecks bij laden zoals dure statische constructors of overdreven relocaties.</li>
       <li xml:lang="pt">Identificação de constrangimentos de performance no carregamento, como construtores estáticos dispendiosos ou realocações excessivas.</li>
       <li xml:lang="sv">Identifiera prestandaflaskhalsar vid laddning, såsom kostsamma statiska konstruktorer eller överdrivna relokeringar.</li>
@@ -45,6 +50,7 @@
       <li xml:lang="x-test">xxIdentifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.xx</li>
       <li>Size profiling of ELF files.</li>
       <li xml:lang="ca">Anàlisi del rendiment de mida dels fitxers ELF.</li>
+      <li xml:lang="es">Análisis de rendimiento de tamaño de archivos ELF.</li>
       <li xml:lang="nl">Profileren van grootte van ELF-bestanden.</li>
       <li xml:lang="pt">Análise do tamanho dos ficheiros ELF.</li>
       <li xml:lang="sv">Storleksprofilering av ELF-filer.</li>
@@ -54,6 +60,7 @@
     <p>Main features:</p>
     <p xml:lang="ca">Característiques principals:</p>
     <p xml:lang="de">Kernfunktionen:</p>
+    <p xml:lang="es">Funciones principales:</p>
     <p xml:lang="nl">Hoofdkenmerken:</p>
     <p xml:lang="pt">Funcionalidades principais:</p>
     <p xml:lang="sk">Hlavné funkcie:</p>
@@ -63,6 +70,7 @@
     <ul>
       <li>ELF structure browser.</li>
       <li xml:lang="ca">Explorador de l'estructura ELF.</li>
+      <li xml:lang="es">Explorador de estructura ELF.</li>
       <li xml:lang="nl">ELF-structuurbrowser.</li>
       <li xml:lang="pt">Navegação pela estrutura ELF.</li>
       <li xml:lang="sv">ELF-strukturbläddrare.</li>
@@ -70,6 +78,7 @@
       <li xml:lang="x-test">xxELF structure browser.xx</li>
       <li>Tree map visualization of the size of the various parts of an ELF file.</li>
       <li xml:lang="ca">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
+      <li xml:lang="es">Visualización en mapa de árbol del tamaño de las distintas partes de un archivo ELF.</li>
       <li xml:lang="nl">Visualisatie van boomstructuur van de grootte van de verschillende onderdelen van een ELF-bestand.</li>
       <li xml:lang="pt">Visualização em árvore do tamanho das diversas componentes de um ficheiro ELF.</li>
       <li xml:lang="sv">Visualisering av storleken för de olika delarna av en ELF-file med en trädavbildning.</li>
@@ -77,6 +86,7 @@
       <li xml:lang="x-test">xxTree map visualization of the size of the various parts of an ELF file.xx</li>
       <li>Relocation heatmap.</li>
       <li xml:lang="ca">Mapa de calor de les relocacions.</li>
+      <li xml:lang="es">Mapa de calor de reubicaciones.</li>
       <li xml:lang="nl">Relocatie heatmap.</li>
       <li xml:lang="pt">'Mapa de calor' das realocações.</li>
       <li xml:lang="sv">Färgdiagram för relokeringar.</li>
@@ -85,6 +95,7 @@
       <li>Built-in disassembler for x86 and AArch64.</li>
       <li xml:lang="ca">Desassemblador incorporat per a x86 i AArch64.</li>
       <li xml:lang="de">Eingebauter Disassembler für x86 und AArch64.</li>
+      <li xml:lang="es">Desensamblador integrado para x86 y AArch64.</li>
       <li xml:lang="nl">Ingebouwde disassembler voor x86 en AArch64.</li>
       <li xml:lang="pt">Descodificação para Assembly incorporada para o x86 e o AArch64.</li>
       <li xml:lang="sv">Inbyggd disassembler för x86 och AArch64.</li>
@@ -92,6 +103,7 @@
       <li xml:lang="x-test">xxBuilt-in disassembler for x86 and AArch64.xx</li>
       <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="ca">Navegador de les disposicions de memòria per tipus de dada extretes de la informació de depuració DWARF.</li>
+      <li xml:lang="es">Explorador para capas de memoria de tipos de datos extraídos de información de depuración DWARF.</li>
       <li xml:lang="nl">Browser voor indeling geheugen van het type gegevens uitgepakt uit DWARF-debuginformatie.</li>
       <li xml:lang="pt">Navegação pelos diferentes formatos de memória para dados extraídos a partir da informação de depuração DWARF.</li>
       <li xml:lang="sv">Bläddrare för minneslayout av datatyper extraherad från DWARF avlusningsinformation.</li>
@@ -99,6 +111,7 @@
       <li xml:lang="x-test">xxBrowser for data type memory layouts extracted from DWARF debug information.xx</li>
       <li>Forward and backward dependency viewer.</li>
       <li xml:lang="ca">Visualitzador de les dependències cap endavant i cap enrere.</li>
+      <li xml:lang="es">Visor de dependencias hacia atrás y hacia adelante.</li>
       <li xml:lang="nl">Viewer voor voorwaartse en achterwaartse afhankelijkheid.</li>
       <li xml:lang="pt">Visualização das dependências anteriores e posteriores.</li>
       <li xml:lang="sv">Visning av framåt- och bakåtberoenden.</li>
