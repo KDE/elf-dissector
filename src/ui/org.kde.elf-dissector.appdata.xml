@@ -47,7 +47,7 @@
       <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="ca">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocacions excessives.</li>
       <li xml:lang="es">Identificar cuellos de botella de rendimiento en tiempo de carga, como constructores estáticos costosos o excesivas reubicaciones.</li>
-      <li xml:lang="gl">Identificar colos de botella en tempo de carga como construtores estáticos custosos ou cambios de lugar excesivos.</li>
+      <li xml:lang="gl">Identificar colos de botella en tempo de carga como construtores estáticos custosos ou traslados excesivos.</li>
       <li xml:lang="nl">Identificeren van prestatie-bottlenecks bij laden zoals dure statische constructors of overdreven relocaties.</li>
       <li xml:lang="pt">Identificação de constrangimentos de performance no carregamento, como construtores estáticos dispendiosos ou realocações excessivas.</li>
       <li xml:lang="sv">Identifiera prestandaflaskhalsar vid laddning, såsom kostsamma statiska konstruktorer eller överdrivna relokeringar.</li>
@@ -96,7 +96,7 @@
       <li>Relocation heatmap.</li>
       <li xml:lang="ca">Mapa de calor de les relocacions.</li>
       <li xml:lang="es">Mapa de calor de reubicaciones.</li>
-      <li xml:lang="gl">Mapa de calor de cambios de lugar.</li>
+      <li xml:lang="gl">Mapa de traslados.</li>
       <li xml:lang="nl">Relocatie heatmap.</li>
       <li xml:lang="pt">'Mapa de calor' das realocações.</li>
       <li xml:lang="sv">Färgdiagram för relokeringar.</li>
