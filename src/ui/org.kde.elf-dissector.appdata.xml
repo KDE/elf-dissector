@@ -132,6 +132,12 @@
       <li xml:lang="x-test">xxForward and backward dependency viewer.xx</li>
     </ul>
   </description>
+   <screenshots>
+    <screenshot type="default">
+      <caption>Size treemap view.</caption>
+      <image type="source">https://cdn.kde.org/screenshots/elf-dissector/elf-dissector-size-treemap.png</image>
+    </screenshot>
+  </screenshots>
   <launchable type="desktop-id">org.kde.elf-dissector.desktop</launchable>
   <project_group>KDE</project_group>
   <provides>
