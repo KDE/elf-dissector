@@ -132,7 +132,7 @@
       <li xml:lang="x-test">xxForward and backward dependency viewer.xx</li>
     </ul>
   </description>
-   <screenshots>
+  <screenshots>
     <screenshot type="default">
       <caption>Size treemap view.</caption>
       <image type="source">https://cdn.kde.org/screenshots/elf-dissector/elf-dissector-size-treemap.png</image>
