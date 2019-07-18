@@ -135,6 +135,11 @@
   <screenshots>
     <screenshot type="default">
       <caption>Size treemap view.</caption>
+      <caption xml:lang="ca">Vista del mapa d'arbre de la mida</caption>
+      <caption xml:lang="pt">Dimensionamento da área da árvore.</caption>
+      <caption xml:lang="sv">Ändra storlek på trädavbildningen.</caption>
+      <caption xml:lang="uk">Перегляд ієрархічної карти розмірів.</caption>
+      <caption xml:lang="x-test">xxSize treemap view.xx</caption>
       <image type="source">https://cdn.kde.org/screenshots/elf-dissector/elf-dissector-size-treemap.png</image>
     </screenshot>
   </screenshots>
