@@ -5,6 +5,7 @@
   <project_license>LGPL-2.0+</project_license>
   <name>ELF Dissector</name>
   <name xml:lang="ca">ELF Dissector</name>
+  <name xml:lang="cs">ELF Dissector</name>
   <name xml:lang="de">ELF Dissector</name>
   <name xml:lang="es">Disector ELF</name>
   <name xml:lang="gl">Disector de ELF</name>
@@ -77,6 +78,7 @@
     </ul>
     <p>Main features:</p>
     <p xml:lang="ca">Característiques principals:</p>
+    <p xml:lang="cs">Hlavní vlastnosti:</p>
     <p xml:lang="de">Kernfunktionen:</p>
     <p xml:lang="es">Funciones principales:</p>
     <p xml:lang="gl">Funcionalidades principais:</p>
@@ -91,6 +93,7 @@
     <ul>
       <li>ELF structure browser.</li>
       <li xml:lang="ca">Explorador de l'estructura ELF.</li>
+      <li xml:lang="cs">Prohlížeč struktury ELF.</li>
       <li xml:lang="de">ELF-Strukturbrowser.</li>
       <li xml:lang="es">Explorador de estructura ELF.</li>
       <li xml:lang="gl">Navegador de estruturas ELF.</li>
