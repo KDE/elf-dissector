@@ -179,6 +179,7 @@
     <screenshot type="default">
       <caption>Size treemap view.</caption>
       <caption xml:lang="ca">Vista del mapa d'arbre de la mida.</caption>
+      <caption xml:lang="es">Vista de mapa en árbol de tamaños.</caption>
       <caption xml:lang="gl">Vista de mapa de árbore de tamaños.</caption>
       <caption xml:lang="id">Ukuran tampilan peta-hierarki.</caption>
       <caption xml:lang="it">Visualizzatore della mappa ad albero delle dimensioni.</caption>
