@@ -514,7 +514,7 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
             res = dwarf_get_FORM_name(formType, &formName);
             if (res != DW_DLV_OK)
                 return {};
-            value = QStringLiteral("TODO: ") + QString::fromLocal8Bit(formName);
+            value = QLatin1String("TODO: ") + QString::fromLocal8Bit(formName);
             break;
         }
     }

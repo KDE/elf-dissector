@@ -231,7 +231,7 @@ QString Disassembler::disassembleCapstone(const unsigned char* data, uint64_t si
         if (!line.isNull())
             result += printSourceLine(line) + "<br/>";
 
-        result += QString::number(insn->address - baseAddress()) + ": " + insn->mnemonic + " " + insn->op_str;
+        result += QString::number(insn->address - baseAddress()) + ": " + insn->mnemonic + QLatin1Char(' ') + insn->op_str;
         switch (file()->header()->machine()) {
             case EM_386:
             case EM_X86_64:

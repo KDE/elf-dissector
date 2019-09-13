@@ -51,9 +51,9 @@ void StructurePackingCheck::checkAll(DwarfInfo* info)
 static QString printSummary(int structSize, int usedBytes, int usedBits, int optimalSize)
 {
     QString s;
-    s += QStringLiteral("Used bytes: ") + QString::number(usedBytes) + QLatin1Char('/') + QString::number(structSize);
+    s += QLatin1String("Used bytes: ") + QString::number(usedBytes) + QLatin1Char('/') + QString::number(structSize);
     s += " (" + QString::number(double(usedBytes*100) / double(structSize), 'g', 4) + "%)\n";
-    s += QStringLiteral("Used bits: ") + QString::number(usedBits) + QLatin1Char('/') + QString::number(structSize*8);
+    s += QLatin1String("Used bits: ") + QString::number(usedBits) + QLatin1Char('/') + QString::number(structSize*8);
     s += " (" + QString::number(double(usedBits*100) / double(structSize*8), 'g', 4) + "%)\n";
     if (optimalSize < structSize) {
         s += "Optimal size: " + QString::number(optimalSize) + " bytes (";

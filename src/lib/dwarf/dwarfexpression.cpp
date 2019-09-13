@@ -248,7 +248,7 @@ QString DwarfExpression::displayString() const
     for (int i = 0; i < m_block.size(); ++i) {
         const auto op = opcode(m_block.at(i));
         if (!op) {
-            s += QStringLiteral("unknown<0x") + QString::number((uint8_t)m_block.at(i), 16) + QLatin1Char('>');
+            s += QLatin1String("unknown<0x") + QString::number((uint8_t)m_block.at(i), 16) + QLatin1Char('>');
         } else {
             s += op->name;
             int size = 0;
