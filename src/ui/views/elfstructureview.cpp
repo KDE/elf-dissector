@@ -75,8 +75,10 @@ void ElfStructureView::setModel(ElfModel* model)
 
 void ElfStructureView::selectionChanged(const QItemSelection &selection)
 {
-    if (selection.isEmpty())
+    if (selection.isEmpty()) {
         ui->elfDetailView->clear();
+	return;
+    }
 
     const QModelIndex index = selection.first().topLeft();
     ui->elfDetailView->setHtml(index.data(ElfModel::DetailRole).toString());
