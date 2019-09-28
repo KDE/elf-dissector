@@ -7,7 +7,7 @@ Static analysis tool for ELF libraries and executables.
 ELF Dissector is useful if you need to do one or more of the following tasks:
 
 * Inspecting forward and backward dependencies, on library and symbol level.
-* Identifying load-time performance bottlenecks such as expensive static contructors or excessive relocations.
+* Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.
 * Size profiling of ELF files.
 
 ## Features
