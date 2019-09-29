@@ -29,6 +29,7 @@ int main(int argc, char** argv)
     QCoreApplication::setOrganizationName(QStringLiteral("KDE"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
     QCoreApplication::setApplicationVersion(QStringLiteral(ELF_DISSECTOR_VERSION_STRING));
+    QGuiApplication::setDesktopFileName(QStringLiteral("org.kde.elf-dissector"));
 
     Q_INIT_RESOURCE(plotter);
     DwarfPrinter::registerConverterFunctions();
