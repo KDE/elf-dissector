@@ -103,8 +103,12 @@ void LDBenchmark::readResults(QProcess* proc, LoadMode mode)
 {
     while(proc->canReadLine()) {
         const auto line = proc->readLine();
+        if (!line.startsWith("LDBENCHMARKRUNNER\t")) {
+            qDebug() << "target stdout:" << line;
+            continue;
+        }
         const auto index = line.lastIndexOf('\t');
-        const auto fileName = line.left(index);
+        const auto fileName = line.mid(18, index - 18);
         const auto cost = line.mid(index).trimmed().toDouble();
         auto it = std::find_if(m_results.begin(), m_results.end(), [fileName](const Result &res) {
             return res.fileName == fileName;

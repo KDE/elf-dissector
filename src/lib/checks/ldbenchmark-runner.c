@@ -62,7 +62,7 @@ int main(int argc, char **argv)
             diff += end.tv_nsec;
             diff += 1000000000 - start.tv_nsec;
         }
-        fprintf(stdout, "%s\t%.2f\n", argv[i], diff/1000.0);
+        fprintf(stdout, "LDBENCHMARKRUNNER\t%s\t%.2f\n", argv[i], diff/1000.0);
     }
 
     return 0;
