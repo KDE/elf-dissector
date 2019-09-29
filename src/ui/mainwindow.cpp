@@ -113,7 +113,7 @@ void MainWindow::restoreSettings()
     ui->sizeTreeMapView->restoreSettings();
     ui->actionReopenPreviousFile->setChecked(settings.value(QStringLiteral("Settings/ReloadPreviousFile"), false).toBool());
     if (ui->actionReopenPreviousFile->isChecked()) {
-        const auto fileName = settings.value(QStringLiteral("Recent/PreviousFile")).toString();
+        auto fileName = settings.value(QStringLiteral("Recent/PreviousFile")).toString();
         const QFileInfo fi(fileName);
         if (!fi.isReadable() || !fi.isFile())
             return;
