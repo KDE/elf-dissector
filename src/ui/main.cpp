@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addPositionalArgument(QStringLiteral("elf"), QStringLiteral("ELF library to open"), QStringLiteral("<elf>"));
+    parser.addPositionalArgument(QStringLiteral("elf"), MainWindow::tr("ELF file to open"), QStringLiteral("<elf>"));
     parser.process(app);
 
     MainWindow mainWindow;
