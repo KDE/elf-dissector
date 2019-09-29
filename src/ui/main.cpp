@@ -26,6 +26,7 @@
 int main(int argc, char** argv)
 {
     QCoreApplication::setApplicationName(QStringLiteral("ELF Dissector"));
+    QGuiApplication::setApplicationDisplayName(MainWindow::tr("ELF Dissector"));
     QCoreApplication::setOrganizationName(QStringLiteral("KDE"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
     QCoreApplication::setApplicationVersion(QStringLiteral(ELF_DISSECTOR_VERSION_STRING));
