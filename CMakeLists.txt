@@ -62,6 +62,13 @@ find_package(Capstone)
 if (Capstone_FOUND)
     set(HAVE_CAPSTONE TRUE)
 endif()
+find_package(Gnuplot QUIET)
+set_package_properties(Gnuplot PROPERTIES
+    DESCRIPTION "a command-line driven graphing utility"
+    URL "https://www.gnuplot.info/"
+    PURPOSE "Required for the Performance benchmark tool"
+    TYPE RUNTIME
+)
 
 # config files
 configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector.h)
