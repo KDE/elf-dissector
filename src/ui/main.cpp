@@ -25,6 +25,8 @@
 
 int main(int argc, char** argv)
 {
+    QApplication app(argc, argv);
+
     QCoreApplication::setApplicationName(QStringLiteral("ELF Dissector"));
     QGuiApplication::setApplicationDisplayName(MainWindow::tr("ELF Dissector"));
     QCoreApplication::setOrganizationName(QStringLiteral("KDE"));
@@ -34,8 +36,6 @@ int main(int argc, char** argv)
 
     Q_INIT_RESOURCE(plotter);
     DwarfPrinter::registerConverterFunctions();
-
-    QApplication app(argc, argv);
 
     QCommandLineParser parser;
     parser.addHelpOption();
