@@ -44,10 +44,8 @@ public:
     ElfFile* file(int index) const;
 
 private:
-
     void measure(LoadMode mode, int iterations);
     void readResults(QProcess *proc, LoadMode mode);
-    void dumpResults();
 
     ElfFileSet *m_fileSet = nullptr;
 

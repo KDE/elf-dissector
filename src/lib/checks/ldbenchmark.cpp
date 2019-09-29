@@ -28,15 +28,6 @@
 
 #include <cassert>
 
-static double average(const QVector<double> &data)
-{
-    if (data.size() == 0)
-        return 0.0;
-    const double sum = std::accumulate(data.constBegin(), data.constEnd(), 0.0);
-    qDebug() << sum << data << data.size() << (sum / data.size());
-    return sum / data.size();
-}
-
 static double median(QVector<double> data)
 {
     if (data.size() == 0)
@@ -81,8 +72,6 @@ void LDBenchmark::measureFileSet(ElfFileSet* fileSet)
     measure(LoadMode::None, 1); // avoid cold cache skewing the results
     measure(LoadMode::Lazy, 5);
     measure(LoadMode::Now, 5);
-
-//     dumpResults();
 }
 
 void LDBenchmark::measure(LDBenchmark::LoadMode mode, int iterations)
@@ -154,20 +143,6 @@ void LDBenchmark::writeCSV(const QString& fileName)
         f.write(QByteArray::number(::max(res.now)));
         f.write("\n");
     }
-}
-
-void LDBenchmark::dumpResults()
-{
-    double lazy = 0.0;
-    double now = 0.0;
-    for (int i = 0; i < m_results.size(); ++i) {
-        const auto res = m_results.at(i);
-        const auto file = m_fileSet->file(m_results.size() - 1 - i);
-        printf("%s\t%.2f\t%.2f\n", res.fileName.constData(), average(res.lazy), average(res.now));
-        lazy += average(res.lazy);
-        now += average(res.now);
-    }
-    printf("Lazy: %.2f µs, immediate: %.2f µs\n", lazy, now);
 }
 
 int LDBenchmark::size() const
