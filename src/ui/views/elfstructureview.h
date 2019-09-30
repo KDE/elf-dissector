@@ -28,7 +28,6 @@ class ElfStructureView;
 }
 
 class ElfModel;
-class QAbstractItemModel;
 class QItemSelection;
 class QSortFilterProxyModel;
 class QUrl;

@@ -20,7 +20,6 @@
 
 #include <libdwarf.h>
 
-class QByteArray;
 
 /** Represents one line information entry in the .debug_lines section. */
 class DwarfLine
