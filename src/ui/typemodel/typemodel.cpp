@@ -29,6 +29,7 @@
 
 #include <QIcon>
 #include <QTime>
+#include <QDebug>
 
 TypeModel::TypeModel(QObject* parent): QAbstractItemModel(parent)
 {

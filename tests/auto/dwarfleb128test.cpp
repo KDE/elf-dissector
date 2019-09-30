@@ -17,7 +17,6 @@
 
 #include <dwarf/dwarfleb128.h>
 
-#include <QDebug>
 #include <QtTest/qtest.h>
 #include <QObject>
 

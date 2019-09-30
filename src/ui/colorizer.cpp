@@ -18,7 +18,6 @@
 #include "colorizer.h"
 
 #include <QColor>
-#include <QDebug>
 
 
 Colorizer::Colorizer(uint8_t saturation, uint8_t value):

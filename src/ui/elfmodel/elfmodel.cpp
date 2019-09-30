@@ -26,7 +26,6 @@
 #include "parentvisitor.h"
 #include "datavisitor.h"
 
-#include <QDebug>
 #include <QUrl>
 
 ElfModel::ElfModel(QObject* parent) : QAbstractItemModel(parent)

@@ -17,7 +17,6 @@
 
 #include <dwarf/dwarfexpression.h>
 
-#include <QDebug>
 #include <QtTest/qtest.h>
 #include <QObject>
 

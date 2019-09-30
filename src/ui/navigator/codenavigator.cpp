@@ -18,7 +18,6 @@
 #include "codenavigator.h"
 
 #include <QAction>
-#include <QDebug>
 #include <QInputDialog>
 #include <QMenu>
 #include <QProcess>

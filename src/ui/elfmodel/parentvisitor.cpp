@@ -23,7 +23,6 @@
 #include <elf/elfgnusymbolversionrequirement.h>
 #include <dwarf/dwarfcudie.h>
 
-#include <QDebug>
 
 #include <elf.h>
 

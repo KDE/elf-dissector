@@ -43,7 +43,6 @@
 #include <printers/relocationprinter.h>
 #include <printers/symbolprinter.h>
 
-#include <QDebug>
 #include <QIcon>
 #include <QUrl>
 

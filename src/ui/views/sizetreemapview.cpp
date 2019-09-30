@@ -27,7 +27,6 @@
 #include <elf/elfsymboltablesection.h>
 #include <demangle/demangler.h>
 
-#include <QDebug>
 #include <QMenu>
 #include <QSettings>
 

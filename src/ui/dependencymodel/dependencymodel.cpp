@@ -24,7 +24,6 @@
 #include <elf/elfhashsection.h>
 #include <checks/dependenciescheck.h>
 
-#include <QDebug>
 #include <QIcon>
 
 #include <cassert>

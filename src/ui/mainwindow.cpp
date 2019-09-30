@@ -25,8 +25,6 @@
 #include <elfmodel/elfmodel.h>
 #include <navigator/codenavigator.h>
 
-#include <QApplication>
-#include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>

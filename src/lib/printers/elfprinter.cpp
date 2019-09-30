@@ -21,7 +21,6 @@
 #include <elf.h>
 
 #include <QByteArray>
-#include <QList>
 
 static const LookupTableEntry<uint16_t> file_type_table[] {
     { ET_NONE, "none" },

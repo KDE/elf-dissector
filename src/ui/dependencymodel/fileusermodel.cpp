@@ -19,7 +19,6 @@
 
 #include <elf/elffileset.h>
 
-#include <QDebug>
 
 FileUserModel::FileUserModel(QObject* parent): QAbstractListModel(parent)
 {

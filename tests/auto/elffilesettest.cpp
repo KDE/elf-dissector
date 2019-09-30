@@ -17,7 +17,6 @@
 
 #include <elf/elffileset.h>
 
-#include <QDebug>
 #include <QtTest/qtest.h>
 #include <QObject>
 

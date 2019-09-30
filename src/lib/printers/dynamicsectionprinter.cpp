@@ -19,7 +19,6 @@
 #include "printerutils_p.h"
 
 #include <QByteArray>
-#include <QList>
 
 #include <elf.h>
 

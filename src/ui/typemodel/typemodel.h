@@ -19,7 +19,6 @@
 #define TYPEMODEL_H
 
 #include <QAbstractItemModel>
-#include <QDebug>
 #include <QVector>
 
 class ElfFileSet;

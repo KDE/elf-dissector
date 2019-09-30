@@ -21,7 +21,6 @@
 #include <dwarf/dwarfranges.h>
 #include <dwarf/dwarfaddressranges.h>
 
-#include <QDebug>
 #include <QtTest/qtest.h>
 #include <QObject>
 

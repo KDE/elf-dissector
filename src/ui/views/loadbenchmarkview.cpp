@@ -22,8 +22,6 @@
 #include <plotter/gnuplotter.h>
 #include <loadbenchmarkmodel/loadbenchmarkmodel.h>
 
-#include <QDebug>
-#include <QPixmap>
 #include <QSortFilterProxyModel>
 
 LoadBenchmarkView::LoadBenchmarkView(QWidget* parent):

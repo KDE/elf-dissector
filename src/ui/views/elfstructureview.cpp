@@ -23,7 +23,6 @@
 
 #include <KRecursiveFilterProxyModel>
 
-#include <QDebug>
 #include <QMouseEvent>
 
 ElfStructureView::ElfStructureView(QWidget* parent):

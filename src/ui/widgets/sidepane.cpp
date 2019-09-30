@@ -17,7 +17,6 @@
 
 #include "sidepane.h"
 
-#include <QDebug>
 #include <QStyledItemDelegate>
 
 class Delegate : public QStyledItemDelegate
