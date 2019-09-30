@@ -416,18 +416,20 @@ static const RelocType reloc_types_aarch64[] = {
 struct RelocTypeRepository
 {
     int machine;
-    const RelocType* typeInfos;
     int typeInfosSize;
+    const RelocType* typeInfos;
 };
 
+#define RTR(mach, typeInfo) { mach, sizeof(typeInfo) / sizeof(RelocType), typeInfo }
 static const RelocTypeRepository reloc_type_repository[] {
-    { EM_386, reloc_types_i386, sizeof(reloc_types_i386) / sizeof(RelocType) },
-    { EM_ARM, reloc_types_arm, sizeof(reloc_types_arm) / sizeof(RelocType) },
-    { EM_X86_64, reloc_types_x86_64, sizeof(reloc_types_x86_64) / sizeof(RelocType) },
+    RTR(EM_386, reloc_types_i386),
+    RTR(EM_ARM, reloc_types_arm),
+    RTR(EM_X86_64, reloc_types_x86_64),
 #ifdef EM_AARCH64
-    { EM_AARCH64, reloc_types_aarch64, sizeof(reloc_types_aarch64) / sizeof(RelocType) }
+    RTR(EM_AARCH64, reloc_types_aarch64),
 #endif
 };
+#undef RTR
 
 static const int reloc_type_repository_size = sizeof(reloc_type_repository) / sizeof(RelocTypeRepository);
 
