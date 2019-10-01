@@ -51,7 +51,7 @@
 #endif
 
 #ifdef HAVE_CAPSTONE
-#include <capstone/capstone.h>
+#include <capstone.h>
 #endif
 
 static int qstring_printf(void *data, const char *format, ...)
