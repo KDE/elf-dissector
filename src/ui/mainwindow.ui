@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="document-edit-decrypt-verify">
+   <iconset theme="elf-dissector">
     <normaloff/>
    </iconset>
   </property>

@@ -54,3 +54,8 @@ install(TARGETS elf-dissector ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(PROGRAMS org.kde.elf-dissector.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.elf-dissector.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+
+ecm_install_icons(
+  ICONS 16-apps-elf-dissector.svg  32-apps-elf-dissector.svg
+  DESTINATION ${KDE_INSTALL_ICONDIR}
+)
