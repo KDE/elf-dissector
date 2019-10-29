@@ -48,6 +48,8 @@
     // in binutils 2.29 print_insn_i386 disappeared from the dis-asm.h header,
     // not sure what the proper replacement for it is, so define it here
     extern "C" int print_insn_i386 (bfd_vma, disassemble_info *);
+    extern "C" int print_insn_big_arm(bfd_vma, disassemble_info *);
+    extern "C" int print_insn_little_arm(bfd_vma, disassemble_info *);
 #endif
 
 #ifdef HAVE_CAPSTONE
