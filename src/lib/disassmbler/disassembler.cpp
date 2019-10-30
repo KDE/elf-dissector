@@ -224,8 +224,9 @@ QString Disassembler::disassembleCapstone(const unsigned char* data, uint64_t si
     auto address = baseAddress();
     QString result;
 
-    while (size > 0) {
-        if (!cs_disasm_iter(handle, &data, &size, &address, insn)) {
+    size_t cs_size = size; // force to size_t for 32bit host support
+    while (cs_size > 0) {
+        if (!cs_disasm_iter(handle, &data, &cs_size, &address, insn)) {
             return result;
         }
 
