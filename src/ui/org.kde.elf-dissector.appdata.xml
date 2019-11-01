@@ -15,6 +15,7 @@
   <name xml:lang="nl">ELF-dissector</name>
   <name xml:lang="pl">Dysektor ELF</name>
   <name xml:lang="pt">Análise do ELF</name>
+  <name xml:lang="pt-BR">Dissecador ELF</name>
   <name xml:lang="ru">ELF Dissector</name>
   <name xml:lang="sk">ELF Dissector</name>
   <name xml:lang="sv">ELF-dissektor</name>
@@ -101,6 +102,7 @@
     <p xml:lang="nl">Hoofdkenmerken:</p>
     <p xml:lang="pl">Główne możliwości:</p>
     <p xml:lang="pt">Funcionalidades principais:</p>
+    <p xml:lang="pt-BR">Principais recursos:</p>
     <p xml:lang="ru">Основные возможности:</p>
     <p xml:lang="sk">Hlavné funkcie:</p>
     <p xml:lang="sv">Huvudfunktionalitet:</p>
