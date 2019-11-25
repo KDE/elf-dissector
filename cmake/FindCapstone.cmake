@@ -1,6 +1,8 @@
 find_package(PkgConfig QUIET)
 pkg_check_modules(Capstone QUIET IMPORTED_TARGET capstone)
 
+if (Capstone_FOUND)
+
 # include paths may or may not contain the capstone subdir, make sure we always have it
 # that might not be the cleanest way, but it's what newer Capstone versions seem to do, and
 # it avoids conflicting with system includes triggering the -isystem bug on older GCC
@@ -12,6 +14,7 @@ if (NOT _capstone_hdr)
     endforeach()
     set(Capstone_INCLUDE_DIRS ${_capstone_new_include_dirs})
     set_target_properties(PkgConfig::Capstone PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${Capstone_INCLUDE_DIRS})
+endif()
 endif()
 
 include(FeatureSummary)
