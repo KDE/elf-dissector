@@ -21,17 +21,18 @@
 #include <elfmodel/elfmodel.h>
 #include <navigator/codenavigator.h>
 
-#include <KRecursiveFilterProxyModel>
+#include <QSortFilterProxyModel>
 
 #include <QMouseEvent>
 
 ElfStructureView::ElfStructureView(QWidget* parent):
     QWidget(parent),
     ui(new Ui::ElfStructureView),
-    m_proxy(new KRecursiveFilterProxyModel(this))
+    m_proxy(new QSortFilterProxyModel(this))
 {
     ui->setupUi(this);
     ui->elfStructureView->setModel(m_proxy);
+    m_proxy->setRecursiveFilteringEnabled(true);
     ui->elfStructureView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     connect(ui->elfStructureView->selectionModel(), &QItemSelectionModel::selectionChanged,

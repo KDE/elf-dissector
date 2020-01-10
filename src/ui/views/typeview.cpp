@@ -21,10 +21,9 @@
 #include <typemodel/typemodel.h>
 #include <navigator/codenavigator.h>
 
-#include <KRecursiveFilterProxyModel>
-
 #include <QItemSelectionModel>
 #include <QMessageBox>
+#include <QSortFilterProxyModel>
 
 TypeView::TypeView(QWidget* parent):
     QWidget(parent),
@@ -33,7 +32,8 @@ TypeView::TypeView(QWidget* parent):
 {
     ui->setupUi(this);
 
-    auto proxy = new KRecursiveFilterProxyModel(this);
+    auto proxy = new QSortFilterProxyModel(this);
+    proxy->setRecursiveFilteringEnabled(true);
     proxy->setSourceModel(m_model);
     ui->typeTreeView->setModel(proxy);
     ui->typeTreeView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);

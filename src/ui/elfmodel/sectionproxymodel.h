@@ -18,10 +18,10 @@
 #ifndef SECTIONPROXYMODEL_H
 #define SECTIONPROXYMODEL_H
 
-#include <KRecursiveFilterProxyModel>
+#include <QSortFilterProxyModel>
 
 /** Restrict the structure model to just files and sections. */
-class SectionProxyModel : public KRecursiveFilterProxyModel
+class SectionProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
