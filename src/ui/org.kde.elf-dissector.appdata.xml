@@ -215,4 +215,7 @@
   <provides>
     <binary>elf-dissector</binary>
   </provides>
+  <categories>
+    <category>Development</category>
+  </categories>
 </component>
