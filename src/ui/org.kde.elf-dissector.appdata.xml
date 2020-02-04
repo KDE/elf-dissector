@@ -5,6 +5,7 @@
   <project_license>GPL-2.0-or-later</project_license>
   <name>ELF Dissector</name>
   <name xml:lang="ca">ELF Dissector</name>
+  <name xml:lang="ca-valencia">ELF Dissector</name>
   <name xml:lang="cs">ELF Dissector</name>
   <name xml:lang="de">ELF Dissector</name>
   <name xml:lang="en-GB">ELF Dissector</name>
@@ -23,6 +24,7 @@
   <name xml:lang="x-test">xxELF Dissectorxx</name>
   <summary>Static analysis tool for ELF files</summary>
   <summary xml:lang="ca">Eina d'anàlisi estàtica per als fitxers ELF</summary>
+  <summary xml:lang="ca-valencia">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="de">Statische Analyse für ELF-Dateien</summary>
   <summary xml:lang="en-GB">Static analysis tool for ELF files</summary>
   <summary xml:lang="es">Herramienta de análisis estático para archivos ELF</summary>
@@ -38,6 +40,7 @@
   <description>
     <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="ca">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
+    <p xml:lang="ca-valencia">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
     <p xml:lang="en-GB">ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="es">El disector ELF es útil cuando necesita hacer una o más de las siguientes tareas:</p>
     <p xml:lang="gl">O disector de ELF é útil se necesita realizar algunha das seguintes tarefas:</p>
@@ -52,6 +55,7 @@
     <ul>
       <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="ca">Inspeccionar les dependències cap endavant i cap enrere, a nivell de biblioteca i símbols.</li>
+      <li xml:lang="ca-valencia">Inspeccionar les dependències cap avant i cap arrere, a nivell de biblioteca i símbols.</li>
       <li xml:lang="en-GB">Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="es">Inspeccionar dependencias adelante y atrás a nivel de biblioteca y símbolos.</li>
       <li xml:lang="gl">Inspeccionar dependencias cara adiante e cara atrás, a nivel de bibliotecas e de símbolos.</li>
@@ -65,6 +69,7 @@
       <li xml:lang="x-test">xxInspecting forward and backward dependencies, on library and symbol level.xx</li>
       <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="ca">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocacions excessives.</li>
+      <li xml:lang="ca-valencia">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocacions excessives.</li>
       <li xml:lang="en-GB">Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="es">Identificar cuellos de botella de rendimiento en tiempo de carga, como constructores estáticos costosos o excesivas reubicaciones.</li>
       <li xml:lang="gl">Identificar colos de botella en tempo de carga como construtores estáticos custosos ou traslados excesivos.</li>
@@ -78,6 +83,7 @@
       <li xml:lang="x-test">xxIdentifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.xx</li>
       <li>Size profiling of ELF files.</li>
       <li xml:lang="ca">Anàlisi del rendiment de mida dels fitxers ELF.</li>
+      <li xml:lang="ca-valencia">Anàlisi del rendiment de mida dels fitxers ELF.</li>
       <li xml:lang="en-GB">Size profiling of ELF files.</li>
       <li xml:lang="es">Análisis de rendimiento de tamaño de archivos ELF.</li>
       <li xml:lang="gl">Análise de tamaño de ficheiros ELF.</li>
@@ -92,6 +98,7 @@
     </ul>
     <p>Main features:</p>
     <p xml:lang="ca">Característiques principals:</p>
+    <p xml:lang="ca-valencia">Característiques principals:</p>
     <p xml:lang="cs">Hlavní vlastnosti:</p>
     <p xml:lang="de">Kernfunktionen:</p>
     <p xml:lang="en-GB">Main features:</p>
@@ -111,6 +118,7 @@
     <ul>
       <li>ELF structure browser.</li>
       <li xml:lang="ca">Explorador de l'estructura ELF.</li>
+      <li xml:lang="ca-valencia">Explorador de l'estructura ELF.</li>
       <li xml:lang="cs">Prohlížeč struktury ELF.</li>
       <li xml:lang="de">ELF-Strukturbrowser.</li>
       <li xml:lang="en-GB">ELF structure browser.</li>
@@ -126,6 +134,7 @@
       <li xml:lang="x-test">xxELF structure browser.xx</li>
       <li>Tree map visualization of the size of the various parts of an ELF file.</li>
       <li xml:lang="ca">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
+      <li xml:lang="ca-valencia">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
       <li xml:lang="en-GB">Tree map visualisation of the size of the various parts of an ELF file.</li>
       <li xml:lang="es">Visualización en mapa de árbol del tamaño de las distintas partes de un archivo ELF.</li>
       <li xml:lang="gl">Visualización de mapa de árbore do tamaño das distintas partes dun ficheiro ELF.</li>
@@ -139,6 +148,7 @@
       <li xml:lang="x-test">xxTree map visualization of the size of the various parts of an ELF file.xx</li>
       <li>Relocation heatmap.</li>
       <li xml:lang="ca">Mapa de calor de les relocacions.</li>
+      <li xml:lang="ca-valencia">Mapa de calor de les relocacions.</li>
       <li xml:lang="en-GB">Relocation heatmap.</li>
       <li xml:lang="es">Mapa de calor de reubicaciones.</li>
       <li xml:lang="gl">Mapa de traslados.</li>
@@ -152,6 +162,7 @@
       <li xml:lang="x-test">xxRelocation heatmap.xx</li>
       <li>Built-in disassembler for x86 and AArch64.</li>
       <li xml:lang="ca">Desassemblador incorporat per a x86 i AArch64.</li>
+      <li xml:lang="ca-valencia">Desassemblador incorporat per a x86 i AArch64.</li>
       <li xml:lang="de">Eingebauter Disassembler für x86 und AArch64.</li>
       <li xml:lang="en-GB">Built-in disassembler for x86 and AArch64.</li>
       <li xml:lang="es">Desensamblador integrado para x86 y AArch64.</li>
@@ -166,6 +177,7 @@
       <li xml:lang="x-test">xxBuilt-in disassembler for x86 and AArch64.xx</li>
       <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="ca">Navegador de les disposicions de memòria per tipus de dada extretes de la informació de depuració DWARF.</li>
+      <li xml:lang="ca-valencia">Navegador de les disposicions de memòria per tipus de dada extretes de la informació de depuració DWARF.</li>
       <li xml:lang="en-GB">Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="es">Explorador para capas de memoria de tipos de datos extraídos de información de depuración DWARF.</li>
       <li xml:lang="gl">Navegador para disposicións de memoria de tipos de datos extraídas de información de depuración de DWARF.</li>
@@ -179,6 +191,7 @@
       <li xml:lang="x-test">xxBrowser for data type memory layouts extracted from DWARF debug information.xx</li>
       <li>Forward and backward dependency viewer.</li>
       <li xml:lang="ca">Visualitzador de les dependències cap endavant i cap enrere.</li>
+      <li xml:lang="ca-valencia">Visualitzador de les dependències cap avant i cap arrere.</li>
       <li xml:lang="en-GB">Forward and backward dependency viewer.</li>
       <li xml:lang="es">Visor de dependencias hacia atrás y hacia adelante.</li>
       <li xml:lang="gl">Visor de dependencias cara adiante e cara atrás.</li>
@@ -196,6 +209,7 @@
     <screenshot type="default">
       <caption>Size treemap view.</caption>
       <caption xml:lang="ca">Vista del mapa d'arbre de la mida.</caption>
+      <caption xml:lang="ca-valencia">Vista del mapa d'arbre de la mida.</caption>
       <caption xml:lang="en-GB">Size treemap view.</caption>
       <caption xml:lang="es">Vista de mapa en árbol de tamaños.</caption>
       <caption xml:lang="gl">Vista de mapa de árbore de tamaños.</caption>
