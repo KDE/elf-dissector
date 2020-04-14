@@ -13,6 +13,7 @@
   <name xml:lang="gl">Disector de ELF</name>
   <name xml:lang="id">ELF Dissector</name>
   <name xml:lang="it">Dissettore ELF</name>
+  <name xml:lang="ko">ELF 분석 도구</name>
   <name xml:lang="nl">ELF-dissector</name>
   <name xml:lang="pl">Dysektor ELF</name>
   <name xml:lang="pt">Análise do ELF</name>
@@ -31,6 +32,7 @@
   <summary xml:lang="gl">Ferramenta de análise estática para ficheiros ELF</summary>
   <summary xml:lang="id">Alat analisis statik untuk file-file ELF</summary>
   <summary xml:lang="it">Strumento di analisi statica per i file ELF</summary>
+  <summary xml:lang="ko">ELF 파일 정적 분석 도구</summary>
   <summary xml:lang="nl">Statisch analysehulpmiddel voor ELF-bestanden</summary>
   <summary xml:lang="pl">Narzędzie analizy statycznej dla plików ELF</summary>
   <summary xml:lang="pt">Ferramenta de análise estática de ficheiros ELF</summary>
@@ -46,6 +48,7 @@
     <p xml:lang="gl">O disector de ELF é útil se necesita realizar algunha das seguintes tarefas:</p>
     <p xml:lang="id">ELF Dissector berguna jika kamu membutuhkan untuk melakukan satu atau lebih pada tugas-tugas berikut ini:</p>
     <p xml:lang="it">Il dissettore ELF è utile se hai bisogno di effettuare una o più delle seguenti attività:</p>
+    <p xml:lang="ko">ELF 분석 도구는  다음 작업을 수행할 때 유용합니다:</p>
     <p xml:lang="nl">ELF Dissector is nuttig als u een of meer van de volgende taken moet doen:</p>
     <p xml:lang="pl">Dysektor ELF jest przydatny jako:</p>
     <p xml:lang="pt">A Análise do ELF é útil se precisar de fazer uma ou mais das seguintes tarefas:</p>
@@ -61,6 +64,7 @@
       <li xml:lang="gl">Inspeccionar dependencias cara adiante e cara atrás, a nivel de bibliotecas e de símbolos.</li>
       <li xml:lang="id">Mengamati maju dan mundur ketergantungan, pada level simbol dan pustaka.</li>
       <li xml:lang="it">Controllare le dipendenze in avanti e all'indietro, a livello di librerie e di simboli.</li>
+      <li xml:lang="ko">라이브러리 및 기호 단계에서 전방 및 후방 의존성 확인.</li>
       <li xml:lang="nl">Inspecteren van voorwaartse en achterwaartse afhankelijkheden, op niveau van bibliotheek en symbool.</li>
       <li xml:lang="pl">Przeglądanie zależności w przód i w tył na poziomie biblioteki i symboli.</li>
       <li xml:lang="pt">Inspecção das dependências anteriores e posteriores, ao nível da biblioteca e do símbolo.</li>
@@ -75,6 +79,7 @@
       <li xml:lang="gl">Identificar colos de botella en tempo de carga como construtores estáticos custosos ou traslados excesivos.</li>
       <li xml:lang="id">Mengidentifikasi hambatan kinerja waktu-muat seperti konstruktor statis mahal atau relokasi berlebihan.</li>
       <li xml:lang="it">Identificare i colli di bottiglia nelle prestazioni del tempo di caricamento, quali costruttori statici pesanti o rilocazioni eccessive.</li>
+      <li xml:lang="ko">비용이 많이 드는 정적 생성자나 너무 잦은 재할당 등 로드 시간 성능 병목 확인.</li>
       <li xml:lang="nl">Identificeren van prestatie-bottlenecks bij laden zoals dure statische constructors of overdreven relocaties.</li>
       <li xml:lang="pl">Rozpoznawanie wąskich gardeł przy wczytywaniu, takich jak kosztowne statyczne konstruktory lub nadmierne relokacje.</li>
       <li xml:lang="pt">Identificação de constrangimentos de performance no carregamento, como construtores estáticos dispendiosos ou realocações excessivas.</li>
@@ -89,6 +94,7 @@
       <li xml:lang="gl">Análise de tamaño de ficheiros ELF.</li>
       <li xml:lang="id">Ukuran perprofilan file-file ELF.</li>
       <li xml:lang="it">Profilare le dimensioni dei file ELF.</li>
+      <li xml:lang="ko">ELF 파일 크기 프로필 계산.</li>
       <li xml:lang="nl">Profileren van grootte van ELF-bestanden.</li>
       <li xml:lang="pl">Profilowanie rozmiaru plików ELF.</li>
       <li xml:lang="pt">Análise do tamanho dos ficheiros ELF.</li>
@@ -106,6 +112,7 @@
     <p xml:lang="gl">Funcionalidades principais:</p>
     <p xml:lang="id">Fitur utama:</p>
     <p xml:lang="it">Funzionalità principali:</p>
+    <p xml:lang="ko">주 기능:</p>
     <p xml:lang="nl">Hoofdkenmerken:</p>
     <p xml:lang="pl">Główne możliwości:</p>
     <p xml:lang="pt">Funcionalidades principais:</p>
@@ -126,6 +133,7 @@
       <li xml:lang="gl">Navegador de estruturas ELF.</li>
       <li xml:lang="id">Penelusur struktur ELF.</li>
       <li xml:lang="it">Navigatore della struttura ELF.</li>
+      <li xml:lang="ko">ELF 구조 탐색기.</li>
       <li xml:lang="nl">ELF-structuurbrowser.</li>
       <li xml:lang="pl">Przeglądarka struktury ELF.</li>
       <li xml:lang="pt">Navegação pela estrutura ELF.</li>
@@ -140,6 +148,7 @@
       <li xml:lang="gl">Visualización de mapa de árbore do tamaño das distintas partes dun ficheiro ELF.</li>
       <li xml:lang="id">Visualisasi peta hierarki dari ukuran berbagai bagian file ELF.</li>
       <li xml:lang="it">Visualizzazione della mappa ad albero delle dimensioni delle varie parti di un file ELF.</li>
+      <li xml:lang="ko">ELF 파일의 다양한 부분 크기를 트리 구조로 표시합니다.</li>
       <li xml:lang="nl">Visualisatie van boomstructuur van de grootte van de verschillende onderdelen van een ELF-bestand.</li>
       <li xml:lang="pl">Obrazowanie drzewiastej mapy rozmiaru różnych części plików ELF.</li>
       <li xml:lang="pt">Visualização em árvore do tamanho das diversas componentes de um ficheiro ELF.</li>
@@ -154,6 +163,7 @@
       <li xml:lang="gl">Mapa de traslados.</li>
       <li xml:lang="id">Relokasi heatmap.</li>
       <li xml:lang="it">Mappa di calore delle rilocazioni.</li>
+      <li xml:lang="ko">재할당 히트맵.</li>
       <li xml:lang="nl">Relocatie heatmap.</li>
       <li xml:lang="pl">Gorąca mapa relokacji.</li>
       <li xml:lang="pt">'Mapa de calor' das realocações.</li>
@@ -169,6 +179,7 @@
       <li xml:lang="gl">Desensamblador incorporado para x86 e AArch64.</li>
       <li xml:lang="id">Bawaan disassembler untuk x86 dan AArch64.</li>
       <li xml:lang="it">Disassemblatore incorporato per x86 e per AArch64.</li>
+      <li xml:lang="ko">내장 x86 및 AArch64 디스어셈블러.</li>
       <li xml:lang="nl">Ingebouwde disassembler voor x86 en AArch64.</li>
       <li xml:lang="pl">Wbudowany dysasembler dla x86 oraz AArch64.</li>
       <li xml:lang="pt">Descodificação para Assembly incorporada para o x86 e o AArch64.</li>
@@ -183,6 +194,7 @@
       <li xml:lang="gl">Navegador para disposicións de memoria de tipos de datos extraídas de información de depuración de DWARF.</li>
       <li xml:lang="id">Penelusur untuk tataletak memori tipe data yang diekstrak dari informasi debug DWARF.</li>
       <li xml:lang="it">Navigatore degli schemi di memoria dei tipi di dato estratti dalle informazioni di debug DWARF.</li>
+      <li xml:lang="ko">DWARF 디버그 정보에서 추출한 자료형별 메모리 레이아웃 탐색기.</li>
       <li xml:lang="nl">Browser voor indeling geheugen van het type gegevens uitgepakt uit DWARF-debuginformatie.</li>
       <li xml:lang="pl">Przeglądarka układów rodzajów danych w pamięci wydobytych z danych diagnostycznych DWARF</li>
       <li xml:lang="pt">Navegação pelos diferentes formatos de memória para dados extraídos a partir da informação de depuração DWARF.</li>
@@ -197,6 +209,7 @@
       <li xml:lang="gl">Visor de dependencias cara adiante e cara atrás.</li>
       <li xml:lang="id">Penampil ketergantungan maju dan mundur</li>
       <li xml:lang="it">Visualizzatore di dipendenze in avanti e all'indietro.</li>
+      <li xml:lang="ko">전방 및 후방 의존성 뷰어.</li>
       <li xml:lang="nl">Viewer voor voorwaartse en achterwaartse afhankelijkheid.</li>
       <li xml:lang="pl">Przeglądarka zależności w przód i w tył.</li>
       <li xml:lang="pt">Visualização das dependências anteriores e posteriores.</li>
@@ -215,6 +228,7 @@
       <caption xml:lang="gl">Vista de mapa de árbore de tamaños.</caption>
       <caption xml:lang="id">Ukuran tampilan peta-hierarki.</caption>
       <caption xml:lang="it">Visualizzatore della mappa ad albero delle dimensioni.</caption>
+      <caption xml:lang="ko">크기 트리 구조 보기.</caption>
       <caption xml:lang="nl">Grootte weergave boomstructuurmap.</caption>
       <caption xml:lang="pl">Widok drzewiastej mapy rozmiaru.</caption>
       <caption xml:lang="pt">Dimensionamento da área da árvore.</caption>
