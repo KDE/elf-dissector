@@ -38,6 +38,7 @@
   <summary xml:lang="nl">Statisch analysehulpmiddel voor ELF-bestanden</summary>
   <summary xml:lang="pl">Narzędzie analizy statycznej dla plików ELF</summary>
   <summary xml:lang="pt">Ferramenta de análise estática de ficheiros ELF</summary>
+  <summary xml:lang="pt-BR">Ferramenta de análise estática para arquivos ELF</summary>
   <summary xml:lang="sv">Statiskt analysverktyg av ELF-filer</summary>
   <summary xml:lang="uk">Інструмент статичного аналізу файлів ELF</summary>
   <summary xml:lang="x-test">xxStatic analysis tool for ELF filesxx</summary>
@@ -55,6 +56,7 @@
     <p xml:lang="nl">ELF Dissector is nuttig als u een of meer van de volgende taken moet doen:</p>
     <p xml:lang="pl">Dysektor ELF jest przydatny jako:</p>
     <p xml:lang="pt">A Análise do ELF é útil se precisar de fazer uma ou mais das seguintes tarefas:</p>
+    <p xml:lang="pt-BR">O ELF Dissector é útil se você precisa para fazer uma ou mais das seguintes tarefas:</p>
     <p xml:lang="sv">ELF-dissektor är användbar om du behöver utföra en eller fler av följande uppgifter:</p>
     <p xml:lang="uk">ELF Dissector стане у пригоді, коли вам захочеться виконати одне з таких завдань:</p>
     <p xml:lang="x-test">xxELF Dissector is useful if you need to do one or more of the following tasks:xx</p>
@@ -145,6 +147,7 @@
       <li xml:lang="nl">ELF-structuurbrowser.</li>
       <li xml:lang="pl">Przeglądarka struktury ELF.</li>
       <li xml:lang="pt">Navegação pela estrutura ELF.</li>
+      <li xml:lang="pt-BR">Navegador de estrutura ELF.</li>
       <li xml:lang="sv">ELF-strukturbläddrare.</li>
       <li xml:lang="uk">Навігація структурою ELF.</li>
       <li xml:lang="x-test">xxELF structure browser.xx</li>
