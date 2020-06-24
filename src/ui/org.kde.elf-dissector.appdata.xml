@@ -21,6 +21,7 @@
   <name xml:lang="pt-BR">Dissecador ELF</name>
   <name xml:lang="ru">ELF Dissector</name>
   <name xml:lang="sk">ELF Dissector</name>
+  <name xml:lang="sl">ELF Dissector</name>
   <name xml:lang="sv">ELF-dissektor</name>
   <name xml:lang="uk">ELF Dissector</name>
   <name xml:lang="x-test">xxELF Dissectorxx</name>
@@ -39,6 +40,7 @@
   <summary xml:lang="pl">Narzędzie analizy statycznej dla plików ELF</summary>
   <summary xml:lang="pt">Ferramenta de análise estática de ficheiros ELF</summary>
   <summary xml:lang="pt-BR">Ferramenta de análise estática para arquivos ELF</summary>
+  <summary xml:lang="sl">Orodje za statično analizo datotek ELF</summary>
   <summary xml:lang="sv">Statiskt analysverktyg av ELF-filer</summary>
   <summary xml:lang="uk">Інструмент статичного аналізу файлів ELF</summary>
   <summary xml:lang="x-test">xxStatic analysis tool for ELF filesxx</summary>
@@ -57,6 +59,7 @@
     <p xml:lang="pl">Dysektor ELF jest przydatny jako:</p>
     <p xml:lang="pt">A Análise do ELF é útil se precisar de fazer uma ou mais das seguintes tarefas:</p>
     <p xml:lang="pt-BR">O ELF Dissector é útil se você precisa para fazer uma ou mais das seguintes tarefas:</p>
+    <p xml:lang="sl">ELF Dissector je uporaben, če morate opraviti eno ali več naslednjih nalog:</p>
     <p xml:lang="sv">ELF-dissektor är användbar om du behöver utföra en eller fler av följande uppgifter:</p>
     <p xml:lang="uk">ELF Dissector стане у пригоді, коли вам захочеться виконати одне з таких завдань:</p>
     <p xml:lang="x-test">xxELF Dissector is useful if you need to do one or more of the following tasks:xx</p>
@@ -74,6 +77,7 @@
       <li xml:lang="nl">Inspecteren van voorwaartse en achterwaartse afhankelijkheden, op niveau van bibliotheek en symbool.</li>
       <li xml:lang="pl">Przeglądanie zależności w przód i w tył na poziomie biblioteki i symboli.</li>
       <li xml:lang="pt">Inspecção das dependências anteriores e posteriores, ao nível da biblioteca e do símbolo.</li>
+      <li xml:lang="sl">Pregledovanje odvisnosti naprej in nazaj na ravni knjižnice in simbolov.</li>
       <li xml:lang="sv">Inspektera framåt- och bakåtberoenden på biblioteks- och symbolnivå.</li>
       <li xml:lang="uk">Інспектування прямих і зворотних залежностей на рівні бібліотек і символів.</li>
       <li xml:lang="x-test">xxInspecting forward and backward dependencies, on library and symbol level.xx</li>
@@ -90,6 +94,7 @@
       <li xml:lang="nl">Identificeren van prestatie-bottlenecks bij laden zoals dure statische constructors of overdreven relocaties.</li>
       <li xml:lang="pl">Rozpoznawanie wąskich gardeł przy wczytywaniu, takich jak kosztowne statyczne konstruktory lub nadmierne relokacje.</li>
       <li xml:lang="pt">Identificação de constrangimentos de performance no carregamento, como construtores estáticos dispendiosos ou realocações excessivas.</li>
+      <li xml:lang="sl">Prepoznavanje ozkih grl v obremenitvi, kot so dragi statični konstruktorji ali prekomerne premestitve.</li>
       <li xml:lang="sv">Identifiera prestandaflaskhalsar vid laddning, såsom kostsamma statiska konstruktorer eller överdrivna relokeringar.</li>
       <li xml:lang="uk">Визначення вузьких місць у швидкодії під час завантаження, зокрема вартісних статичних конструкторів або надмірних пересувань даних.</li>
       <li xml:lang="x-test">xxIdentifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.xx</li>
@@ -106,6 +111,7 @@
       <li xml:lang="nl">Profileren van grootte van ELF-bestanden.</li>
       <li xml:lang="pl">Profilowanie rozmiaru plików ELF.</li>
       <li xml:lang="pt">Análise do tamanho dos ficheiros ELF.</li>
+      <li xml:lang="sl">Profiliranje velikosti iz datotek ELF.</li>
       <li xml:lang="sv">Storleksprofilering av ELF-filer.</li>
       <li xml:lang="uk">Профілювання за розміром файлів ELF.</li>
       <li xml:lang="x-test">xxSize profiling of ELF files.xx</li>
@@ -128,6 +134,7 @@
     <p xml:lang="pt-BR">Principais recursos:</p>
     <p xml:lang="ru">Основные возможности:</p>
     <p xml:lang="sk">Hlavné funkcie:</p>
+    <p xml:lang="sl">Glavne možnosti:</p>
     <p xml:lang="sv">Huvudfunktionalitet:</p>
     <p xml:lang="uk">Основні можливості:</p>
     <p xml:lang="x-test">xxMain features:xx</p>
@@ -148,6 +155,7 @@
       <li xml:lang="pl">Przeglądarka struktury ELF.</li>
       <li xml:lang="pt">Navegação pela estrutura ELF.</li>
       <li xml:lang="pt-BR">Navegador de estrutura ELF.</li>
+      <li xml:lang="sl">Brskalnik ELF struktur.</li>
       <li xml:lang="sv">ELF-strukturbläddrare.</li>
       <li xml:lang="uk">Навігація структурою ELF.</li>
       <li xml:lang="x-test">xxELF structure browser.xx</li>
@@ -164,6 +172,7 @@
       <li xml:lang="nl">Visualisatie van boomstructuur van de grootte van de verschillende onderdelen van een ELF-bestand.</li>
       <li xml:lang="pl">Obrazowanie drzewiastej mapy rozmiaru różnych części plików ELF.</li>
       <li xml:lang="pt">Visualização em árvore do tamanho das diversas componentes de um ficheiro ELF.</li>
+      <li xml:lang="sl">Vizualna predstavitev drevesne strukture velikosti različnih delov datoteke ELF.</li>
       <li xml:lang="sv">Visualisering av storleken för de olika delarna av en ELF-file med en trädavbildning.</li>
       <li xml:lang="uk">Візуалізація у вигляді деревоподібної структури для розмірів різних частин файла ELF.</li>
       <li xml:lang="x-test">xxTree map visualization of the size of the various parts of an ELF file.xx</li>
@@ -180,6 +189,7 @@
       <li xml:lang="nl">Relocatie heatmap.</li>
       <li xml:lang="pl">Gorąca mapa relokacji.</li>
       <li xml:lang="pt">'Mapa de calor' das realocações.</li>
+      <li xml:lang="sl">Toplotni grafikon premestitev.</li>
       <li xml:lang="sv">Färgdiagram för relokeringar.</li>
       <li xml:lang="uk">«Теплова» карта пересувань.</li>
       <li xml:lang="x-test">xxRelocation heatmap.xx</li>
@@ -197,6 +207,7 @@
       <li xml:lang="nl">Ingebouwde disassembler voor x86 en AArch64.</li>
       <li xml:lang="pl">Wbudowany dysasembler dla x86 oraz AArch64.</li>
       <li xml:lang="pt">Descodificação para Assembly incorporada para o x86 e o AArch64.</li>
+      <li xml:lang="sl">Vgrajen raz-zbirnik za x86 in AArch64.</li>
       <li xml:lang="sv">Inbyggd disassembler för x86 och AArch64.</li>
       <li xml:lang="uk">Вбудований дизасемблер для x86 та AArch64.</li>
       <li xml:lang="x-test">xxBuilt-in disassembler for x86 and AArch64.xx</li>
@@ -213,6 +224,7 @@
       <li xml:lang="nl">Browser voor indeling geheugen van het type gegevens uitgepakt uit DWARF-debuginformatie.</li>
       <li xml:lang="pl">Przeglądarka układów rodzajów danych w pamięci wydobytych z danych diagnostycznych DWARF</li>
       <li xml:lang="pt">Navegação pelos diferentes formatos de memória para dados extraídos a partir da informação de depuração DWARF.</li>
+      <li xml:lang="sl">Brskalnik za postavitve pomnilniških struktur podatkov, pridobljeno iz podatkov o odpravljanju napak DWARF.</li>
       <li xml:lang="sv">Bläddrare för minneslayout av datatyper extraherad från DWARF avlusningsinformation.</li>
       <li xml:lang="uk">Навігатор компонуваннями пам'яті для типів даних на основі діагностичних даних DWARF.</li>
       <li xml:lang="x-test">xxBrowser for data type memory layouts extracted from DWARF debug information.xx</li>
@@ -229,6 +241,7 @@
       <li xml:lang="nl">Viewer voor voorwaartse en achterwaartse afhankelijkheid.</li>
       <li xml:lang="pl">Przeglądarka zależności w przód i w tył.</li>
       <li xml:lang="pt">Visualização das dependências anteriores e posteriores.</li>
+      <li xml:lang="sl">Vpogledovalnik odvisnosti naprej in nazaj.</li>
       <li xml:lang="sv">Visning av framåt- och bakåtberoenden.</li>
       <li xml:lang="uk">Прямий і зворотний перегляд залежностей.</li>
       <li xml:lang="x-test">xxForward and backward dependency viewer.xx</li>
@@ -249,6 +262,7 @@
       <caption xml:lang="nl">Grootte weergave boomstructuurmap.</caption>
       <caption xml:lang="pl">Widok drzewiastej mapy rozmiaru.</caption>
       <caption xml:lang="pt">Dimensionamento da área da árvore.</caption>
+      <caption xml:lang="sl">Pogled v drevesno strukturo velikosti.</caption>
       <caption xml:lang="sv">Ändra storlek på trädavbildningen.</caption>
       <caption xml:lang="uk">Перегляд ієрархічної карти розмірів.</caption>
       <caption xml:lang="x-test">xxSize treemap view.xx</caption>
