@@ -213,7 +213,7 @@
       <li xml:lang="x-test">xxBuilt-in disassembler for x86 and AArch64.xx</li>
       <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="ca">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
-      <li xml:lang="ca-valencia">Navegador de les disposicions de memòria per tipus de dada extretes de la informació de depuració DWARF.</li>
+      <li xml:lang="ca-valencia">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
       <li xml:lang="en-GB">Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="es">Explorador para capas de memoria de tipos de datos extraídos de información de depuración DWARF.</li>
       <li xml:lang="fr">Navigateur pour les profils mémoire associés aux types de données, qui ont été extraits des informations de débogage « DWARF ».</li>
