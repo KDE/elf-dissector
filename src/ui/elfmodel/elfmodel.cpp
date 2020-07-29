@@ -231,7 +231,11 @@ QUrl ElfModel::urlForIndex(const QModelIndex& index) const
 QModelIndex ElfModel::indexForUrl(const QUrl& url) const
 {
     Q_ASSERT(url.scheme() == QLatin1String("elfmodel"));
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
     const auto rows = url.path().split(QLatin1Char('/'), QString::SkipEmptyParts);
+#else
+    const auto rows = url.path().split(QLatin1Char('/'), Qt::SkipEmptyParts);
+#endif
 
     QModelIndex idx;
     for (const auto &r : rows) {
