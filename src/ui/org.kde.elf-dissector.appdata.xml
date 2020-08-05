@@ -229,8 +229,8 @@
       <li xml:lang="uk">Навігатор компонуваннями пам'яті для типів даних на основі діагностичних даних DWARF.</li>
       <li xml:lang="x-test">xxBrowser for data type memory layouts extracted from DWARF debug information.xx</li>
       <li>Forward and backward dependency viewer.</li>
-      <li xml:lang="ca">Visualitzador de les dependències cap endavant i cap enrere.</li>
-      <li xml:lang="ca-valencia">Visualitzador de les dependències cap avant i cap arrere.</li>
+      <li xml:lang="ca">Visor de les dependències cap endavant i cap enrere.</li>
+      <li xml:lang="ca-valencia">Visor de les dependències cap avant i cap arrere.</li>
       <li xml:lang="en-GB">Forward and backward dependency viewer.</li>
       <li xml:lang="es">Visor de dependencias hacia atrás y hacia adelante.</li>
       <li xml:lang="fr">Afficheur des dépendances aval et amont.</li>
