@@ -8,6 +8,7 @@
   <name xml:lang="ca-valencia">ELF Dissector</name>
   <name xml:lang="cs">ELF Dissector</name>
   <name xml:lang="de">ELF Dissector</name>
+  <name xml:lang="el">Ανατόμος ELF</name>
   <name xml:lang="en-GB">ELF Dissector</name>
   <name xml:lang="es">Disector ELF</name>
   <name xml:lang="fr">Analyseur ELF</name>
@@ -29,6 +30,7 @@
   <summary xml:lang="ca">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="ca-valencia">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="de">Statische Analyse für ELF-Dateien</summary>
+  <summary xml:lang="el">Εργαλείο στατικής ανάλυσης για ELF αρχεία</summary>
   <summary xml:lang="en-GB">Static analysis tool for ELF files</summary>
   <summary xml:lang="es">Herramienta de análisis estático para archivos ELF</summary>
   <summary xml:lang="fr">Outil d'analyse statique pour fichiers ELF</summary>
@@ -48,6 +50,7 @@
     <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="ca">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
     <p xml:lang="ca-valencia">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
+    <p xml:lang="el">Ο ανατόμος ELF είναι χρήσιμος αν θέλετε να κάνετε μία ή περισσότερες από τις ακόλουθες εργασίες:</p>
     <p xml:lang="en-GB">ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="es">El disector ELF es útil cuando necesita hacer una o más de las siguientes tareas:</p>
     <p xml:lang="fr">L'analyseur ELF est utile quand vous avez besoin de réaliser une ou plusieurs de tâches suivantes :</p>
@@ -67,6 +70,7 @@
       <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="ca">Inspeccionar les dependències cap endavant i cap enrere, a nivell de biblioteca i símbols.</li>
       <li xml:lang="ca-valencia">Inspeccionar les dependències cap avant i cap arrere, a nivell de biblioteca i símbols.</li>
+      <li xml:lang="el">Επιθεώρηση προς τα εμπρός και προς τα πίσω εξαρτήσεων, σε επίπεδο βιβλιοθηκών και συμβόλων.</li>
       <li xml:lang="en-GB">Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="es">Inspeccionar dependencias adelante y atrás a nivel de biblioteca y símbolos.</li>
       <li xml:lang="fr">Inspection en cours des dépendances aval et amont, au niveau « bibliothèque » ou « symbole ».</li>
@@ -84,6 +88,7 @@
       <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="ca">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocacions excessives.</li>
       <li xml:lang="ca-valencia">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocacions excessives.</li>
+      <li xml:lang="el">Ταυτοποίηση συμφορήσεων στην απόδοση κατά τη φόρτωση όπως στατικούς constructors με υπερκατανάλωση πόρων ή εκτεταμένες μεταθέσεις.</li>
       <li xml:lang="en-GB">Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="es">Identificar cuellos de botella de rendimiento en tiempo de carga, como constructores estáticos costosos o excesivas reubicaciones.</li>
       <li xml:lang="fr">Identification en cours des goulots d'étranglement en performances pour les temps de chargement, tels que constructeurs statiques conséquents ou des déplacements excessifs.</li>
@@ -101,6 +106,7 @@
       <li>Size profiling of ELF files.</li>
       <li xml:lang="ca">Anàlisi del rendiment de mida dels fitxers ELF.</li>
       <li xml:lang="ca-valencia">Anàlisi del rendiment de mida dels fitxers ELF.</li>
+      <li xml:lang="el">Προφίλ μεγέθους για ELF αρχεία.</li>
       <li xml:lang="en-GB">Size profiling of ELF files.</li>
       <li xml:lang="es">Análisis de rendimiento de tamaño de archivos ELF.</li>
       <li xml:lang="fr">Profilage de taille pour les fichiers ELF.</li>
@@ -121,6 +127,7 @@
     <p xml:lang="ca-valencia">Característiques principals:</p>
     <p xml:lang="cs">Hlavní vlastnosti:</p>
     <p xml:lang="de">Kernfunktionen:</p>
+    <p xml:lang="el">Κύριες λειτουργίες:</p>
     <p xml:lang="en-GB">Main features:</p>
     <p xml:lang="es">Funciones principales:</p>
     <p xml:lang="fr">Fonctions principales :</p>
@@ -144,6 +151,7 @@
       <li xml:lang="ca-valencia">Explorador de l'estructura ELF.</li>
       <li xml:lang="cs">Prohlížeč struktury ELF.</li>
       <li xml:lang="de">ELF-Strukturbrowser.</li>
+      <li xml:lang="el">Περιηγητής δομής ELF.</li>
       <li xml:lang="en-GB">ELF structure browser.</li>
       <li xml:lang="es">Explorador de estructura ELF.</li>
       <li xml:lang="fr">Navigateur de structure ELF.</li>
@@ -162,6 +170,7 @@
       <li>Tree map visualization of the size of the various parts of an ELF file.</li>
       <li xml:lang="ca">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
       <li xml:lang="ca-valencia">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
+      <li xml:lang="el">Αναπαράσταση δενδρικού χάρτη μεγέθους των διαφόρων τμημάτων ενός αρχείου ELF.</li>
       <li xml:lang="en-GB">Tree map visualisation of the size of the various parts of an ELF file.</li>
       <li xml:lang="es">Visualización en mapa de árbol del tamaño de las distintas partes de un archivo ELF.</li>
       <li xml:lang="fr">Affichage par arborescence de la taille des différentes parties d'un fichier ELF.</li>
@@ -179,6 +188,7 @@
       <li>Relocation heatmap.</li>
       <li xml:lang="ca">Mapa de calor de les relocacions.</li>
       <li xml:lang="ca-valencia">Mapa de calor de les relocacions.</li>
+      <li xml:lang="el">Χάρτης μετάθεσης.</li>
       <li xml:lang="en-GB">Relocation heatmap.</li>
       <li xml:lang="es">Mapa de calor de reubicaciones.</li>
       <li xml:lang="fr">Carte des déplacements.</li>
@@ -197,6 +207,7 @@
       <li xml:lang="ca">Desassemblador incorporat per a x86 i AArch64.</li>
       <li xml:lang="ca-valencia">Desassemblador incorporat per a x86 i AArch64.</li>
       <li xml:lang="de">Eingebauter Disassembler für x86 und AArch64.</li>
+      <li xml:lang="el">Ενσωματωμένος αποσυναρμολογητής για x86 και AArch64.</li>
       <li xml:lang="en-GB">Built-in disassembler for x86 and AArch64.</li>
       <li xml:lang="es">Desensamblador integrado para x86 y AArch64.</li>
       <li xml:lang="fr">Dé-assembleur intégré pour processeurs « x86 » et « AArch64 ».</li>
@@ -214,6 +225,7 @@
       <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="ca">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
       <li xml:lang="ca-valencia">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
+      <li xml:lang="el">Περιηγητής για διατάξεις μνήμης τύπων δεδομένων που εξάγονται από πληροφορίες αποσφαλμάτωσης DWARF.</li>
       <li xml:lang="en-GB">Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="es">Explorador para capas de memoria de tipos de datos extraídos de información de depuración DWARF.</li>
       <li xml:lang="fr">Navigateur pour les profils mémoire associés aux types de données, qui ont été extraits des informations de débogage « DWARF ».</li>
@@ -231,6 +243,7 @@
       <li>Forward and backward dependency viewer.</li>
       <li xml:lang="ca">Visor de les dependències cap endavant i cap enrere.</li>
       <li xml:lang="ca-valencia">Visor de les dependències cap avant i cap arrere.</li>
+      <li xml:lang="el">Προβολή προς τα εμπρός και προς τα πίσω εξαρτήσεων.</li>
       <li xml:lang="en-GB">Forward and backward dependency viewer.</li>
       <li xml:lang="es">Visor de dependencias hacia atrás y hacia adelante.</li>
       <li xml:lang="fr">Afficheur des dépendances aval et amont.</li>
@@ -252,6 +265,7 @@
       <caption>Size treemap view.</caption>
       <caption xml:lang="ca">Vista del mapa d'arbre de la mida.</caption>
       <caption xml:lang="ca-valencia">Vista del mapa d'arbre de la mida.</caption>
+      <caption xml:lang="el">Προβολή δενδρικού χάρτη μεγέθους. </caption>
       <caption xml:lang="en-GB">Size treemap view.</caption>
       <caption xml:lang="es">Vista de mapa en árbol de tamaños.</caption>
       <caption xml:lang="fr">Dimensionner l'affichage en arborescence.</caption>
