@@ -175,7 +175,7 @@
       <li xml:lang="es">Visualización en mapa de árbol del tamaño de las distintas partes de un archivo ELF.</li>
       <li xml:lang="fr">Affichage par arborescence de la taille des différentes parties d'un fichier ELF.</li>
       <li xml:lang="gl">Visualización de mapa de árbore do tamaño das distintas partes dun ficheiro ELF.</li>
-      <li xml:lang="id">Visualisasi peta hierarki dari ukuran berbagai bagian file ELF.</li>
+      <li xml:lang="id">Visualisasi peta ranting dari ukuran berbagai bagian file ELF.</li>
       <li xml:lang="it">Visualizzazione della mappa ad albero delle dimensioni delle varie parti di un file ELF.</li>
       <li xml:lang="ko">ELF 파일의 다양한 부분 크기를 트리 구조로 표시합니다.</li>
       <li xml:lang="nl">Visualisatie van boomstructuur van de grootte van de verschillende onderdelen van een ELF-bestand.</li>
@@ -270,7 +270,7 @@
       <caption xml:lang="es">Vista de mapa en árbol de tamaños.</caption>
       <caption xml:lang="fr">Dimensionner l'affichage en arborescence.</caption>
       <caption xml:lang="gl">Vista de mapa de árbore de tamaños.</caption>
-      <caption xml:lang="id">Ukuran tampilan peta-hierarki.</caption>
+      <caption xml:lang="id">Ukuran tampilan peta-ranting.</caption>
       <caption xml:lang="it">Visualizzatore della mappa ad albero delle dimensioni.</caption>
       <caption xml:lang="ko">크기 트리 구조 보기.</caption>
       <caption xml:lang="nl">Grootte weergave boomstructuurmap.</caption>
