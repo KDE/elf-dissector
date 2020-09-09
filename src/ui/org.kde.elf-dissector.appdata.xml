@@ -13,6 +13,7 @@
   <name xml:lang="es">Disector ELF</name>
   <name xml:lang="fr">Analyseur ELF</name>
   <name xml:lang="gl">Disector de ELF</name>
+  <name xml:lang="ia">ELF Dissector</name>
   <name xml:lang="id">ELF Dissector</name>
   <name xml:lang="it">Dissettore ELF</name>
   <name xml:lang="ko">ELF 분석 도구</name>
@@ -35,6 +36,7 @@
   <summary xml:lang="es">Herramienta de análisis estático para archivos ELF</summary>
   <summary xml:lang="fr">Outil d'analyse statique pour fichiers ELF</summary>
   <summary xml:lang="gl">Ferramenta de análise estática para ficheiros ELF</summary>
+  <summary xml:lang="ia">Instrumento de analysis static per files ELF</summary>
   <summary xml:lang="id">Alat analisis statik untuk file-file ELF</summary>
   <summary xml:lang="it">Strumento di analisi statica per i file ELF</summary>
   <summary xml:lang="ko">ELF 파일 정적 분석 도구</summary>
@@ -55,6 +57,7 @@
     <p xml:lang="es">El disector ELF es útil cuando necesita hacer una o más de las siguientes tareas:</p>
     <p xml:lang="fr">L'analyseur ELF est utile quand vous avez besoin de réaliser une ou plusieurs de tâches suivantes :</p>
     <p xml:lang="gl">O disector de ELF é útil se necesita realizar algunha das seguintes tarefas:</p>
+    <p xml:lang="ia">Elf Dissector es utile se tu necessita facer un o plus del cargas sequente:</p>
     <p xml:lang="id">ELF Dissector berguna jika kamu membutuhkan untuk melakukan satu atau lebih pada tugas-tugas berikut ini:</p>
     <p xml:lang="it">Il dissettore ELF è utile se hai bisogno di effettuare una o più delle seguenti attività:</p>
     <p xml:lang="ko">ELF 분석 도구는  다음 작업을 수행할 때 유용합니다:</p>
