@@ -105,6 +105,9 @@ private slots:
 
 	QTest::newRow("initializer list") << "_Z1fP1BIXtl1ALi1EEEE" << (VB << "f(B<A{1}>*)");
 	QTest::newRow("template parameter object") << "_ZTAXtl1ALi1EEE" << (VB << "template parameter object for A{1}");
+
+        QTest::newRow("noexcept") << "_ZSt9__find_ifIPKcN9__gnu_cxx5__ops12_Iter_negateIPDoFiiEEEET_S8_S8_T0_St26random_access_iterator_tag.isra.0"
+            << (VB << "std" << "__find_if" << "__find_if<char const*, __gnu_cxx::__ops::_Iter_negate<int (*)(int) noexcept>>(char const*, char const*, __gnu_cxx::__ops::_Iter_negate<int (*)(int) noexcept>, std::random_access_iterator_tag) [clone .isra.0]");
     }
 
     void testDemangler()

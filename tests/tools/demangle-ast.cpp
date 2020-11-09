@@ -434,7 +434,7 @@ static int handleNameComponent(demangle_component* component)
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
         case DEMANGLE_COMPONENT_NOEXCEPT:
             writeNode("NOEXCEPT");
-            // ??
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
         case DEMANGLE_COMPONENT_THROW_SPEC:
             writeNode("THROW_SPEC");

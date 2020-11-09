@@ -549,6 +549,15 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         }
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
+        case DEMANGLE_COMPONENT_NOEXCEPT:
+        {
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            const auto n = nameParts.takeLast();
+            nameParts.push_back(n + " noexcept");
+            break;
+        }
+#endif
         default:
             qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type << m_mangledName;
     }
