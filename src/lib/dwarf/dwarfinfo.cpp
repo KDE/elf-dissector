@@ -226,6 +226,9 @@ DwarfCuDie* DwarfInfo::compilationUnitForAddress(uint64_t address) const
 DwarfDie* DwarfInfo::dieAtOffset(Dwarf_Off offset) const
 {
     const auto cus = compilationUnits();
+    if (cus.isEmpty())
+        return nullptr;
+
     auto it = std::lower_bound(cus.begin(), cus.end(), offset, [](DwarfDie* lhs, Dwarf_Off rhs) { return lhs->offset() < rhs; });
 
     if (it != cus.end() && (*it)->offset() == offset)

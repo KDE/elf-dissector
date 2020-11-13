@@ -61,6 +61,9 @@ DwarfCuDie* DwarfAddressRanges::compilationUnitForAddress(uint64_t addr) const
         return nullptr;
 
     auto die = m_info->dieAtOffset(offset);
+    if (!die)
+        return nullptr;
+
     assert(die->isCompilationUnit());
     return static_cast<DwarfCuDie*>(die);
 }
