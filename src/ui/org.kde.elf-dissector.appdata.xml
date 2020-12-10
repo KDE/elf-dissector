@@ -189,8 +189,8 @@
       <li xml:lang="uk">Візуалізація у вигляді деревоподібної структури для розмірів різних частин файла ELF.</li>
       <li xml:lang="x-test">xxTree map visualization of the size of the various parts of an ELF file.xx</li>
       <li>Relocation heatmap.</li>
-      <li xml:lang="ca">Mapa de calor de les relocacions.</li>
-      <li xml:lang="ca-valencia">Mapa de calor de les relocacions.</li>
+      <li xml:lang="ca">Gràfic d'intensitat de colors de les relocacions.</li>
+      <li xml:lang="ca-valencia">Gràfic d'intensitat de colors de les relocacions.</li>
       <li xml:lang="el">Χάρτης μετάθεσης.</li>
       <li xml:lang="en-GB">Relocation heatmap.</li>
       <li xml:lang="es">Mapa de calor de reubicaciones.</li>
