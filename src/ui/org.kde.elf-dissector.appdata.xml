@@ -27,6 +27,7 @@
   <name xml:lang="sv">ELF-dissektor</name>
   <name xml:lang="uk">ELF Dissector</name>
   <name xml:lang="x-test">xxELF Dissectorxx</name>
+  <name xml:lang="zh-CN">ELF 解析器</name>
   <summary>Static analysis tool for ELF files</summary>
   <summary xml:lang="ca">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="ca-valencia">Eina d'anàlisi estàtica per als fitxers ELF</summary>
@@ -48,6 +49,7 @@
   <summary xml:lang="sv">Statiskt analysverktyg av ELF-filer</summary>
   <summary xml:lang="uk">Інструмент статичного аналізу файлів ELF</summary>
   <summary xml:lang="x-test">xxStatic analysis tool for ELF filesxx</summary>
+  <summary xml:lang="zh-CN">ELF 文件静态分析工具</summary>
   <description>
     <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="ca">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
@@ -69,6 +71,7 @@
     <p xml:lang="sv">ELF-dissektor är användbar om du behöver utföra en eller fler av följande uppgifter:</p>
     <p xml:lang="uk">ELF Dissector стане у пригоді, коли вам захочеться виконати одне з таких завдань:</p>
     <p xml:lang="x-test">xxELF Dissector is useful if you need to do one or more of the following tasks:xx</p>
+    <p xml:lang="zh-CN">ELF 解析器对于以下任务很有用：</p>
     <ul>
       <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="ca">Inspeccionar les dependències cap endavant i cap enrere, a nivell de biblioteca i símbols.</li>
@@ -88,6 +91,7 @@
       <li xml:lang="sv">Inspektera framåt- och bakåtberoenden på biblioteks- och symbolnivå.</li>
       <li xml:lang="uk">Інспектування прямих і зворотних залежностей на рівні бібліотек і символів.</li>
       <li xml:lang="x-test">xxInspecting forward and backward dependencies, on library and symbol level.xx</li>
+      <li xml:lang="zh-CN">在库和符号级别检查前向和后向依赖。</li>
       <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="ca">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocacions excessives.</li>
       <li xml:lang="ca-valencia">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocacions excessives.</li>
@@ -106,6 +110,7 @@
       <li xml:lang="sv">Identifiera prestandaflaskhalsar vid laddning, såsom kostsamma statiska konstruktorer eller överdrivna relokeringar.</li>
       <li xml:lang="uk">Визначення вузьких місць у швидкодії під час завантаження, зокрема вартісних статичних конструкторів або надмірних пересувань даних.</li>
       <li xml:lang="x-test">xxIdentifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.xx</li>
+      <li xml:lang="zh-CN">查明载入时的性能瓶颈，例如昂贵的静态构造器或者过量的重定位。</li>
       <li>Size profiling of ELF files.</li>
       <li xml:lang="ca">Anàlisi del rendiment de mida dels fitxers ELF.</li>
       <li xml:lang="ca-valencia">Anàlisi del rendiment de mida dels fitxers ELF.</li>
@@ -148,6 +153,7 @@
     <p xml:lang="sv">Huvudfunktionalitet:</p>
     <p xml:lang="uk">Основні можливості:</p>
     <p xml:lang="x-test">xxMain features:xx</p>
+    <p xml:lang="zh-CN">主要功能：</p>
     <ul>
       <li>ELF structure browser.</li>
       <li xml:lang="ca">Explorador de l'estructura ELF.</li>
@@ -170,6 +176,7 @@
       <li xml:lang="sv">ELF-strukturbläddrare.</li>
       <li xml:lang="uk">Навігація структурою ELF.</li>
       <li xml:lang="x-test">xxELF structure browser.xx</li>
+      <li xml:lang="zh-CN">ELF 结构浏览器。</li>
       <li>Tree map visualization of the size of the various parts of an ELF file.</li>
       <li xml:lang="ca">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
       <li xml:lang="ca-valencia">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
@@ -225,6 +232,7 @@
       <li xml:lang="sv">Inbyggd disassembler för x86 och AArch64.</li>
       <li xml:lang="uk">Вбудований дизасемблер для x86 та AArch64.</li>
       <li xml:lang="x-test">xxBuilt-in disassembler for x86 and AArch64.xx</li>
+      <li xml:lang="zh-CN">内置的 x86 和 AArch64 反汇编器。</li>
       <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="ca">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
       <li xml:lang="ca-valencia">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
@@ -261,6 +269,7 @@
       <li xml:lang="sv">Visning av framåt- och bakåtberoenden.</li>
       <li xml:lang="uk">Прямий і зворотний перегляд залежностей.</li>
       <li xml:lang="x-test">xxForward and backward dependency viewer.xx</li>
+      <li xml:lang="zh-CN">前向和后向依赖查看器。</li>
     </ul>
   </description>
   <screenshots>
