@@ -275,23 +275,6 @@
   <screenshots>
     <screenshot type="default">
       <caption>Size treemap views</caption>
-      <caption xml:lang="ca">Vista del mapa d'arbre de la mida</caption>
-      <caption xml:lang="ca-valencia">Vista del mapa d'arbre de la mida.</caption>
-      <caption xml:lang="el">Προβολή δενδρικού χάρτη μεγέθους. </caption>
-      <caption xml:lang="en-GB">Size treemap view.</caption>
-      <caption xml:lang="es">Vista de mapa en árbol de tamaños.</caption>
-      <caption xml:lang="fr">Dimensionner l'affichage en arborescence.</caption>
-      <caption xml:lang="gl">Vista de mapa de árbore de tamaños.</caption>
-      <caption xml:lang="id">Ukuran tampilan peta-ranting.</caption>
-      <caption xml:lang="it">Visualizzatore della mappa ad albero delle dimensioni.</caption>
-      <caption xml:lang="ko">크기 트리 구조 보기.</caption>
-      <caption xml:lang="nl">Grootte weergave boomstructuurmap.</caption>
-      <caption xml:lang="pl">Widok drzewiastej mapy rozmiaru.</caption>
-      <caption xml:lang="pt">Dimensionamento da área da árvore.</caption>
-      <caption xml:lang="sl">Pogled v drevesno strukturo velikosti.</caption>
-      <caption xml:lang="sv">Ändra storlek på trädavbildningen.</caption>
-      <caption xml:lang="uk">Перегляд ієрархічної карти розмірів.</caption>
-      <caption xml:lang="x-test">xxSize treemap view.xx</caption>
       <image type="source">https://cdn.kde.org/screenshots/elf-dissector/elf-dissector-size-treemap.png</image>
     </screenshot>
   </screenshots>
