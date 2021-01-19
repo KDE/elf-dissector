@@ -18,6 +18,7 @@
   <name xml:lang="it">Dissettore ELF</name>
   <name xml:lang="ko">ELF 분석 도구</name>
   <name xml:lang="nl">ELF-dissector</name>
+  <name xml:lang="nn">ELF-dissektor</name>
   <name xml:lang="pl">Dysektor ELF</name>
   <name xml:lang="pt">Análise do ELF</name>
   <name xml:lang="pt-BR">Dissecador ELF</name>
@@ -42,6 +43,7 @@
   <summary xml:lang="it">Strumento di analisi statica per i file ELF</summary>
   <summary xml:lang="ko">ELF 파일 정적 분석 도구</summary>
   <summary xml:lang="nl">Statisch analysehulpmiddel voor ELF-bestanden</summary>
+  <summary xml:lang="nn">Verktøy for statisk analyse av ELF-filer</summary>
   <summary xml:lang="pl">Narzędzie analizy statycznej dla plików ELF</summary>
   <summary xml:lang="pt">Ferramenta de análise estática de ficheiros ELF</summary>
   <summary xml:lang="pt-BR">Ferramenta de análise estática para arquivos ELF</summary>
@@ -144,6 +146,7 @@
     <p xml:lang="it">Funzionalità principali:</p>
     <p xml:lang="ko">주 기능:</p>
     <p xml:lang="nl">Hoofdkenmerken:</p>
+    <p xml:lang="nn">Hovudfunksjonar:</p>
     <p xml:lang="pl">Główne możliwości:</p>
     <p xml:lang="pt">Funcionalidades principais:</p>
     <p xml:lang="pt-BR">Principais recursos:</p>
