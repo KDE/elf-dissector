@@ -135,6 +135,7 @@
       <li xml:lang="sv">Storleksprofilering av ELF-filer.</li>
       <li xml:lang="uk">Профілювання за розміром файлів ELF.</li>
       <li xml:lang="x-test">xxSize profiling of ELF files.xx</li>
+      <li xml:lang="zh-CN">ELF 文件的大小分析</li>
     </ul>
     <p>Main features:</p>
     <p xml:lang="ca">Característiques principals:</p>
@@ -204,6 +205,7 @@
       <li xml:lang="sv">Visualisering av storleken för de olika delarna av en ELF-file med en trädavbildning.</li>
       <li xml:lang="uk">Візуалізація у вигляді деревоподібної структури для розмірів різних частин файла ELF.</li>
       <li xml:lang="x-test">xxTree map visualization of the size of the various parts of an ELF file.xx</li>
+      <li xml:lang="zh-CN">ELF 文件各个部分大小的树形映射可视化。</li>
       <li>Relocation heatmap.</li>
       <li xml:lang="ca">Gràfic d'intensitat de colors de les relocacions.</li>
       <li xml:lang="ca-valencia">Gràfic d'intensitat de colors de les relocacions.</li>
@@ -223,6 +225,7 @@
       <li xml:lang="sv">Färgdiagram för relokeringar.</li>
       <li xml:lang="uk">«Теплова» карта пересувань.</li>
       <li xml:lang="x-test">xxRelocation heatmap.xx</li>
+      <li xml:lang="zh-CN">重定位热图。</li>
       <li>Built-in disassembler for x86 and AArch64.</li>
       <li xml:lang="ca">Desassemblador incorporat per a x86 i AArch64.</li>
       <li xml:lang="ca-valencia">Desassemblador incorporat per a x86 i AArch64.</li>
@@ -263,6 +266,7 @@
       <li xml:lang="sv">Bläddrare för minneslayout av datatyper extraherad från DWARF avlusningsinformation.</li>
       <li xml:lang="uk">Навігатор компонуваннями пам'яті для типів даних на основі діагностичних даних DWARF.</li>
       <li xml:lang="x-test">xxBrowser for data type memory layouts extracted from DWARF debug information.xx</li>
+      <li xml:lang="zh-CN">从 DWARF 调试信息中提取的数据类型内存布局浏览器</li>
       <li>Forward and backward dependency viewer.</li>
       <li xml:lang="ca">Visor de les dependències cap endavant i cap enrere.</li>
       <li xml:lang="ca-valencia">Visor de les dependències cap avant i cap arrere.</li>
@@ -303,6 +307,7 @@
       <caption xml:lang="sv">Ändra storlek på trädavbildningar</caption>
       <caption xml:lang="uk">Перегляд ієрархічної карти розмірів</caption>
       <caption xml:lang="x-test">xxSize treemap viewsxx</caption>
+      <caption xml:lang="zh-CN">大小树状视图</caption>
       <image type="source">https://cdn.kde.org/screenshots/elf-dissector/elf-dissector-size-treemap.png</image>
     </screenshot>
   </screenshots>
