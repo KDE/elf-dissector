@@ -128,7 +128,13 @@ DwarfInfoPrivate::DwarfInfoPrivate(DwarfInfo *qq) :
     objAccessMethods.get_section_count = callback_get_section_count;
     objAccessMethods.get_section_info = callback_get_section_info;
     objAccessMethods.load_section = callback_load_section;
+#ifndef Q_OS_FREEBSD
+    // TODO: check structure fields at cmake or compile time
+    //       rather than ifdeffing on an OS.
+    //
+    // FreeBSD's DWARF.h doesn't have this (separate developments).
     objAccessMethods.relocate_a_section = nullptr;
+#endif
 }
 
 DwarfInfoPrivate::~DwarfInfoPrivate()
