@@ -27,6 +27,8 @@
 
 #include <elf.h>
 
+#include <type_traits>
+
 class DwarfInfoPrivate {
 public:
     DwarfInfoPrivate(DwarfInfo* qq);
@@ -77,14 +79,17 @@ static void callback_dwarf_handler(Dwarf_Error error, Dwarf_Ptr errarg)
 {
     DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(errarg);
 
+    // Ensure that errcore can be converted
+    static_assert( std::is_convertible<Dwarf_Unsigned, unsigned long long>::value, "Incompatible DWARFs" );
+
     const char *errmsg = dwarf_errmsg(error);
     const Dwarf_Unsigned errcode = dwarf_errno(error);
     if (d->elfFile->isSeparateDebugFile()) {
         qWarning("DWARF error in debug file for %s: %s (errno %llu)",
-                 qPrintable(d->elfFile->contentFile()->fileName()), errmsg, errcode);
+                 qPrintable(d->elfFile->contentFile()->fileName()), errmsg, static_cast<unsigned long long>(errcode));
     } else {
         qWarning("DWARF error in %s: %s (errno %llu)",
-                 qPrintable(d->elfFile->fileName()), errmsg, errcode);
+                 qPrintable(d->elfFile->fileName()), errmsg, static_cast<unsigned long long>(errcode));
     }
 
     d->isValid = false;
