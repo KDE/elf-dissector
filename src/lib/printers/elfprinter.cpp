@@ -73,7 +73,9 @@ static const LookupTableEntry<uint32_t> section_type_table[] {
     { SHT_GNU_ATTRIBUTES, "GNU object attributes" },
     { SHT_GNU_HASH, "GNU-style hash table" },
     { SHT_GNU_LIBLIST, "GNU prelink library list" },
+#ifdef SHT_CHECKSUM
     { SHT_CHECKSUM, "checksum for DSO content" },
+#endif
     { SHT_GNU_verdef, "GNU version definition" },
     { SHT_GNU_verneed, "GNU version needs" },
     { SHT_GNU_versym, "GNU version symbol table" }
@@ -133,7 +135,9 @@ static const LookupTableEntry<uint32_t> segment_type_table[] {
     { PT_SHLIB, "Reserved" },
     { PT_PHDR, "Entry for header table itself" },
     { PT_TLS, "Thread-local storage segment" },
+#ifdef PT_NUM
     { PT_NUM, "Number of defined types" },
+#endif
     { PT_GNU_EH_FRAME, "GCC .eh_frame_hdr segment" },
     { PT_GNU_STACK, "Indicates stack executability" },
     { PT_GNU_RELRO, "Read-only after relocation" },
