@@ -29,6 +29,7 @@
 #include <libdwarf.h>
 
 #include <cassert>
+#include <type_traits>
 
 DwarfDie::DwarfDie(Dwarf_Die die, DwarfDie* parent) :
     m_die(die)
@@ -448,16 +449,18 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
         case DW_FORM_data8:
         case DW_FORM_udata:
         {
+            static_assert( std::is_convertible<Dwarf_Unsigned, qulonglong>::value, "Incompatible DWARFs" );
             Dwarf_Unsigned n;
             res = dwarf_formudata(attr, &n, nullptr);
-            value = n;
+            value = static_cast<qulonglong>(n);
             break;
         }
         case DW_FORM_sdata:
         {
+            static_assert( std::is_convertible<Dwarf_Signed, qlonglong>::value, "Incompatible DWARFs" );
             Dwarf_Signed n;
             res = dwarf_formsdata(attr, &n, nullptr);
-            value = n;
+            value = static_cast<qlonglong>(n);
             break;
         }
         case DW_FORM_string:
@@ -488,16 +491,18 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
         }
         case DW_FORM_sec_offset:
         {
+            static_assert( std::is_convertible<Dwarf_Off, qulonglong>::value, "Incompatible DWARFs" );
             Dwarf_Off offset;
             res = dwarf_global_formref(attr, &offset, nullptr);
-            value = offset;
+            value = static_cast<qulonglong>(offset);
             break;
         }
         case DW_FORM_addr:
         {
+            static_assert( std::is_convertible<Dwarf_Addr, qulonglong>::value, "Incompatible DWARFs" );
             Dwarf_Addr addr;
             res = dwarf_formaddr(attr, &addr, nullptr);
-            value = addr;
+            value = static_cast<qulonglong>(addr);
             break;
         }
         case DW_FORM_exprloc:
