@@ -42,6 +42,17 @@ static const NoteType note_types[] {
 
 static const int note_types_size = sizeof(note_types) / sizeof(NoteType);
 
+#ifdef Q_OS_FREEBSD
+// FreeBSD elf-common.h has no ELF_NOTE_OS_* and those are strings, anyway
+
+static const NoteType os_types[] {
+    { 0, ELF_NOTE_FREEBSD },
+    // TODO: is that a sensible value?
+    // TODO: there's also NETBSD, SOLARIS and GNU
+};
+
+
+#else
 #define OS(type) { ELF_NOTE_OS_ ## type, #type }
 
 static const NoteType os_types[] {
@@ -52,6 +63,7 @@ static const NoteType os_types[] {
 };
 
 #undef OS
+#endif
 
 static const int os_types_size = sizeof(note_types) / sizeof(NoteType);
 
