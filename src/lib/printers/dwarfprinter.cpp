@@ -25,7 +25,9 @@
 #include <QString>
 
 #include <libdwarf.h>
+
 #include <cassert>
+#include <type_traits>
 
 const char* DwarfPrinter::virtuality(DwarfVirtuality v)
 {
@@ -38,15 +40,19 @@ const char* DwarfPrinter::virtuality(DwarfVirtuality v)
 
 QByteArray DwarfPrinter::ranges(const DwarfRanges& ranges)
 {
+    
     QByteArray b;
     for (int i = 0; i < ranges.size(); ++i) {
         const auto r = ranges.entry(i);
+        static_assert(std::is_same< decltype(r->dwr_addr1), Dwarf_Addr >::value, "Incompatible DWARFs");
+        static_assert(std::is_same< decltype(r->dwr_addr2), Dwarf_Addr >::value, "Incompatible DWARFs");
+        static_assert( std::is_convertible<Dwarf_Addr, qulonglong>::value, "Incompatible DWARFs" );
         if (r->dwr_type == DW_RANGES_ADDRESS_SELECTION) {
             if (r->dwr_addr2 != 0)
-                b += "base address: 0x" + QByteArray::number(r->dwr_addr2, 16) + ' ';
+                b += "base address: 0x" + QByteArray::number(static_cast<qulonglong>(r->dwr_addr2), 16) + ' ';
         } else {
-            b += "[0x" + QByteArray::number(r->dwr_addr1, 16);
-            b += ", 0x" + QByteArray::number(r->dwr_addr2, 16);
+            b += "[0x" + QByteArray::number(static_cast<qulonglong>(r->dwr_addr1), 16);
+            b += ", 0x" + QByteArray::number(static_cast<qulonglong>(r->dwr_addr2), 16);
             b += "]\n";
         }
     }
