@@ -114,18 +114,23 @@ static const RelocType reloc_types_arm[] {
     RT(R_ARM_GOTPC, "32 bit PC relative offset to GOT"),
     RT(R_ARM_GOT32, "32 bit GOT entry"),
     RT(R_ARM_PLT32, "Deprecated, 32 bit PLT address"),
+#ifdef __GLIBC_PREREQ
 #if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_CALL, "PC relative 24 bit (BL, BLX)"),
     RT(R_ARM_JUMP24, "PC relative 24 bit (B, BL<cond>)"),
     RT(R_ARM_THM_JUMP24, "PC relative 24 bit (Thumb32 B.W)"),
     RT(R_ARM_BASE_ABS, "Adjust by program base"),
 #endif
+#endif
+#ifdef R_ARM_ALU_PCREL_7_0
     RT(R_ARM_ALU_PCREL_7_0, "ALU RCREL 7 0"),
     RT(R_ARM_ALU_PCREL_15_8, "ALU PCREL 15 8"),
     RT(R_ARM_ALU_PCREL_23_15, "ALU RCREL 23 15"),
     RT(R_ARM_LDR_SBREL_11_0, "Program base relative (LDR 11 0)"),
     RT(R_ARM_ALU_SBREL_19_12, "Program base relative (ALU 19 12)"),
     RT(R_ARM_ALU_SBREL_27_20, "Program base relative (ALU 27 20)"),
+#endif
+#ifdef __GLIBC_PREREQ
 #if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_TARGET1, "TARGET1"),
     RT(R_ARM_SBREL31, "Program base relative"),
@@ -194,8 +199,10 @@ static const RelocType reloc_types_arm[] {
     RT(R_ARM_GOTOFF12, "12 bit, GOT entry relative to GOT origin (LDR, STR)"),
     RT(R_ARM_GOTRELAX, "GOTRELAX"),
 #endif
+#endif
     RT(R_ARM_GNU_VTENTRY, "GNU VTENTRY"),
     RT(R_ARM_GNU_VTINHERIT, "GNU VTINHERIT"),
+#ifdef R_ARM_THM_PC11
     RT(R_ARM_THM_PC11, "PC relative & 0xFFE (Thumb16 B)"),
     RT(R_ARM_THM_PC9, "PC relative & 0x1FE (Thumb16 B/B<cond>)"),
     RT(R_ARM_TLS_GD32, "PC-rel 32 bit for global dynamic thread local data"),
@@ -203,28 +210,39 @@ static const RelocType reloc_types_arm[] {
     RT(R_ARM_TLS_LDO32, "32 bit offset relative to TLS block"),
     RT(R_ARM_TLS_IE32, "PC-rel 32 bit for GOT entry of static TLS block offset"),
     RT(R_ARM_TLS_LE32, "32 bit offset relative to static TLS block"),
+#endif
+#ifdef __GLIBC_PREREQ
 #if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_TLS_LDO12, "12 bit relative to TLS block (LDR, STR)"),
     RT(R_ARM_TLS_LE12, "12 bit relative to static TLS block (LDR, STR)"),
     RT(R_ARM_TLS_IE12GP, "12 bit GOT entry relative to GOT origin (LDR)"),
     RT(R_ARM_ME_TOO, "ME TOO"),
 #endif
+#endif
 #ifdef R_ARM_THM_TLS_DESCSEQ
     RT(R_ARM_THM_TLS_DESCSEQ, "TLS DESCSEQ (Thumb)"),
 #endif
+#ifdef __GLIBC_PREREQ
 #if __GLIBC_PREREQ(2, 18)
     RT(R_ARM_THM_TLS_DESCSEQ16, "TLS DESCSEQ16 (Thumb)"),
     RT(R_ARM_THM_TLS_DESCSEQ32, "TLS DESCSEQ32 (Thumb)"),
     RT(R_ARM_THM_GOT_BREL12, "GOT entry relative to GOT origin, 12 bit (Thumb32 LDR)"),
 #endif
+#endif
 #ifdef R_ARM_IRELATIVE
     RT(R_ARM_IRELATIVE, "IRELATIVE"),
 #endif
+#ifdef R_ARM_RXPC25
     RT(R_ARM_RXPC25, "RXPC25"),
+#endif
     RT(R_ARM_RSBREL32, "RSBREL32"),
+#ifdef R_ARM_THM_RPC22
     RT(R_ARM_THM_RPC22, "RPC22 (Thumb)"),
+#endif
     RT(R_ARM_RREL32, "RREL32"),
+#ifdef R_ARM_RABS22
     RT(R_ARM_RABS22, "RABS22"),
+#endif
     RT(R_ARM_RPC24, "RPC24"),
     RT(R_ARM_RBASE, "RBASE")
 };
@@ -237,7 +255,9 @@ static const RelocType reloc_types_x86_64[] {
     RT(R_X86_64_PLT32, "32 bit PLT address"),
     RT(R_X86_64_COPY, "Copy symbol at runtime"),
     RT(R_X86_64_GLOB_DAT, "Create GOT entry"),
+#ifdef R_X86_64_JUMP_SLOT
     RT(R_X86_64_JUMP_SLOT, "Create PLT entry"),
+#endif
     RT(R_X86_64_RELATIVE, "Adjust by program base"),
     RT(R_X86_64_GOTPCREL, "32 bit signed PC relative offset to GOT"),
     RT(R_X86_64_32, "Direct 32 bit zero extended"),
@@ -276,6 +296,7 @@ static const RelocType reloc_types_x86_64[] {
 #ifdef EM_AARCH64
 static const RelocType reloc_types_aarch64[] = {
     RT(R_AARCH64_NONE, "No relocation"),
+#ifdef R_AARCH64_P32_ABS32
     RT(R_AARCH64_P32_ABS32, "Direct 32 bit"),
     RT(R_AARCH64_P32_COPY, "Copy symbol at runtime"),
     RT(R_AARCH64_P32_GLOB_DAT, "Create GOT entry"),
@@ -286,21 +307,25 @@ static const RelocType reloc_types_aarch64[] = {
     RT(R_AARCH64_P32_TLS_TPREL, "TP-relative offset, 32 bit"),
     RT(R_AARCH64_P32_TLSDESC, " TLS Descriptor"),
     RT(R_AARCH64_P32_IRELATIVE, "STT_GNU_IFUNC relocation"),
+#endif
     RT(R_AARCH64_ABS64, "Direct 64 bit"),
     RT(R_AARCH64_ABS32, "Direct 32 bit"),
     RT(R_AARCH64_ABS16, " Direct 16-bit"),
     RT(R_AARCH64_PREL64, "PC-relative 64-bit"),
     RT(R_AARCH64_PREL32, " PC-relative 32-bit"),
     RT(R_AARCH64_PREL16, " PC-relative 16-bit"),
+#ifdef R_AARCH64_MOVW_UABS_G0
     RT(R_AARCH64_MOVW_UABS_G0, "Dir. MOVZ imm. from bits 15:0"),
     RT(R_AARCH64_MOVW_UABS_G0_NC, "Likewise for MOVK; no check"),
     RT(R_AARCH64_MOVW_UABS_G1, "Dir. MOVZ imm. from bits 31:16"),
     RT(R_AARCH64_MOVW_UABS_G1_NC, "Likewise for MOVK; no check"),
     RT(R_AARCH64_MOVW_UABS_G2, "Dir. MOVZ imm. from bits 47:32"),
+#endif
     RT(R_AARCH64_TSTBR14, "PC-rel. TBZ/TBNZ imm. from 15:2"),
     RT(R_AARCH64_CONDBR19, "PC-rel. cond. br. imm. from 20:2"),
     RT(R_AARCH64_JUMP26, "PC-rel. B imm. from bits 27:2"),
     RT(R_AARCH64_CALL26, "Likewise for CALL"),
+#ifdef R_AARCH64_LDST16_ABS_LO12_NC
     RT(R_AARCH64_LDST16_ABS_LO12_NC, "Dir. ADD imm. from bits 11:1"),
     RT(R_AARCH64_LDST32_ABS_LO12_NC, "Likewise for bits 11:2"),
     RT(R_AARCH64_LDST64_ABS_LO12_NC, "Likewise for bits 11:3"),
@@ -399,13 +424,16 @@ static const RelocType reloc_types_aarch64[] = {
     RT(R_AARCH64_TLSLE_LDST128_TPREL_LO12_NC, "Likewise; no check"),
     RT(R_AARCH64_TLSLD_LDST128_DTPREL_LO12, "DTP-rel. LD/ST imm. 11:4"),
     RT(R_AARCH64_TLSLD_LDST128_DTPREL_LO12_NC, "Likewise; no check"),
+#endif
     RT(R_AARCH64_COPY, "Copy symbol at runtime"),
     RT(R_AARCH64_GLOB_DAT, "Create GOT entry"),
     RT(R_AARCH64_JUMP_SLOT, "Create PLT entry"),
     RT(R_AARCH64_RELATIVE, "Adjust by program base"),
+#ifdef R_AARCH64_TLS_DTPMOD
     RT(R_AARCH64_TLS_DTPMOD, "Module number, 64 bit"),
     RT(R_AARCH64_TLS_DTPREL, "Module-relative offset, 64 bit"),
     RT(R_AARCH64_TLS_TPREL, "TP-relative offset, 64 bit"),
+#endif
     RT(R_AARCH64_TLSDESC, "TLS Descriptor"),
     RT(R_AARCH64_IRELATIVE, "STT_GNU_IFUNC relocation"),
 };
