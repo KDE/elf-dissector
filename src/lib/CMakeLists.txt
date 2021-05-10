@@ -67,5 +67,17 @@ target_link_libraries(libelfdissector PUBLIC Qt5::Core PRIVATE Binutils::Iberty 
 if (Capstone_FOUND)
     target_link_libraries(libelfdissector PRIVATE PkgConfig::Capstone)
 endif()
+# Rounabout FreeBSD specialty: binutils internals need libintl,
+# which isn't linked by default because we use the binutils static libs.
+if(CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
+    find_package(Intl REQUIRED)
+    if(Intl_FOUND)
+        if(TARGET Intl::Intl)
+            target_link_libraries(libelfdissector PRIVATE Intl::Intl)
+        else()
+            target_link_libraries(libelfdissector PRIVATE ${Intl_LIBRARIES})
+        endif()
+    endif()
+endif()
 
 add_subdirectory(checks)
