@@ -28,7 +28,8 @@ struct LookupTableEntry
     const char* const label;
 };
 
-// TODO optimize for sorted tables
+// NOTE: the tables don't have to be sorted, so these lookups are linear.
+
 template <typename T, std::size_t N>
 QByteArray lookupLabel(T value, const LookupTableEntry<T> (&lookupTable)[N])
 {
