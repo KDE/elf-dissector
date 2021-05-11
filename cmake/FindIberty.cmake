@@ -11,6 +11,9 @@ find_package_handle_standard_args(Iberty DEFAULT_MSG Iberty_LIBRARY Iberty_INCLU
 set(Binutils_VERSION_MAJOR 2)
 set(Binutils_VERSION_MINOR 22)
 
+set(_old_requires ${CMAKE_REQUIRED_INCLUDES})
+list(APPEND CMAKE_REQUIRED_INCLUDES ${Iberty_INCLUDE_DIR})
+
 check_c_source_compiles("
     #include <demangle.h>
     int main(int argc, char **argv) {
@@ -100,3 +103,5 @@ endif()
 include(FeatureSummary)
 set_package_properties(binutils-devel PROPERTIES URL https://www.gcc.org/
   DESCRIPTION "Development files of binutils.")
+
+set(CMAKE_REQUIRED_INCLUDES ${_old_requires})
