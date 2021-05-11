@@ -105,30 +105,49 @@ private slots:
         QVERIFY(def);
         QCOMPARE(def->versionIndex(), (uint16_t)2);
         QCOMPARE(symbolVersionDefs->definitionForVersionIndex(2), def);
+#ifdef Q_OS_FREEBSD
+        // Both entries have auxiliarySize == 1
+        QCOMPARE(def->auxiliarySize(), 1u);
+        QCOMPARE(def->auxiliaryEntry(0)->name(), "VER1");
+        defV1 = def;
+#else
         if (def->auxiliarySize() == 1)
             defV1 = def;
         else
             defV2 = def;
+#endif
 
         def = symbolVersionDefs->definition(2);
         QVERIFY(def);
         QCOMPARE(def->versionIndex(), (uint16_t)3);
         QCOMPARE(symbolVersionDefs->definitionForVersionIndex(3), def);
+#ifdef Q_OS_FREEBSD
+        // Both entries have auxiliarySize == 1
+        QCOMPARE(def->auxiliarySize(), 1u);
+        QCOMPARE(def->auxiliaryEntry(0)->name(), "VER2");
+        defV2 = def;
+#else
         if (def->auxiliarySize() == 1)
             defV1 = def;
         else
             defV2 = def;
-
+#endif
         QVERIFY(defV1);
         QVERIFY(defV2);
 
+#ifdef Q_OS_FREEBSD
+        QEXPECT_FAIL("", "FreeBSD only 1 auxiliary", Continue);
+#endif
         QCOMPARE(defV2->auxiliarySize(), (uint16_t)2);
         auto defEntry = defV2->auxiliaryEntry(0);
         QVERIFY(defEntry);
         QCOMPARE(defEntry->name(), "VER2");
-        defEntry = defV2->auxiliaryEntry(1);
-        QVERIFY(defEntry);
-        QCOMPARE(defEntry->name(), "VER1");
+        if (defV2->auxiliarySize() > 1)
+        {
+            defEntry = defV2->auxiliaryEntry(1);
+            QVERIFY(defEntry);
+            QCOMPARE(defEntry->name(), "VER1");
+        }
 
         QCOMPARE(defV1->auxiliarySize(), (uint16_t)1);
         defEntry = defV1->auxiliaryEntry(0);
