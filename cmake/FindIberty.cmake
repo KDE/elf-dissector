@@ -84,6 +84,19 @@ if(Binutils_HAVE_DEMANGLE_COMPONENT_TPARM_OBJ)
   set(Binutils_VERSION_MINOR 32)
 endif()
 
+ # we don't really care about that particular define, but about a behavior
+ # difference in demangling, but that is much harder to check for here
+check_c_source_compiles("
+    #include <ctf.h>
+    int main(int argc, char **argv) {
+        return CTF_F_NEWFUNCINFO;
+    }"
+    Binutils_HAVE_CTF_F_NEWFUNCINFO
+)
+if(Binutils_HAVE_CTF_F_NEWFUNCINFO)
+  set(Binutils_VERSION_MINOR 36)
+endif()
+
 include(FeatureSummary)
 set_package_properties(binutils-devel PROPERTIES URL https://www.gcc.org/
   DESCRIPTION "Development files of binutils.")
