@@ -69,6 +69,9 @@ private slots:
         if (f.indexOfSection(".plt") > 0) {
             auto pltSection = f.section<ElfPltSection>(f.indexOfSection(".plt"));
             QVERIFY(pltSection);
+#ifdef Q_OS_FREEBSD
+            QEXPECT_FAIL("", "FreeBSD no plt entries", Continue);
+#endif
             QVERIFY(pltSection->header()->entryCount() > 0);
             QVERIFY(pltSection->gotSection());
             for (uint i = 1; i < pltSection->header()->entryCount(); ++i) {
@@ -101,7 +104,12 @@ private slots:
             }
         }
 
+#ifdef Q_OS_FREEBSD
+        // Doesn't seem to have a buildId (w/ clang, anyway)
+        QVERIFY(f.buildId().isEmpty());
+#else
         QVERIFY(f.buildId().size() >= 16);
+#endif
 
         QCOMPARE((uint16_t)f.segmentHeaders().size(), f.header()->programHeaderCount());
     }
