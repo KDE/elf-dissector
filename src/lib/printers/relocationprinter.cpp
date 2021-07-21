@@ -26,6 +26,26 @@
 
 #include <elf.h>
 
+// Fix build on FreeBSD 12, which does not include these ELF relocation
+// types; they're standard, and were added to FreeBSD 13 in
+// https://cgit.freebsd.org/src/commit/?id=f7d181543fd96a89b84878ddb2d5ac010fadd9b8
+#ifndef R_386_32PLT
+#define R_386_32PLT             11
+#define R_386_16                20
+#define R_386_PC16              21
+#define R_386_8                 22
+#define R_386_PC8               23
+#define R_386_SIZE32            38
+#define R_386_TLS_GOTDESC       39
+#define R_386_TLS_DESC_CALL     40
+#define R_386_TLS_DESC          41
+#define R_386_GOT32X            43
+#define R_X86_64_RELATIVE64     38
+/* 39 and 40 were BND-related, already decomissioned */
+#define R_X86_64_GOTPCRELX      41
+#define R_X86_64_REX_GOTPCRELX  42
+#endif
+
 struct RelocType
 {
     uint32_t id;
