@@ -117,7 +117,7 @@
       <li xml:lang="sv">Identifiera prestandaflaskhalsar vid laddning, såsom kostsamma statiska konstruktorer eller överdrivna relokeringar.</li>
       <li xml:lang="uk">Визначення вузьких місць у швидкодії під час завантаження, зокрема вартісних статичних конструкторів або надмірних пересувань даних.</li>
       <li xml:lang="x-test">xxIdentifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.xx</li>
-      <li xml:lang="zh-CN">查明载入时的性能瓶颈，例如昂贵的静态构造器或者过量的重定位。</li>
+      <li xml:lang="zh-CN">查明加载时的性能瓶颈，例如昂贵的静态构造器或者过量的重定位。</li>
       <li>Size profiling of ELF files.</li>
       <li xml:lang="ca">Anàlisi del rendiment de mida dels fitxers ELF.</li>
       <li xml:lang="ca-valencia">Anàlisi del rendiment de mida dels fitxers ELF.</li>
