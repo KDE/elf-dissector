@@ -63,7 +63,7 @@ set(libelfdisector_srcs
 
 kde_source_files_enable_exceptions(elf/elffile.cpp)
 add_library(libelfdissector STATIC ${libelfdisector_srcs})
-target_link_libraries(libelfdissector PUBLIC Qt5::Core PRIVATE Binutils::Iberty Binutils::Opcodes ${Iberty_LIBRARY} Dwarf::Dwarf)
+target_link_libraries(libelfdissector PUBLIC Qt5::Core PRIVATE Binutils::Iberty Binutils::Opcodes Dwarf::Dwarf)
 if (Capstone_FOUND)
     target_link_libraries(libelfdissector PRIVATE PkgConfig::Capstone)
 endif()

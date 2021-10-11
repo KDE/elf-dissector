@@ -100,6 +100,13 @@ if(Binutils_HAVE_CTF_F_NEWFUNCINFO)
   set(Binutils_VERSION_MINOR 36)
 endif()
 
+if(TARGET Binutils::Iberty)
+   target_link_libraries(Binutils::Iberty INTERFACE Binutils::Opcodes)
+endif()
+if(TARGET Binutils::Opcodes)
+   target_link_libraries(Binutils::Opcodes INTERFACE Binutils::Iberty)
+endif()
+
 include(FeatureSummary)
 set_package_properties(binutils-devel PROPERTIES URL https://www.gcc.org/
   DESCRIPTION "Development files of binutils.")
