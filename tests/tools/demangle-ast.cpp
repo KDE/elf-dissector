@@ -441,6 +441,12 @@ static int handleNameComponent(demangle_component* component)
             // ??
             break;
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
+        case DEMANGLE_COMPONENT_VENDOR_EXPR:
+            writeNode("VENDOR_EXPR");
+            // ??
+            break;
+#endif
     }
     return sourceNode;
 }
