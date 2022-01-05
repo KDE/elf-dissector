@@ -60,7 +60,24 @@ void DwarfCuDie::loadLines() const
     if (m_lines)
         return;
 
-    dwarf_srclines(m_die, &m_lines, &m_lineCount, nullptr);
+    Dwarf_Error error = 0;
+    Dwarf_Line_Context linecontext= 0;
+    Dwarf_Unsigned version = 0;
+    Dwarf_Small table_count = 0;
+    int res = dwarf_srclines_b(m_die,&version, &table_count, &linecontext,&error);
+    if(res == DW_DLV_ERROR) {
+        return;
+    } else if (res == DW_DLV_NO_ENTRY) {
+        // No data.
+        return;
+    }
+
+    res = dwarf_srclines_from_linecontext(linecontext, &m_lines, &m_lineCount, &error);
+    if(res == DW_DLV_ERROR) {
+        return;
+    } else if (res == DW_DLV_NO_ENTRY) {
+        return;
+    }
 }
 
 DwarfLine DwarfCuDie::lineForAddress(Dwarf_Addr addr) const

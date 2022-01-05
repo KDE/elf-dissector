@@ -64,6 +64,7 @@ endif()
 set(CMAKE_REQUIRED_LIBRARIES ${Opcodes_LIBRARY})
 check_c_source_compiles("
     #include <dis-asm.h>
+    extern int print_insn_i386             (bfd_vma, disassemble_info *);
     int main(int argc, char **argv) {
         disassembler_ftype ftype = print_insn_i386;
         return 0;

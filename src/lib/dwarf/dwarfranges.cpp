@@ -28,14 +28,18 @@ DwarfRanges::DwarfRanges() : m_rangeSize(0)
 DwarfRanges::DwarfRanges(const DwarfDie* die, uint64_t offset)
 {
     Dwarf_Ranges* ranges = nullptr;
-    const auto res = dwarf_get_ranges_a(die->dwarfInfo()->dwarfHandle(), offset,
-                                        die->dieHandle(), &ranges, &m_rangeSize,
+    Dwarf_Off finaloffset = 0;
+    const int res = dwarf_get_ranges_b(die->dwarfInfo()->dwarfHandle(), offset,
+                                        die->dieHandle(), &finaloffset, &ranges, &m_rangeSize,
                                         nullptr, nullptr);
-    if (res != DW_DLV_OK)
+
+    if (res != DW_DLV_OK) {
+        m_rangeSize = 0; // dwarf_get_ranges_b randomly sets this even when it fails
         return;
+    }
 
     m_ranges.reset(ranges, [die, this](Dwarf_Ranges* ranges) {
-        dwarf_ranges_dealloc(die->dwarfInfo()->dwarfHandle(), ranges, m_rangeSize);
+        dwarf_dealloc_ranges(die->dwarfInfo()->dwarfHandle(), ranges, m_rangeSize);
     });
 }
 

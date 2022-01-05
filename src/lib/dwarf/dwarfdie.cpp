@@ -618,7 +618,7 @@ void DwarfDie::scanChildren() const
         m_children.push_back(new DwarfDie(childDie, const_cast<DwarfDie*>(this)));
 
         Dwarf_Die siblingDie;
-        res = dwarf_siblingof(handle, childDie, &siblingDie, nullptr);
+        res = dwarf_siblingof_b(handle, childDie, true, &siblingDie, nullptr);
         if (res != DW_DLV_OK)
             return;
 
