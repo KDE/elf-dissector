@@ -1,8 +1,5 @@
 # CMake setup
 cmake_minimum_required(VERSION 3.1)
-if(POLICY CMP0063)
-  cmake_policy(SET CMP0063 NEW)
-endif()
 project(elf-dissector VERSION 0.0.1)
 
 find_package(ECM 5.38 REQUIRED NO_MODULE)
