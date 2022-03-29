@@ -55,7 +55,7 @@
   <description>
     <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="ca">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
-    <p xml:lang="ca-valencia">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
+    <p xml:lang="ca-valencia">ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
     <p xml:lang="el">Ο ανατόμος ELF είναι χρήσιμος αν θέλετε να κάνετε μία ή περισσότερες από τις ακόλουθες εργασίες:</p>
     <p xml:lang="en-GB">ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="es">El disector ELF es útil cuando necesita hacer una o más de las siguientes tareas:</p>
@@ -78,7 +78,7 @@
     <ul>
       <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="ca">Inspeccionar les dependències cap endavant i cap enrere, a nivell de biblioteca i símbols.</li>
-      <li xml:lang="ca-valencia">Inspeccionar les dependències cap endavant i cap enrere, a nivell de biblioteca i símbols.</li>
+      <li xml:lang="ca-valencia">Inspeccionar les dependències cap avant i cap enrere, a nivell de biblioteca i símbols.</li>
       <li xml:lang="el">Επιθεώρηση προς τα εμπρός και προς τα πίσω εξαρτήσεων, σε επίπεδο βιβλιοθηκών και συμβόλων.</li>
       <li xml:lang="en-GB">Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="es">Inspeccionar dependencias adelante y atrás a nivel de biblioteca y símbolos.</li>
@@ -276,7 +276,7 @@
       <li xml:lang="zh-CN">从 DWARF 调试信息中提取的数据类型内存布局浏览器</li>
       <li>Forward and backward dependency viewer.</li>
       <li xml:lang="ca">Visor de les dependències cap endavant i cap enrere.</li>
-      <li xml:lang="ca-valencia">Visor de les dependències cap endavant i cap enrere.</li>
+      <li xml:lang="ca-valencia">Visor de les dependències cap avant i cap enrere.</li>
       <li xml:lang="el">Προβολή προς τα εμπρός και προς τα πίσω εξαρτήσεων.</li>
       <li xml:lang="en-GB">Forward and backward dependency viewer.</li>
       <li xml:lang="es">Visor de dependencias hacia atrás y hacia adelante.</li>
