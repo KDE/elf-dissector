@@ -5,4 +5,3 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'frameworks/extra-cmake-modules': '@stable'
-    'frameworks/kitemmodels': '@stable'

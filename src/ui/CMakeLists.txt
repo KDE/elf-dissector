@@ -42,7 +42,7 @@ set(libelfdissectorui_srcs
 )
 
 add_library(libelfdissectorui STATIC ${libelfdissectorui_srcs})
-target_link_libraries(libelfdissectorui Qt5::Widgets Dwarf::Dwarf libelfdissector KF5::ItemModels)
+target_link_libraries(libelfdissectorui Qt5::Widgets Dwarf::Dwarf libelfdissector)
 
 ecm_create_qm_loader(elfdissector_qm_loader elf-dissector_qt)
 add_executable(elf-dissector
