@@ -99,7 +99,7 @@
       <li xml:lang="zh-CN">在库和符号级别检查前向和后向依赖。</li>
       <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="ca">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocalitzacions excessives.</li>
-      <li xml:lang="ca-valencia">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocalisacions excessives.</li>
+      <li xml:lang="ca-valencia">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocalitzacions excessives.</li>
       <li xml:lang="el">Ταυτοποίηση συμφορήσεων στην απόδοση κατά τη φόρτωση όπως στατικούς constructors με υπερκατανάλωση πόρων ή εκτεταμένες μεταθέσεις.</li>
       <li xml:lang="en-GB">Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="es">Identificar cuellos de botella de rendimiento en tiempo de carga, como constructores estáticos costosos o excesivas reubicaciones.</li>
@@ -191,7 +191,7 @@
       <li xml:lang="zh-CN">ELF 结构浏览器。</li>
       <li>Tree map visualization of the size of the various parts of an ELF file.</li>
       <li xml:lang="ca">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
-      <li xml:lang="ca-valencia">Visualisació de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
+      <li xml:lang="ca-valencia">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
       <li xml:lang="el">Αναπαράσταση δενδρικού χάρτη μεγέθους των διαφόρων τμημάτων ενός αρχείου ELF.</li>
       <li xml:lang="en-GB">Tree map visualisation of the size of the various parts of an ELF file.</li>
       <li xml:lang="es">Visualización en mapa de árbol del tamaño de las distintas partes de un archivo ELF.</li>
@@ -212,7 +212,7 @@
       <li xml:lang="zh-CN">ELF 文件各个部分大小的树形映射可视化。</li>
       <li>Relocation heatmap.</li>
       <li xml:lang="ca">Gràfic d'intensitat de colors de les relocalitzacions.</li>
-      <li xml:lang="ca-valencia">Gràfic d'intensitat de colors de les relocalisacions.</li>
+      <li xml:lang="ca-valencia">Gràfic d'intensitat de colors de les relocalitzacions.</li>
       <li xml:lang="el">Χάρτης μετάθεσης.</li>
       <li xml:lang="en-GB">Relocation heatmap.</li>
       <li xml:lang="es">Mapa de calor de reubicaciones.</li>
