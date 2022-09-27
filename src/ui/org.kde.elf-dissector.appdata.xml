@@ -16,6 +16,7 @@
   <name xml:lang="ia">ELF Dissector</name>
   <name xml:lang="id">ELF Dissector</name>
   <name xml:lang="it">Dissettore ELF</name>
+  <name xml:lang="ka">ELF-ი დისექტორი</name>
   <name xml:lang="ko">ELF 분석 도구</name>
   <name xml:lang="nl">ELF-dissector</name>
   <name xml:lang="nn">ELF Dissector</name>
@@ -42,6 +43,7 @@
   <summary xml:lang="ia">Instrumento de analysis static per files ELF</summary>
   <summary xml:lang="id">Alat analisis statik untuk file-file ELF</summary>
   <summary xml:lang="it">Strumento di analisi statica per i file ELF</summary>
+  <summary xml:lang="ka">სტატიკური ანალიზის ხელსაწყო ELF ფაილებისთვის</summary>
   <summary xml:lang="ko">ELF 파일 정적 분석 도구</summary>
   <summary xml:lang="nl">Statisch analysehulpmiddel voor ELF-bestanden</summary>
   <summary xml:lang="nn">Verktøy for statisk analyse av ELF-filer</summary>
@@ -133,6 +135,7 @@
       <li xml:lang="gl">Análise de tamaño de ficheiros ELF.</li>
       <li xml:lang="id">Ukuran perprofilan file-file ELF.</li>
       <li xml:lang="it">Profilare le dimensioni dei file ELF.</li>
+      <li xml:lang="ka">ELF ფაილების პროფილირების ზომა.</li>
       <li xml:lang="ko">ELF 파일 크기 프로필 계산.</li>
       <li xml:lang="nl">Profileren van grootte van ELF-bestanden.</li>
       <li xml:lang="nn">Storleiks­profilering av ELF-filer.</li>
@@ -158,6 +161,7 @@
     <p xml:lang="gl">Funcionalidades principais:</p>
     <p xml:lang="id">Fitur utama:</p>
     <p xml:lang="it">Funzionalità principali:</p>
+    <p xml:lang="ka">მთავარი ფუნქციები:</p>
     <p xml:lang="ko">주 기능:</p>
     <p xml:lang="nl">Hoofdkenmerken:</p>
     <p xml:lang="nn">Hovudfunksjonar:</p>
@@ -185,6 +189,7 @@
       <li xml:lang="gl">Navegador de estruturas ELF.</li>
       <li xml:lang="id">Penelusur struktur ELF.</li>
       <li xml:lang="it">Navigatore della struttura ELF.</li>
+      <li xml:lang="ka">ELF-ის სტრუქტურის დათვალიერება.</li>
       <li xml:lang="ko">ELF 구조 탐색기.</li>
       <li xml:lang="nl">ELF-structuurbrowser.</li>
       <li xml:lang="nn">Kan bla gjennom ELF-strukturen.</li>
@@ -229,6 +234,7 @@
       <li xml:lang="gl">Mapa de traslados.</li>
       <li xml:lang="id">Relokasi heatmap.</li>
       <li xml:lang="it">Mappa di calore delle rilocazioni.</li>
+      <li xml:lang="ka">გადაადგილების რუკა.</li>
       <li xml:lang="ko">재할당 히트맵.</li>
       <li xml:lang="nl">Relocatie heatmap.</li>
       <li xml:lang="nn">Relokasjons-varmekart.</li>
@@ -252,6 +258,7 @@
       <li xml:lang="gl">Desensamblador incorporado para x86 e AArch64.</li>
       <li xml:lang="id">Bawaan disassembler untuk x86 dan AArch64.</li>
       <li xml:lang="it">Disassemblatore incorporato per x86 e per AArch64.</li>
+      <li xml:lang="ka">ჩაშენებული დისასამბლერი x86 და AArch64-სთვის.</li>
       <li xml:lang="ko">내장 x86 및 AArch64 디스어셈블러.</li>
       <li xml:lang="nl">Ingebouwde disassembler voor x86 en AArch64.</li>
       <li xml:lang="nn">Innebygd disassembler for x86 og AArch64.</li>
@@ -296,6 +303,7 @@
       <li xml:lang="gl">Visor de dependencias cara adiante e cara atrás.</li>
       <li xml:lang="id">Penampil ketergantungan maju dan mundur</li>
       <li xml:lang="it">Visualizzatore di dipendenze in avanti e all'indietro.</li>
+      <li xml:lang="ka">წინა და უკანა დამოკიდებულებების ნახვა.</li>
       <li xml:lang="ko">전방 및 후방 의존성 뷰어.</li>
       <li xml:lang="nl">Viewer voor voorwaartse en achterwaartse afhankelijkheid.</li>
       <li xml:lang="nn">Visar for framover- og bakoveravhengnadar.</li>
