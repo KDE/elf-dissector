@@ -1,0 +1,506 @@
+# Shinjo Park <kde@peremen.name>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"PO-Revision-Date: 2020-04-14 01:05+0200\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 19.04.3\n"
+"X-Qt-Contexts: true\n"
+
+#: 3rdparty/treemap/treemap.cpp:1350
+#, qt-format
+msgctxt "TreeMapWidget|"
+msgid "Text %1"
+msgstr "텍스트 %1"
+
+#: 3rdparty/treemap/treemap.cpp:2870
+msgctxt "TreeMapWidget|"
+msgid "Recursive Bisection"
+msgstr "재귀적 분할"
+
+#: 3rdparty/treemap/treemap.cpp:2871
+msgctxt "TreeMapWidget|"
+msgid "Columns"
+msgstr "열"
+
+#: 3rdparty/treemap/treemap.cpp:2872
+msgctxt "TreeMapWidget|"
+msgid "Rows"
+msgstr "행"
+
+#: 3rdparty/treemap/treemap.cpp:2873
+msgctxt "TreeMapWidget|"
+msgid "Always Best"
+msgstr "항상 최적"
+
+#: 3rdparty/treemap/treemap.cpp:2874
+msgctxt "TreeMapWidget|"
+msgid "Best"
+msgstr "최적"
+
+#: 3rdparty/treemap/treemap.cpp:2875
+msgctxt "TreeMapWidget|"
+msgid "Alternate (V)"
+msgstr "번갈아감(수직)"
+
+#: 3rdparty/treemap/treemap.cpp:2876
+msgctxt "TreeMapWidget|"
+msgid "Alternate (H)"
+msgstr "번갈아감(수평)"
+
+#: 3rdparty/treemap/treemap.cpp:2877
+msgctxt "TreeMapWidget|"
+msgid "Horizontal"
+msgstr "수평"
+
+#: 3rdparty/treemap/treemap.cpp:2878
+msgctxt "TreeMapWidget|"
+msgid "Vertical"
+msgstr "수직"
+
+#: lib/elf/elfdynamicentry.cpp:111
+#, qt-format
+msgctxt "QObject|"
+msgid "unknown (%1)"
+msgstr "알 수 없음(%1)"
+
+#: ui/dependencymodel/dependencymodel.cpp:134
+msgctxt "DependencyModel|"
+msgid "Cyclic dependency!"
+msgstr "순환 의존성!"
+
+#: ui/dependencymodel/dependencymodel.cpp:138
+msgctxt "DependencyModel|"
+msgid "Dependency not found!"
+msgstr "의존성을 찾을 수 없음!"
+
+#: ui/dependencymodel/dependencymodel.cpp:236
+msgctxt "DependencyModel|"
+msgid "Library"
+msgstr "라이브러리"
+
+#: ui/dependencymodel/dependencymodel.cpp:237
+msgctxt "DependencyModel|"
+msgid "Symbols Used"
+msgstr "사용한 기호"
+
+#: ui/dependencymodel/filelistmodel.cpp:67
+msgctxt "FileListModel|"
+msgid "Shared Object"
+msgstr "공유 객체"
+
+#: ui/dependencymodel/fileusermodel.cpp:89
+msgctxt "FileUserModel|"
+msgid "Users"
+msgstr "사용자"
+
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:88
+msgctxt "UnusedDependenciesModel|"
+msgid "ELF File"
+msgstr "ELF 파일"
+
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:89
+msgctxt "UnusedDependenciesModel|"
+msgid "Unused Dependency"
+msgstr "사용하지 않은 의존성"
+
+#: ui/dependencymodel/usedsymbolmodel.cpp:75
+msgctxt "UsedSymbolModel|"
+msgid "Symbol"
+msgstr "기호"
+
+#: ui/elfmodel/datavisitor.cpp:152 ui/elfmodel/datavisitor.cpp:321
+msgctxt "QObject|"
+msgid "<null>"
+msgstr "<null>"
+
+#: ui/elfmodel/datavisitor.cpp:355
+msgctxt "QObject|"
+msgid "Construction VTable"
+msgstr "생성 VTable"
+
+#: ui/elfmodel/datavisitor.cpp:355
+msgctxt "QObject|"
+msgid "VTable"
+msgstr "VTable"
+
+#: ui/elfmodel/elfmodel.cpp:134
+msgctxt "ElfModel|"
+msgid "Entry"
+msgstr "항목"
+
+#: ui/elfmodel/elfmodel.cpp:135
+msgctxt "ElfModel|"
+msgid "Size"
+msgstr "크기"
+
+#: ui/issuesmodel/issuesmodel.cpp:61
+#, qt-format
+msgctxt "IssuesModel|"
+msgid "%1 (implicit virtual destructor)"
+msgstr "%1(암시적 가상 소멸자)"
+
+#: ui/issuesmodel/issuesmodel.cpp:87
+msgctxt "IssuesModel|"
+msgid "Issue"
+msgstr "문제점"
+
+#: ui/issuesmodel/issuesmodel.cpp:88
+msgctxt "IssuesModel|"
+msgid "Location"
+msgstr "위치"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:71
+msgctxt "LoadBenchmarkModel|"
+msgid "File"
+msgstr "파일"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:72
+msgctxt "LoadBenchmarkModel|"
+msgid "Lazy Median"
+msgstr "늦은 중앙값"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:73
+msgctxt "LoadBenchmarkModel|"
+msgid "Lazy Min"
+msgstr "늦은 최솟값"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:74
+msgctxt "LoadBenchmarkModel|"
+msgid "Now Median"
+msgstr "현재 중앙값"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:75
+msgctxt "LoadBenchmarkModel|"
+msgid "Now Min"
+msgstr "현재 최솟값"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:76
+msgctxt "LoadBenchmarkModel|"
+msgid "Relocs"
+msgstr "위치 이동"
+
+#: ui/main.cpp:31
+msgctxt "MainWindow|"
+msgid "ELF Dissector"
+msgstr "ELF 분석 도구"
+
+#: ui/main.cpp:43
+msgctxt "MainWindow|"
+msgid "ELF file to open"
+msgstr "열 ELF 파일"
+
+#: ui/mainwindow.cpp:94
+msgctxt "MainWindow|"
+msgid "Open ELF Object"
+msgstr "ELF 객체 열기"
+
+#: ui/mainwindow.cpp:142
+msgctxt "MainWindow|"
+msgid "Failed to load ELF file"
+msgstr "ELF 파일을 열 수 없음"
+
+#: ui/mainwindow.cpp:142
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Could not load %1."
+msgstr "%1을(를) 불러올 수 없습니다."
+
+#: ui/mainwindow.cpp:146
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Failed to load %1."
+msgstr "%1을(를) 불러올 수 없습니다."
+
+#: ui/mainwindow.cpp:153
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Loaded %1."
+msgstr "%1을(를) 불러왔습니다."
+
+#: ui/mainwindow.ui:71
+msgctxt "MainWindow|"
+msgid "&File"
+msgstr "파일(&F)"
+
+#: ui/mainwindow.ui:79
+msgctxt "MainWindow|"
+msgid "&Actions"
+msgstr "동작(&A)"
+
+#: ui/mainwindow.ui:84
+msgctxt "MainWindow|"
+msgid "&Settings"
+msgstr "설정(&S)"
+
+#: ui/mainwindow.ui:100
+msgctxt "MainWindow|"
+msgid "&Open..."
+msgstr "열기(&O)..."
+
+#: ui/mainwindow.ui:103
+msgctxt "MainWindow|"
+msgid "Ctrl+O"
+msgstr "Ctrl+O"
+
+#: ui/mainwindow.ui:113
+msgctxt "MainWindow|"
+msgid "&Quit"
+msgstr "끝내기(&Q)"
+
+#: ui/mainwindow.ui:116
+msgctxt "MainWindow|"
+msgid "Ctrl+Q"
+msgstr "Ctrl+Q"
+
+#: ui/mainwindow.ui:129
+msgctxt "MainWindow|"
+msgid "Reopen &Previously Loaded Files"
+msgstr "이전에 불러온 파일 다시 열기(&P)"
+
+#: ui/navigator/codenavigator.cpp:36
+msgctxt "CodeNavigator|"
+msgid "KDevelop"
+msgstr "KDevelop"
+
+#: ui/navigator/codenavigator.cpp:37
+msgctxt "CodeNavigator|"
+msgid "Kate"
+msgstr "Kate"
+
+#: ui/navigator/codenavigator.cpp:38
+msgctxt "CodeNavigator|"
+msgid "KWrite"
+msgstr "KWrite"
+
+#: ui/navigator/codenavigator.cpp:39
+msgctxt "CodeNavigator|"
+msgid "Qt Creator"
+msgstr "Qt Creator"
+
+#: ui/navigator/codenavigator.cpp:81
+msgctxt "QObject|"
+msgid "Code Navigation"
+msgstr "코드 탐색"
+
+#: ui/navigator/codenavigator.cpp:105
+msgctxt "QObject|"
+msgid "Custom..."
+msgstr "사용자 정의..."
+
+#: ui/navigator/codenavigator.cpp:117
+msgctxt "QObject|"
+msgid "Custom Code Navigation"
+msgstr "사용자 정의 코드 탐색"
+
+#: ui/navigator/codenavigator.cpp:118
+msgctxt "QObject|"
+msgid ""
+"Specify command to use for code navigation, '%f' will be replaced by the "
+"file name, '%l' by the line number."
+msgstr ""
+"코드를 탐색할 명령어를 입력하십시오. '%f'는 파일 이름, '%l'은 줄 번호로 대체"
+"됩니다."
+
+#: ui/typemodel/typemodel.cpp:263
+msgctxt "TypeModel|"
+msgid "Data Type"
+msgstr "자료형"
+
+#: ui/typemodel/typemodel.cpp:264
+msgctxt "TypeModel|"
+msgid "Size"
+msgstr "크기"
+
+#: ui/views/dependencyview.ui:21
+msgctxt "DependencyView|"
+msgid "Top Down"
+msgstr "위에서 아래로"
+
+#: ui/views/dependencyview.ui:34 ui/views/dependencyview.ui:55
+#: ui/views/dependencyview.ui:93 ui/views/dependencyview.ui:117
+#: ui/views/dependencyview.ui:141 ui/views/dependencyview.ui:178
+msgctxt "DependencyView|"
+msgid "Search"
+msgstr "찾기"
+
+#: ui/views/dependencyview.ui:80
+msgctxt "DependencyView|"
+msgid "Inverse"
+msgstr "역순"
+
+#: ui/views/dependencyview.ui:172
+msgctxt "DependencyView|"
+msgid "Unused"
+msgstr "사용하지 않음"
+
+#: ui/views/dependencyview.ui:199
+msgctxt "DependencyView|"
+msgid "&Optimize Dependency Order"
+msgstr "의존성 순서 최적화(&O)"
+
+#: ui/views/elfstructureview.ui:36
+msgctxt "ElfStructureView|"
+msgid "Search"
+msgstr "찾기"
+
+#: ui/views/elfstructureview.ui:68
+msgctxt "ElfStructureView|"
+msgid "&Back"
+msgstr "뒤로(&B)"
+
+#: ui/views/elfstructureview.ui:76
+msgctxt "ElfStructureView|"
+msgid "&Forward"
+msgstr "앞으로(&F)"
+
+#: ui/views/issuesview.ui:29
+msgctxt "IssuesView|"
+msgid "Search"
+msgstr "찾기"
+
+#: ui/views/issuesview.ui:46
+msgctxt "IssuesView|"
+msgid "&Check for issues (expensive!)"
+msgstr "문제점 찾기(자원을 많이 소모함!)(&C)"
+
+#: ui/views/loadbenchmarkview.ui:41
+msgctxt "LoadBenchmarkView|"
+msgid "Data"
+msgstr "데이터"
+
+#: ui/views/loadbenchmarkview.ui:64
+msgctxt "LoadBenchmarkView|"
+msgid "Plot"
+msgstr "그리기"
+
+#: ui/views/loadbenchmarkview.ui:81
+msgctxt "LoadBenchmarkView|"
+msgid "&Run Benchmark"
+msgstr "벤치마크 실행(&R)"
+
+#: ui/views/loadbenchmarkview.ui:84
+msgctxt "LoadBenchmarkView|"
+msgid "Measure loading and dynamic linking time."
+msgstr "불러오기 및 동적 링크 시간을 측정합니다."
+
+#: ui/views/sizetreemapview.ui:39
+msgctxt "SizeTreeMapView|"
+msgid "Search"
+msgstr "찾기"
+
+#: ui/views/sizetreemapview.ui:68
+msgctxt "SizeTreeMapView|"
+msgid "Hide &Debug Information"
+msgstr "디버그 정보 숨기기(&D)"
+
+#: ui/views/sizetreemapview.ui:71
+msgctxt "SizeTreeMapView|"
+msgid "Do not show sections containing debug information."
+msgstr "디버그 정보를 포함하는 섹션을 숨깁니다."
+
+#: ui/views/sizetreemapview.ui:84
+msgctxt "SizeTreeMapView|"
+msgid "Colorize &Sections"
+msgstr "섹션 색상 입히기(&S)"
+
+#: ui/views/sizetreemapview.ui:87
+msgctxt "SizeTreeMapView|"
+msgid "Vary color of sections in the size tree map."
+msgstr "크기 트리 지도의 섹션별로 다른 색상을 적용합니다."
+
+#: ui/views/sizetreemapview.ui:100
+msgctxt "SizeTreeMapView|"
+msgid "Colorize S&ymbols"
+msgstr "기호 색상 입히기(&Y)"
+
+#: ui/views/sizetreemapview.ui:103
+msgctxt "SizeTreeMapView|"
+msgid "Vary the color of symbols in the size tree map."
+msgstr "크기 트리 지도의 기호별로 다른 색상을 적용합니다."
+
+#: ui/views/sizetreemapview.ui:116
+msgctxt "SizeTreeMapView|"
+msgid "&Relocation Heatmap"
+msgstr "재할당 히트맵(&R)"
+
+#: ui/views/sizetreemapview.ui:129
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-runtime"
+msgstr "실행 시 불러오지 않는 것 숨기기"
+
+#: ui/views/sizetreemapview.ui:132
+msgctxt "SizeTreeMapView|"
+msgid ""
+"Do not show content from sections that are not loaded into memory at runtime."
+msgstr "실행할 때 메모리로 불러오지 않는 섹션의 내용을 숨깁니다."
+
+#: ui/views/sizetreemapview.ui:145
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-writable"
+msgstr "쓰기 불가능 숨기기"
+
+#: ui/views/sizetreemapview.ui:148
+msgctxt "SizeTreeMapView|"
+msgid "Do not show content that is read-only/shared."
+msgstr "읽기 전용/공유 내용을 숨깁니다."
+
+#: ui/views/sizetreemapview.ui:161
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-executable"
+msgstr "실행 불가능 숨기기"
+
+#: ui/views/sizetreemapview.ui:164
+msgctxt "SizeTreeMapView|"
+msgid "Do not show non-executable data content."
+msgstr "실행 가능이 아닌 데이터 내용을 숨깁니다."
+
+#: ui/views/sizetreemapview.ui:177
+msgctxt "SizeTreeMapView|"
+msgid "&No Colorization"
+msgstr "색상화 없음(&N)"
+
+#: ui/views/typeview.cpp:61 ui/views/typeview.cpp:73
+msgctxt "TypeView|"
+msgid "Invalid DWARF entries"
+msgstr "잘못된 DWARF 항목"
+
+#: ui/views/typeview.cpp:62 ui/views/typeview.cpp:74
+msgctxt "TypeView|"
+msgid ""
+"An error occurred while reading DWARF data of some ELF objects, the tree "
+"will be incomplete."
+msgstr ""
+"일부 ELF 객체의 DWARF 데이터를 불러올 수 없어서 트리가 불완전할 것입니다."
+
+#: ui/views/typeview.cpp:69
+msgctxt "TypeView|"
+msgid "Compute Type Tree"
+msgstr "자료형 트리 계산"
+
+#: ui/views/typeview.cpp:69
+msgctxt "TypeView|"
+msgid ""
+"Computing the type tree from DWARF data can take up to several minutes in "
+"which the application will not respond, and use up to 1.5GB of memory. "
+"Proceed anyway?"
+msgstr ""
+"DWARF 데이터에서 자료형 트리를 계산하는 작업은 수 분까지 걸릴 수 있으며 프로"
+"그램이 응답하지 않을 것입니다. 최대 메모리를 1.5 GB까지 사용합니다. 계속 진행"
+"하시겠습니까?"
+
+#: ui/views/typeview.ui:36
+msgctxt "TypeView|"
+msgid "Search"
+msgstr "찾기"
+
+#: ui/widgets/gnuplotwidget.cpp:31
+msgctxt "GnuplotWidget|"
+msgid "'gnuplot' not found, plotting not available."
+msgstr "'gnuplot'을 찾을 수 없어서 그릴 수 없습니다."

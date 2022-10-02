@@ -1,0 +1,501 @@
+# Alexander Potashev <aspotashev@gmail.com>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"PO-Revision-Date: 2019-10-16 19:58+0300\n"
+"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 19.07.70\n"
+
+#: 3rdparty/treemap/treemap.cpp:1350
+#, qt-format
+msgctxt "TreeMapWidget|"
+msgid "Text %1"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2870
+msgctxt "TreeMapWidget|"
+msgid "Recursive Bisection"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2871
+msgctxt "TreeMapWidget|"
+msgid "Columns"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2872
+msgctxt "TreeMapWidget|"
+msgid "Rows"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2873
+msgctxt "TreeMapWidget|"
+msgid "Always Best"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2874
+msgctxt "TreeMapWidget|"
+msgid "Best"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2875
+msgctxt "TreeMapWidget|"
+msgid "Alternate (V)"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2876
+msgctxt "TreeMapWidget|"
+msgid "Alternate (H)"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2877
+msgctxt "TreeMapWidget|"
+msgid "Horizontal"
+msgstr ""
+
+#: 3rdparty/treemap/treemap.cpp:2878
+msgctxt "TreeMapWidget|"
+msgid "Vertical"
+msgstr ""
+
+#: lib/elf/elfdynamicentry.cpp:111
+#, qt-format
+msgctxt "QObject|"
+msgid "unknown (%1)"
+msgstr ""
+
+#: ui/dependencymodel/dependencymodel.cpp:134
+msgctxt "DependencyModel|"
+msgid "Cyclic dependency!"
+msgstr ""
+
+#: ui/dependencymodel/dependencymodel.cpp:138
+msgctxt "DependencyModel|"
+msgid "Dependency not found!"
+msgstr ""
+
+#: ui/dependencymodel/dependencymodel.cpp:236
+msgctxt "DependencyModel|"
+msgid "Library"
+msgstr ""
+
+#: ui/dependencymodel/dependencymodel.cpp:237
+msgctxt "DependencyModel|"
+msgid "Symbols Used"
+msgstr ""
+
+#: ui/dependencymodel/filelistmodel.cpp:67
+msgctxt "FileListModel|"
+msgid "Shared Object"
+msgstr ""
+
+#: ui/dependencymodel/fileusermodel.cpp:89
+msgctxt "FileUserModel|"
+msgid "Users"
+msgstr ""
+
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:88
+msgctxt "UnusedDependenciesModel|"
+msgid "ELF File"
+msgstr ""
+
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:89
+msgctxt "UnusedDependenciesModel|"
+msgid "Unused Dependency"
+msgstr ""
+
+#: ui/dependencymodel/usedsymbolmodel.cpp:75
+msgctxt "UsedSymbolModel|"
+msgid "Symbol"
+msgstr ""
+
+#: ui/elfmodel/datavisitor.cpp:152 ui/elfmodel/datavisitor.cpp:321
+msgctxt "QObject|"
+msgid "<null>"
+msgstr ""
+
+#: ui/elfmodel/datavisitor.cpp:355
+msgctxt "QObject|"
+msgid "Construction VTable"
+msgstr ""
+
+#: ui/elfmodel/datavisitor.cpp:355
+msgctxt "QObject|"
+msgid "VTable"
+msgstr ""
+
+#: ui/elfmodel/elfmodel.cpp:134
+msgctxt "ElfModel|"
+msgid "Entry"
+msgstr ""
+
+#: ui/elfmodel/elfmodel.cpp:135
+msgctxt "ElfModel|"
+msgid "Size"
+msgstr ""
+
+#: ui/issuesmodel/issuesmodel.cpp:61
+#, qt-format
+msgctxt "IssuesModel|"
+msgid "%1 (implicit virtual destructor)"
+msgstr ""
+
+#: ui/issuesmodel/issuesmodel.cpp:87
+msgctxt "IssuesModel|"
+msgid "Issue"
+msgstr ""
+
+#: ui/issuesmodel/issuesmodel.cpp:88
+msgctxt "IssuesModel|"
+msgid "Location"
+msgstr ""
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:71
+msgctxt "LoadBenchmarkModel|"
+msgid "File"
+msgstr ""
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:72
+msgctxt "LoadBenchmarkModel|"
+msgid "Lazy Median"
+msgstr ""
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:73
+msgctxt "LoadBenchmarkModel|"
+msgid "Lazy Min"
+msgstr ""
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:74
+msgctxt "LoadBenchmarkModel|"
+msgid "Now Median"
+msgstr ""
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:75
+msgctxt "LoadBenchmarkModel|"
+msgid "Now Min"
+msgstr ""
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:76
+msgctxt "LoadBenchmarkModel|"
+msgid "Relocs"
+msgstr ""
+
+#: ui/main.cpp:31
+msgctxt "MainWindow|"
+msgid "ELF Dissector"
+msgstr ""
+
+#: ui/main.cpp:43
+msgctxt "MainWindow|"
+msgid "ELF file to open"
+msgstr ""
+
+#: ui/mainwindow.cpp:94
+msgctxt "MainWindow|"
+msgid "Open ELF Object"
+msgstr ""
+
+#: ui/mainwindow.cpp:142
+msgctxt "MainWindow|"
+msgid "Failed to load ELF file"
+msgstr ""
+
+#: ui/mainwindow.cpp:142
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Could not load %1."
+msgstr ""
+
+#: ui/mainwindow.cpp:146
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Failed to load %1."
+msgstr ""
+
+#: ui/mainwindow.cpp:153
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Loaded %1."
+msgstr ""
+
+#: ui/mainwindow.ui:71
+msgctxt "MainWindow|"
+msgid "&File"
+msgstr "&Файл"
+
+#: ui/mainwindow.ui:79
+msgctxt "MainWindow|"
+msgid "&Actions"
+msgstr ""
+
+#: ui/mainwindow.ui:84
+msgctxt "MainWindow|"
+msgid "&Settings"
+msgstr "&Настройка"
+
+#: ui/mainwindow.ui:100
+msgctxt "MainWindow|"
+msgid "&Open..."
+msgstr "&Открыть..."
+
+#: ui/mainwindow.ui:103
+msgctxt "MainWindow|"
+msgid "Ctrl+O"
+msgstr "Ctrl+O"
+
+#: ui/mainwindow.ui:113
+msgctxt "MainWindow|"
+msgid "&Quit"
+msgstr "В&ыход"
+
+#: ui/mainwindow.ui:116
+msgctxt "MainWindow|"
+msgid "Ctrl+Q"
+msgstr "Ctrl+Q"
+
+#: ui/mainwindow.ui:129
+msgctxt "MainWindow|"
+msgid "Reopen &Previously Loaded Files"
+msgstr ""
+
+#: ui/navigator/codenavigator.cpp:36
+msgctxt "CodeNavigator|"
+msgid "KDevelop"
+msgstr "KDevelop"
+
+#: ui/navigator/codenavigator.cpp:37
+msgctxt "CodeNavigator|"
+msgid "Kate"
+msgstr "Kate"
+
+#: ui/navigator/codenavigator.cpp:38
+msgctxt "CodeNavigator|"
+msgid "KWrite"
+msgstr "KWrite"
+
+#: ui/navigator/codenavigator.cpp:39
+msgctxt "CodeNavigator|"
+msgid "Qt Creator"
+msgstr "Qt Creator"
+
+#: ui/navigator/codenavigator.cpp:81
+msgctxt "QObject|"
+msgid "Code Navigation"
+msgstr ""
+
+#: ui/navigator/codenavigator.cpp:105
+msgctxt "QObject|"
+msgid "Custom..."
+msgstr ""
+
+#: ui/navigator/codenavigator.cpp:117
+msgctxt "QObject|"
+msgid "Custom Code Navigation"
+msgstr ""
+
+#: ui/navigator/codenavigator.cpp:118
+msgctxt "QObject|"
+msgid ""
+"Specify command to use for code navigation, '%f' will be replaced by the "
+"file name, '%l' by the line number."
+msgstr ""
+
+#: ui/typemodel/typemodel.cpp:263
+msgctxt "TypeModel|"
+msgid "Data Type"
+msgstr ""
+
+#: ui/typemodel/typemodel.cpp:264
+msgctxt "TypeModel|"
+msgid "Size"
+msgstr ""
+
+#: ui/views/dependencyview.ui:21
+msgctxt "DependencyView|"
+msgid "Top Down"
+msgstr ""
+
+#: ui/views/dependencyview.ui:34 ui/views/dependencyview.ui:55
+#: ui/views/dependencyview.ui:93 ui/views/dependencyview.ui:117
+#: ui/views/dependencyview.ui:141 ui/views/dependencyview.ui:178
+msgctxt "DependencyView|"
+msgid "Search"
+msgstr ""
+
+#: ui/views/dependencyview.ui:80
+msgctxt "DependencyView|"
+msgid "Inverse"
+msgstr ""
+
+#: ui/views/dependencyview.ui:172
+msgctxt "DependencyView|"
+msgid "Unused"
+msgstr ""
+
+#: ui/views/dependencyview.ui:199
+msgctxt "DependencyView|"
+msgid "&Optimize Dependency Order"
+msgstr ""
+
+#: ui/views/elfstructureview.ui:36
+msgctxt "ElfStructureView|"
+msgid "Search"
+msgstr ""
+
+#: ui/views/elfstructureview.ui:68
+msgctxt "ElfStructureView|"
+msgid "&Back"
+msgstr ""
+
+#: ui/views/elfstructureview.ui:76
+msgctxt "ElfStructureView|"
+msgid "&Forward"
+msgstr ""
+
+#: ui/views/issuesview.ui:29
+msgctxt "IssuesView|"
+msgid "Search"
+msgstr ""
+
+#: ui/views/issuesview.ui:46
+msgctxt "IssuesView|"
+msgid "&Check for issues (expensive!)"
+msgstr ""
+
+#: ui/views/loadbenchmarkview.ui:41
+msgctxt "LoadBenchmarkView|"
+msgid "Data"
+msgstr ""
+
+#: ui/views/loadbenchmarkview.ui:64
+msgctxt "LoadBenchmarkView|"
+msgid "Plot"
+msgstr ""
+
+#: ui/views/loadbenchmarkview.ui:81
+msgctxt "LoadBenchmarkView|"
+msgid "&Run Benchmark"
+msgstr ""
+
+#: ui/views/loadbenchmarkview.ui:84
+msgctxt "LoadBenchmarkView|"
+msgid "Measure loading and dynamic linking time."
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:39
+msgctxt "SizeTreeMapView|"
+msgid "Search"
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:68
+msgctxt "SizeTreeMapView|"
+msgid "Hide &Debug Information"
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:71
+msgctxt "SizeTreeMapView|"
+msgid "Do not show sections containing debug information."
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:84
+msgctxt "SizeTreeMapView|"
+msgid "Colorize &Sections"
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:87
+msgctxt "SizeTreeMapView|"
+msgid "Vary color of sections in the size tree map."
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:100
+msgctxt "SizeTreeMapView|"
+msgid "Colorize S&ymbols"
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:103
+msgctxt "SizeTreeMapView|"
+msgid "Vary the color of symbols in the size tree map."
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:116
+msgctxt "SizeTreeMapView|"
+msgid "&Relocation Heatmap"
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:129
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-runtime"
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:132
+msgctxt "SizeTreeMapView|"
+msgid ""
+"Do not show content from sections that are not loaded into memory at runtime."
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:145
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-writable"
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:148
+msgctxt "SizeTreeMapView|"
+msgid "Do not show content that is read-only/shared."
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:161
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-executable"
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:164
+msgctxt "SizeTreeMapView|"
+msgid "Do not show non-executable data content."
+msgstr ""
+
+#: ui/views/sizetreemapview.ui:177
+msgctxt "SizeTreeMapView|"
+msgid "&No Colorization"
+msgstr ""
+
+#: ui/views/typeview.cpp:61 ui/views/typeview.cpp:73
+msgctxt "TypeView|"
+msgid "Invalid DWARF entries"
+msgstr ""
+
+#: ui/views/typeview.cpp:62 ui/views/typeview.cpp:74
+msgctxt "TypeView|"
+msgid ""
+"An error occurred while reading DWARF data of some ELF objects, the tree "
+"will be incomplete."
+msgstr ""
+
+#: ui/views/typeview.cpp:69
+msgctxt "TypeView|"
+msgid "Compute Type Tree"
+msgstr ""
+
+#: ui/views/typeview.cpp:69
+msgctxt "TypeView|"
+msgid ""
+"Computing the type tree from DWARF data can take up to several minutes in "
+"which the application will not respond, and use up to 1.5GB of memory. "
+"Proceed anyway?"
+msgstr ""
+
+#: ui/views/typeview.ui:36
+msgctxt "TypeView|"
+msgid "Search"
+msgstr ""
+
+#: ui/widgets/gnuplotwidget.cpp:31
+msgctxt "GnuplotWidget|"
+msgid "'gnuplot' not found, plotting not available."
+msgstr ""

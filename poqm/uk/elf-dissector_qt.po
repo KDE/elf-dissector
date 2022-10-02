@@ -1,0 +1,519 @@
+# Translation of elf-dissector_qt.po to Ukrainian
+# Copyright (C) 2019 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: elf-dissector_qt\n"
+"PO-Revision-Date: 2019-09-30 08:17+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 19.11.70\n"
+
+#: 3rdparty/treemap/treemap.cpp:1350
+#, qt-format
+msgctxt "TreeMapWidget|"
+msgid "Text %1"
+msgstr "Текст %1"
+
+#: 3rdparty/treemap/treemap.cpp:2870
+msgctxt "TreeMapWidget|"
+msgid "Recursive Bisection"
+msgstr "Рекурсивний поділ навпіл"
+
+#: 3rdparty/treemap/treemap.cpp:2871
+msgctxt "TreeMapWidget|"
+msgid "Columns"
+msgstr "Стовпчики"
+
+#: 3rdparty/treemap/treemap.cpp:2872
+msgctxt "TreeMapWidget|"
+msgid "Rows"
+msgstr "Рядки"
+
+#: 3rdparty/treemap/treemap.cpp:2873
+msgctxt "TreeMapWidget|"
+msgid "Always Best"
+msgstr "Завжди найкраще"
+
+#: 3rdparty/treemap/treemap.cpp:2874
+msgctxt "TreeMapWidget|"
+msgid "Best"
+msgstr "Найкраще"
+
+#: 3rdparty/treemap/treemap.cpp:2875
+msgctxt "TreeMapWidget|"
+msgid "Alternate (V)"
+msgstr "Альтернативне (верт.)"
+
+#: 3rdparty/treemap/treemap.cpp:2876
+msgctxt "TreeMapWidget|"
+msgid "Alternate (H)"
+msgstr "Альтернативне (гориз.)"
+
+#: 3rdparty/treemap/treemap.cpp:2877
+msgctxt "TreeMapWidget|"
+msgid "Horizontal"
+msgstr "Горизонтально"
+
+#: 3rdparty/treemap/treemap.cpp:2878
+msgctxt "TreeMapWidget|"
+msgid "Vertical"
+msgstr "Вертикально"
+
+#: lib/elf/elfdynamicentry.cpp:111
+#, qt-format
+msgctxt "QObject|"
+msgid "unknown (%1)"
+msgstr "невідомий (%1)"
+
+#: ui/dependencymodel/dependencymodel.cpp:134
+msgctxt "DependencyModel|"
+msgid "Cyclic dependency!"
+msgstr "Циклічна залежність!"
+
+#: ui/dependencymodel/dependencymodel.cpp:138
+msgctxt "DependencyModel|"
+msgid "Dependency not found!"
+msgstr "Залежності не знайдено!"
+
+#: ui/dependencymodel/dependencymodel.cpp:236
+msgctxt "DependencyModel|"
+msgid "Library"
+msgstr "Бібліотека"
+
+#: ui/dependencymodel/dependencymodel.cpp:237
+msgctxt "DependencyModel|"
+msgid "Symbols Used"
+msgstr "Використані символи"
+
+#: ui/dependencymodel/filelistmodel.cpp:67
+msgctxt "FileListModel|"
+msgid "Shared Object"
+msgstr "Спільний об'єкт"
+
+#: ui/dependencymodel/fileusermodel.cpp:89
+msgctxt "FileUserModel|"
+msgid "Users"
+msgstr "Користувачі"
+
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:88
+msgctxt "UnusedDependenciesModel|"
+msgid "ELF File"
+msgstr "Файл ELF"
+
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:89
+msgctxt "UnusedDependenciesModel|"
+msgid "Unused Dependency"
+msgstr "Невикористана залежність"
+
+#: ui/dependencymodel/usedsymbolmodel.cpp:75
+msgctxt "UsedSymbolModel|"
+msgid "Symbol"
+msgstr "Символ"
+
+#: ui/elfmodel/datavisitor.cpp:152 ui/elfmodel/datavisitor.cpp:321
+msgctxt "QObject|"
+msgid "<null>"
+msgstr "<порожньо>"
+
+#: ui/elfmodel/datavisitor.cpp:355
+msgctxt "QObject|"
+msgid "Construction VTable"
+msgstr "V-таблиця побудови"
+
+#: ui/elfmodel/datavisitor.cpp:355
+msgctxt "QObject|"
+msgid "VTable"
+msgstr "V-таблиця"
+
+#: ui/elfmodel/elfmodel.cpp:134
+msgctxt "ElfModel|"
+msgid "Entry"
+msgstr "Запис"
+
+#: ui/elfmodel/elfmodel.cpp:135
+msgctxt "ElfModel|"
+msgid "Size"
+msgstr "Розмір"
+
+#: ui/issuesmodel/issuesmodel.cpp:61
+#, qt-format
+msgctxt "IssuesModel|"
+msgid "%1 (implicit virtual destructor)"
+msgstr "%1 (неявний віртуальний деструктор)"
+
+#: ui/issuesmodel/issuesmodel.cpp:87
+msgctxt "IssuesModel|"
+msgid "Issue"
+msgstr "Вада"
+
+#: ui/issuesmodel/issuesmodel.cpp:88
+msgctxt "IssuesModel|"
+msgid "Location"
+msgstr "Розташування"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:71
+msgctxt "LoadBenchmarkModel|"
+msgid "File"
+msgstr "Файл"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:72
+msgctxt "LoadBenchmarkModel|"
+msgid "Lazy Median"
+msgstr "«Лінива» медіана"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:73
+msgctxt "LoadBenchmarkModel|"
+msgid "Lazy Min"
+msgstr "«Лінивий» мінімум"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:74
+msgctxt "LoadBenchmarkModel|"
+msgid "Now Median"
+msgstr "Поточна медіана"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:75
+msgctxt "LoadBenchmarkModel|"
+msgid "Now Min"
+msgstr "Поточний мінімум"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:76
+msgctxt "LoadBenchmarkModel|"
+msgid "Relocs"
+msgstr "Пересування"
+
+#: ui/main.cpp:31
+msgctxt "MainWindow|"
+msgid "ELF Dissector"
+msgstr "ELF Dissector"
+
+#: ui/main.cpp:43
+msgctxt "MainWindow|"
+msgid "ELF file to open"
+msgstr "файл ELF, який слід відкрити"
+
+#: ui/mainwindow.cpp:94
+msgctxt "MainWindow|"
+msgid "Open ELF Object"
+msgstr "Відкрити об'єкт ELF"
+
+#: ui/mainwindow.cpp:142
+msgctxt "MainWindow|"
+msgid "Failed to load ELF file"
+msgstr "Не вдалося завантажити файл ELF"
+
+#: ui/mainwindow.cpp:142
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Could not load %1."
+msgstr "Не вдалося завантажити %1."
+
+#: ui/mainwindow.cpp:146
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Failed to load %1."
+msgstr "Не вдалося завантажити %1."
+
+#: ui/mainwindow.cpp:153
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Loaded %1."
+msgstr "Завантажено %1."
+
+#: ui/mainwindow.ui:71
+msgctxt "MainWindow|"
+msgid "&File"
+msgstr "&Файл"
+
+#: ui/mainwindow.ui:79
+msgctxt "MainWindow|"
+msgid "&Actions"
+msgstr "&Дії"
+
+#: ui/mainwindow.ui:84
+msgctxt "MainWindow|"
+msgid "&Settings"
+msgstr "П&араметри"
+
+#: ui/mainwindow.ui:100
+msgctxt "MainWindow|"
+msgid "&Open..."
+msgstr "&Відкрити…"
+
+#: ui/mainwindow.ui:103
+msgctxt "MainWindow|"
+msgid "Ctrl+O"
+msgstr "Ctrl+O"
+
+#: ui/mainwindow.ui:113
+msgctxt "MainWindow|"
+msgid "&Quit"
+msgstr "Ви&йти"
+
+#: ui/mainwindow.ui:116
+msgctxt "MainWindow|"
+msgid "Ctrl+Q"
+msgstr "Ctrl+Q"
+
+#: ui/mainwindow.ui:129
+msgctxt "MainWindow|"
+msgid "Reopen &Previously Loaded Files"
+msgstr "Повторно відкрити &раніше завантажені файли"
+
+#: ui/navigator/codenavigator.cpp:36
+msgctxt "CodeNavigator|"
+msgid "KDevelop"
+msgstr "KDevelop"
+
+#: ui/navigator/codenavigator.cpp:37
+msgctxt "CodeNavigator|"
+msgid "Kate"
+msgstr "Kate"
+
+#: ui/navigator/codenavigator.cpp:38
+msgctxt "CodeNavigator|"
+msgid "KWrite"
+msgstr "KWrite"
+
+#: ui/navigator/codenavigator.cpp:39
+msgctxt "CodeNavigator|"
+msgid "Qt Creator"
+msgstr "Qt Creator"
+
+#: ui/navigator/codenavigator.cpp:81
+msgctxt "QObject|"
+msgid "Code Navigation"
+msgstr "Навігація кодом"
+
+#: ui/navigator/codenavigator.cpp:105
+msgctxt "QObject|"
+msgid "Custom..."
+msgstr "Нетиповий…"
+
+#: ui/navigator/codenavigator.cpp:117
+msgctxt "QObject|"
+msgid "Custom Code Navigation"
+msgstr "Нетипова навігація кодом"
+
+#: ui/navigator/codenavigator.cpp:118
+msgctxt "QObject|"
+msgid ""
+"Specify command to use for code navigation, '%f' will be replaced by the "
+"file name, '%l' by the line number."
+msgstr ""
+"Вкажіть команду для навігації кодом, «%f» буде замінено на назву файла, «%l» "
+"— на номер рядка."
+
+#: ui/typemodel/typemodel.cpp:263
+msgctxt "TypeModel|"
+msgid "Data Type"
+msgstr "Тип даних"
+
+#: ui/typemodel/typemodel.cpp:264
+msgctxt "TypeModel|"
+msgid "Size"
+msgstr "Розмір"
+
+#: ui/views/dependencyview.ui:21
+msgctxt "DependencyView|"
+msgid "Top Down"
+msgstr "Згори вниз"
+
+#: ui/views/dependencyview.ui:34 ui/views/dependencyview.ui:55
+#: ui/views/dependencyview.ui:93 ui/views/dependencyview.ui:117
+#: ui/views/dependencyview.ui:141 ui/views/dependencyview.ui:178
+msgctxt "DependencyView|"
+msgid "Search"
+msgstr "Пошук"
+
+#: ui/views/dependencyview.ui:80
+msgctxt "DependencyView|"
+msgid "Inverse"
+msgstr "Зворотний"
+
+#: ui/views/dependencyview.ui:172
+msgctxt "DependencyView|"
+msgid "Unused"
+msgstr "Не використано"
+
+#: ui/views/dependencyview.ui:199
+msgctxt "DependencyView|"
+msgid "&Optimize Dependency Order"
+msgstr "&Оптимізувати порядок залежностей"
+
+#: ui/views/elfstructureview.ui:36
+msgctxt "ElfStructureView|"
+msgid "Search"
+msgstr "Пошук"
+
+#: ui/views/elfstructureview.ui:68
+msgctxt "ElfStructureView|"
+msgid "&Back"
+msgstr "&Назад"
+
+#: ui/views/elfstructureview.ui:76
+msgctxt "ElfStructureView|"
+msgid "&Forward"
+msgstr "&Далі"
+
+#: ui/views/issuesview.ui:29
+msgctxt "IssuesView|"
+msgid "Search"
+msgstr "Пошук"
+
+#: ui/views/issuesview.ui:46
+msgctxt "IssuesView|"
+msgid "&Check for issues (expensive!)"
+msgstr "&Шукати вади (високе навантаження на систему!)"
+
+#: ui/views/loadbenchmarkview.ui:41
+msgctxt "LoadBenchmarkView|"
+msgid "Data"
+msgstr "Дані"
+
+#: ui/views/loadbenchmarkview.ui:64
+msgctxt "LoadBenchmarkView|"
+msgid "Plot"
+msgstr "Графік"
+
+#: ui/views/loadbenchmarkview.ui:81
+msgctxt "LoadBenchmarkView|"
+msgid "&Run Benchmark"
+msgstr "&Тестування швидкодії"
+
+#: ui/views/loadbenchmarkview.ui:84
+msgctxt "LoadBenchmarkView|"
+msgid "Measure loading and dynamic linking time."
+msgstr "Виміряти час завантаження і динамічного компонування."
+
+#: ui/views/sizetreemapview.ui:39
+msgctxt "SizeTreeMapView|"
+msgid "Search"
+msgstr "Пошук"
+
+#: ui/views/sizetreemapview.ui:68
+msgctxt "SizeTreeMapView|"
+msgid "Hide &Debug Information"
+msgstr "Приховати &діагностичні дані"
+
+#: ui/views/sizetreemapview.ui:71
+msgctxt "SizeTreeMapView|"
+msgid "Do not show sections containing debug information."
+msgstr "Не показувати розділи, у яких містяться діагностичні дані."
+
+#: ui/views/sizetreemapview.ui:84
+msgctxt "SizeTreeMapView|"
+msgid "Colorize &Sections"
+msgstr "Розфарбувати &розділи"
+
+#: ui/views/sizetreemapview.ui:87
+msgctxt "SizeTreeMapView|"
+msgid "Vary color of sections in the size tree map."
+msgstr "Варіювати колір розділів на карті ієрархії розмірів."
+
+#: ui/views/sizetreemapview.ui:100
+msgctxt "SizeTreeMapView|"
+msgid "Colorize S&ymbols"
+msgstr "Роз&фарбувати символи"
+
+#: ui/views/sizetreemapview.ui:103
+msgctxt "SizeTreeMapView|"
+msgid "Vary the color of symbols in the size tree map."
+msgstr "Варіювати кольори символів на карті ієрархії розмірів."
+
+#: ui/views/sizetreemapview.ui:116
+msgctxt "SizeTreeMapView|"
+msgid "&Relocation Heatmap"
+msgstr "«Т&еплова» карта пересувань"
+
+#: ui/views/sizetreemapview.ui:129
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-runtime"
+msgstr "Приховати нединамічні"
+
+#: ui/views/sizetreemapview.ui:132
+msgctxt "SizeTreeMapView|"
+msgid ""
+"Do not show content from sections that are not loaded into memory at runtime."
+msgstr ""
+"Не показувати дані з розділів, які не завантажуються до пам'яті під час "
+"роботи програми."
+
+#: ui/views/sizetreemapview.ui:145
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-writable"
+msgstr "Приховати незаписувані"
+
+#: ui/views/sizetreemapview.ui:148
+msgctxt "SizeTreeMapView|"
+msgid "Do not show content that is read-only/shared."
+msgstr ""
+"Не показувати дані, які призначено лише для читання або спільного "
+"використання."
+
+#: ui/views/sizetreemapview.ui:161
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-executable"
+msgstr "Приховати невиконуване"
+
+#: ui/views/sizetreemapview.ui:164
+msgctxt "SizeTreeMapView|"
+msgid "Do not show non-executable data content."
+msgstr "Не показувати невиконувані дані."
+
+#: ui/views/sizetreemapview.ui:177
+msgctxt "SizeTreeMapView|"
+msgid "&No Colorization"
+msgstr "&Без розфарбовування"
+
+#: ui/views/typeview.cpp:61 ui/views/typeview.cpp:73
+msgctxt "TypeView|"
+msgid "Invalid DWARF entries"
+msgstr "Некоректні записи DWARF"
+
+#: ui/views/typeview.cpp:62 ui/views/typeview.cpp:74
+msgctxt "TypeView|"
+msgid ""
+"An error occurred while reading DWARF data of some ELF objects, the tree "
+"will be incomplete."
+msgstr ""
+"Під час читання даних DWARF деяких об'єктів ELF сталася помилка. Ієрархія "
+"буде неповною."
+
+#: ui/views/typeview.cpp:69
+msgctxt "TypeView|"
+msgid "Compute Type Tree"
+msgstr "Визначити ієрархію типів"
+
+#: ui/views/typeview.cpp:69
+msgctxt "TypeView|"
+msgid ""
+"Computing the type tree from DWARF data can take up to several minutes in "
+"which the application will not respond, and use up to 1.5GB of memory. "
+"Proceed anyway?"
+msgstr ""
+"Визначення ієрархії типів на основі даних DWARF може тривати до декількох "
+"хвилин, протягом яких програма не відповідатиме на запити і "
+"використовуватиме до 1,5 ГБ оперативної пам'яті. Виконати дії з визначення "
+"ієрархії попри це?"
+
+#: ui/views/typeview.ui:36
+msgctxt "TypeView|"
+msgid "Search"
+msgstr "Пошук"
+
+#: ui/widgets/gnuplotwidget.cpp:31
+msgctxt "GnuplotWidget|"
+msgid "'gnuplot' not found, plotting not available."
+msgstr "«gnuplot» не знайдено. Побудова графіків неможлива."
