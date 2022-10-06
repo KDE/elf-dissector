@@ -234,7 +234,7 @@ msgstr "S'ha carregat %1."
 #: ui/mainwindow.ui:71
 msgctxt "MainWindow|"
 msgid "&File"
-msgstr "&Fitxer"
+msgstr "Fi&txer"
 
 #: ui/mainwindow.ui:79
 msgctxt "MainWindow|"
@@ -244,12 +244,12 @@ msgstr "&Accions"
 #: ui/mainwindow.ui:84
 msgctxt "MainWindow|"
 msgid "&Settings"
-msgstr "&Configuració"
+msgstr "Con&figuració"
 
 #: ui/mainwindow.ui:100
 msgctxt "MainWindow|"
 msgid "&Open..."
-msgstr "&Obri..."
+msgstr "O&bri..."
 
 #: ui/mainwindow.ui:103
 msgctxt "MainWindow|"
@@ -425,7 +425,7 @@ msgstr "Variació de color de les seccions al mapa de l'arbre de les mides."
 #: ui/views/sizetreemapview.ui:100
 msgctxt "SizeTreeMapView|"
 msgid "Colorize S&ymbols"
-msgstr "Acolori&x els símbols"
+msgstr "A&colorix els símbols"
 
 #: ui/views/sizetreemapview.ui:103
 msgctxt "SizeTreeMapView|"
