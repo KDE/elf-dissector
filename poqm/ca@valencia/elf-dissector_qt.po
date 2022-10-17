@@ -201,7 +201,7 @@ msgstr "ELF Dissector"
 #: ui/main.cpp:43
 msgctxt "MainWindow|"
 msgid "ELF file to open"
-msgstr "Fitxer ELF que s'obrirà"
+msgstr "Fitxer ELF que s'ha d'obrir"
 
 #: ui/mainwindow.cpp:94
 msgctxt "MainWindow|"
