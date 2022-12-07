@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Qt-Contexts: true\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: 3rdparty/treemap/treemap.cpp:1350
 #, qt-format
@@ -376,7 +376,7 @@ msgstr "მონაცემები"
 #: ui/views/loadbenchmarkview.ui:64
 msgctxt "LoadBenchmarkView|"
 msgid "Plot"
-msgstr ""
+msgstr "გრაფიკი"
 
 #: ui/views/loadbenchmarkview.ui:81
 msgctxt "LoadBenchmarkView|"
@@ -396,12 +396,13 @@ msgstr "ძებნა"
 #: ui/views/sizetreemapview.ui:68
 msgctxt "SizeTreeMapView|"
 msgid "Hide &Debug Information"
-msgstr ""
+msgstr "&გამართვის ინფორმაციის დამალვა"
 
 #: ui/views/sizetreemapview.ui:71
 msgctxt "SizeTreeMapView|"
 msgid "Do not show sections containing debug information."
 msgstr ""
+"სექციები, რომლებიც გამართვის ინფორმაციას არ შეიცავენ, ნაჩვენები არ იქნება."
 
 #: ui/views/sizetreemapview.ui:84
 msgctxt "SizeTreeMapView|"
@@ -421,12 +422,12 @@ msgstr "&სიმბოლოების გაფერადება"
 #: ui/views/sizetreemapview.ui:103
 msgctxt "SizeTreeMapView|"
 msgid "Vary the color of symbols in the size tree map."
-msgstr ""
+msgstr "ზომის ხის რუკაზე სიმბოლოების ფერის ცვლილება."
 
 #: ui/views/sizetreemapview.ui:116
 msgctxt "SizeTreeMapView|"
 msgid "&Relocation Heatmap"
-msgstr ""
+msgstr "&გადაადგილების რუკა"
 
 #: ui/views/sizetreemapview.ui:129
 msgctxt "SizeTreeMapView|"
@@ -442,7 +443,7 @@ msgstr ""
 #: ui/views/sizetreemapview.ui:145
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-writable"
-msgstr ""
+msgstr "არა-ჩაწერადების დამალვა"
 
 #: ui/views/sizetreemapview.ui:148
 msgctxt "SizeTreeMapView|"
@@ -452,7 +453,7 @@ msgstr ""
 #: ui/views/sizetreemapview.ui:161
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-executable"
-msgstr ""
+msgstr "არა-გაშვებადების დამალვა"
 
 #: ui/views/sizetreemapview.ui:164
 msgctxt "SizeTreeMapView|"
