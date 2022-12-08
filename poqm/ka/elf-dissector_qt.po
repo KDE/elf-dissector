@@ -144,7 +144,7 @@ msgstr "ზომა"
 #, qt-format
 msgctxt "IssuesModel|"
 msgid "%1 (implicit virtual destructor)"
-msgstr ""
+msgstr "%1 (ნაგულისხმები ვირტუალური დესტრუქტორი)"
 
 #: ui/issuesmodel/issuesmodel.cpp:87
 msgctxt "IssuesModel|"
@@ -164,27 +164,27 @@ msgstr "ფაილი"
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:72
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Median"
-msgstr ""
+msgstr "ზარმაცი მედიანა"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:73
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Min"
-msgstr ""
+msgstr "ზარმაცი წთ"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:74
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Median"
-msgstr ""
+msgstr "ახლა მედიანა"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:75
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Min"
-msgstr ""
+msgstr "ახლა წთ"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:76
 msgctxt "LoadBenchmarkModel|"
 msgid "Relocs"
-msgstr ""
+msgstr "გადაადგილებები"
 
 #: ui/main.cpp:31
 msgctxt "MainWindow|"
@@ -262,7 +262,7 @@ msgstr "Ctrl+Q"
 #: ui/mainwindow.ui:129
 msgctxt "MainWindow|"
 msgid "Reopen &Previously Loaded Files"
-msgstr ""
+msgstr "&ადრე გახსნილი ფაილების თავიდან გახსნა"
 
 #: ui/navigator/codenavigator.cpp:36
 msgctxt "CodeNavigator|"
@@ -297,7 +297,7 @@ msgstr "გა_მართვა..."
 #: ui/navigator/codenavigator.cpp:117
 msgctxt "QObject|"
 msgid "Custom Code Navigation"
-msgstr ""
+msgstr "ხელით მითითებულ კოდში ნავიგაცია"
 
 #: ui/navigator/codenavigator.cpp:118
 msgctxt "QObject|"
@@ -305,6 +305,8 @@ msgid ""
 "Specify command to use for code navigation, '%f' will be replaced by the "
 "file name, '%l' by the line number."
 msgstr ""
+"მიუთითეთ ბრძანება კოდში ნავიგაციისთვის. \"%f\" შეიცვლება ფაილის სახელით, \"%l"
+"\" ხაზის ნომრით."
 
 #: ui/typemodel/typemodel.cpp:263
 msgctxt "TypeModel|"
@@ -381,12 +383,12 @@ msgstr "გრაფიკი"
 #: ui/views/loadbenchmarkview.ui:81
 msgctxt "LoadBenchmarkView|"
 msgid "&Run Benchmark"
-msgstr ""
+msgstr "Benchmark-ის &გაშვება"
 
 #: ui/views/loadbenchmarkview.ui:84
 msgctxt "LoadBenchmarkView|"
 msgid "Measure loading and dynamic linking time."
-msgstr ""
+msgstr "ჩატვირთვის და დინამიკური მიბმის დროის გაზომვა."
 
 #: ui/views/sizetreemapview.ui:39
 msgctxt "SizeTreeMapView|"
@@ -412,7 +414,7 @@ msgstr "&სექციების გაფერადება"
 #: ui/views/sizetreemapview.ui:87
 msgctxt "SizeTreeMapView|"
 msgid "Vary color of sections in the size tree map."
-msgstr ""
+msgstr "ზომის ხის რუკის სექციების გაფერადება."
 
 #: ui/views/sizetreemapview.ui:100
 msgctxt "SizeTreeMapView|"
@@ -458,7 +460,7 @@ msgstr "არა-გაშვებადების დამალვა"
 #: ui/views/sizetreemapview.ui:164
 msgctxt "SizeTreeMapView|"
 msgid "Do not show non-executable data content."
-msgstr ""
+msgstr "მონაცემების არაშესრულებადი შემცველობა ნაჩვენები არ იქნება."
 
 #: ui/views/sizetreemapview.ui:177
 msgctxt "SizeTreeMapView|"
@@ -476,6 +478,8 @@ msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
 "will be incomplete."
 msgstr ""
+"შეცდომა ზოგიერთი ELF ობიექტის DWARF მონაცემების წაკითხვისას. ხე დაუსრულებელი "
+"იქნება."
 
 #: ui/views/typeview.cpp:69
 msgctxt "TypeView|"
@@ -498,4 +502,4 @@ msgstr "ძებნა"
 #: ui/widgets/gnuplotwidget.cpp:31
 msgctxt "GnuplotWidget|"
 msgid "'gnuplot' not found, plotting not available."
-msgstr ""
+msgstr "'gnuplot' დაყენებული არ გაქვთ. ხაზვის ფუნქციონალი გაითიშება."
