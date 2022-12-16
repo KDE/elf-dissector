@@ -321,7 +321,7 @@ msgstr "ზომა"
 #: ui/views/dependencyview.ui:21
 msgctxt "DependencyView|"
 msgid "Top Down"
-msgstr ""
+msgstr "მაღლიდან დაბლა"
 
 #: ui/views/dependencyview.ui:34 ui/views/dependencyview.ui:55
 #: ui/views/dependencyview.ui:93 ui/views/dependencyview.ui:117
@@ -434,13 +434,15 @@ msgstr "&გადაადგილების რუკა"
 #: ui/views/sizetreemapview.ui:129
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-runtime"
-msgstr ""
+msgstr "გაშვებისას არა-საჭიროების დამალვა"
 
 #: ui/views/sizetreemapview.ui:132
 msgctxt "SizeTreeMapView|"
 msgid ""
 "Do not show content from sections that are not loaded into memory at runtime."
 msgstr ""
+"არ მაჩვენო სექციების შემცველობა, რომელიც გაშვებისას მეხსიერებაში არ "
+"იტვირთება."
 
 #: ui/views/sizetreemapview.ui:145
 msgctxt "SizeTreeMapView|"
@@ -450,7 +452,7 @@ msgstr "არა-ჩაწერადების დამალვა"
 #: ui/views/sizetreemapview.ui:148
 msgctxt "SizeTreeMapView|"
 msgid "Do not show content that is read-only/shared."
-msgstr ""
+msgstr "მხოლოდ-წაკითხვადი შემცველობა ნაჩვენები არ იქნება."
 
 #: ui/views/sizetreemapview.ui:161
 msgctxt "SizeTreeMapView|"
@@ -493,6 +495,9 @@ msgid ""
 "which the application will not respond, and use up to 1.5GB of memory. "
 "Proceed anyway?"
 msgstr ""
+"DWARF-ის მონაცემებიდან ტიპის ხის აგებას რამდენიმე წუთი შეიძლება დასჭირდეს, "
+"რომლის დროსაც აპლიკაცია არ გიპასუხებთ და შეიძლება 1.5გბ-მდე მეხსიერება "
+"მიირთვას. გავაგრძელო?"
 
 #: ui/views/typeview.ui:36
 msgctxt "TypeView|"
