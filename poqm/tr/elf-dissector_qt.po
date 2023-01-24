@@ -1,8 +1,8 @@
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2022-11-21 22:28+0300\n"
+"PO-Revision-Date: 2023-01-23 20:11+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #: 3rdparty/treemap/treemap.cpp:1350
 #, qt-format
@@ -267,7 +267,7 @@ msgstr "Önceden Yüklenen Dosyaları Ye&niden Aç"
 #: ui/navigator/codenavigator.cpp:36
 msgctxt "CodeNavigator|"
 msgid "KDevelop"
-msgstr "KDevelop"
+msgstr "K Geliştir"
 
 #: ui/navigator/codenavigator.cpp:37
 msgctxt "CodeNavigator|"
