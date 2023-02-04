@@ -292,7 +292,7 @@ msgstr "დოკუმენტის ნავიგაცია"
 #: ui/navigator/codenavigator.cpp:105
 msgctxt "QObject|"
 msgid "Custom..."
-msgstr "გა_მართვა..."
+msgstr "ხელით..."
 
 #: ui/navigator/codenavigator.cpp:117
 msgctxt "QObject|"
