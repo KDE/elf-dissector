@@ -1,8 +1,8 @@
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2019, 2020.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2019, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2020-03-07 17:09+0100\n"
+"PO-Revision-Date: 2023-04-23 08:19+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.08.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1350
@@ -120,11 +120,13 @@ msgctxt "QObject|"
 msgid "<null>"
 msgstr "<nulo>"
 
+# well-spelled: TáboaV
 #: ui/elfmodel/datavisitor.cpp:355
 msgctxt "QObject|"
 msgid "Construction VTable"
 msgstr "TáboaV de constrición"
 
+# well-spelled: TáboaV
 #: ui/elfmodel/datavisitor.cpp:355
 msgctxt "QObject|"
 msgid "VTable"
