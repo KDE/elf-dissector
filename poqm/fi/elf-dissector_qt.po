@@ -1,8 +1,8 @@
-# Tommi Nieminen <translator@legisign.org>, 2022.
+# Tommi Nieminen <translator@legisign.org>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2022-08-09 18:08+0300\n"
+"PO-Revision-Date: 2023-04-20 10:38+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1350
@@ -184,12 +184,12 @@ msgstr "Minimi nyt"
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:76
 msgctxt "LoadBenchmarkModel|"
 msgid "Relocs"
-msgstr ""
+msgstr "Uudelleensijoitukset"
 
 #: ui/main.cpp:31
 msgctxt "MainWindow|"
 msgid "ELF Dissector"
-msgstr ""
+msgstr "ELF-analysoija"
 
 #: ui/main.cpp:43
 msgctxt "MainWindow|"
@@ -383,7 +383,7 @@ msgstr "Piirrä"
 #: ui/views/loadbenchmarkview.ui:81
 msgctxt "LoadBenchmarkView|"
 msgid "&Run Benchmark"
-msgstr ""
+msgstr "&Aja testi"
 
 #: ui/views/loadbenchmarkview.ui:84
 msgctxt "LoadBenchmarkView|"
@@ -428,7 +428,7 @@ msgstr "Vaihtele symbolien väriä kokopuukartalla."
 #: ui/views/sizetreemapview.ui:116
 msgctxt "SizeTreeMapView|"
 msgid "&Relocation Heatmap"
-msgstr ""
+msgstr "&Uudelleensijoituksen lämpökartta"
 
 #: ui/views/sizetreemapview.ui:129
 msgctxt "SizeTreeMapView|"
@@ -477,11 +477,13 @@ msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
 "will be incomplete."
 msgstr ""
+"Joidenkin ELF-olioiden DWARF-tietoa luettaessa tapahtui virhe: puusta tulee "
+"epätäydellinen."
 
 #: ui/views/typeview.cpp:69
 msgctxt "TypeView|"
 msgid "Compute Type Tree"
-msgstr ""
+msgstr "Laske tyyppipuu"
 
 #: ui/views/typeview.cpp:69
 msgctxt "TypeView|"
@@ -490,6 +492,8 @@ msgid ""
 "which the application will not respond, and use up to 1.5GB of memory. "
 "Proceed anyway?"
 msgstr ""
+"Tyyppipuun laskenta DWARF-tiedosta voi viedä useita minuutteja, jona aikana "
+"sovellus ei vastaa, ja kuluttaa jopa 1,5 Gt muistia. Jatketaanko silti?"
 
 #: ui/views/typeview.ui:36
 msgctxt "TypeView|"
