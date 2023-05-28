@@ -1,7 +1,7 @@
 include(CheckCSourceCompiles)
 include(CMakePushCheckState)
 
-find_path(Dwarf_INCLUDE_DIR libdwarf.h PATH_SUFFIXES libdwarf)
+find_path(Dwarf_INCLUDE_DIR libdwarf.h PATH_SUFFIXES libdwarf-0)
 
 find_library(Dwarf_LIBRARY NAMES dwarf)
 
@@ -32,7 +32,7 @@ endif()
 cmake_pop_check_state()
 
 if(NOT DWARF_LINKS_WITHOUT_LIBELF AND NOT DWARF_NEEDS_LIBELF)
-    message(FATAL_ERROR "Can't get libdwarf to link!?")
+    message(WARNING "Can't get libdwarf to link!?")
 endif()
 
 include(FindPackageHandleStandardArgs)

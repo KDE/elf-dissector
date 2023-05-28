@@ -71,6 +71,19 @@ static int qstring_printf(void *data, const char *format, ...)
     return buffer.size();
 }
 
+
+static int fprintf_styled(void *, enum disassembler_style, const char* fmt, ...)
+{
+    va_list args;
+    int r;
+
+    va_start(args, fmt);
+    r = vprintf(fmt, args);
+    va_end(args);
+
+    return r;
+}
+
 static void print_address(bfd_vma addr, struct disassemble_info *info)
 {
     const auto disasm = static_cast<Disassembler*>(info->application_data);
@@ -127,7 +140,7 @@ QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t si
     QString result;
     disassembler_ftype disassemble_fn;
     disassemble_info info;
-    INIT_DISASSEMBLE_INFO(info, &result, qstring_printf);
+    INIT_DISASSEMBLE_INFO(info, &result, qstring_printf, fprintf_styled);
 
     info.application_data = this;
     info.flavour = bfd_target_elf_flavour;
