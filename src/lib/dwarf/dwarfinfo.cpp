@@ -39,8 +39,13 @@ public:
 
     ElfFile *elfFile = nullptr;
     QVector<DwarfCuDie*> compilationUnits;
+#ifdef Q_OS_FREEBSD
+    Dwarf_Obj_Access_Interface objAccessIface{};
+    Dwarf_Obj_Access_Methods objAccessMethods{};
+#else
     Dwarf_Obj_Access_Interface_a_s objAccessIface{};
     Dwarf_Obj_Access_Methods_a objAccessMethods{};
+#endif
 
     Dwarf_Debug dbg{};
 
@@ -51,11 +56,19 @@ public:
 };
 
 
+#ifdef Q_OS_FREEBSD
+static Dwarf_Endianness callback_get_byte_order(void *obj)
+{
+    const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
+    return d->elfFile->byteOrder() == ELFDATA2LSB ? DW_END_little : DW_END_big;
+}
+#else
 static Dwarf_Small callback_get_byte_order(void *obj)
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
     return d->elfFile->byteOrder() == ELFDATA2LSB ? DW_END_little : DW_END_big;
 }
+#endif
 
 static Dwarf_Small callback_get_length_size(void *obj)
 {
@@ -95,13 +108,23 @@ static void callback_dwarf_handler(Dwarf_Error error, Dwarf_Ptr errarg)
     d->isValid = false;
 }
 
+#ifdef Q_OS_FREEBSD
 static int callback_get_section_info(void *obj, Dwarf_Half index, Dwarf_Obj_Access_Section_a *sectionInfo, int *error)
+#else
+static int callback_get_section_info(void *obj, Dwarf_Half index, Dwarf_Obj_Access_Section *sectionInfo, int *error)
+#endif
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
     const auto sectionHeader = d->elfFile->sectionHeaders().at(index);
+#ifdef Q_OS_FREEBSD
+    sectionInfo->addr = (Dwarf_Addr)(d->elfFile->rawData() + sectionHeader->sectionOffset());
+    sectionInfo->size = sectionHeader->size();
+    sectionInfo->name = sectionHeader->name();
+#else
     sectionInfo->as_addr = (Dwarf_Addr)(d->elfFile->rawData() + sectionHeader->sectionOffset());
     sectionInfo->as_size = sectionHeader->size();
     sectionInfo->as_name = sectionHeader->name();
+#endif
     *error = DW_DLV_OK;
     return DW_DLV_OK;
 }
@@ -126,6 +149,7 @@ DwarfInfoPrivate::DwarfInfoPrivate(DwarfInfo *qq) :
     q(qq),
     isValid(true)
 {
+#ifndef Q_OS_FREEBSD
     objAccessIface.ai_object = this;
     objAccessIface.ai_methods = &objAccessMethods;
     objAccessMethods.om_get_byte_order = callback_get_byte_order;
@@ -135,25 +159,46 @@ DwarfInfoPrivate::DwarfInfoPrivate(DwarfInfo *qq) :
     objAccessMethods.om_get_section_info = callback_get_section_info;
     objAccessMethods.om_load_section = callback_load_section;
     objAccessMethods.om_get_filesize = callback_get_filesize;
-#ifndef Q_OS_FREEBSD
+
     // TODO: check structure fields at cmake or compile time
     //       rather than ifdeffing on an OS.
     //
     // FreeBSD's DWARF.h doesn't have this (separate developments).
     objAccessMethods.om_relocate_a_section = nullptr;
+#else
+    objAccessIface.object = this;
+    objAccessIface.methods = &objAccessMethods;
+    objAccessMethods.get_byte_order = callback_get_byte_order;
+    objAccessMethods.get_length_size = callback_get_length_size;
+    objAccessMethods.get_pointer_size = callback_get_pointer_size;
+    objAccessMethods.get_section_count = callback_get_section_count;
+    objAccessMethods.get_section_info = callback_get_section_info;
+    objAccessMethods.load_section = callback_load_section;
 #endif
 }
 
 DwarfInfoPrivate::~DwarfInfoPrivate()
 {
     qDeleteAll(compilationUnits);
+#ifdef Q_OS_FREEBSD
+    dwarf_object_finish(dbg, nullptr);
+#else
     dwarf_object_finish(dbg);
+#endif
 }
 
 void DwarfInfoPrivate::scanCompilationUnits()
 {
     Dwarf_Unsigned nextHeader = 0;
     forever {
+#ifdef Q_OS_FREEBSD
+        int res = dwarf_next_cu_header(dbg, nullptr, nullptr, nullptr, nullptr, &nextHeader, nullptr);
+        if (res != DW_DLV_OK)
+            return;
+
+        Dwarf_Die cuDie = nullptr;
+        res = dwarf_siblingof(dbg, nullptr, &cuDie, nullptr);
+#else
         int res = dwarf_next_cu_header_d(dbg,
             true,
             nullptr, nullptr,
@@ -167,6 +212,7 @@ void DwarfInfoPrivate::scanCompilationUnits()
 
         Dwarf_Die cuDie = nullptr;
         res = dwarf_siblingof_b(dbg, nullptr, true, &cuDie, nullptr);
+#endif
         if(res != DW_DLV_OK)
             return;
 

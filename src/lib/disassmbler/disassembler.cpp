@@ -50,10 +50,7 @@
     // in binutils 2.29 print_insn_i386 disappeared from the dis-asm.h header,
     // not sure what the proper replacement for it is, so define it here
     //
-    // > There is no replacement, they just hid it because they don't give a
-    // > fuck about other users of the API. \o/
     // > See commit 88c1242dc0a1e1ab582a65ea8bd05eb5f244c59b in binutils.
-    // > Good news is that they just hid it, so we can just declare them like this:
     extern "C" int print_insn_i386 (bfd_vma, disassemble_info *);
     extern "C" int print_insn_big_arm(bfd_vma, disassemble_info *);
     extern "C" int print_insn_little_arm(bfd_vma, disassemble_info *);
@@ -145,7 +142,11 @@ QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t si
     QString result;
     disassembler_ftype disassemble_fn;
     disassemble_info info;
+#ifdef Q_OS_FREEBSD
     INIT_DISASSEMBLE_INFO(info, &result, qstring_printf, fprintf_styled);
+#else
+    INIT_DISASSEMBLE_INFO(info, &result, qstring_printf);
+#endif
 
     info.application_data = this;
     info.flavour = bfd_target_elf_flavour;

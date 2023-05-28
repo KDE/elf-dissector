@@ -616,9 +616,12 @@ void DwarfDie::scanChildren() const
     const auto handle = dwarfHandle();
     forever {
         m_children.push_back(new DwarfDie(childDie, const_cast<DwarfDie*>(this)));
-
         Dwarf_Die siblingDie;
+#ifdef Q_OS_FREEBSD
+        res = dwarf_siblingof(handle, childDie, &siblingDie, nullptr);
+#else
         res = dwarf_siblingof_b(handle, childDie, true, &siblingDie, nullptr);
+#endif
         if (res != DW_DLV_OK)
             return;
 
