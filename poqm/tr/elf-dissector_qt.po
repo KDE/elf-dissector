@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2023-06-01 12:34+0300\n"
+"PO-Revision-Date: 2023-06-04 01:21+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -247,7 +247,7 @@ msgstr "&Aç..."
 #: ui/mainwindow.ui:103
 msgctxt "MainWindow|"
 msgid "Ctrl+O"
-msgstr "Ctrl+O"
+msgstr "Kontrol+O"
 
 #: ui/mainwindow.ui:113
 msgctxt "MainWindow|"
@@ -257,7 +257,7 @@ msgstr "Çı&k"
 #: ui/mainwindow.ui:116
 msgctxt "MainWindow|"
 msgid "Ctrl+Q"
-msgstr "Ctrl+Q"
+msgstr "Kontrol+Q"
 
 #: ui/mainwindow.ui:129
 msgctxt "MainWindow|"
