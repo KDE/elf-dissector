@@ -41,7 +41,7 @@
   <summary xml:lang="es">Herramienta de análisis estático para archivos ELF</summary>
   <summary xml:lang="fi">ELF-tiedostojen staattisen analyysin työkalu</summary>
   <summary xml:lang="fr">Outil d'analyse statique pour fichiers ELF</summary>
-  <summary xml:lang="gl">Ferramenta de análise estática para ficheiros ELF</summary>
+  <summary xml:lang="gl">Ferramenta de análise estática para ficheiros ELF.</summary>
   <summary xml:lang="ia">Instrumento de analysis static per files ELF</summary>
   <summary xml:lang="id">Alat analisis statik untuk file-file ELF</summary>
   <summary xml:lang="it">Strumento di analisi statica per i file ELF</summary>
@@ -270,7 +270,7 @@
       <li xml:lang="es">Desensamblador integrado para x86 y AArch64.</li>
       <li xml:lang="fi">Sisään rakennettu x86- ja AArch64-disassembleri.</li>
       <li xml:lang="fr">Dé-assembleur intégré pour processeurs « x86 » et « AArch64 ».</li>
-      <li xml:lang="gl">Desensamblador incorporado para x86 e AArch64.</li>
+      <li xml:lang="gl">Desensamblador de serie para x86 e AArch64.</li>
       <li xml:lang="id">Bawaan disassembler untuk x86 dan AArch64.</li>
       <li xml:lang="it">Disassemblatore incorporato per x86 e per AArch64.</li>
       <li xml:lang="ka">ჩაშენებული დისასამბლერი x86 და AArch64-სთვის.</li>
@@ -346,7 +346,7 @@
       <caption xml:lang="es">Vistas de mapa en árbol de tamaños.</caption>
       <caption xml:lang="fi">Koon puukarttanäkymät</caption>
       <caption xml:lang="fr">Dimensionner les affichages en arborescence.</caption>
-      <caption xml:lang="gl">Vistas de mapa de árbore de tamaños</caption>
+      <caption xml:lang="gl">Vistas de mapa de árbore de tamaños.</caption>
       <caption xml:lang="id">Ukuran tampilan peta-ranting</caption>
       <caption xml:lang="it">Viste a mappa ad albero delle dimensioni</caption>
       <caption xml:lang="ka">ზომის მიბმის ხის ხედები</caption>
