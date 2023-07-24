@@ -37,8 +37,10 @@ protected:
     int doVisit(ElfNoteSection* section, int arg) const override;
     int doVisit(ElfPltSection *section, int) const override;
     int doVisit(ElfRelocationSection* section, int arg) const override;
+#if HAVE_DWARF
     int doVisit(DwarfInfo* info, int arg) const override;
     int doVisit(DwarfDie* die, int) const override;
+#endif
 };
 
 #endif

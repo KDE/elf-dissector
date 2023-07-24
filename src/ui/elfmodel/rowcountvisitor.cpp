@@ -80,6 +80,7 @@ int RowCountVisitor::doVisit(ElfRelocationSection* section, int) const
     return section->header()->entryCount();
 }
 
+#if HAVE_DWARF
 int RowCountVisitor::doVisit(DwarfInfo* info, int) const
 {
     return info->compilationUnits().size();
@@ -89,3 +90,4 @@ int RowCountVisitor::doVisit(DwarfDie *die, int) const
 {
     return die->children().size();
 }
+#endif

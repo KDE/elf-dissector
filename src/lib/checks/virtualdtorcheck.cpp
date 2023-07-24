@@ -15,22 +15,25 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include "config-elf-dissector.h"
 #include "virtualdtorcheck.h"
 
 #include <elf/elffileset.h>
+#if HAVE_DWARF
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
 #include <dwarf/dwarfcudie.h>
 #include <dwarf/dwarftypes.h>
 
 #include <dwarf.h>
-
+#endif
 
 #include <algorithm>
 #include <iostream>
 
 void VirtualDtorCheck::findImplicitVirtualDtors(ElfFileSet* fileSet)
 {
+#if HAVE_DWARF
     for (int i = 0; i < fileSet->size(); ++i) {
         const auto file = fileSet->file(i);
         if (!file->dwarfInfo())
@@ -47,10 +50,12 @@ void VirtualDtorCheck::findImplicitVirtualDtors(ElfFileSet* fileSet)
                 || res.sourceFilePath.endsWith(QLatin1String(".cxx"));
         }), m_results.end()
     );
+#endif
 }
 
 void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
 {
+#if HAVE_DWARF
     const bool isCandidate =
         die->tag() == DW_TAG_subprogram &&
         die->attribute(DW_AT_external).toBool() &&
@@ -87,6 +92,7 @@ void VirtualDtorCheck::findImplicitVirtualDtors(DwarfDie* die)
             continue;
         findImplicitVirtualDtors(child);
     }
+#endif
 }
 
 void VirtualDtorCheck::printResults() const

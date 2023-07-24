@@ -15,11 +15,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include "config-elf-dissector.h"
 #include "codenavigatorprinter.h"
 #include "codenavigator.h"
 
+#if HAVE_DWARF
 #include <dwarf/dwarfdie.h>
 #include <dwarf.h>
+#endif
 
 #include <QFileInfo>
 #include <QUrl>
@@ -30,6 +33,7 @@ QString CodeNavigatorPrinter::sourceLocationRichText(DwarfDie* die)
     if (!die)
         return s;
 
+#if HAVE_DWARF
     const auto fileName = die->sourceFilePath();
     if (fileName.isEmpty())
         return s;
@@ -54,6 +58,7 @@ QString CodeNavigatorPrinter::sourceLocationRichText(DwarfDie* die)
         s += QLatin1String("</a>");
     }
     s += QLatin1String("<br/>");
+#endif
 
     return s;
 }

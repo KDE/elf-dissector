@@ -15,17 +15,22 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include "config-elf-dissector.h"
 #include "typemodel.h"
 
 #include <navigator/codenavigatorprinter.h>
 #include <elf/elffileset.h>
+#if HAVE_DWARF
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
 #include <dwarf/dwarfcudie.h>
+#endif
 #include <printers/dwarfprinter.h>
 #include <checks/structurepackingcheck.h>
 
+#if HAVE_DWARF
 #include <dwarf.h>
+#endif
 
 #include <QIcon>
 #include <QTime>
@@ -69,24 +74,31 @@ void TypeModel::addFile(ElfFile* file)
     if (!dwarf)
         return;
 
+#if HAVE_DWARF
     foreach (const auto cu, dwarf->compilationUnits()) {
         foreach (const auto die, cu->children())
             addDwarfDieRecursive(die, 0);
     }
+#endif
 }
 
 bool dieInherits(DwarfDie *parentDie, DwarfDie *childDie)
 {
+#if HAVE_DWARF
     if (parentDie == childDie)
         return true;
     DwarfDie *baseDie = childDie->inheritedFrom();
     if (!baseDie)
         return false;
     return dieInherits(parentDie, baseDie);
+#else
+    return false;
+#endif
 }
 
 bool isBetterDie(DwarfDie *prevDie, DwarfDie *newDie)
 {
+#if HAVE_DWARF
     // we don't care about increasing the level of detail for structure nodes
     if (prevDie->tag() != DW_TAG_class_type && prevDie->tag() != DW_TAG_structure_type)
         return false;
@@ -107,12 +119,14 @@ bool isBetterDie(DwarfDie *prevDie, DwarfDie *newDie)
     // TODO
 
     // TODO what else?
+#endif
 
     return false;
 }
 
 bool TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
 {
+#if HAVE_DWARF
     if (!die->dwarfInfo()->isValid()) {
         m_hasInvalidDies = true;
         return false;
@@ -169,6 +183,7 @@ bool TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
         m_parentMap[nodeId] = parentId;
         return true;
     }
+#endif
 
     return false;
 }
@@ -192,6 +207,7 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
     if (!index.isValid())
         return {};
 
+#if HAVE_DWARF
     const auto node = m_nodes.at(index.internalId());
     switch (role) {
         case Qt::DisplayRole:
@@ -229,6 +245,7 @@ QVariant TypeModel::data(const QModelIndex& index, int role) const
             }
             return {};
     };
+#endif
 
     return {};
 }

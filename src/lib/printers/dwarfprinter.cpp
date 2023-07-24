@@ -15,32 +15,39 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include "config-elf-dissector.h"
 #include "dwarfprinter.h"
 
+#if HAVE_DWARF
 #include <dwarf/dwarfexpression.h>
 #include <dwarf/dwarfranges.h>
 #include <dwarf/dwarfdie.h>
 
+#include <libdwarf.h>
+#endif
+
 #include <QMetaType>
 #include <QString>
-
-#include <libdwarf.h>
 
 #include <cassert>
 #include <type_traits>
 
 const char* DwarfPrinter::virtuality(DwarfVirtuality v)
 {
+#if HAVE_DWARF
     const char *str = nullptr;
     const auto res = dwarf_get_VIRTUALITY_name(static_cast<int>(v), &str);
     if (res != DW_DLV_OK)
         return nullptr;
     return str;
+#else
+    return nullptr;
+#endif
 }
 
 QByteArray DwarfPrinter::ranges(const DwarfRanges& ranges)
 {
-    
+#if HAVE_DWARF
     QByteArray b;
     for (int i = 0; i < ranges.size(); ++i) {
         const auto r = ranges.entry(i);
@@ -57,10 +64,14 @@ QByteArray DwarfPrinter::ranges(const DwarfRanges& ranges)
         }
     }
     return b;
+#else
+    return {};
+#endif
 }
 
 void DwarfPrinter::registerConverterFunctions()
 {
+#if HAVE_DWARF
     QMetaType::registerConverter<DwarfExpression, QString>(&DwarfExpression::displayString);
     QMetaType::registerConverter<DwarfVirtuality, QString>([](DwarfVirtuality v){
         return QString::fromLatin1(DwarfPrinter::virtuality(v));
@@ -68,10 +79,12 @@ void DwarfPrinter::registerConverterFunctions()
     QMetaType::registerConverter<DwarfRanges, QString>([](const DwarfRanges &r){
         return QString::fromLatin1(DwarfPrinter::ranges(r));
     });
+#endif
 }
 
 QString DwarfPrinter::dieRichText(DwarfDie* die)
 {
+#if HAVE_DWARF
     assert(die);
     QString s;
     s += "TAG: " + QLatin1String(die->tagName()) + "<br/>";
@@ -87,4 +100,7 @@ QString DwarfPrinter::dieRichText(DwarfDie* die)
         s += QLatin1String(die->attributeName(attrType)) + ": " + attrValueStr.toHtmlEscaped() + "<br/>";
     }
     return s;
+#else
+    return {};
+#endif
 }

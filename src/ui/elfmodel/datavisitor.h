@@ -46,16 +46,20 @@ protected:
     QVariant doVisit(ElfNoteEntry *entry, int role) const override;
     QVariant doVisit(ElfPltEntry *entry, int role) const override;
     QVariant doVisit(ElfRelocationEntry *entry, int arg) const override;
+#if HAVE_DWARF
     QVariant doVisit(DwarfInfo *info, int arg) const override;
     QVariant doVisit(DwarfDie *die, int arg) const override;
+#endif
 
 private:
     friend class NavigatingDisassembler;
     QString printSectionName(ElfSection *section) const;
     QString printSymbolName(ElfSymbolTableEntry *symbol) const;
     QString printRelocation(ElfRelocationEntry *entry) const;
+#if HAVE_DWARF
     QString printDwarfDie(DwarfDie* die) const;
     QString printDwarfDieName(DwarfDie* die) const;
+#endif
 
 private:
     const ElfModel* const m_model;

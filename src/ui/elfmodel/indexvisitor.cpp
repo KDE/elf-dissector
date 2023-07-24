@@ -20,7 +20,9 @@
 #include <elf/elffile.h>
 #include <elf/elffileset.h>
 #include <elf/elfgnusymbolversionrequirement.h>
+#if HAVE_DWARF
 #include <dwarf/dwarfcudie.h>
+#endif
 
 #include <elf.h>
 
@@ -73,8 +75,12 @@ IndexVisitor::type IndexVisitor::doVisit(ElfFile* file, int row) const
             // else fallthrough
         default:
             if (strcmp(section->header()->name(), ".debug_info") == 0) {
+#if HAVE_DWARF
                 type = ElfNodeVariant::DwarfInfo;
                 internalPointer = file->dwarfInfo();
+#else
+                type = ElfNodeVariant::Section;
+#endif
             } else {
                 type = ElfNodeVariant::Section;
             }
@@ -142,6 +148,7 @@ IndexVisitor::type IndexVisitor::doVisit(ElfRelocationSection* section, int row)
     return qMakePair<void*, ElfNodeVariant::Type>(entry, ElfNodeVariant::RelocationEntry);
 }
 
+#if HAVE_DWARF
 IndexVisitor::type IndexVisitor::doVisit(DwarfInfo* info, int row) const
 {
     auto cuDie = info->compilationUnits().at(row);
@@ -153,3 +160,4 @@ QPair< void*, ElfNodeVariant::Type > IndexVisitor::doVisit(DwarfDie* die, int ro
     DwarfDie *childDie = die->children().at(row);
     return qMakePair<void*, ElfNodeVariant::Type>(childDie, ElfNodeVariant::DwarfDie);
 }
+#endif

@@ -35,15 +35,6 @@ set(libelfdisector_srcs
 
     disassmbler/disassembler.cpp
 
-    dwarf/dwarfaddressranges.cpp
-    dwarf/dwarfcudie.cpp
-    dwarf/dwarfinfo.cpp
-    dwarf/dwarfdie.cpp
-    dwarf/dwarfexpression.cpp
-    dwarf/dwarfleb128.cpp
-    dwarf/dwarfline.cpp
-    dwarf/dwarfranges.cpp
-
     checks/ldbenchmark.cpp
     checks/structurepackingcheck.cpp
     checks/dependenciescheck.cpp
@@ -60,10 +51,25 @@ set(libelfdisector_srcs
 
     optimizers/dependencysorter.cpp
 )
+if (HAVE_DWARF)
+    list(APPEND libelfdisector_srcs
+        dwarf/dwarfaddressranges.cpp
+        dwarf/dwarfcudie.cpp
+        dwarf/dwarfinfo.cpp
+        dwarf/dwarfdie.cpp
+        dwarf/dwarfexpression.cpp
+        dwarf/dwarfleb128.cpp
+        dwarf/dwarfline.cpp
+        dwarf/dwarfranges.cpp
+    )
+endif()
 
 kde_source_files_enable_exceptions(elf/elffile.cpp)
 add_library(libelfdissector STATIC ${libelfdisector_srcs})
-target_link_libraries(libelfdissector PUBLIC Qt5::Core PRIVATE Binutils::Iberty Binutils::Opcodes Dwarf::Dwarf)
+target_link_libraries(libelfdissector PUBLIC Qt5::Core PRIVATE Binutils::Iberty Binutils::Opcodes)
+if (HAVE_DWARF)
+    target_link_libraries(libelfdissector PRIVATE Dwarf::Dwarf)
+endif()
 if (Capstone_FOUND)
     target_link_libraries(libelfdissector PRIVATE PkgConfig::Capstone)
 endif()

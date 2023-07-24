@@ -15,20 +15,23 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include "config-elf-dissector.h"
 #include "structurepackingcheck.h"
 
 #include <elf/elffileset.h>
+#if HAVE_DWARF
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfdie.h>
 #include <dwarf/dwarfcudie.h>
 #include <dwarf/dwarfexpression.h>
 
+#include <dwarf.h>
+#endif
+
 #include <QBitArray>
 #include <QDebug>
 #include <QString>
 #include <QTextStream>
-
-#include <dwarf.h>
 
 #include <cassert>
 #include <iostream>
@@ -40,12 +43,14 @@ void StructurePackingCheck::setElfFileSet(ElfFileSet* fileSet)
 
 void StructurePackingCheck::checkAll(DwarfInfo* info)
 {
+#if HAVE_DWARF
     assert(m_fileSet);
     if (!info)
         return;
 
     foreach (auto die, info->compilationUnits())
         checkDie(die);
+#endif
 }
 
 static QString printSummary(int structSize, int usedBytes, int usedBits, int optimalSize)
@@ -63,6 +68,7 @@ static QString printSummary(int structSize, int usedBytes, int usedBits, int opt
     return s;
 }
 
+#if HAVE_DWARF
 static int dataMemberLocation(DwarfDie *die)
 {
     const auto attr = die->attribute(DW_AT_data_member_location);
@@ -81,9 +87,11 @@ static bool compareMemberDiesByLocation(DwarfDie *lhs, DwarfDie *rhs)
     }
     return lhsLoc < rhsLoc;
 }
+#endif
 
 QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
 {
+#if HAVE_DWARF
     assert(structDie->tag() == DW_TAG_class_type || structDie->tag() == DW_TAG_structure_type);
 
     QVector<DwarfDie*> members;
@@ -105,10 +113,14 @@ QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
     s += '\n';
     s += printStructure(structDie, members);
     return s;
+#else
+    return {};
+#endif
 }
 
 void StructurePackingCheck::checkDie(DwarfDie* die)
 {
+#if HAVE_DWARF
     if (die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) {
         QVector<DwarfDie*> members;
         foreach (auto child, die->children()) {
@@ -144,6 +156,7 @@ void StructurePackingCheck::checkDie(DwarfDie* die)
         foreach (auto child, die->children())
             checkDie(child);
     }
+#endif
 }
 
 static int countBytes(const QBitArray &bits)
@@ -170,6 +183,7 @@ static int countBits(const QBitArray &bits)
     return count;
 }
 
+#if HAVE_DWARF
 static int bitsForEnum(DwarfDie *die)
 {
     assert(die->tag() == DW_TAG_enumeration_type);
@@ -227,9 +241,11 @@ static int actualTypeSize(DwarfDie *die)
     }
     return die->typeSize() * 8;
 }
+#endif
 
 std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
 {
+#if HAVE_DWARF
     const auto structSize = structDie->typeSize();
     if (structSize <= 0)
         return {};
@@ -257,17 +273,23 @@ std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie
     const auto usedBytes = countBytes(memUsage);
     const auto usedBits = countBits(memUsage);
     return std::make_tuple(usedBytes, usedBits);
+#else
+    return std::make_tuple(0, 0);
+#endif
 }
 
+#if HAVE_DWARF
 static bool hasUnknownSize(DwarfDie *typeDie)
 {
     // 0-size elements can exist, see e.g. __flexarr in inotify.h
     return typeDie->typeSize() == 0 && (typeDie->tag() == DW_TAG_class_type || typeDie->tag() == DW_TAG_structure_type);
 }
+#endif
 
 QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector<DwarfDie*>& memberDies) const
 {
     QString str;
+#if HAVE_DWARF
     QTextStream s(&str);
 
     s << (structDie->tag() == DW_TAG_class_type ? "class " : "struct ");
@@ -334,11 +356,13 @@ QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector
     s << "}; // size: " << structDie->typeSize();
     s << ", alignment: " << structDie->typeAlignment();
     s << "\n";
+#endif
     return str;
 }
 
 static bool isEmptyBaseClass(DwarfDie* inheritanceDie)
 {
+#if HAVE_DWARF
     assert(inheritanceDie->tag() == DW_TAG_inheritance);
     const auto baseTypeDie = inheritanceDie->attribute(DW_AT_type).value<DwarfDie*>();
     if (baseTypeDie->typeSize() != 1)
@@ -352,12 +376,14 @@ static bool isEmptyBaseClass(DwarfDie* inheritanceDie)
         if (!isEmptyBaseClass(d))
             return false;
     }
+#endif
     return true;
 }
 
 int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
 {
     int size = 0;
+#if HAVE_DWARF
     int alignment = 1;
     QVector<int> sizes;
 
@@ -396,6 +422,7 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
     // align the entire struct to maximum member alignment
     if (size % alignment)
         size += alignment - (size % alignment);
+#endif
 
     // structs are always at least 1 byte
     return std::max(1, size);
@@ -403,6 +430,7 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
 
 static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QVector<QByteArray> &fullId)
 {
+#if HAVE_DWARF
     // TODO filter to namespace/class/struct tags?
     if (die->name() != fullId.first())
         return nullptr;
@@ -416,11 +444,13 @@ static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QVector<QByteA
         if (found)
             return found;
     }
+#endif
     return nullptr;
 }
 
 DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
 {
+#if HAVE_DWARF
     // recurse into typedefs
     if (typeDie->tag() == DW_TAG_typedef)
         return findTypeDefinition(typeDie->attribute(DW_AT_type).value<DwarfDie*>());
@@ -456,4 +486,7 @@ DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
     // no luck
     qDebug() << "didn't fine a full definition for" << typeDie->displayName();
     return typeDie;
+#else
+    return nullptr;
+#endif
 }

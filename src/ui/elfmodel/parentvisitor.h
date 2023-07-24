@@ -38,8 +38,10 @@ protected:
     type doVisit(ElfGotEntry *entry, int) const override;
     type doVisit(ElfPltEntry *entry, int) const override;
     type doVisit(ElfSymbolTableEntry *symbold, int) const override;
+#if HAVE_DWARF
     type doVisit(DwarfInfo* info, int) const override;
     type doVisit(DwarfDie* die, int) const override;
+#endif
 
 private:
     type makeParent(void* payload, ElfNodeVariant::Type type, int row) const;
