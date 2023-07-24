@@ -100,6 +100,18 @@ if(Binutils_HAVE_CTF_F_NEWFUNCINFO)
   set(Binutils_VERSION_MINOR 36)
 endif()
 
+check_c_source_compiles("
+    #include <dis-asm.h>
+    int main(int, char**) {
+        init_disassemble_info(NULL, NULL, NULL, NULL);
+        return 0;
+    }"
+    Binutils_HAVE_4ARG_INTI_DISASSEMBLE_INFO
+)
+if (Binutils_HAVE_4ARG_INTI_DISASSEMBLE_INFO)
+    set(Binutils_VERSION_MINOR 39)
+endif()
+
 if(TARGET Binutils::Iberty)
    target_link_libraries(Binutils::Iberty INTERFACE Binutils::Opcodes)
 endif()

@@ -49,6 +49,7 @@
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 29)
     // in binutils 2.29 print_insn_i386 disappeared from the dis-asm.h header,
     // not sure what the proper replacement for it is, so define it here
+    // See commit 88c1242dc0a1e1ab582a65ea8bd05eb5f244c59b in binutils.
     extern "C" int print_insn_i386 (bfd_vma, disassemble_info *);
     extern "C" int print_insn_big_arm(bfd_vma, disassemble_info *);
     extern "C" int print_insn_little_arm(bfd_vma, disassemble_info *);
@@ -122,12 +123,30 @@ QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
     return disassembleCapstone(data, size);
 }
 
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 39)
+static int fprintf_styled(void *, enum disassembler_style, const char* fmt, ...)
+{
+    va_list args;
+    int r;
+
+    va_start(args, fmt);
+    r = vprintf(fmt, args);
+    va_end(args);
+
+    return r;
+}
+#endif
+
 QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t size)
 {
     QString result;
     disassembler_ftype disassemble_fn;
     disassemble_info info;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 39)
+    INIT_DISASSEMBLE_INFO(info, &result, qstring_printf, fprintf_styled);
+#else
     INIT_DISASSEMBLE_INFO(info, &result, qstring_printf);
+#endif
 
     info.application_data = this;
     info.flavour = bfd_target_elf_flavour;
