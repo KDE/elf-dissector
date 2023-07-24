@@ -32,7 +32,8 @@ endif()
 cmake_pop_check_state()
 
 if(NOT DWARF_LINKS_WITHOUT_LIBELF AND NOT DWARF_NEEDS_LIBELF)
-    message(FATAL_ERROR "Can't get libdwarf to link!?")
+    message(WARNING "Can't get libdwarf to link!?")
+    return()
 endif()
 
 include(FindPackageHandleStandardArgs)

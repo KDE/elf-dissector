@@ -26,10 +26,12 @@
 #include <elf/elfpltsection.h>
 #include <elf/elfgotsection.h>
 #include <elf/elfrelocationentry.h>
+#if HAVE_DWARF
 #include <dwarf/dwarfinfo.h>
 #include <dwarf/dwarfaddressranges.h>
 #include <dwarf/dwarfcudie.h>
 #include <dwarf/dwarfline.h>
+#endif
 
 #include <QDebug>
 #include <QString>
@@ -186,9 +188,11 @@ QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t si
 
     uint32_t bytes = 0;
     while (bytes < size) {
+#if HAVE_DWARF
         auto line = lineForAddress(baseAddress() + bytes);
         if (!line.isNull())
             result += printSourceLine(line) + "<br/>";
+#endif
         result += QStringLiteral("%1: ").arg(bytes, 8, 10);
         bytes += (*disassemble_fn)(bytes, &info);
         result += QLatin1String("<br/>");
@@ -251,9 +255,11 @@ QString Disassembler::disassembleCapstone(const unsigned char* data, uint64_t si
             return result;
         }
 
+#if HAVE_DWARF
         const auto line = lineForAddress(insn->address);
         if (!line.isNull())
             result += printSourceLine(line) + "<br/>";
+#endif
 
         result += QString::number(insn->address - baseAddress()) + ": " + insn->mnemonic + QLatin1Char(' ') + insn->op_str;
         switch (file()->header()->machine()) {
@@ -373,6 +379,7 @@ QString Disassembler::printPltEntry(ElfPltEntry* entry) const
     return entry->section()->header()->name() + QStringLiteral(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
 }
 
+#if HAVE_DWARF
 DwarfLine Disassembler::lineForAddress(uint64_t addr) const
 {
     if (!file()->dwarfInfo())
@@ -400,3 +407,4 @@ QString Disassembler::printSourceLine(DwarfLine line) const
     s += ':' + QString::number(line.line()) + "</a></i>";
     return s;
 }
+#endif

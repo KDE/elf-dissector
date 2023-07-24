@@ -21,8 +21,9 @@
 #include <elf/elffileset.h>
 #include <elf/elfgnusymbolversiondefinitionauxiliaryentry.h>
 #include <elf/elfgnusymbolversionrequirement.h>
+#if HAVE_DWARF
 #include <dwarf/dwarfcudie.h>
-
+#endif
 
 #include <elf.h>
 
@@ -91,6 +92,7 @@ ParentVisitor::type ParentVisitor::doVisit(ElfSymbolTableEntry *symbol, int) con
     return makeParent(const_cast<ElfSymbolTableSection*>(symbol->symbolTable()), ElfNodeVariant::SymbolTableSection, symbol->index());
 }
 
+#if HAVE_DWARF
 ParentVisitor::type ParentVisitor::doVisit(DwarfInfo* info, int) const
 {
     return makeParent(info->elfFile(), ElfNodeVariant::File, info->elfFile()->indexOfSection(".debug_info"));
@@ -103,6 +105,7 @@ ParentVisitor::type ParentVisitor::doVisit(DwarfDie* die, int) const
     }
     return makeParent(die->dwarfInfo(), ElfNodeVariant::DwarfInfo, die->dwarfInfo()->compilationUnits().indexOf(static_cast<DwarfCuDie*>(die)));
 }
+#endif
 
 ParentVisitor::type ParentVisitor::makeParent(void* payload, ElfNodeVariant::Type type, int row) const
 {

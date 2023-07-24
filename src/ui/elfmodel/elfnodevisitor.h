@@ -18,6 +18,8 @@
 #ifndef ELFNODEVISITOR_H
 #define ELFNODEVISITOR_H
 
+#include "config-elf-dissector.h"
+
 #include <elf/elfheader.h>
 #include <elf/elfsymboltablesection.h>
 #include <elf/elfdynamicsection.h>
@@ -33,8 +35,10 @@
 #include <elf/elfrelocationsection.h>
 #include <elf/elfrelocationentry.h>
 
+#if HAVE_DWARF
 #include <dwarf/dwarfdie.h>
 #include <dwarf/dwarfinfo.h>
+#endif
 
 #include "elfnodevariant.h"
 
@@ -111,10 +115,12 @@ public:
                 return doVisit(node->value<ElfGNUSymbolVersionRequirement>(), arg);
             case ElfNodeVariant::VersionRequirementAuxiliaryEntry:
                 return doVisit(node->value<ElfGNUSymbolVersionRequirementAuxiliaryEntry>(), arg);
+#if HAVE_DWARF
             case ElfNodeVariant::DwarfInfo:
                 return doVisit(node->value<DwarfInfo>(), arg);
             case ElfNodeVariant::DwarfDie:
                 return doVisit(node->value<DwarfDie>(), arg);
+#endif
         }
 
         assert(false);
@@ -223,6 +229,7 @@ protected:
     {
         return T();
     }
+#if HAVE_DWARF
     virtual T doVisit(DwarfInfo*, int) const
     {
         return T();
@@ -231,6 +238,7 @@ protected:
     {
        return T();
     }
+#endif
 };
 
 #endif

@@ -15,6 +15,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include "config-elf-dissector.h"
 #include "elffile.h"
 #include "elfheader.h"
 #include "elfsectionheader_impl.h"
@@ -34,7 +35,9 @@
 #include "elfsegmentheader_impl.h"
 #include "elfnoteentry.h"
 
+#if HAVE_DWARF
 #include <dwarf/dwarfinfo.h>
+#endif
 
 #include <QDebug>
 #include <QFileInfo>
@@ -165,8 +168,10 @@ void ElfFile::parse()
     parseSections();
     parseSegments();
 
+#if HAVE_DWARF
     if (indexOfSection(".debug_info") >= 0)
         m_dwarfInfo = new DwarfInfo(this);
+#endif
 }
 
 void ElfFile::parseHeader()

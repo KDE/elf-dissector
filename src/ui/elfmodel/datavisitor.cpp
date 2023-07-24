@@ -28,7 +28,9 @@
 #include <elf/elfsegmentheader.h>
 #include <elf.h>
 
+#if HAVE_DWARF
 #include <dwarf/dwarfaddressranges.h>
+#endif
 
 #include <disassmbler/disassembler.h>
 #include <demangle/demangler.h>
@@ -299,6 +301,7 @@ static QString printVerSymInfo(ElfSymbolTableEntry *entry)
     return s;
 }
 
+#if HAVE_DWARF
 static DwarfDie* findDwarfDie(ElfSymbolTableEntry *entry)
 {
     auto *dwarf = entry->symbolTable()->file()->dwarfInfo();
@@ -312,6 +315,7 @@ static DwarfDie* findDwarfDie(ElfSymbolTableEntry *entry)
         res = dwarf->dieForMangledSymbol(entry->name());
     return res;
 }
+#endif
 
 QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
 {
@@ -404,12 +408,14 @@ QVariant DataVisitor::doVisit(ElfSymbolTableEntry* entry, int arg) const
                 }
             }
 
+#if HAVE_DWARF
             const auto die = findDwarfDie(entry);
             if (die) {
                 s += CodeNavigatorPrinter::sourceLocationRichText(die);
                 s += QLatin1String("<br/><b>DWARF DIE</b><br/>");
                 s += printDwarfDie(die);
             }
+#endif
             return s;
         }
     }
@@ -685,6 +691,7 @@ QVariant DataVisitor::doVisit(ElfRelocationEntry *entry, int arg) const
     return {};
 }
 
+#if HAVE_DWARF
 QVariant DataVisitor::doVisit(DwarfInfo* info, int arg) const
 {
     const auto sectionIndex = info->elfFile()->indexOfSection(".debug_info");
@@ -715,6 +722,7 @@ QVariant DataVisitor::doVisit(DwarfDie* die, int arg) const
     }
     return {};
 }
+#endif
 
 QString DataVisitor::printSectionName(ElfSection* section) const
 {
@@ -776,6 +784,7 @@ QString DataVisitor::printRelocation(ElfRelocationEntry* entry) const
     return s;
 }
 
+#if HAVE_DWARF
 QString DataVisitor::printDwarfDie(DwarfDie* die) const
 {
     assert(die);
@@ -808,3 +817,4 @@ QString DataVisitor::printDwarfDieName(DwarfDie* die) const
 
     return s;
 }
+#endif

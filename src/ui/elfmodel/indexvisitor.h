@@ -39,8 +39,10 @@ public:
     type doVisit(ElfNoteSection* section, int row) const override;
     type doVisit(ElfPltSection *section, int row) const override;
     type doVisit(ElfRelocationSection *section, int row) const override;
+#if HAVE_DWARF
     type doVisit(DwarfInfo* info, int row) const override;
     type doVisit(DwarfDie* die, int row) const override;
+#endif
 };
 
 #endif // INDEXVISITOR_H
