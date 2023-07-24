@@ -491,9 +491,9 @@ msgid ""
 "which the application will not respond, and use up to 1.5GB of memory. "
 "Proceed anyway?"
 msgstr ""
-"DWARF 데이터에서 자료형 트리를 계산하는 작업은 수 분까지 걸릴 수 있으며 프로"
-"그램이 응답하지 않을 것입니다. 최대 메모리를 1.5 GB까지 사용합니다. 계속 진행"
-"하시겠습니까?"
+"DWARF 데이터에서 자료형 트리를 계산하는 작업은 수 분까지 걸릴 수 있으며 앱이 "
+"응답하지 않을 것입니다. 최대 메모리를 1.5 GB까지 사용합니다. 계속 진행하시겠"
+"습니까?"
 
 #: ui/views/typeview.ui:36
 msgctxt "TypeView|"
