@@ -152,7 +152,7 @@ void DwarfInfoPrivate::scanCompilationUnits()
             return;
 
         Dwarf_Die cuDie = nullptr;
-        res = dwarf_siblingof(dbg, nullptr, &cuDie, nullptr);
+        res = dwarf_siblingof_b(dbg, nullptr, true, &cuDie, nullptr);
         if(res != DW_DLV_OK)
             return;
 
