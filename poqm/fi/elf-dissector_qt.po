@@ -115,17 +115,17 @@ msgctxt "UsedSymbolModel|"
 msgid "Symbol"
 msgstr "Symboli"
 
-#: ui/elfmodel/datavisitor.cpp:152 ui/elfmodel/datavisitor.cpp:321
+#: ui/elfmodel/datavisitor.cpp:154 ui/elfmodel/datavisitor.cpp:325
 msgctxt "QObject|"
 msgid "<null>"
 msgstr "<tyhjä>"
 
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "Construction VTable"
 msgstr ""
 
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "VTable"
 msgstr "VTable"
@@ -308,12 +308,12 @@ msgstr ""
 "Määritä koodinavigointiin käytettävä komento. ”%f” korvataan "
 "tiedostonimellä, ”%l” rivinumerolla."
 
-#: ui/typemodel/typemodel.cpp:263
+#: ui/typemodel/typemodel.cpp:280
 msgctxt "TypeModel|"
 msgid "Data Type"
 msgstr "Tietotyyppi"
 
-#: ui/typemodel/typemodel.cpp:264
+#: ui/typemodel/typemodel.cpp:281
 msgctxt "TypeModel|"
 msgid "Size"
 msgstr "Koko"

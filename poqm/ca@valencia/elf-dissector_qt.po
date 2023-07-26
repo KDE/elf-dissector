@@ -122,17 +122,17 @@ msgctxt "UsedSymbolModel|"
 msgid "Symbol"
 msgstr "Símbol"
 
-#: ui/elfmodel/datavisitor.cpp:152 ui/elfmodel/datavisitor.cpp:321
+#: ui/elfmodel/datavisitor.cpp:154 ui/elfmodel/datavisitor.cpp:325
 msgctxt "QObject|"
 msgid "<null>"
 msgstr "<nul>"
 
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "Construction VTable"
 msgstr "VTable de construcció"
 
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "VTable"
 msgstr "VTable"
@@ -315,12 +315,12 @@ msgstr ""
 "Especifiqueu l'ordre que s'utilitzarà per a la navegació pel codi, «%f» se "
 "substituirà pel nom del fitxer, «%l» pel número de línia."
 
-#: ui/typemodel/typemodel.cpp:263
+#: ui/typemodel/typemodel.cpp:280
 msgctxt "TypeModel|"
 msgid "Data Type"
 msgstr "Tipus de dades"
 
-#: ui/typemodel/typemodel.cpp:264
+#: ui/typemodel/typemodel.cpp:281
 msgctxt "TypeModel|"
 msgid "Size"
 msgstr "Mida"

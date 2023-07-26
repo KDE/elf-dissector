@@ -117,17 +117,17 @@ msgctxt "UsedSymbolModel|"
 msgid "Symbol"
 msgstr "符号"
 
-#: ui/elfmodel/datavisitor.cpp:152 ui/elfmodel/datavisitor.cpp:321
+#: ui/elfmodel/datavisitor.cpp:154 ui/elfmodel/datavisitor.cpp:325
 msgctxt "QObject|"
 msgid "<null>"
 msgstr "<null>"
 
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "Construction VTable"
 msgstr "构建 VTable"
 
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "VTable"
 msgstr "VTable"
@@ -308,12 +308,12 @@ msgid ""
 "file name, '%l' by the line number."
 msgstr "指定用于代码导航的命令，'%f' 会被替换成文件名，'%l' 会被替换成行号。"
 
-#: ui/typemodel/typemodel.cpp:263
+#: ui/typemodel/typemodel.cpp:280
 msgctxt "TypeModel|"
 msgid "Data Type"
 msgstr "数据类型"
 
-#: ui/typemodel/typemodel.cpp:264
+#: ui/typemodel/typemodel.cpp:281
 msgctxt "TypeModel|"
 msgid "Size"
 msgstr "大小"

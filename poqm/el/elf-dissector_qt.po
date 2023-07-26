@@ -115,17 +115,17 @@ msgctxt "UsedSymbolModel|"
 msgid "Symbol"
 msgstr "Σύμβολο"
 
-#: ui/elfmodel/datavisitor.cpp:152 ui/elfmodel/datavisitor.cpp:321
+#: ui/elfmodel/datavisitor.cpp:154 ui/elfmodel/datavisitor.cpp:325
 msgctxt "QObject|"
 msgid "<null>"
 msgstr "<null>"
 
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "Construction VTable"
 msgstr "VTable κατασκευής"
 
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "VTable"
 msgstr "VTable"
@@ -308,12 +308,12 @@ msgstr ""
 "Καθορίστε εντολή για την πλοήγηση στον κώδικα, το '%f' θα αντικατασταθεί με "
 "το όνομα αρχείου, το '%l' από τον αριθμό γραμμής."
 
-#: ui/typemodel/typemodel.cpp:263
+#: ui/typemodel/typemodel.cpp:280
 msgctxt "TypeModel|"
 msgid "Data Type"
 msgstr "Τύπος δεδομένων"
 
-#: ui/typemodel/typemodel.cpp:264
+#: ui/typemodel/typemodel.cpp:281
 msgctxt "TypeModel|"
 msgid "Size"
 msgstr "Μέγεθος"

@@ -115,19 +115,19 @@ msgctxt "UsedSymbolModel|"
 msgid "Symbol"
 msgstr "Símbolo"
 
-#: ui/elfmodel/datavisitor.cpp:152 ui/elfmodel/datavisitor.cpp:321
+#: ui/elfmodel/datavisitor.cpp:154 ui/elfmodel/datavisitor.cpp:325
 msgctxt "QObject|"
 msgid "<null>"
 msgstr "<nulo>"
 
 # well-spelled: TáboaV
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "Construction VTable"
 msgstr "TáboaV de constrición"
 
 # well-spelled: TáboaV
-#: ui/elfmodel/datavisitor.cpp:355
+#: ui/elfmodel/datavisitor.cpp:359
 msgctxt "QObject|"
 msgid "VTable"
 msgstr "TáboaV"
@@ -310,12 +310,12 @@ msgstr ""
 "Indicar a orde que usar para a navegación de código, «%f» substituirase polo "
 "nome do ficheiro e «%l» polo número de liña."
 
-#: ui/typemodel/typemodel.cpp:263
+#: ui/typemodel/typemodel.cpp:280
 msgctxt "TypeModel|"
 msgid "Data Type"
 msgstr "Tipo de dato"
 
-#: ui/typemodel/typemodel.cpp:264
+#: ui/typemodel/typemodel.cpp:281
 msgctxt "TypeModel|"
 msgid "Size"
 msgstr "Tamaño"
