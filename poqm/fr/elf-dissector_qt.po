@@ -1,16 +1,16 @@
-# Xavier Besnard <xavier.besnard@neuf.fr>, 2020.
+# SPDX-FileCopyrightText: 2020, 2023 Xavier Besnard <xavier.besnard@neuf.fr>
 msgid ""
 msgstr ""
 "Project-Id-Version: elf-dissector_qt\n"
-"PO-Revision-Date: 2020-05-13 07:43+0200\n"
-"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2023-10-11 20:34+0200\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 20.04.0\n"
+"X-Generator: Lokalize 23.08.1\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1350
@@ -22,7 +22,7 @@ msgstr "Texte %1"
 #: 3rdparty/treemap/treemap.cpp:2870
 msgctxt "TreeMapWidget|"
 msgid "Recursive Bisection"
-msgstr "Bisection récursive"
+msgstr "Bissectrice récursive"
 
 #: 3rdparty/treemap/treemap.cpp:2871
 msgctxt "TreeMapWidget|"
