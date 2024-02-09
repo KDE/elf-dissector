@@ -1,8 +1,8 @@
-# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2023-06-04 01:21+0300\n"
+"PO-Revision-Date: 2024-02-08 18:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 24.01.95\n"
 
 #: 3rdparty/treemap/treemap.cpp:1350
 #, qt-format
@@ -164,7 +164,7 @@ msgstr "Dosya"
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:72
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Median"
-msgstr "Tembel Medyan"
+msgstr "Tembel Ortanca"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:73
 msgctxt "LoadBenchmarkModel|"
@@ -174,7 +174,7 @@ msgstr "Tembel En Düşük"
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:74
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Median"
-msgstr "Şimdiki Medyan"
+msgstr "Şimdiki Ortanca"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:75
 msgctxt "LoadBenchmarkModel|"
