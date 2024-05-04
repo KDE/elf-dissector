@@ -1,16 +1,16 @@
-# SPDX-FileCopyrightText: 2020, 2023 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2020, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: elf-dissector_qt\n"
-"PO-Revision-Date: 2023-10-11 20:34+0200\n"
-"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2024-04-26 15:35+0200\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
+"Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1350
@@ -509,4 +509,5 @@ msgstr "Rechercher"
 msgctxt "GnuplotWidget|"
 msgid "'gnuplot' not found, plotting not available."
 msgstr ""
-"Impossible de trouver « gnuplot » et donc impossible de lancer un tracé."
+"Impossible de trouver le paquet « gnuplot » et donc impossible de lancer un "
+"tracé."
