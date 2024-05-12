@@ -249,7 +249,7 @@ msgstr "Con&figuració"
 #: ui/mainwindow.ui:100
 msgctxt "MainWindow|"
 msgid "&Open..."
-msgstr "O&bri..."
+msgstr "O&bri…"
 
 #: ui/mainwindow.ui:103
 msgctxt "MainWindow|"
@@ -294,12 +294,12 @@ msgstr "Qt Creator"
 #: ui/navigator/codenavigator.cpp:81
 msgctxt "QObject|"
 msgid "Code Navigation"
-msgstr "Navegació pel codi"
+msgstr "Navegueu pel codi"
 
 #: ui/navigator/codenavigator.cpp:105
 msgctxt "QObject|"
 msgid "Custom..."
-msgstr "Personalitzat..."
+msgstr "Personalitzat…"
 
 #: ui/navigator/codenavigator.cpp:117
 msgctxt "QObject|"
