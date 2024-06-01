@@ -1,15 +1,15 @@
 # translation of elf-dissector_qt.pot to Esperanto
 # Copyright (C) 2024 Free Software Foundation, Inc.
 # This file is distributed under the same license as the elf-dissector package.
-# Oliver Kellogg <okellogg@users.sourceforge.net>, 2024.
+# Oliver Kellogg <olivermkellogg@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: elf-dissector\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 13:43+0100\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
-"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
+"PO-Revision-Date: 2024-05-31 19:37+0200\n"
+"Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -311,6 +311,8 @@ msgid ""
 "Specify command to use for code navigation, '%f' will be replaced by the "
 "file name, '%l' by the line number."
 msgstr ""
+"Specifu komandon uzendan por koda navigado, '%f' estos anstataŭigita per la "
+"dosiernomo, '%l' per la linionumero."
 
 #: ui/typemodel/typemodel.cpp:280
 msgctxt "TypeModel|"
@@ -481,6 +483,8 @@ msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
 "will be incomplete."
 msgstr ""
+"Okazis eraro dum legado de DWARF-datumoj de iuj ELF-objektoj, la arbo estos "
+"nekompleta."
 
 #: ui/views/typeview.cpp:69
 msgctxt "TypeView|"
@@ -494,6 +498,9 @@ msgid ""
 "which the application will not respond, and use up to 1.5GB of memory. "
 "Proceed anyway?"
 msgstr ""
+"Komputado de la tiparbon el DWARF-datumoj povas daŭri ĝis pluraj minutoj, en "
+"kiuj la aplikaĵo ne respondos, kaj uzos ĝis 1.5GB da memoro. Ĉu procedi "
+"ĉiukaze?"
 
 #: ui/views/typeview.ui:36
 msgctxt "TypeView|"
