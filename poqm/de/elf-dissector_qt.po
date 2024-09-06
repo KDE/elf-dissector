@@ -1,7 +1,7 @@
 # Burkhard Lück <lueck@hube-lueck.de>, 2019, 2020, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: elf-dissector_qt\n"
 "PO-Revision-Date: 2021-04-28 10:59+0200\n"
 "Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
