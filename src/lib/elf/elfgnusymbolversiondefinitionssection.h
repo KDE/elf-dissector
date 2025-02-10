@@ -20,7 +20,7 @@
 
 #include "elfsection.h"
 
-#include <QVector>
+#include <QList>
 
 class ElfGNUSymbolVersionDefinition;
 
@@ -47,7 +47,7 @@ protected:
     void parse();
 
 private:
-     QVector<ElfGNUSymbolVersionDefinition*> m_versionDefinitions;
+     QList<ElfGNUSymbolVersionDefinition*> m_versionDefinitions;
 };
 
 #endif // ELFGNUSYMBOLVERSIONDEFINITIONSSECTION_H

@@ -20,7 +20,7 @@
 
 #include "elfsection.h"
 
-#include <QVector>
+#include <QList>
 
 class ElfSymbolTableEntry;
 
@@ -37,7 +37,7 @@ public:
     virtual ElfSymbolTableEntry *lookup(const char* name) const = 0;
 
     /** Histogram of the hash chain lengths. */
-    virtual QVector<uint32_t> histogram() const = 0;
+    virtual QList<uint32_t> histogram() const = 0;
     /** Average length of common prefixes in case of hash collisions. */
     virtual double averagePrefixLength() const = 0;
 

@@ -19,7 +19,7 @@
 #define USEDSYMBOLMODEL_H
 
 #include <QAbstractListModel>
-#include <QVector>
+#include <QList>
 
 class ElfFile;
 class ElfSymbolTableEntry;
@@ -38,7 +38,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 private:
-    QVector<ElfSymbolTableEntry*> m_entries;
+    QList<ElfSymbolTableEntry*> m_entries;
 };
 
 #endif // USEDSYMBOLMODEL_H

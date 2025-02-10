@@ -20,7 +20,7 @@
 
 #include <QAbstractItemModel>
 #include <QHash>
-#include <QVector>
+#include <QList>
 
 class ElfFileSet;
 class ElfFile;
@@ -58,13 +58,13 @@ private:
 
     ElfFileSet *m_fileSet = nullptr;
     QHash<QByteArray, int32_t> m_fileIndex;
-    mutable QVector<uint64_t> m_parentMap;
-    mutable QVector<QVector<uint64_t>> m_childMap;
+    mutable QList<uint64_t> m_parentMap;
+    mutable QList<QList<uint64_t>> m_childMap;
     mutable uint32_t m_uniqueIndex = 0; // 0 is the invisible root
     static const int32_t InvalidFile = -1; // marker for dependencies we could not find
 
     int usedSymbolCount(int parentId, int fileId) const;
-    mutable QVector<QVector<int>> m_symbolCountTable;
+    mutable QList<QList<int>> m_symbolCountTable;
 };
 
 #endif // DEPENDENCYMODEL_H

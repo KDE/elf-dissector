@@ -20,7 +20,7 @@
 
 #include "elfsection.h"
 
-#include <QVector>
+#include <QList>
 
 class ElfNoteEntry;
 
@@ -36,7 +36,7 @@ public:
     ElfNoteEntry* entry(int index) const;
 
 private:
-    QVector<ElfNoteEntry*> m_entries;
+    QList<ElfNoteEntry*> m_entries;
 };
 
 #endif // ELFNOTESECTION_H

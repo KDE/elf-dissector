@@ -152,7 +152,7 @@ private:
         int maxLines;
     };
 
-    QVector<Field> _field;
+    QList<Field> _field;
 };
 
 
@@ -704,7 +704,7 @@ private:
         bool visible, forced;
         DrawParams::Position pos;
     };
-    QVector<FieldAttr> _attr;
+    QList<FieldAttr> _attr;
 
     SelectionMode _selectionMode;
     TreeMapItem::SplitMode _splitMode;

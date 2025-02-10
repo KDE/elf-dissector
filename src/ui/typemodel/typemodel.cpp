@@ -141,7 +141,7 @@ bool TypeModel::addDwarfDieRecursive(DwarfDie* die, uint32_t parentId)
             return false;
     }
 
-    QVector<uint32_t> children;
+    QList<uint32_t> children;
     if (parentId < (uint32_t)m_childMap.size())
         children = m_childMap.at(parentId);
 

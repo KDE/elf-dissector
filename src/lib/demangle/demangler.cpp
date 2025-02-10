@@ -29,14 +29,14 @@
 #include <demangle.h>
 
 
-QVector<QByteArray> Demangler::demangle(const char* name)
+QList<QByteArray> Demangler::demangle(const char* name)
 {
     QScopedValueRollback<const char*> mangledName(m_mangledName, name);
 
     void *memory = nullptr;
     demangle_component *component = cplus_demangle_v3_components(name, DMGL_PARAMS | DMGL_ANSI | DMGL_TYPES | DMGL_VERBOSE, &memory);
 
-    QVector<QByteArray> result;
+    QList<QByteArray> result;
     if (!memory || !component) { // demangle failed, likely not mangled
         result.push_back(name);
         return result;
@@ -91,7 +91,7 @@ struct demangle_builtin_type_info {
     /*enum d_builtin_type_print*/ int print;
 };
 
-static QByteArray join(const QVector<QByteArray> &v, const QByteArray &sep)
+static QByteArray join(const QList<QByteArray> &v, const QByteArray &sep)
 {
     QByteArray res;
     for (auto it  = v.begin(); it != v.end(); ++it) {
@@ -102,7 +102,7 @@ static QByteArray join(const QVector<QByteArray> &v, const QByteArray &sep)
     return res;
 }
 
-void Demangler::handleNameComponent(demangle_component* component, QVector< QByteArray >& nameParts)
+void Demangler::handleNameComponent(demangle_component* component, QList< QByteArray >& nameParts)
 {
     // TODO: complete the component types
     switch (component->type) {
@@ -139,7 +139,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
 
             // left is the name of the function, right is the return type (ignored here) and arguments
             handleNameComponent(component->u.s_binary.left, nameParts);
-            QVector<QByteArray> args;
+            QList<QByteArray> args;
             handleNameComponent(component->u.s_binary.right, args);
             if (!nameParts.isEmpty() && !args.isEmpty())
                 nameParts.last().append(args.last() + m_modifiers);
@@ -151,7 +151,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
                 QScopedValueRollback<bool> indexRestter(m_indexTemplateArgs, false);
                 handleNameComponent(component->u.s_binary.left, nameParts);
             }
-            QVector<QByteArray> args;
+            QList<QByteArray> args;
             handleNameComponent(component->u.s_binary.right, args);
             const QByteArray fullTemplate = nameParts.last() + '<' + join(args, ", ") + '>';
             if (m_inArgList) // we only want the template grouping on top-level
@@ -186,7 +186,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_CONSTRUCTION_VTABLE:
         {
             handleNameComponent(component->u.s_binary.left, nameParts);
-            QVector<QByteArray> tmp;
+            QList<QByteArray> tmp;
             handleNameComponent(component->u.s_binary.right, tmp);
             nameParts.push_back("construction vtable in " + join(tmp, "::"));
             break;
@@ -222,7 +222,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_REFTEMP:
         {
             handleNameComponent(component->u.s_binary.left, nameParts);
-            QVector<QByteArray> tmp;
+            QList<QByteArray> tmp;
             handleNameComponent(component->u.s_binary.right, tmp);
             nameParts.push_back("reference temporary #" + tmp.last());
             break;
@@ -270,7 +270,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
 #endif
         case DEMANGLE_COMPONENT_VENDOR_TYPE_QUAL:
         {
-            QVector<QByteArray> parts;
+            QList<QByteArray> parts;
             handleNameComponent(component->u.s_binary.left, parts);
             handleNameComponent(component->u.s_binary.right, parts);
             nameParts.push_back(parts.first() + ' ' + parts.last());
@@ -309,10 +309,10 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             m_pendingPointer = false;
 
             // left is return type (only relevant in argument lists), right is the (optional) argument list
-            QVector<QByteArray> returnType;
+            QList<QByteArray> returnType;
             handleOptionalNameComponent(component->u.s_binary.left, returnType);
 
-            QVector<QByteArray> args;
+            QList<QByteArray> args;
             handleOptionalNameComponent(component->u.s_binary.right, args);
             QByteArray fullName;
             if (m_inArgList && !returnType.isEmpty())
@@ -334,7 +334,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             m_pendingReference = false;
             // left is optional dimension, right is type
             handleNameComponent(component->u.s_binary.right, nameParts);
-            QVector<QByteArray> dim;
+            QList<QByteArray> dim;
             handleOptionalNameComponent(component->u.s_binary.left, dim);
             QByteArray suffix;
             if (prevRef) {
@@ -353,7 +353,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         {
             QScopedValueRollback<QByteArray> ptrmemTypeResetter(m_ptrmemType);
             m_ptrmemType.clear();
-            QVector<QByteArray> tmp;
+            QList<QByteArray> tmp;
             handleNameComponent(component->u.s_binary.left, tmp);
             m_ptrmemType = tmp.last();
             handleNameComponent(component->u.s_binary.right, nameParts);
@@ -361,7 +361,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         }
         case DEMANGLE_COMPONENT_VECTOR_TYPE:
         {
-            QVector<QByteArray> parts;
+            QList<QByteArray> parts;
             // left is size, right is type
             handleNameComponent(component->u.s_binary.left, parts);
             handleNameComponent(component->u.s_binary.right, parts);
@@ -387,7 +387,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
                 int currentIndex = -1;
                 if (m_indexTemplateArgs)
                     currentIndex = m_templateParamIndex++;
-                QVector<QByteArray> left;
+                QList<QByteArray> left;
                 {
                     QScopedValueRollback<bool> resetter(m_indexTemplateArgs, false);
                     handleNameComponent(component->u.s_binary.left, left);
@@ -414,7 +414,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_INITIALIZER_LIST:
 	{
-            QVector<QByteArray> parts;
+            QList<QByteArray> parts;
 	    handleNameComponent(component->u.s_binary.left, parts);
             handleNameComponent(component->u.s_binary.right, parts);
 	    nameParts.push_back(parts.at(0) + "{" + parts.at(1) + "}");
@@ -472,7 +472,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
         case DEMANGLE_COMPONENT_LITERAL_NEG:
         {
             // left is type, right is value
-            QVector<QByteArray> type;
+            QList<QByteArray> type;
             handleNameComponent(component->u.s_binary.left, type);
             handleNameComponent(component->u.s_binary.right, type);
             if (component->type == DEMANGLE_COMPONENT_LITERAL_NEG)
@@ -501,7 +501,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
             break;
         case DEMANGLE_COMPONENT_LAMBDA:
         {
-            QVector<QByteArray> args;
+            QList<QByteArray> args;
             handleNameComponent(component->u.s_unary_num.sub, args);
             nameParts.push_back("{lambda(" + join(args, ", ") + ")#" + QByteArray::number(component->u.s_unary_num.num + 1) + '}');
             break;
@@ -530,7 +530,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
         case DEMANGLE_COMPONENT_TAGGED_NAME:
         {
-            QVector<QByteArray> args;
+            QList<QByteArray> args;
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, args);
             const auto n = nameParts.takeLast();
@@ -541,7 +541,7 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_CLONE:
         {
-            QVector<QByteArray> args;
+            QList<QByteArray> args;
             handleNameComponent(component->u.s_binary.left, nameParts);
             handleNameComponent(component->u.s_binary.right, args);
             const auto n = nameParts.takeLast();
@@ -563,14 +563,14 @@ void Demangler::handleNameComponent(demangle_component* component, QVector< QByt
     }
 }
 
-void Demangler::handleOptionalNameComponent(demangle_component* component, QVector< QByteArray >& nameParts)
+void Demangler::handleOptionalNameComponent(demangle_component* component, QList< QByteArray >& nameParts)
 {
     if (!component)
         return;
     handleNameComponent(component, nameParts);
 }
 
-void Demangler::handleOperatorComponent(demangle_component* component, QVector< QByteArray >& nameParts)
+void Demangler::handleOperatorComponent(demangle_component* component, QList< QByteArray >& nameParts)
 {
     if (component->type == DEMANGLE_COMPONENT_OPERATOR) {
         nameParts.push_back(QByteArray(component->u.s_operator.op->name, component->u.s_operator.op->len));

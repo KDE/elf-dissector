@@ -97,7 +97,7 @@ void DeadCodeFinder::dumpResultsForFile(ElfFile* file)
     if (!symTab)
         return;
 
-    QVector<QByteArray> unusedSyms;
+    QList<QByteArray> unusedSyms;
     for (uint i = 0; i < symTab->header()->entryCount(); ++i) {
         auto sym = symTab->entry(i);
         if (sym->size() == 0 || sym->bindType() != STB_GLOBAL || sym->visibility() != STV_DEFAULT)

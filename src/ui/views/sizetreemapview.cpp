@@ -171,7 +171,7 @@ void SizeTreeMapView::reloadTreeMap()
         QHash<QByteArray, SymbolNode*> children;
     };
 
-    QVector<SymbolNode*> sectionItems;
+    QList<SymbolNode*> sectionItems;
     sectionItems.resize(file->sectionHeaders().size());
 
     if (!section) {
@@ -210,7 +210,7 @@ void SizeTreeMapView::reloadTreeMap()
             if (entry->size() == 0 || !sectionItems.at(entry->sectionIndex()))
                 continue;
             SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
-            const QVector<QByteArray> demangledNames = demangler.demangle(entry->name());
+            const QList<QByteArray> demangledNames = demangler.demangle(entry->name());
             for (const QByteArray &demangledName : demangledNames) {
                 SymbolNode *node = parentNode->children.value(demangledName);
                 if (!node) {

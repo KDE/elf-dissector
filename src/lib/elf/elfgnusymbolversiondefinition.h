@@ -52,7 +52,7 @@ public:
 private:
     ElfGNUSymbolVersionDefinitionsSection *m_section;
     const Elf64_Verdef* const m_verDef;
-    QVector<ElfGNUSymbolVersionDefinitionAuxiliaryEntry*> m_auxEntries;
+    QList<ElfGNUSymbolVersionDefinitionAuxiliaryEntry*> m_auxEntries;
 };
 
 #endif // ELFGNUSYMBOLVERSIONDEFINITION_H

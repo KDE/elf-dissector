@@ -112,9 +112,9 @@ Dwarf_Off DwarfDie::offset() const
     return offset;
 }
 
-static QVector<int> arrayDimensions(const DwarfDie *die)
+static QList<int> arrayDimensions(const DwarfDie *die)
 {
-    QVector<int> dims;
+    QList<int> dims;
     for (const auto child : die->children()) {
         if (child->tag() != DW_TAG_subrange_type)
             continue;
@@ -366,7 +366,7 @@ static void stringifyEnum(QVariant &value, int (*get_name)(unsigned int, const c
     value = QString::fromLocal8Bit(str);
 }
 
-QVector< Dwarf_Half > DwarfDie::attributes() const
+QList< Dwarf_Half > DwarfDie::attributes() const
 {
     Dwarf_Attribute* attrList;
     Dwarf_Signed attrCount;
@@ -374,7 +374,7 @@ QVector< Dwarf_Half > DwarfDie::attributes() const
     if (res != DW_DLV_OK)
         return {};
 
-    QVector<Dwarf_Half> attrs;
+    QList<Dwarf_Half> attrs;
     attrs.reserve(attrCount);
     for (int i = 0; i < attrCount; ++i) {
         Dwarf_Half attrType;
@@ -574,7 +574,7 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
     return value;
 }
 
-QVector< DwarfDie* > DwarfDie::children() const
+QList< DwarfDie* > DwarfDie::children() const
 {
     if (!m_childrenScanned)
         scanChildren();

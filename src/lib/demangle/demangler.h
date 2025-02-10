@@ -21,7 +21,7 @@
 #include <QByteArray>
 #include <QHash>
 #include <QMetaType>
-#include <QVector>
+#include <QList>
 
 struct demangle_component;
 
@@ -34,7 +34,7 @@ public:
     Demangler& operator=(const Demangler &other) = delete;
 
     /** Demangle the given name and return the name split in namespace(s)/class/method. */
-    QVector<QByteArray> demangle(const char* name);
+    QList<QByteArray> demangle(const char* name);
 
     /** Demangle the given name into a single string. */
     static QByteArray demangleFull(const char* name);
@@ -52,9 +52,9 @@ public:
 
 private:
     void reset();
-    void handleNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
-    void handleOptionalNameComponent(demangle_component *component, QVector<QByteArray> &nameParts);
-    void handleOperatorComponent(demangle_component *component, QVector<QByteArray> &nameParts);
+    void handleNameComponent(demangle_component *component, QList<QByteArray> &nameParts);
+    void handleOptionalNameComponent(demangle_component *component, QList<QByteArray> &nameParts);
+    void handleOperatorComponent(demangle_component *component, QList<QByteArray> &nameParts);
 
     const char *m_mangledName = nullptr;
     int m_templateParamIndex = 0;

@@ -44,7 +44,7 @@ public:
 private:
     ElfFileSet *m_fileSet = nullptr;
     ElfFile *m_usedFile = nullptr;
-    QVector<int> m_users;
+    QList<int> m_users;
 };
 
 #endif // FILEUSERMODEL_H

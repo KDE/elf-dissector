@@ -20,7 +20,7 @@
 
 #include "elfsection.h"
 
-#include <QVector>
+#include <QList>
 
 /** Base class for sections with array content. */
 template <typename T>
@@ -48,7 +48,7 @@ protected:
             m_entries.push_back(createEntry(index));
     }
 
-    QVector<T*> m_entries;
+    QList<T*> m_entries;
 };
 
 #endif // ELFARRAYSECTION_H

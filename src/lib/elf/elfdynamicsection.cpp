@@ -18,7 +18,7 @@
 #include "elfdynamicsection.h"
 
 #include <QByteArray>
-#include <QVector>
+#include <QList>
 #include <QList>
 
 #include <elf.h>
@@ -38,24 +38,24 @@ QByteArray ElfDynamicSection::soName() const
     return QByteArray();
 }
 
-QVector< QByteArray > ElfDynamicSection::neededLibraries() const
+QList< QByteArray > ElfDynamicSection::neededLibraries() const
 {
     return stringList(DT_NEEDED);
 }
 
-QVector< QByteArray > ElfDynamicSection::rpaths() const
+QList< QByteArray > ElfDynamicSection::rpaths() const
 {
     return stringList(DT_RPATH);
 }
 
-QVector< QByteArray > ElfDynamicSection::runpaths() const
+QList< QByteArray > ElfDynamicSection::runpaths() const
 {
     return stringList(DT_RUNPATH);
 }
 
-QVector< QByteArray > ElfDynamicSection::stringList(int64_t tag) const
+QList< QByteArray > ElfDynamicSection::stringList(int64_t tag) const
 {
-    QVector<QByteArray> v;
+    QList<QByteArray> v;
     for (const auto entry : m_entries) {
         if (entry->tag() == tag) {
             const QByteArray s = entry->stringValue();

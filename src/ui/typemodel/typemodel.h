@@ -19,7 +19,7 @@
 #define TYPEMODEL_H
 
 #include <QAbstractItemModel>
-#include <QVector>
+#include <QList>
 
 class ElfFileSet;
 class ElfFile;
@@ -55,9 +55,9 @@ private:
     struct Node {
         DwarfDie *die = nullptr;
     };
-    QVector<QVector<uint32_t>> m_childMap;
-    QVector<uint32_t> m_parentMap;
-    QVector<Node> m_nodes;
+    QList<QList<uint32_t>> m_childMap;
+    QList<uint32_t> m_parentMap;
+    QList<Node> m_nodes;
 
     ElfFileSet *m_fileSet = nullptr;
     bool m_hasInvalidDies;

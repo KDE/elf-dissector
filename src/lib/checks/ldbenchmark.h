@@ -20,7 +20,7 @@
 
 #include <QByteArray>
 #include <QStringList>
-#include <QVector>
+#include <QList>
 
 class QProcess;
 
@@ -51,10 +51,10 @@ private:
 
     struct Result {
         QByteArray fileName;
-        QVector<double> lazy;
-        QVector<double> now;
+        QList<double> lazy;
+        QList<double> now;
     };
-    QVector<Result> m_results;
+    QList<Result> m_results;
     QStringList m_args;
 };
 

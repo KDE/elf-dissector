@@ -18,7 +18,7 @@
 #ifndef ELFREVERSERELOCATOR_H
 #define ELFREVERSERELOCATOR_H
 
-#include <QVector>
+#include <QList>
 
 class ElfRelocationEntry;
 class ElfRelocationSection;
@@ -44,8 +44,8 @@ public:
 private:
     void indexRelocations() const;
 
-    QVector<ElfRelocationSection*> m_relocSections;
-    mutable QVector<ElfRelocationEntry*> m_relocations;
+    QList<ElfRelocationSection*> m_relocSections;
+    mutable QList<ElfRelocationEntry*> m_relocations;
 };
 
 #endif // ELFREVERSERELOCATOR_H

@@ -118,7 +118,7 @@ int ElfFile::sectionCount() const
     return m_sectionHeaders.size();
 }
 
-QVector<ElfSectionHeader*> ElfFile::sectionHeaders() const
+QList<ElfSectionHeader*> ElfFile::sectionHeaders() const
 {
     return m_sectionHeaders;
 }
@@ -441,7 +441,7 @@ DwarfInfo* ElfFile::dwarfInfo() const
     return m_dwarfInfo;
 }
 
-QVector< ElfSegmentHeader* > ElfFile::segmentHeaders() const
+QList< ElfSegmentHeader* > ElfFile::segmentHeaders() const
 {
     return m_segmentHeaders;
 }

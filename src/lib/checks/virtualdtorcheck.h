@@ -20,7 +20,7 @@
 
 #include <QByteArray>
 #include <QString>
-#include <QVector>
+#include <QList>
 
 class ElfFileSet;
 class DwarfDie;
@@ -37,13 +37,13 @@ public:
         QString sourceFilePath;
         int lineNumber;
     };
-    const QVector<Result>& results() const;
+    const QList<Result>& results() const;
     void clear();
 
 private:
     void findImplicitVirtualDtors(DwarfDie* die);
 
-    QVector<Result> m_results;
+    QList<Result> m_results;
 };
 
 #endif // VIRTUALDTORCHECK_H

@@ -25,7 +25,7 @@
 
 #include <QFile>
 #include <QMetaType>
-#include <QVector>
+#include <QList>
 
 #include <memory>
 
@@ -82,7 +82,7 @@ public:
      */
     int sectionCount() const;
     /** Returns a list of all available section headers. */
-    QVector<ElfSectionHeader*> sectionHeaders() const;
+    QList<ElfSectionHeader*> sectionHeaders() const;
     /** Returns the section at index @p index. */
     template <typename T>
     inline T* section(int index) const
@@ -121,7 +121,7 @@ public:
     DwarfInfo* dwarfInfo() const;
 
     /** Returns a lost of all available segment headers. */
-    QVector<ElfSegmentHeader*> segmentHeaders() const;
+    QList<ElfSegmentHeader*> segmentHeaders() const;
 
 private:
     void parse();
@@ -134,15 +134,15 @@ private:
     QFile m_file;
     uchar *m_data;
     std::unique_ptr<ElfHeader> m_header;
-    QVector<ElfSectionHeader*> m_sectionHeaders;
-    QVector<ElfSection*> m_sections;
+    QList<ElfSectionHeader*> m_sectionHeaders;
+    QList<ElfSection*> m_sections;
     ElfDynamicSection* m_dynamicSection = nullptr;
     ElfHashSection* m_hashSection = nullptr;
     ElfReverseRelocator m_reverseReloc;
     std::unique_ptr<ElfFile> m_separateDebugFile;
     ElfFile *m_contentFile = nullptr; // the counter part for a separate debug file
     DwarfInfo *m_dwarfInfo = nullptr;
-    QVector<ElfSegmentHeader*> m_segmentHeaders;
+    QList<ElfSegmentHeader*> m_segmentHeaders;
 };
 
 Q_DECLARE_METATYPE(ElfFile*)

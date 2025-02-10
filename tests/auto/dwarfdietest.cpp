@@ -84,7 +84,7 @@ private Q_SLOTS:
         QVERIFY(f.dwarfInfo());
         QVERIFY(f.dwarfInfo()->addressRanges()->isValid());
 
-        QVector<DwarfDie*> dieQueue;
+        QList<DwarfDie*> dieQueue;
         dieQueue.resize(f.dwarfInfo()->compilationUnits().size());
         auto cus = f.dwarfInfo()->compilationUnits();
         std::copy(cus.constBegin(), cus.constEnd(), dieQueue.begin());

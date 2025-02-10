@@ -18,7 +18,7 @@
 #ifndef ELFSTRUCTUREVIEW_H
 #define ELFSTRUCTUREVIEW_H
 
-#include <QVector>
+#include <QList>
 #include <QWidget>
 
 #include <memory>
@@ -55,7 +55,7 @@ private:
     std::unique_ptr<Ui::ElfStructureView> ui;
     ElfModel *m_elfModel = nullptr;
     QSortFilterProxyModel* m_proxy;
-    QVector<QUrl> m_history;
+    QList<QUrl> m_history;
     int m_historyIndex = -1;
     bool m_historyLock = false;
 };

@@ -94,7 +94,7 @@ QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
 #if HAVE_DWARF
     assert(structDie->tag() == DW_TAG_class_type || structDie->tag() == DW_TAG_structure_type);
 
-    QVector<DwarfDie*> members;
+    QList<DwarfDie*> members;
     for (auto child : structDie->children()) {
         if (child->tag() == DW_TAG_member && !child->isStaticMember())
             members.push_back(child);
@@ -122,7 +122,7 @@ void StructurePackingCheck::checkDie(DwarfDie* die)
 {
 #if HAVE_DWARF
     if (die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) {
-        QVector<DwarfDie*> members;
+        QList<DwarfDie*> members;
         for (auto child : die->children()) {
             if (child->tag() == DW_TAG_member && !child->isStaticMember())
                 members.push_back(child);
@@ -243,7 +243,7 @@ static int actualTypeSize(DwarfDie *die)
 }
 #endif
 
-std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
+std::tuple<int, int> StructurePackingCheck::computeStructureMemoryUsage(DwarfDie* structDie, const QList< DwarfDie* >& memberDies) const
 {
 #if HAVE_DWARF
     const auto structSize = structDie->typeSize();
@@ -286,7 +286,7 @@ static bool hasUnknownSize(DwarfDie *typeDie)
 }
 #endif
 
-QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QVector<DwarfDie*>& memberDies) const
+QString StructurePackingCheck::printStructure(DwarfDie* structDie, const QList<DwarfDie*>& memberDies) const
 {
     QString str;
 #if HAVE_DWARF
@@ -380,12 +380,12 @@ static bool isEmptyBaseClass(DwarfDie* inheritanceDie)
     return true;
 }
 
-int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const
+int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QList< DwarfDie* >& memberDies) const
 {
     int size = 0;
 #if HAVE_DWARF
     int alignment = 1;
-    QVector<int> sizes;
+    QList<int> sizes;
 
     // TODO: lots of stuff missing to compute optimal bit field layout
     int prevMemberLocation = -1;
@@ -428,7 +428,7 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
     return std::max(1, size);
 }
 
-static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QVector<QByteArray> &fullId)
+static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QList<QByteArray> &fullId)
 {
 #if HAVE_DWARF
     // TODO filter to namespace/class/struct tags?
@@ -437,7 +437,7 @@ static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QVector<QByteA
     if (fullId.size() == 1)
         return die;
 
-    QVector<QByteArray> partialId = fullId;
+    QList<QByteArray> partialId = fullId;
     partialId.pop_front();
     for (auto child : die->children()) {
         DwarfDie *found = findTypeDefinitionRecursive(child, partialId);
@@ -459,7 +459,7 @@ DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
         return typeDie;
 
     // determine the full identifier of the type
-    QVector<QByteArray> fullId;
+    QList<QByteArray> fullId;
     DwarfDie *parentDie = typeDie;
     do {
         fullId.prepend(parentDie->name());

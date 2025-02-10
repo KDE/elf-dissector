@@ -29,16 +29,16 @@ public:
     /** SO name. */
     QByteArray soName() const;
     /** RPATHs. */
-    QVector<QByteArray> rpaths() const;
+    QList<QByteArray> rpaths() const;
     /** RUNPATHs. */
-    QVector<QByteArray> runpaths() const;
+    QList<QByteArray> runpaths() const;
     /** Needed libraries. */
-    QVector<QByteArray> neededLibraries() const;
+    QList<QByteArray> neededLibraries() const;
     /** First entry of the given tag. @c nullptr if no such entry exists. */
     ElfDynamicEntry* entryWithTag(int64_t type) const;
 
 private:
-    QVector<QByteArray> stringList(int64_t tag) const;
+    QList<QByteArray> stringList(int64_t tag) const;
 };
 
 #endif // ELFDYNAMICSECTION_H

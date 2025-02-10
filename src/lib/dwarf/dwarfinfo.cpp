@@ -38,7 +38,7 @@ public:
     DwarfDie *dieForMangledSymbolRecursive(const QByteArray &symbol, DwarfDie *die) const;
 
     ElfFile *elfFile = nullptr;
-    QVector<DwarfCuDie*> compilationUnits;
+    QList<DwarfCuDie*> compilationUnits;
     Dwarf_Obj_Access_Interface objAccessIface;
     Dwarf_Obj_Access_Methods objAccessMethods;
 
@@ -208,7 +208,7 @@ Dwarf_Debug DwarfInfo::dwarfHandle() const
     return d->dbg;
 }
 
-QVector< DwarfCuDie* > DwarfInfo::compilationUnits() const
+QList< DwarfCuDie* > DwarfInfo::compilationUnits() const
 {
     if (d->compilationUnits.isEmpty())
         d->scanCompilationUnits();

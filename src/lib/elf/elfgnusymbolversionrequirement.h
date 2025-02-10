@@ -18,7 +18,7 @@
 #ifndef ELFGNUSYMBOLVERSIONREQUIREMENT_H
 #define ELFGNUSYMBOLVERSIONREQUIREMENT_H
 
-#include <QVector>
+#include <QList>
 #include <elf.h>
 
 class ElfGNUSymbolVersionRequirementsSection;
@@ -51,7 +51,7 @@ public:
 private:
     ElfGNUSymbolVersionRequirementsSection *m_section;
     const Elf64_Verneed* const m_verNeed;
-    QVector<ElfGNUSymbolVersionRequirementAuxiliaryEntry*> m_auxEntries;
+    QList<ElfGNUSymbolVersionRequirementAuxiliaryEntry*> m_auxEntries;
 };
 
 #endif // ELFGNUSYMBOLVERSIONREQUIREMENT_H

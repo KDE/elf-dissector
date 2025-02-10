@@ -50,7 +50,7 @@ void DependencySorter::sortDtNeeded(ElfFileSet* fileSet)
     }
 
     // count usages
-    QVector<int> usageCounts;
+    QList<int> usageCounts;
     const auto needed = file->dynamicSection()->neededLibraries();
     usageCounts.resize(needed.size());
     for (int i = 0; i < needed.size(); ++i) {
@@ -63,7 +63,7 @@ void DependencySorter::sortDtNeeded(ElfFileSet* fileSet)
     qDebug() << usageCounts;
 
     // sort, check if change is needed
-    QVector<int> sortedNeededIndex;
+    QList<int> sortedNeededIndex;
     sortedNeededIndex.resize(needed.size());
     std::iota(sortedNeededIndex.begin(), sortedNeededIndex.end(), 0);
     assert(sortedNeededIndex.size() == usageCounts.size());
@@ -76,7 +76,7 @@ void DependencySorter::sortDtNeeded(ElfFileSet* fileSet)
     qDebug() << sortedNeededIndex;
 
     // since we modify the file in-place, get the necessary string table values before we do that
-    QVector<uint64_t> neededValues;
+    QList<uint64_t> neededValues;
     neededValues.resize(needed.size());
     int neededIndex = 0;
     for (uint i = 0; i < file->dynamicSection()->header()->entryCount(); ++i) {

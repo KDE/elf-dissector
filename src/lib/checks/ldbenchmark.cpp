@@ -28,7 +28,7 @@
 
 #include <cassert>
 
-static double median(QVector<double> data)
+static double median(QList<double> data)
 {
     if (data.size() == 0)
         return 0.0;
@@ -36,14 +36,14 @@ static double median(QVector<double> data)
     return data.at(data.size() / 2);
 }
 
-static double min(const QVector<double> &data)
+static double min(const QList<double> &data)
 {
     if (data.size() == 0)
         return 0.0;
     return *std::min_element(data.constBegin(), data.constEnd());
 }
 
-static double max(const QVector<double> &data)
+static double max(const QList<double> &data)
 {
     if (data.size() == 0)
         return 0.0;

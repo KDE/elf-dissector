@@ -71,9 +71,9 @@ void DependenciesCheck::printUnusedDependencies(ElfFileSet* fileSet, const Unuse
     }
 }
 
-QVector<ElfSymbolTableEntry*> DependenciesCheck::usedSymbols(ElfFile* userFile, ElfFile* providerFile)
+QList<ElfSymbolTableEntry*> DependenciesCheck::usedSymbols(ElfFile* userFile, ElfFile* providerFile)
 {
-    QVector<ElfSymbolTableEntry*> symbols;
+    QList<ElfSymbolTableEntry*> symbols;
 
     const auto symtab = userFile->section<ElfSymbolTableSection>(userFile->indexOfSection(SHT_DYNSYM));
     if (!symtab)

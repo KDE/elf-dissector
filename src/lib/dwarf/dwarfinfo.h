@@ -49,7 +49,7 @@ public:
 
     Dwarf_Debug dwarfHandle() const; // TODO this shouldn't be public API
 
-    QVector<DwarfCuDie*> compilationUnits() const;
+    QList<DwarfCuDie*> compilationUnits() const;
     /** Returns the CU DIE for the given address.
      *  Prefer this over direct .debug_arange lookup, as that is not always
      *  available.

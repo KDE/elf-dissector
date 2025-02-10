@@ -122,11 +122,11 @@ ElfSymbolTableEntry* ElfGnuHashSection::lookup(const char* name) const
     return nullptr;
 }
 
-QVector<uint32_t> ElfGnuHashSection::histogram() const
+QList<uint32_t> ElfGnuHashSection::histogram() const
 {
-    QVector<uint32_t> hist;
+    QList<uint32_t> hist;
     for (uint i = 0; i < bucketCount(); ++i) {
-        int count = 0;
+        qsizetype count = 0;
 
         const auto n = bucket(i);
         auto hashValue = value(n);

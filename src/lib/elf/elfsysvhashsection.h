@@ -33,7 +33,7 @@ public:
     static uint32_t hash(const char* name);
     ElfSymbolTableEntry *lookup(const char* name) const final override;
 
-    QVector<uint32_t> histogram() const final override;
+    QList<uint32_t> histogram() const final override;
     double averagePrefixLength() const final override;
 
 private:

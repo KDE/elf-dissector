@@ -25,7 +25,6 @@ class DwarfInfo;
 class DwarfDie;
 
 class QString;
-template<class T> class QVector;
 
 class StructurePackingCheck
 {
@@ -44,9 +43,9 @@ public:
 
 private:
     void checkDie(DwarfDie* die);
-    std::tuple<int, int> computeStructureMemoryUsage(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies) const;
-    QString printStructure(DwarfDie* structDie, const QVector< DwarfDie* >& memberDies) const;
-    int optimalStructureSize(DwarfDie* structDie, const QVector<DwarfDie*> &memberDies) const;
+    std::tuple<int, int> computeStructureMemoryUsage(DwarfDie* structDie, const QList<DwarfDie*> &memberDies) const;
+    QString printStructure(DwarfDie* structDie, const QList<DwarfDie*>& memberDies) const;
+    int optimalStructureSize(DwarfDie* structDie, const QList<DwarfDie*> &memberDies) const;
     /** Look for a better type DIE for the given external one (@p typeDie). */
     DwarfDie* findTypeDefinition(DwarfDie *typeDie) const;
 

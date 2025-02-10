@@ -110,7 +110,7 @@ void VirtualDtorCheck::clear()
     m_results.clear();
 }
 
-const QVector< VirtualDtorCheck::Result >& VirtualDtorCheck::results() const
+const QList< VirtualDtorCheck::Result >& VirtualDtorCheck::results() const
 {
     return m_results;
 }

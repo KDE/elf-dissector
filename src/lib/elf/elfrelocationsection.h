@@ -21,7 +21,7 @@
 #include "elfsection.h"
 #include "elfrelocationentry.h"
 
-#include <QVector>
+#include <QList>
 
 /** Relocation table sections. */
 class ElfRelocationSection : public ElfSection
@@ -33,7 +33,7 @@ public:
     ElfRelocationEntry* entry(uint32_t index) const;
 
 private:
-    QVector<ElfRelocationEntry> m_entries;
+    QList<ElfRelocationEntry> m_entries;
 };
 
 #endif // ELFRELOCATIONSECTION_H

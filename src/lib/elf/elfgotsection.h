@@ -21,7 +21,7 @@
 #include "elfsection.h"
 #include "elfgotentry.h"
 
-#include <QVector>
+#include <QList>
 
 /** Represents a .got.* section. */
 class ElfGotSection : public ElfSection
@@ -34,7 +34,7 @@ public:
     uint64_t entryCount() const;
 
 private:
-    QVector<ElfGotEntry> m_entries;
+    QList<ElfGotEntry> m_entries;
 };
 
 #endif // ELFGOTSECTION_H

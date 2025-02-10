@@ -43,11 +43,11 @@ private:
     void findSeparateDebugFile(ElfFile *file) const;
     static bool isValidDebugLinkFile(const QString& fileName, uint32_t expectedCrc);
 
-    QVector<ElfFile*> m_files;
-    QVector<QByteArray> m_baseSearchPaths;
-    QVector<QByteArray> m_ldLibraryPaths;
+    QList<ElfFile*> m_files;
+    QList<QByteArray> m_baseSearchPaths;
+    QList<QByteArray> m_ldLibraryPaths;
 
-    QVector<QString> m_globalDebugSearchPath;
+    QList<QString> m_globalDebugSearchPath;
 };
 
 #endif // ELFFILESET_H

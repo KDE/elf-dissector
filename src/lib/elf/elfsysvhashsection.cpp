@@ -78,11 +78,11 @@ ElfSymbolTableEntry* ElfSysvHashSection::lookup(const char* name) const
     return nullptr;
 }
 
-QVector<uint32_t> ElfSysvHashSection::histogram() const
+QList<uint32_t> ElfSysvHashSection::histogram() const
 {
-    QVector<uint32_t> hist;
+    QList<uint32_t> hist;
     for (uint i = 0; i < bucketCount(); ++i) {
-        int count = 0;
+        qsizetype count = 0;
 
         auto y = bucket(i);
         while (y != STN_UNDEF) {

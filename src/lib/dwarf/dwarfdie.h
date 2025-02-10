@@ -19,7 +19,7 @@
 #define DWARFDIE_H
 
 #include <QVariant>
-#include <QVector>
+#include <QList>
 
 #include <libdwarf.h>
 
@@ -64,11 +64,11 @@ public:
     /** Source code location, best effort to find an absolute path, and line number if present. */
     QString sourceLocation() const;
 
-    QVector<Dwarf_Half> attributes() const;
+    QList<Dwarf_Half> attributes() const;
     static QByteArray attributeName(Dwarf_Half attributeType);
     QVariant attribute(Dwarf_Half attributeType) const;
 
-    QVector<DwarfDie*> children() const;
+    QList<DwarfDie*> children() const;
     DwarfDie* dieAtOffset(Dwarf_Off offset) const;
 
     /** If this DIE is inheriting attributes from another DIE, that's returned here. */
@@ -95,7 +95,7 @@ protected:
         DwarfInfo *info;
     } m_parent;
 
-    mutable QVector<DwarfDie*> m_children;
+    mutable QList<DwarfDie*> m_children;
     mutable bool m_childrenScanned = false;
 };
 

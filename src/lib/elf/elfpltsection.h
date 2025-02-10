@@ -21,7 +21,7 @@
 #include "elfsection.h"
 #include "elfpltentry.h"
 
-#include <QVector>
+#include <QList>
 
 class ElfGotSection;
 
@@ -37,7 +37,7 @@ public:
     ElfGotSection* gotSection() const;
 
 private:
-    QVector<ElfPltEntry> m_entries;
+    QList<ElfPltEntry> m_entries;
     mutable ElfGotSection *m_gotSection;
 };
 

@@ -49,7 +49,7 @@ void ElfFileSet::addFile(const QString& fileName)
     addFile(f);
 }
 
-static void resolvePlaceholder(QVector<QByteArray> &paths, const QByteArray &originPath)
+static void resolvePlaceholder(QList<QByteArray> &paths, const QByteArray &originPath)
 {
     for (auto it = paths.begin(); it != paths.end(); ++it)
         (*it).replace("$ORIGIN", originPath);
@@ -72,7 +72,7 @@ void ElfFileSet::addFile(ElfFile* file)
     resolvePlaceholder(rpaths, originPath);
     resolvePlaceholder(runpaths, originPath);
 
-    QVector<QByteArray> searchPaths;
+    QList<QByteArray> searchPaths;
     searchPaths.reserve(rpaths.size() + m_ldLibraryPaths.size() + runpaths.size() + m_baseSearchPaths.size());
     if (runpaths.isEmpty()) // DT_RPATH is supposed to be ignored if DT_RUNPATH is present
         searchPaths += rpaths;
@@ -129,7 +129,7 @@ ElfFile* ElfFileSet::file(int index) const
     return m_files.at(index);
 }
 
-static bool hasUnresolvedDependencies(ElfFile *file, const QVector<ElfFile*> &resolved, int startIndex)
+static bool hasUnresolvedDependencies(ElfFile *file, const QList<ElfFile*> &resolved, int startIndex)
 {
     if (!file->dynamicSection())
         return false;
@@ -145,10 +145,10 @@ static bool hasUnresolvedDependencies(ElfFile *file, const QVector<ElfFile*> &re
 
 void ElfFileSet::topologicalSort()
 {
-    QVector<ElfFile*> sorted;
+    QList<ElfFile*> sorted;
     sorted.resize(m_files.size());
 
-    QVector<ElfFile*> remaining = m_files;
+    QList<ElfFile*> remaining = m_files;
 
     for (int i = sorted.size() - 1; i >= 0; --i) {
         for (auto it = std::begin(remaining); it != std::end(remaining); ++it) {
