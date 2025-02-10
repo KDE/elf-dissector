@@ -11,7 +11,7 @@ endif()
 add_executable(virtual-inheritance virtual-inheritance.cpp)
 
 add_executable(qtstructures qtstructures.cpp)
-target_link_libraries(qtstructures Qt5::Core)
+target_link_libraries(qtstructures Qt6::Core)
 
 add_library(versioned-symbols SHARED versioned-symbols.c)
 set_target_properties(versioned-symbols PROPERTIES LINK_FLAGS "-Wl,--version-script ${CMAKE_CURRENT_SOURCE_DIR}/versioned-symbols.version")

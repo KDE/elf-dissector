@@ -42,7 +42,7 @@ set(libelfdissectorui_srcs
 )
 
 add_library(libelfdissectorui STATIC ${libelfdissectorui_srcs})
-target_link_libraries(libelfdissectorui Qt5::Widgets libelfdissector)
+target_link_libraries(libelfdissectorui Qt6::Widgets libelfdissector)
 if (HAVE_DWARF)
   target_link_libraries(libelfdissectorui Dwarf::Dwarf)
 endif()

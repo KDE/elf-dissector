@@ -1,8 +1,8 @@
 # CMake setup
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.16)
 project(elf-dissector VERSION 0.0.1)
 
-find_package(ECM 5.38 REQUIRED NO_MODULE)
+find_package(ECM 6.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 include(KDECompilerSettings NO_POLICY_SCOPE)
@@ -48,10 +48,10 @@ if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME STREQUAL GNU)
 endif()
 
 # dependencies
-find_package(Qt5 5.11 COMPONENTS Widgets Test NO_MODULE REQUIRED)
+find_package(Qt6 6.7 COMPONENTS Widgets Test NO_MODULE REQUIRED)
 
 find_package(Iberty REQUIRED)
-find_package(Dwarf)
+#find_package(Dwarf)
 if (TARGET Dwarf::Dwarf)
     set(HAVE_DWARF TRUE)
 endif()
