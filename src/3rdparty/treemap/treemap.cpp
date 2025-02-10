@@ -45,6 +45,7 @@
 #define DEBUG_DRAWING 0
 #define MAX_FIELD 12
 
+using namespace Qt::Literals;
 
 //
 // StoredDrawParams
@@ -1552,10 +1553,10 @@ QString TreeMapWidget::tipString(TreeMapItem* i) const
         if (!i->text(0).isEmpty()) {
             itemTip = i->text(0);
             if (!i->text(1).isEmpty())
-                itemTip += " (" + i->text(1) + ')';
+                itemTip += " ("_L1 + i->text(1) + ')'_L1;
 
             if (!tip.isEmpty())
-                tip += '\n';
+                tip += '\n'_L1;
 
             tip += itemTip;
         }

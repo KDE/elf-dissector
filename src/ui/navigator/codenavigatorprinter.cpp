@@ -27,6 +27,8 @@
 #include <QFileInfo>
 #include <QUrl>
 
+using namespace Qt::Literals;
+
 QString CodeNavigatorPrinter::sourceLocationRichText(DwarfDie* die)
 {
     QString s;
@@ -48,12 +50,12 @@ QString CodeNavigatorPrinter::sourceLocationRichText(DwarfDie* die)
         url.setPath(fileName);
         url.setFragment(QString::number(lineNum));
         s += QLatin1String("<a href=\"");
-        s += url.toEncoded();
+        s += QString::fromUtf8(url.toEncoded());
         s += QLatin1String("\">");
     }
     s += fileName;
     if (lineNum > 0)
-        s += ':' + QString::number(lineNum);
+        s += ':'_L1 + QString::number(lineNum);
     if (hasCodeNavigation) {
         s += QLatin1String("</a>");
     }

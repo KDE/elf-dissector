@@ -304,17 +304,17 @@ bool DwarfDie::isStaticMember() const
 
 QString DwarfDie::displayName() const
 {
-    QString n = name();
+    QString n = QString::fromUtf8(name());
 
     if (n.isEmpty())
-        n = typeName();
+        n = QString::fromUtf8(typeName());
 
     if (n.isEmpty()) {
-        n = tagName();
+        n = QString::fromUtf8(tagName());
         n += QLatin1String(" (offset ");
     } else {
         n += QLatin1String(" (");
-        n += tagName();
+        n += QString::fromUtf8(tagName());
         n += QLatin1String(", offset ");
     }
     n += QString::number(offset());
@@ -519,7 +519,7 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
             res = dwarf_get_FORM_name(formType, &formName);
             if (res != DW_DLV_OK)
                 return {};
-            value = QLatin1String("TODO: ") + QString::fromLocal8Bit(formName);
+            value = QString(QLatin1String("TODO: ") + QString::fromLocal8Bit(formName));
             break;
         }
     }
@@ -531,7 +531,7 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
         {
             const auto fileIndex = value.value<Dwarf_Unsigned>();
             // index 0 means not present, TODO handle that
-            value = compilationUnit()->sourceFileForIndex(fileIndex -1);
+            value = QString::fromUtf8(compilationUnit()->sourceFileForIndex(fileIndex -1));
             break;
         }
         case DW_AT_ranges:

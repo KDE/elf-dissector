@@ -32,6 +32,8 @@
 
 #include <elf.h>
 
+using namespace Qt::Literals;
+
 SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::SizeTreeMapView),
@@ -45,15 +47,15 @@ SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
         m_sectionProxy->setFilterFixedString(text);
     });
 
-    ui->actionHideDebugInformation->setData("HideDebugInfo");
-    ui->actionHideOccupiesMemory->setData("HideOccupiesNoMemory");
-    ui->actionHideNonWritable->setData("HideNonWritable");
-    ui->actionHideNonExecutable->setData("HideNonExecutable");
+    ui->actionHideDebugInformation->setData("HideDebugInfo"_L1);
+    ui->actionHideOccupiesMemory->setData("HideOccupiesNoMemory"_L1);
+    ui->actionHideNonWritable->setData("HideNonWritable"_L1);
+    ui->actionHideNonExecutable->setData("HideNonExecutable"_L1);
 
-    ui->actionNoColorization->setData("NoColorize");
-    ui->actionColorizeSections->setData("ColorizeSections");
-    ui->actionColorizeSymbols->setData("ColorizeSymbols");
-    ui->actionRelocationHeatmap->setData("RelocationHeatmap");
+    ui->actionNoColorization->setData("NoColorize"_L1);
+    ui->actionColorizeSections->setData("ColorizeSections"_L1);
+    ui->actionColorizeSymbols->setData("ColorizeSymbols"_L1);
+    ui->actionRelocationHeatmap->setData("RelocationHeatmap"_L1);
 
     auto colorizeGroup = new QActionGroup(this);
     colorizeGroup->setExclusive(true);
@@ -164,7 +166,7 @@ void SizeTreeMapView::reloadTreeMap()
         ui->splitter->setSizes({ ui->sectionView->header()->sectionSize(0), width() - ui->sectionView->header()->sectionSize(0) });
 
     QSettings settings;
-    m_treeMap->setSplitMode(settings.value(QStringLiteral("TreeMap/SplitMode"), "Bisection").toString());
+    m_treeMap->setSplitMode(settings.value(QStringLiteral("TreeMap/SplitMode"), "Bisection"_L1).toString());
 
     struct SymbolNode {
         TreeMapItem *item;
@@ -181,7 +183,7 @@ void SizeTreeMapView::reloadTreeMap()
                 baseItem->setSum(baseItem->sum() - shdr->size());
                 continue;
             }
-            auto item = new TreeMapItem(baseItem, shdr->size(), shdr->name(), QString::number(shdr->size()));
+            auto item = new TreeMapItem(baseItem, shdr->size(), QString::fromUtf8(shdr->name()), QString::number(shdr->size()));
             item->setSum(shdr->size());
             if (ui->actionColorizeSections->isChecked())
                 item->setBackColor(sectionColorizer.nextColor());
@@ -192,7 +194,7 @@ void SizeTreeMapView::reloadTreeMap()
         }
     } else {
         baseItem->setSum(section->header()->size());
-        auto item = new TreeMapItem(baseItem, section->header()->size(), section->header()->name(), QString::number(section->header()->size()));
+        auto item = new TreeMapItem(baseItem, section->header()->size(), QString::fromUtf8(section->header()->name()), QString::number(section->header()->size()));
         item->setSum(section->header()->size());
         if (ui->actionRelocationHeatmap->isChecked() && section->header()->flags() & SHF_WRITE)
             item->setBackColor(relocColor(relocRatio(section->header())));
@@ -216,7 +218,7 @@ void SizeTreeMapView::reloadTreeMap()
                 if (!node) {
                     node = new SymbolNode;
                     node->item = new TreeMapItem(parentNode->item);
-                    node->item->setField(0, demangledName);
+                    node->item->setField(0, QString::fromUtf8(demangledName));
                     if (ui->actionColorizeSymbols->isChecked() && parentNode->item->parent() == baseItem) {
                         node->item->setBackColor(symbolColorizer.nextColor());
                     } else {

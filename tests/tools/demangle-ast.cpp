@@ -25,6 +25,7 @@
 #include <demangle.h>
 
 #include <QByteArray>
+#include <QStringBuilder>
 
 #include <iostream>
 
@@ -54,6 +55,10 @@ static void writeNode(const char* name)
     cout << "    node" << nodeCount << "[label = \"" << name << "\"];" << endl;
 }
 
+static void writeNode(const QByteArray &b)
+{
+    writeNode(b.constData());
+}
 static void writeLink(int source, int target)
 {
     if (source == 0 || target == 0)

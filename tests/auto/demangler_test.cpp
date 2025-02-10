@@ -124,7 +124,7 @@ private Q_SLOTS:
         QFETCH(QVector<QByteArray>, expectedDemangled);
 
         Demangler d;
-        auto actualDemangled = d.demangle(mangled.toLatin1());
+        auto actualDemangled = d.demangle(mangled.toLatin1().constData());
         if (actualDemangled != expectedDemangled) {
             qDebug() << actualDemangled;
             qDebug() << expectedDemangled;
@@ -157,7 +157,7 @@ private Q_SLOTS:
         QFETCH(QByteArray, symbol);
         QFETCH(Demangler::SymbolType, type);
 
-        QCOMPARE(Demangler::symbolType(symbol), type);
+        QCOMPARE(Demangler::symbolType(symbol.constData()), type);
     }
 };
 

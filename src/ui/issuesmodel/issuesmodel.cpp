@@ -59,7 +59,7 @@ QVariant IssuesModel::data(const QModelIndex& index, int role) const
         {
             switch (index.column()) {
                 case 0: return tr("%1 (implicit virtual destructor)").arg(QString::fromLatin1(res.fullName));
-                case 1: return res.sourceFilePath + QLatin1Char(':') + QString::number(res.lineNumber);
+                case 1: return QString(res.sourceFilePath + QLatin1Char(':') + QString::number(res.lineNumber));
             }
         }
     }

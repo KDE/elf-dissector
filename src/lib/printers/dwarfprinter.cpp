@@ -32,6 +32,8 @@
 #include <cassert>
 #include <type_traits>
 
+using namespace Qt::Literals;
+
 const char* DwarfPrinter::virtuality(DwarfVirtuality v)
 {
 #if HAVE_DWARF
@@ -87,9 +89,9 @@ QString DwarfPrinter::dieRichText(DwarfDie* die)
 #if HAVE_DWARF
     assert(die);
     QString s;
-    s += "TAG: " + QLatin1String(die->tagName()) + "<br/>";
-    s += "Name: " + QString::fromUtf8(die->name()).toHtmlEscaped() + "<br/>";
-    s += "Offset: " + QString::number(die->offset()) + "<br/>";
+    s += "TAG: "_L1 + QLatin1String(die->tagName()) + "<br/>"_L1;
+    s += "Name: "_L1 + QString::fromUtf8(die->name()).toHtmlEscaped() + "<br/>"_L1;
+    s += "Offset: "_L1 + QString::number(die->offset()) + "<br/>"_L1;
     for (const auto attrType : die->attributes()) {
         const QVariant attrValue = die->attribute(attrType);
         QString attrValueStr;
@@ -97,7 +99,7 @@ QString DwarfPrinter::dieRichText(DwarfDie* die)
             attrValueStr = die->displayName();
         else
             attrValueStr = attrValue.toString();
-        s += QLatin1String(die->attributeName(attrType)) + ": " + attrValueStr.toHtmlEscaped() + "<br/>";
+        s += QLatin1String(die->attributeName(attrType)) + ": "_L1 + attrValueStr.toHtmlEscaped() + "<br/>"_L1;
     }
     return s;
 #else

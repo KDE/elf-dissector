@@ -28,6 +28,8 @@
 
 #include <QUrl>
 
+using namespace Qt::Literals;
+
 ElfModel::ElfModel(QObject* parent) : QAbstractItemModel(parent)
 {
 }
@@ -223,7 +225,7 @@ QUrl ElfModel::urlForIndex(const QModelIndex& index) const
     }
 
     url = parentIdx.data(NodeUrl).toUrl();
-    url.setPath(url.path() + "/" + QString::number(index.row()));
+    url.setPath(url.path() + "/"_L1 + QString::number(index.row()));
 
     return url;
 }

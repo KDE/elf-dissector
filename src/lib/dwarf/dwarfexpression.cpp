@@ -216,6 +216,8 @@ static const opcode_t opcodes[] {
 
 #undef OP
 
+using namespace Qt::Literals;
+
 static const int opcodesSize = sizeof(opcodes) / sizeof(opcode_t);
 
 static const opcode_t* opcode(uint8_t code)
@@ -250,7 +252,7 @@ QString DwarfExpression::displayString() const
         if (!op) {
             s += QLatin1String("unknown<0x") + QString::number((uint8_t)m_block.at(i), 16) + QLatin1Char('>');
         } else {
-            s += op->name;
+            s += QString::fromUtf8(op->name);
             int size = 0;
 
             // TODO correct endianess conversion
@@ -259,7 +261,7 @@ QString DwarfExpression::displayString() const
                 size = sizeof(type); \
                 assert(m_block.size() > i + size); \
                 const auto value = readNumber<type>(i + 1); \
-                s += ' ' + QString::number(value); \
+                s += ' '_L1 + QString::number(value); \
                 break; \
             }
 
@@ -290,16 +292,16 @@ QString DwarfExpression::displayString() const
                     uint64_t addr = 0;
                     // TODO: endianess conversion
                     memcpy(&addr, m_block.constData() + i + 1, m_addrSize);
-                    s += " 0x" + QByteArray::number(qulonglong(addr), 16);
+                    s += " 0x"_L1 + QString::number(qulonglong(addr), 16);
                     size = m_addrSize;
                     break;
                 }
 
                 case OperandType::ULEB128:
-                    s += ' ' + QString::number(DwarfLEB128::decodeUnsigned(m_block.constData() + i + 1, &size));
+                    s += ' '_L1 + QString::number(DwarfLEB128::decodeUnsigned(m_block.constData() + i + 1, &size));
                     break;
                 case OperandType::SLEB128:
-                    s += ' ' + QString::number(DwarfLEB128::decodeSigned(m_block.constData() + i + 1, &size));
+                    s += ' '_L1 + QString::number(DwarfLEB128::decodeSigned(m_block.constData() + i + 1, &size));
                     break;
                 case OperandType::ULEB128ULEB128:
                 {
@@ -321,7 +323,7 @@ QString DwarfExpression::displayString() const
             i += size;
         }
         if (i < m_block.size() - 1)
-            s += ' ';
+            s += ' '_L1;
     }
 
     return s;

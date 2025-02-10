@@ -61,12 +61,14 @@
 #include <capstone.h>
 #endif
 
+using namespace Qt::Literals;
+
 static int qstring_printf(void *data, const char *format, ...)
 {
     QString buffer;
     va_list args;
     va_start(args, format);
-    buffer.vsprintf(format, args);
+    buffer.vasprintf(format, args);
     va_end(args);
 
     QString *s = static_cast<QString*>(data);
@@ -191,7 +193,7 @@ QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t si
 #if HAVE_DWARF
         auto line = lineForAddress(baseAddress() + bytes);
         if (!line.isNull())
-            result += printSourceLine(line) + "<br/>";
+            result += printSourceLine(line) + "<br/>"_L1;
 #endif
         result += QStringLiteral("%1: ").arg(bytes, 8, 10);
         bytes += (*disassemble_fn)(bytes, &info);
@@ -258,10 +260,10 @@ QString Disassembler::disassembleCapstone(const unsigned char* data, uint64_t si
 #if HAVE_DWARF
         const auto line = lineForAddress(insn->address);
         if (!line.isNull())
-            result += printSourceLine(line) + "<br/>";
+            result += printSourceLine(line) + "<br/>"_L1;
 #endif
 
-        result += QString::number(insn->address - baseAddress()) + ": " + insn->mnemonic + QLatin1Char(' ') + insn->op_str;
+        result += QString::number(insn->address - baseAddress()) + ": "_L1 + QString::fromUtf8(insn->mnemonic) + QLatin1Char(' ') + QString::fromUtf8(insn->op_str);
         switch (file()->header()->machine()) {
             case EM_386:
             case EM_X86_64:
@@ -291,7 +293,7 @@ QString Disassembler::disassembleCapstone(const unsigned char* data, uint64_t si
             default:
                 break;
         }
-        result += "<br/>";
+        result += "<br/>"_L1;
     }
 
     return result;
@@ -315,12 +317,12 @@ void Disassembler::printAddress(uint64_t addr, QString *s) const
     if (auto symbolTable = file()->symbolTable()) {
         const auto target = symbolTable->entryContainingValue(addr);
         if (target) {
-            s->append(" (");
+            s->append(" ("_L1);
             s->append(printSymbol(target));
             if (target->value() < addr) {
                 s->append(QLatin1String("+0x") + QString::number(addr - target->value(), 16));
             }
-            s->append(')');
+            s->append(')'_L1);
             return;
         }
     }
@@ -336,9 +338,9 @@ void Disassembler::printAddress(uint64_t addr, QString *s) const
     if (pltSection) {
         const auto pltEntry = pltSection->entry((addr - section->header()->virtualAddress()) / section->header()->entrySize());
         assert(pltEntry);
-        s->append(" (");
+        s->append(" ("_L1);
         s->append(printPltEntry(pltEntry));
-        s->append(')');
+        s->append(')'_L1);
         return;
     }
 
@@ -346,13 +348,13 @@ void Disassembler::printAddress(uint64_t addr, QString *s) const
     if (gotSection) {
         const auto gotEntry = gotSection->entry((addr - section->header()->virtualAddress()) / file()->addressSize());
         assert(gotEntry);
-        s->append(" (");
+        s->append(" ("_L1);
         s->append(printGotEntry(gotEntry));
-        s->append(')');
+        s->append(')'_L1);
         return;
     }
 
-    s->append(QLatin1String(" (") + section->header()->name() + QLatin1String(" + 0x") + QString::number(addr - section->header()->virtualAddress(), 16) + QLatin1Char(')'));
+    s->append(QLatin1String(" (") + QString::fromUtf8(section->header()->name()) + QLatin1String(" + 0x") + QString::number(addr - section->header()->virtualAddress(), 16) + QLatin1Char(')'));
 }
 
 QString Disassembler::printSymbol(ElfSymbolTableEntry* entry) const
@@ -365,8 +367,8 @@ QString Disassembler::printGotEntry(ElfGotEntry* entry) const
     const auto reloc = entry->relocation();
     const auto sym = reloc ? reloc->symbol() : nullptr;
     if (sym)
-        return sym->name() + QStringLiteral("@got");
-    return entry->section()->header()->name() + QStringLiteral(" + 0x") + QString::number(entry->index() * entry->section()->file()->addressSize());
+        return QString::fromUtf8(sym->name()) + QStringLiteral("@got");
+    return QString::fromUtf8(entry->section()->header()->name()) + QStringLiteral(" + 0x") + QString::number(entry->index() * entry->section()->file()->addressSize());
 }
 
 QString Disassembler::printPltEntry(ElfPltEntry* entry) const
@@ -375,8 +377,8 @@ QString Disassembler::printPltEntry(ElfPltEntry* entry) const
     const auto reloc = gotEntry ? gotEntry->relocation() : nullptr;
     const auto sym = reloc ? reloc->symbol() : nullptr;
     if (sym)
-        return sym->name() + QStringLiteral("@plt");
-    return entry->section()->header()->name() + QStringLiteral(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
+        return QString::fromUtf8(sym->name()) + QStringLiteral("@plt");
+    return QString::fromUtf8(entry->section()->header()->name()) + QStringLiteral(" + 0x") + QString::number(entry->index() * entry->section()->header()->entrySize());
 }
 
 #if HAVE_DWARF
@@ -403,8 +405,8 @@ QString Disassembler::printSourceLine(DwarfLine line) const
     url.setFragment(QString::number(line.line()));
 
     QString s;
-    s += "<i>Source: <a href=\"" + url.toEncoded() + "\">" + cu->sourceFileForLine(line);
-    s += ':' + QString::number(line.line()) + "</a></i>";
+    s += "<i>Source: <a href=\""_L1 + QString::fromUtf8(url.toEncoded()) + "\">"_L1 + cu->sourceFileForLine(line);
+    s += ':'_L1 + QString::number(line.line()) + "</a></i>"_L1;
     return s;
 }
 #endif

@@ -25,6 +25,8 @@
 
 #include <cassert>
 
+using namespace Qt::Literals;
+
 ElfFileSet::ElfFileSet(QObject* parent) : QObject(parent)
 {
     parseLdConf();
@@ -85,7 +87,7 @@ void ElfFileSet::addFile(ElfFile* file)
             continue;
         bool dependencyFound = false;
         for (const auto &dir : searchPaths) {
-            const auto fullPath = dir + '/' + lib;
+            const auto fullPath = QString::fromUtf8(dir + '/' + lib);
             if (!QFile::exists(fullPath))
                 continue;
             ElfFile *dep = new ElfFile(fullPath);
@@ -100,10 +102,11 @@ void ElfFileSet::addFile(ElfFile* file)
 
         // deal with NEEDED entries containing absolute paths
         if (!dependencyFound && lib.startsWith('/')) {
-            if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](ElfFile *file){ return file->fileName() == lib; }) != m_files.cend())
+            const auto libFile = QString::fromUtf8(lib);
+            if (std::find_if(m_files.cbegin(), m_files.cend(), [libFile](ElfFile *file){ return file->fileName() == libFile; }) != m_files.cend())
                 continue;
-            if (QFile::exists(lib)) {
-                ElfFile *dep = new ElfFile(lib);
+            if (QFile::exists(libFile)) {
+                ElfFile *dep = new ElfFile(libFile);
                 ElfFile *firstFile = m_files.at(0);
                 if (dep->open(QIODevice::ReadOnly) && dep->isValid() && dep->type() == firstFile->type() && dep->header()->machine() == firstFile->header()->machine()) {
                     dependencyFound = true;
@@ -211,20 +214,20 @@ void ElfFileSet::parseLdConf(const QString& fileName)
         if (line.startsWith('#'))
             continue;
         if (line.startsWith("include")) {
-            const auto fileGlob = line.mid(8);
+            const auto fileGlob = QString::fromUtf8(line.mid(8));
             if (QFileInfo::exists(fileGlob)) {
                 parseLdConf(fileGlob);
             } else {
-                const auto idx = fileGlob.lastIndexOf('/');
+                const auto idx = fileGlob.lastIndexOf('/'_L1);
                 assert(idx >= 0);
                 QDir dir(fileGlob.left(idx));
                 for (const auto &file : dir.entryList(QStringList() << fileGlob.mid(idx + 1)))
-                    parseLdConf(dir.absolutePath() + '/' + file);
+                    parseLdConf(dir.absolutePath() + '/'_L1 + file);
             }
             continue;
         }
         if (line.startsWith('/')) {
-            if (QFileInfo::exists(line))
+            if (QFileInfo::exists(QString::fromUtf8(line)))
                 m_baseSearchPaths.push_back(line);
             continue;
         }
@@ -237,7 +240,7 @@ void ElfFileSet::findSeparateDebugFile(ElfFile* file) const
     // (1) via build id
     const auto buildId = file->buildId().toHex();
     for (const auto &debugDir : m_globalDebugSearchPath) {
-        auto debugFile = debugDir + "/.build-id/" + buildId.left(2) + "/" + buildId.mid(2) + ".debug";
+        QString debugFile = debugDir + "/.build-id/"_L1 + QString::fromUtf8(buildId.left(2)) + "/"_L1 + QString::fromUtf8(buildId.mid(2)) + ".debug"_L1;
         if (QFile::exists(debugFile)) {
             file->setSeparateDebugFile(debugFile);
             return;
@@ -255,14 +258,14 @@ void ElfFileSet::findSeparateDebugFile(ElfFile* file) const
     const auto dir = QFileInfo(file->fileName()).absolutePath();
 
     // (2a) next to file
-    auto debugFile = dir + "/" + debugLinkSection->fileName();
+    QString debugFile = dir + "/"_L1 + QString::fromUtf8(debugLinkSection->fileName());
     if (isValidDebugLinkFile(debugFile, debugLinkSection->crc())) {
         file->setSeparateDebugFile(debugFile);
         return;
     }
 
     // (2b) in .debug sub-folder next to file
-    debugFile = dir + "/.debug/" + debugLinkSection->fileName();
+    debugFile = dir + "/.debug/"_L1 + QString::fromUtf8(debugLinkSection->fileName());
     if (isValidDebugLinkFile(debugFile, debugLinkSection->crc())) {
         file->setSeparateDebugFile(debugFile);
         return;
@@ -270,7 +273,7 @@ void ElfFileSet::findSeparateDebugFile(ElfFile* file) const
 
     // (2c) in global debug directories
     for (const auto &debugDir : m_globalDebugSearchPath) {
-        debugFile = debugDir + dir + "/" + debugLinkSection->fileName();
+        debugFile = debugDir + dir + "/"_L1 + QString::fromUtf8(debugLinkSection->fileName());
         if (isValidDebugLinkFile(debugFile, debugLinkSection->crc())) {
             file->setSeparateDebugFile(debugFile);
             return;

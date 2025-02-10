@@ -65,7 +65,7 @@ bool ElfFile::isValid() const
 QString ElfFile::displayName() const
 {
     if (dynamicSection() && !dynamicSection()->soName().isEmpty())
-        return dynamicSection()->soName();
+        return QString::fromUtf8(dynamicSection()->soName());
     return QFileInfo(m_file.fileName()).fileName();
 }
 

@@ -25,6 +25,8 @@
 #include <QStandardPaths>
 #include <QUrl>
 
+using namespace Qt::Literals;
+
 struct ide_settings_t {
     const char* const app;
     const char* const args;
@@ -55,9 +57,9 @@ void CodeNavigator::goTo(const QString& filePath, int line)
 
     QString command;
     if (ideIdx >= 0 && ideIdx < ide_settings_size) {
-        command += ide_settings[ideIdx].app;
-        command += ' ';
-        command += ide_settings[ideIdx].args;
+        command += QString::fromUtf8(ide_settings[ideIdx].app);
+        command += ' '_L1;
+        command += QString::fromUtf8(ide_settings[ideIdx].args);
     } else {
         command = settings.value(QStringLiteral("CustomCommand")).toString();
     }
@@ -91,11 +93,11 @@ QAction* CodeNavigator::configMenu(QWidget *parent)
             auto action = new QAction(menu);
             action->setText(QObject::tr(ide_settings[i].name));
             if (ide_settings[i].icon)
-                action->setIcon(QIcon::fromTheme(ide_settings[i].icon));
+                action->setIcon(QIcon::fromTheme(QLatin1StringView(ide_settings[i].icon)));
             action->setCheckable(true);
             action->setChecked(currentIdx == i);
             action->setData(i);
-            action->setEnabled(!QStandardPaths::findExecutable(ide_settings[i].app).isEmpty());
+            action->setEnabled(!QStandardPaths::findExecutable(QLatin1StringView(ide_settings[i].app)).isEmpty());
             group->addAction(action);
             menu->addAction(action);
         }

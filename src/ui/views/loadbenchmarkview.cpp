@@ -24,6 +24,8 @@
 
 #include <QSortFilterProxyModel>
 
+using namespace Qt::Literals;
+
 LoadBenchmarkView::LoadBenchmarkView(QWidget* parent):
     QWidget(parent),
     ui(new Ui::LoadBenchmarkView),
@@ -60,7 +62,7 @@ void LoadBenchmarkView::runBenchmark()
     plotter.setSize(ui->plotter->size());
     plotter.setTemplate(QStringLiteral(":/ldbenchmark.gnuplot"));
 
-    m_benchmark->writeCSV(plotter.workingDir() + "/ldbenchmark.csv");
+    m_benchmark->writeCSV(plotter.workingDir() + "/ldbenchmark.csv"_L1);
     ui->plotter->setPlotter(std::move(plotter));
 
     m_model->setBenchmark(m_benchmark);

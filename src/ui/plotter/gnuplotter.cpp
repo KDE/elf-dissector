@@ -24,6 +24,8 @@
 #include <QStandardPaths>
 #include <QTemporaryDir>
 
+using namespace Qt::Literals;
+
 Gnuplotter::Gnuplotter() :
     m_tempDir(new QTemporaryDir)
 {
@@ -61,7 +63,7 @@ QString Gnuplotter::workingDir() const
 
 QString Gnuplotter::imageFileName() const
 {
-    return m_tempDir->path() + "/plot.png";
+    return m_tempDir->path() + "/plot.png"_L1;
 }
 
 void Gnuplotter::plot() const
@@ -79,7 +81,7 @@ void Gnuplotter::processTemplate() const
 {
     // TODO error handling
 
-    QFile out(m_tempDir->path() + "/plot.gnuplot");
+    QFile out(m_tempDir->path() + "/plot.gnuplot"_L1);
     if (!out.open(QFile::WriteOnly | QFile::Truncate)) {
         qWarning() << "Failed to write to" << m_tempDir->path() << ":" << out.errorString();
         return;

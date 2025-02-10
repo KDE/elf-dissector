@@ -36,6 +36,8 @@
 #include <cassert>
 #include <iostream>
 
+using namespace Qt::Literals;
+
 void StructurePackingCheck::setElfFileSet(ElfFileSet* fileSet)
 {
     m_fileSet = fileSet;
@@ -57,13 +59,13 @@ static QString printSummary(int structSize, int usedBytes, int usedBits, int opt
 {
     QString s;
     s += QLatin1String("Used bytes: ") + QString::number(usedBytes) + QLatin1Char('/') + QString::number(structSize);
-    s += " (" + QString::number(double(usedBytes*100) / double(structSize), 'g', 4) + "%)\n";
+    s += " ("_L1 + QString::number(double(usedBytes*100) / double(structSize), 'g', 4) + "%)\n"_L1;
     s += QLatin1String("Used bits: ") + QString::number(usedBits) + QLatin1Char('/') + QString::number(structSize*8);
-    s += " (" + QString::number(double(usedBits*100) / double(structSize*8), 'g', 4) + "%)\n";
+    s += " ("_L1 + QString::number(double(usedBits*100) / double(structSize*8), 'g', 4) + "%)\n"_L1;
     if (optimalSize < structSize) {
-        s += "Optimal size: " + QString::number(optimalSize) + " bytes (";
+        s += "Optimal size: "_L1 + QString::number(optimalSize) + " bytes ("_L1;
         const int saving = structSize - optimalSize;
-        s += QString::number(-saving) + " bytes, " + QString::number(double(saving*100) / double(structSize), 'g', 4) + "%)\n";
+        s += QString::number(-saving) + " bytes, "_L1 + QString::number(double(saving*100) / double(structSize), 'g', 4) + "%)\n"_L1;
     }
     return s;
 }
@@ -110,7 +112,7 @@ QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
     const int optimalSize = optimalStructureSize(structDie, members);
 
     QString s = printSummary(structSize, usedBytes, usedBits, optimalSize);
-    s += '\n';
+    s += '\n'_L1;
     s += printStructure(structDie, members);
     return s;
 #else

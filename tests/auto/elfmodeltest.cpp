@@ -59,7 +59,7 @@ private Q_SLOTS:
             QVERIFY(idx.isValid());
             if (strcmp(symTab->entry(i)->name(), "") == 0)
                 continue;
-            QCOMPARE(idx.data(Qt::DisplayRole).toString(), QString(symTab->entry(i)->name()));
+            QCOMPARE(idx.data(Qt::DisplayRole).toString(), QString::fromUtf8(symTab->entry(i)->name()));
             auto url = idx.data(ElfModel::NodeUrl).toUrl();
             QVERIFY(url.isValid());
             QVERIFY(!url.path().isEmpty());
