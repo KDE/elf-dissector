@@ -18,6 +18,7 @@
 #include "codenavigator.h"
 
 #include <QAction>
+#include <QActionGroup>
 #include <QInputDialog>
 #include <QMenu>
 #include <QProcess>

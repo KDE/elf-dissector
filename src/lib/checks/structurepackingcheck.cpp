@@ -85,7 +85,7 @@ static bool compareMemberDiesByLocation(DwarfDie *lhs, DwarfDie *rhs)
     const auto lhsLoc = dataMemberLocation(lhs);
     const auto rhsLoc = dataMemberLocation(rhs);
     if (lhsLoc == rhsLoc) {
-        return lhs->attribute(DW_AT_bit_offset) > rhs->attribute(DW_AT_bit_offset);
+        return QVariant::compare(lhs->attribute(DW_AT_bit_offset), rhs->attribute(DW_AT_bit_offset)) == QPartialOrdering::Greater;
     }
     return lhsLoc < rhsLoc;
 }

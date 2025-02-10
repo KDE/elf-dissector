@@ -44,7 +44,7 @@ private Q_SLOTS:
         // we need a full library for this, not just an executable
         ElfFile *f = nullptr;
         for (int i = 0; i < set.size(); ++i) {
-            if (set.file(i)->dynamicSection()->soName() == "libQt5Core.so.5")
+            if (set.file(i)->dynamicSection()->soName() == "libQt6Core.so.6")
                 f = set.file(i);
         }
         QVERIFY(f);

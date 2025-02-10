@@ -68,7 +68,7 @@ private Q_SLOTS:
             ElfFile *file = f.file(i);
             QVERIFY(file->isValid());
             QVERIFY(file->dynamicSection());
-            if (file->dynamicSection() && file->dynamicSection()->soName() == "libQt5Core.so.5")
+            if (file->dynamicSection() && file->dynamicSection()->soName() == "libQt6Core.so.6")
                 foundQtCore = true;
         }
         QVERIFY(foundQtCore);

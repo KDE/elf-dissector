@@ -33,7 +33,7 @@
 #endif
 
 #include <QIcon>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QDebug>
 
 TypeModel::TypeModel(QObject* parent): QAbstractItemModel(parent)
@@ -45,7 +45,7 @@ TypeModel::~TypeModel() = default;
 
 void TypeModel::setFileSet(ElfFileSet* fileSet)
 {
-    QTime t;
+    QElapsedTimer t;
     t.start();
     beginResetModel();
     const auto l = [](TypeModel* m) { m->endResetModel(); };
