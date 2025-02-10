@@ -44,7 +44,7 @@ public:
 protected:
     bool eventFilter(QObject* receiver, QEvent* event) override;
 
-private slots:
+private Q_SLOTS:
     void selectionChanged(const QItemSelection& selection);
     void anchorClicked(const QUrl &url);
 

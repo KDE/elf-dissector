@@ -75,7 +75,7 @@ void DeadCodeFinder::dumpResults()
             continue;
 
         bool skip = false;
-        foreach (const auto &excludePrefix, m_excludePrefixes) {
+        for (const auto &excludePrefix : m_excludePrefixes) {
             if (file->fileName().startsWith(excludePrefix)) {
                 skip = true;
                 break;

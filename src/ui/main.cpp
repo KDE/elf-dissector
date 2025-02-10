@@ -45,7 +45,7 @@ int main(int argc, char** argv)
 
     MainWindow mainWindow;
     mainWindow.show();
-    foreach (const QString &file, parser.positionalArguments())
+    for (const QString &file : parser.positionalArguments())
         mainWindow.loadFile(file);
 
     return app.exec();

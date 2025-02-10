@@ -269,7 +269,7 @@ bool DependencyModel::hasCycle(const QModelIndex& index) const
     const auto file = fileIndex(index.internalId());
 
     QModelIndex parentIndex(index);
-    forever {
+    while (true) {
         parentIndex = parent(parentIndex);
         if (!parentIndex.isValid())
             return false;

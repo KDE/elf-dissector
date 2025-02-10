@@ -41,7 +41,7 @@ int main(int argc, char** argv)
     parser.addPositionalArgument(QStringLiteral("elf"), QStringLiteral("ELF library to open"), QStringLiteral("<elf>"));
     parser.process(app);
 
-    foreach (const auto &fileName, parser.positionalArguments()) {
+    for (const auto &fileName : parser.positionalArguments()) {
         ElfFileSet set;
         set.addFile(fileName);
         if (set.size() == 0)

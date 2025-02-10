@@ -48,7 +48,7 @@ void StructurePackingCheck::checkAll(DwarfInfo* info)
     if (!info)
         return;
 
-    foreach (auto die, info->compilationUnits())
+    for (auto die : info->compilationUnits())
         checkDie(die);
 #endif
 }
@@ -95,7 +95,7 @@ QString StructurePackingCheck::checkOneStructure(DwarfDie* structDie) const
     assert(structDie->tag() == DW_TAG_class_type || structDie->tag() == DW_TAG_structure_type);
 
     QVector<DwarfDie*> members;
-    foreach (auto child, structDie->children()) {
+    for (auto child : structDie->children()) {
         if (child->tag() == DW_TAG_member && !child->isStaticMember())
             members.push_back(child);
         else if (child->tag() == DW_TAG_inheritance)
@@ -123,7 +123,7 @@ void StructurePackingCheck::checkDie(DwarfDie* die)
 #if HAVE_DWARF
     if (die->tag() == DW_TAG_structure_type || die->tag() == DW_TAG_class_type) {
         QVector<DwarfDie*> members;
-        foreach (auto child, die->children()) {
+        for (auto child : die->children()) {
             if (child->tag() == DW_TAG_member && !child->isStaticMember())
                 members.push_back(child);
             else if (child->tag() == DW_TAG_inheritance)
@@ -153,7 +153,7 @@ void StructurePackingCheck::checkDie(DwarfDie* die)
         }
 
     } else {
-        foreach (auto child, die->children())
+        for (auto child : die->children())
             checkDie(child);
     }
 #endif
@@ -193,7 +193,7 @@ static int bitsForEnum(DwarfDie *die)
     // approach 2: count number of enum values
     int enumCount = 0;
 
-    foreach (auto child, die->children()) {
+    for (auto child : die->children()) {
         if (child->tag() != DW_TAG_enumerator)
             continue;
         ++enumCount;
@@ -368,7 +368,7 @@ static bool isEmptyBaseClass(DwarfDie* inheritanceDie)
     if (baseTypeDie->typeSize() != 1)
         return false;
 
-    foreach (auto d, baseTypeDie->children()) {
+    for (auto d : baseTypeDie->children()) {
         if (d->tag() == DW_TAG_member)
             return false;
         if (d->tag() != DW_TAG_inheritance)
@@ -416,7 +416,7 @@ int StructurePackingCheck::optimalStructureSize(DwarfDie* structDie, const QVect
         sizes.push_back(structDie->typeSize() - prevMemberLocation);
 
     // TODO: sort by alignment and add padding
-    foreach (const auto s, sizes)
+    for (const auto s : sizes)
         size += s;
 
     // align the entire struct to maximum member alignment
@@ -439,7 +439,7 @@ static DwarfDie* findTypeDefinitionRecursive(DwarfDie *die, const QVector<QByteA
 
     QVector<QByteArray> partialId = fullId;
     partialId.pop_front();
-    foreach (auto child, die->children()) {
+    for (auto child : die->children()) {
         DwarfDie *found = findTypeDefinitionRecursive(child, partialId);
         if (found)
             return found;
@@ -472,8 +472,8 @@ DwarfDie* StructurePackingCheck::findTypeDefinition(DwarfDie* typeDie) const
         if (!file->dwarfInfo())
             continue;
 
-        foreach (auto cuDie, file->dwarfInfo()->compilationUnits()) {
-            foreach (auto topDie, cuDie->children()) {
+        for (auto cuDie : file->dwarfInfo()->compilationUnits()) {
+            for (auto topDie : cuDie->children()) {
                 DwarfDie *die = findTypeDefinitionRecursive(topDie, fullId);
                 if (die && die->typeSize() > 0) {
                     //qDebug() << "replacing" << typeDie->displayName() << "with" << die->displayName();

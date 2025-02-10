@@ -39,7 +39,7 @@ public:
 
     void setFileSet(ElfFileSet *fileSet);
 
-private slots:
+private Q_SLOTS:
     void runBenchmark();
 
 private:

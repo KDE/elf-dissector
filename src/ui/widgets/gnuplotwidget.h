@@ -36,7 +36,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
-private slots:
+private Q_SLOTS:
     void replot();
 
 private:

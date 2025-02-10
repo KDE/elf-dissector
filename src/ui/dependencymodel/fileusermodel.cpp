@@ -48,7 +48,7 @@ void FileUserModel::setFile(ElfFileSet* fileSet, ElfFile *usedFile)
         const auto file = fileSet->file(i);
         if (!file->dynamicSection())
             continue;
-        foreach (const auto &dep, file->dynamicSection()->neededLibraries()) {
+        for (const auto &dep : file->dynamicSection()->neededLibraries()) {
             if (dep == soName)
                 m_users.push_back(i);
         }

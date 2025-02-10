@@ -74,7 +74,7 @@ static DwarfDie* findByLowPCRecursive(DwarfDie *die, uint64_t addr)
     if (lowPC == addr)
         return die;
 
-    foreach (const auto child, die->children()) {
+    for (const auto child : die->children()) {
         auto res = findByLowPCRecursive(child, addr);
         if (res)
             return res;
@@ -89,7 +89,7 @@ DwarfDie* DwarfAddressRanges::dieForAddress(uint64_t addr) const
     if (!cu)
         return nullptr;
 
-    foreach (const auto die, cu->children()) {
+    for (const auto die : cu->children()) {
         auto res = findByLowPCRecursive(die, addr);
         if (res)
             return res;

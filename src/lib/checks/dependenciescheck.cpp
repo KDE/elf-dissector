@@ -50,7 +50,7 @@ DependenciesCheck::UnusedDependencies DependenciesCheck::unusedDependencies(ElfF
         const auto *dynamicSection = fileSet->file(i)->dynamicSection();
         if (!dynamicSection)
             continue;
-        foreach (const auto &needed, fileSet->file(i)->dynamicSection()->neededLibraries()) {
+        for (const auto &needed : fileSet->file(i)->dynamicSection()->neededLibraries()) {
             const auto depIdx = fileIndex.value(needed);
             const auto depFile = fileSet->file(depIdx);
             const auto count = usedSymbolCount(fileSet->file(i), depFile);

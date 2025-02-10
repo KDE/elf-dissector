@@ -90,7 +90,7 @@ QString DwarfPrinter::dieRichText(DwarfDie* die)
     s += "TAG: " + QLatin1String(die->tagName()) + "<br/>";
     s += "Name: " + QString::fromUtf8(die->name()).toHtmlEscaped() + "<br/>";
     s += "Offset: " + QString::number(die->offset()) + "<br/>";
-    foreach (const auto attrType, die->attributes()) {
+    for (const auto attrType : die->attributes()) {
         const QVariant attrValue = die->attribute(attrType);
         QString attrValueStr;
         if (DwarfDie *die = attrValue.value<DwarfDie*>())

@@ -28,7 +28,7 @@
 ElfFileSet::ElfFileSet(QObject* parent) : QObject(parent)
 {
     parseLdConf();
-    foreach (const auto &path, qgetenv("LD_LIBRARY_PATH").split(':'))
+    for (const auto &path : qgetenv("LD_LIBRARY_PATH").split(':'))
         m_baseSearchPaths.push_back(path);
 
     m_globalDebugSearchPath.push_back(QStringLiteral("/usr/lib/debug")); // seems hardcoded?
@@ -80,11 +80,11 @@ void ElfFileSet::addFile(ElfFile* file)
     searchPaths += runpaths;
     searchPaths += m_baseSearchPaths;
 
-    foreach (const auto &lib, file->dynamicSection()->neededLibraries()) {
+    for (const auto &lib : file->dynamicSection()->neededLibraries()) {
         if (std::find_if(m_files.cbegin(), m_files.cend(), [lib](ElfFile *file){ return file->dynamicSection()->soName() == lib; }) != m_files.cend())
             continue;
         bool dependencyFound = false;
-        foreach (const auto &dir, searchPaths) {
+        for (const auto &dir : searchPaths) {
             const auto fullPath = dir + '/' + lib;
             if (!QFile::exists(fullPath))
                 continue;
@@ -134,7 +134,7 @@ static bool hasUnresolvedDependencies(ElfFile *file, const QVector<ElfFile*> &re
     if (!file->dynamicSection())
         return false;
 
-    foreach (const auto &lib, file->dynamicSection()->neededLibraries()) {
+    for (const auto &lib : file->dynamicSection()->neededLibraries()) {
         const auto it = std::find_if(resolved.constBegin() + startIndex, resolved.constEnd(), [lib](ElfFile *file){ return file->dynamicSection()->soName() == lib; });
         if (it == resolved.constEnd()) {
             return true;
@@ -167,13 +167,13 @@ void ElfFileSet::topologicalSort()
 
 #if 0
     qDebug() << "input";
-    foreach(const auto f, m_files)
+    for(const auto f : m_files)
         qDebug() << f->displayName() << f->fileName();
     qDebug() << "sorted";
-    foreach(const auto f, sorted)
+    for(const auto f : sorted)
         qDebug() << f->displayName();
     qDebug() << "remaining";
-    foreach(const auto f, remaining)
+    for(const auto f : remaining)
         qDebug() << f->displayName();
 #endif
 
@@ -218,7 +218,7 @@ void ElfFileSet::parseLdConf(const QString& fileName)
                 const auto idx = fileGlob.lastIndexOf('/');
                 assert(idx >= 0);
                 QDir dir(fileGlob.left(idx));
-                foreach (const auto &file, dir.entryList(QStringList() << fileGlob.mid(idx + 1)))
+                for (const auto &file : dir.entryList(QStringList() << fileGlob.mid(idx + 1)))
                     parseLdConf(dir.absolutePath() + '/' + file);
             }
             continue;
@@ -236,7 +236,7 @@ void ElfFileSet::findSeparateDebugFile(ElfFile* file) const
 {
     // (1) via build id
     const auto buildId = file->buildId().toHex();
-    foreach (const auto &debugDir, m_globalDebugSearchPath) {
+    for (const auto &debugDir : m_globalDebugSearchPath) {
         auto debugFile = debugDir + "/.build-id/" + buildId.left(2) + "/" + buildId.mid(2) + ".debug";
         if (QFile::exists(debugFile)) {
             file->setSeparateDebugFile(debugFile);
@@ -269,7 +269,7 @@ void ElfFileSet::findSeparateDebugFile(ElfFile* file) const
     }
 
     // (2c) in global debug directories
-    foreach (const auto &debugDir, m_globalDebugSearchPath) {
+    for (const auto &debugDir : m_globalDebugSearchPath) {
         debugFile = debugDir + dir + "/" + debugLinkSection->fileName();
         if (isValidDebugLinkFile(debugFile, debugLinkSection->crc())) {
             file->setSeparateDebugFile(debugFile);

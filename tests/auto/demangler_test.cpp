@@ -28,7 +28,7 @@
 class DemanglerTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testDemangler_data()
     {
         QTest::addColumn<QString>("mangled"); // should be QByteArray, but then we have to explicitly cast it below

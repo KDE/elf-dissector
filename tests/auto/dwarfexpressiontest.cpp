@@ -23,7 +23,7 @@
 class DwarfExpressionTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testDisplayString_data()
     {
         QTest::addColumn<QByteArray>("block");

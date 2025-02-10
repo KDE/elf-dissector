@@ -125,7 +125,7 @@ QVariant DataVisitor::doVisit(ElfFile* file, int arg) const
             s += QLatin1String("<table border=\"1\" border-style=\"solid\" cellspacing=\"0\">");
             s += QLatin1String("<tr><th>Type</th><th>Flags</th><th>Offset</th><th>Virtual Address</th>");
             s += QLatin1String("<th>Physical Address</th><th>File Size</th><th>Memory Size</th><th>Alignment</th></tr>");
-            foreach (auto phdr, file->segmentHeaders()) {
+            for  (auto phdr : file->segmentHeaders()) {
                 s += QLatin1String("<tr>");
                 s += "<td>" + ElfPrinter::segmentType(phdr->type()) + "</td>";
                 s += "<td>" + ElfPrinter::segmentFlags(phdr->flags()) + "</td>";

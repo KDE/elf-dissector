@@ -43,7 +43,7 @@ ElfGNUSymbolVersionDefinition* ElfGNUSymbolVersionDefinitionsSection::definition
 
 ElfGNUSymbolVersionDefinition* ElfGNUSymbolVersionDefinitionsSection::definitionForVersionIndex(uint16_t index) const
 {
-    foreach (auto def, m_versionDefinitions) {
+    for (auto def : m_versionDefinitions) {
         if ((def->versionIndex() & 0x7FFF) == (index & 0x7FFF))
             return def;
     }

@@ -76,7 +76,7 @@ SizeTreeMapView::SizeTreeMapView(QWidget* parent) :
         ui->actionRelocationHeatmap
     });
 
-    foreach (auto action, actions())
+    for (auto action : actions())
         connect(action, &QAction::toggled, this, &SizeTreeMapView::viewActionToggled);
 
     restoreSettings();
@@ -176,7 +176,7 @@ void SizeTreeMapView::reloadTreeMap()
 
     if (!section) {
         Colorizer sectionColorizer(96, 255);
-        foreach (const auto shdr, file->sectionHeaders()) {
+        for (const auto shdr : file->sectionHeaders()) {
             if (isSectionHidden(shdr)) {
                 baseItem->setSum(baseItem->sum() - shdr->size());
                 continue;

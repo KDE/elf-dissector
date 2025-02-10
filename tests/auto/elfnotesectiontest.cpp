@@ -68,7 +68,7 @@ class ElfNoteSectionTest : public QObject
         QCOMPARE(entry->descriptionSize(), (uint64_t)4);
     }
 
-private slots:
+private Q_SLOTS:
     void testABISection()
     {
         ElfFile f(QStringLiteral(BINDIR "single-executable"));

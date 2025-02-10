@@ -146,7 +146,7 @@ DwarfInfoPrivate::~DwarfInfoPrivate()
 void DwarfInfoPrivate::scanCompilationUnits()
 {
     Dwarf_Unsigned nextHeader = 0;
-    forever {
+    while (true) {
         auto res = dwarf_next_cu_header(dbg, nullptr, nullptr, nullptr, nullptr, &nextHeader, nullptr);
         if (res != DW_DLV_OK)
             return;
@@ -165,7 +165,7 @@ DwarfDie* DwarfInfoPrivate::dieForMangledSymbolRecursive(const QByteArray& symbo
 {
     if (die->attribute(DW_AT_linkage_name).toByteArray() == symbol)
         return die;
-    foreach (auto childDie, die->children()) {
+    for (auto childDie : die->children()) {
         const auto hit = dieForMangledSymbolRecursive(symbol, childDie);
         if (hit)
             return hit;
@@ -221,7 +221,7 @@ DwarfCuDie* DwarfInfo::compilationUnitForAddress(uint64_t address) const
     if (cu)
         return cu;
 
-    foreach (auto cu, compilationUnits()) {
+    for (auto cu : compilationUnits()) {
         auto ranges = cu->attribute(DW_AT_ranges).value<DwarfRanges>();
         for (int i = 0; i < ranges.size(); ++i) {
             auto range = ranges.entry(i);
@@ -252,7 +252,7 @@ DwarfDie* DwarfInfo::dieAtOffset(Dwarf_Off offset) const
 
 DwarfDie* DwarfInfo::dieForMangledSymbol(const QByteArray& symbol) const
 {
-    foreach (auto die, compilationUnits()) {
+    for (auto die : compilationUnits()) {
         const auto hit = d->dieForMangledSymbolRecursive(symbol, die);
         if (hit)
             return hit;

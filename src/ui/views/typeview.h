@@ -43,7 +43,7 @@ public:
 protected:
     void showEvent(QShowEvent *event) override;
 
-private slots:
+private Q_SLOTS:
     void selectionChanged(const QItemSelection& selection);
 
 private:

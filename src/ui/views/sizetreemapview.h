@@ -46,7 +46,7 @@ public:
 private:
     bool isSectionHidden(ElfSectionHeader *shdr) const;
 
-private slots:
+private Q_SLOTS:
     void reloadTreeMap();
     void treeMapContextMenu(const QPoint &pos);
     void viewActionToggled();

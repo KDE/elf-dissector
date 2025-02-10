@@ -44,7 +44,7 @@ public:
 
     void setFileSet(ElfFileSet *fileSet);
 
-private slots:
+private Q_SLOTS:
     void search(const QString &text);
     void dependencySelected(const QItemSelection &selection);
     void inverseFileSelected(const QItemSelection &selection);

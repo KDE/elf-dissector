@@ -25,7 +25,7 @@
 class ElfFileSetTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testFindDependencies_data()
     {
         QTest::addColumn<QString>("executable");

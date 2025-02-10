@@ -38,7 +38,7 @@ void VirtualDtorCheck::findImplicitVirtualDtors(ElfFileSet* fileSet)
         const auto file = fileSet->file(i);
         if (!file->dwarfInfo())
             continue;
-        foreach (const auto die, file->dwarfInfo()->compilationUnits())
+        for (const auto die : file->dwarfInfo()->compilationUnits())
             findImplicitVirtualDtors(die);
     }
 

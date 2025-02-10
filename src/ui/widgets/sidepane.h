@@ -30,7 +30,7 @@ public:
     QSize sizeHint() const override;
     void setModel(QAbstractItemModel* model) override;
 
-signals:
+Q_SIGNALS:
     void currentIndexChanged(int index);
 };
 

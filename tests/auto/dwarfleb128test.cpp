@@ -23,7 +23,7 @@
 class DwarfLEB128Test : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testDecodeULEB128_data()
     {
         QTest::addColumn<QByteArray>("data");

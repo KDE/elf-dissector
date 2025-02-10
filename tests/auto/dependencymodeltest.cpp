@@ -25,7 +25,7 @@
 class DependencyModelTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void modelTest_data()
     {
         QTest::addColumn<QString>("file");

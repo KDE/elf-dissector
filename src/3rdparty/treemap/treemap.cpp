@@ -1066,7 +1066,7 @@ int TreeMapItem::sorting(bool* ascending) const
 void TreeMapItem::setSorting(int textNo, bool ascending, bool recursive)
 {
     if (recursive && _children) {
-        foreach(TreeMapItem* child, *_children) {
+        for(TreeMapItem* child : *_children) {
             child->setSorting(textNo, ascending, recursive);
         }
     }
@@ -1094,7 +1094,7 @@ void TreeMapItem::resort(bool recursive)
         std::sort(_children->begin(), _children->end(), treeMapItemLessThan);
 
     if (recursive)
-        foreach(TreeMapItem* i, *_children)
+        for(TreeMapItem* i : *_children)
             i->resort(recursive);
 }
 
@@ -1660,8 +1660,8 @@ void TreeMapWidget::setSelected(TreeMapItem* item, bool selected)
 
     _selection = _tmpSelection;
     if (_selectionMode == Single)
-        emit selectionChanged(item);
-    emit selectionChanged();
+        Q_EMIT selectionChanged(item);
+    Q_EMIT selectionChanged();
     redraw(changed);
 
     if (0) qDebug() << (selected ? "S":"Des") << "elected Item "
@@ -1685,11 +1685,11 @@ TreeMapItemList TreeMapWidget::diff(TreeMapItemList& l1,
 {
     TreeMapItemList l;
 
-    foreach(TreeMapItem* i, l1)
+    for(TreeMapItem* i : l1)
         if (!l2.contains(i))
             l.append(i);
 
-    foreach(TreeMapItem* i, l2)
+    for(TreeMapItem* i : l2)
         if (!l1.contains(i))
             l.append(i);
 
@@ -1714,7 +1714,7 @@ TreeMapItem* TreeMapWidget::setTmpSelected(TreeMapItem* item, bool selected)
     else {
         if (selected) {
             // first remove any selection which is parent or child of <item>
-            foreach(TreeMapItem* i, _tmpSelection)
+            for(TreeMapItem* i : _tmpSelection)
                 if (i->isChildOf(item) || item->isChildOf(i))
                     _tmpSelection.removeAll(i);
 
@@ -1733,14 +1733,14 @@ bool TreeMapWidget::clearSelection(TreeMapItem* parent)
     TreeMapItemList old = _selection;
 
     // remove any selection which is child of <parent>
-    foreach(TreeMapItem* i, _selection)
+    for(TreeMapItem* i : _selection)
         if (i->isChildOf(parent))
             _selection.removeAll(i);
 
     TreeMapItem* changed = diff(old, _selection).commonParent();
     if (changed) {
         changed->redraw();
-        emit selectionChanged();
+        Q_EMIT selectionChanged();
     }
     return (changed != nullptr);
 }
@@ -1784,7 +1784,7 @@ void TreeMapWidget::setCurrent(TreeMapItem* i, bool kbd)
 
     //qDebug() << "Current Item " << (i ? qPrintable(i->path()) : "(null)");
 
-    emit currentChanged(i, kbd);
+    Q_EMIT currentChanged(i, kbd);
 }
 
 void TreeMapWidget::setRangeSelection(TreeMapItem* i1,
@@ -1799,8 +1799,8 @@ void TreeMapWidget::setRangeSelection(TreeMapItem* i1,
 
     _selection = _tmpSelection;
     if (_selectionMode == Single)
-        emit selectionChanged(i2);
-    emit selectionChanged();
+        Q_EMIT selectionChanged(i2);
+    Q_EMIT selectionChanged();
     redraw(changed);
 }
 
@@ -1830,7 +1830,7 @@ TreeMapItem* TreeMapWidget::setTmpRangeSelection(TreeMapItem* i1,
     if (!list) return changed;
 
     bool between = false;
-    foreach(TreeMapItem* i, *list) {
+    for(TreeMapItem* i : *list) {
         if (between) {
             if (i==i1 || i==i2) break;
             changed2 = setTmpSelected(i, selected);
@@ -1853,11 +1853,11 @@ void TreeMapWidget::contextMenuEvent( QContextMenuEvent* e )
     if ( e->reason() == QContextMenuEvent::Keyboard ) {
         QRect r = (_current) ? _current->itemRect() : _base->itemRect();
         QPoint p = QPoint(r.left() + r.width()/2, r.top() + r.height()/2);
-        emit contextMenuRequested(_current, p);
+        Q_EMIT contextMenuRequested(_current, p);
     }
     else {
         TreeMapItem* i = item(e->x(), e->y());
-        emit contextMenuRequested(i, e->pos());
+        Q_EMIT contextMenuRequested(i, e->pos());
     }
 }
 
@@ -1917,16 +1917,16 @@ void TreeMapWidget::mousePressEvent( QMouseEvent* e )
 
     if (e->button() == Qt::RightButton) {
 
-        // emit selection change
+        // Q_EMIT selection change
         if (! (_tmpSelection == _selection)) {
             _selection = _tmpSelection;
             if (_selectionMode == Single)
-                emit selectionChanged(_lastOver);
-            emit selectionChanged();
+                Q_EMIT selectionChanged(_lastOver);
+            Q_EMIT selectionChanged();
         }
         _pressed = nullptr;
         _lastOver = nullptr;
-        emit rightButtonPressed(i, e->pos());
+        Q_EMIT rightButtonPressed(i, e->pos());
     }
 }
 
@@ -1991,11 +1991,11 @@ void TreeMapWidget::mouseReleaseEvent( QMouseEvent* )
         if (! (_tmpSelection == _selection)) {
             _selection = _tmpSelection;
             if (_selectionMode == Single)
-                emit selectionChanged(_lastOver);
-            emit selectionChanged();
+                Q_EMIT selectionChanged(_lastOver);
+            Q_EMIT selectionChanged();
         }
         if (!_inControlDrag && !_inShiftDrag && (_pressed == _lastOver))
-            emit clicked(_lastOver);
+            Q_EMIT clicked(_lastOver);
     }
 
     _pressed = nullptr;
@@ -2007,7 +2007,7 @@ void TreeMapWidget::mouseDoubleClickEvent( QMouseEvent* e )
 {
     TreeMapItem* over = item(e->x(), e->y());
 
-    emit doubleClicked(over);
+    Q_EMIT doubleClicked(over);
 }
 
 
@@ -2091,7 +2091,7 @@ void TreeMapWidget::keyPressEvent( QKeyEvent* e )
         }
 
         if (_current && (e->key() == Qt::Key_Return))
-            emit returnPressed(_current);
+            Q_EMIT returnPressed(_current);
 
         return;
     }
@@ -2179,7 +2179,7 @@ bool TreeMapWidget::event(QEvent *event)
         bool hasTip = false;
         if (i) {
             const QList<QRect>& rList = i->freeRects();
-            foreach(const QRect& r, rList) {
+            for(const QRect& r : rList) {
                 if (r.contains(helpEvent->pos())) {
                     hasTip = true;
                     break;
@@ -2285,7 +2285,7 @@ void TreeMapWidget::drawItem(QPainter* p,
         }
     }
     else {
-        foreach(TreeMapItem* i, _tmpSelection) {
+        for(TreeMapItem* i : _tmpSelection) {
             if (item->isChildOf(i)) {
                 isSelected = true;
                 break;
@@ -2383,7 +2383,7 @@ void TreeMapWidget::drawItems(QPainter* p,
     if (stopDrawing) {
         if (list) {
             // invalidate rects
-            foreach(TreeMapItem* i, *list)
+            for(TreeMapItem* i : *list)
                 i->clearItemRect();
         }
         // tooltip appears on whole item rect
@@ -2415,7 +2415,7 @@ void TreeMapWidget::drawItems(QPainter* p,
 
     // own sum
     child_sum = 0;
-    foreach(TreeMapItem* i, *list) {
+    for(TreeMapItem* i : *list) {
         child_sum += i->value();
         if (DEBUG_DRAWING)
             qDebug() << "  child: " << i->text(0) << ", value "

@@ -95,7 +95,7 @@ void SidePane::setModel(QAbstractItemModel* model)
             const auto selection = selectionModel()->selectedRows();
             if (selection.isEmpty())
                 return;
-            emit currentIndexChanged(selection.first().row());
+            Q_EMIT currentIndexChanged(selection.first().row());
         });
     }
 }

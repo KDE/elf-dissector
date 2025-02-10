@@ -42,7 +42,7 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
-private slots:
+private Q_SLOTS:
     void fileOpen();
     void reloadFileOnStartup();
     void currentViewChanged();

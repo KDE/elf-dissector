@@ -28,7 +28,7 @@
 class ElfSymbolTableTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testSymbolTable_data()
     {
         QTest::addColumn<QString>("executable");

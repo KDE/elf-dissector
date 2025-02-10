@@ -29,7 +29,7 @@
 class DwarfDieTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testCU()
     {
         ElfFile f(QStringLiteral(BINDIR "single-executable"));
@@ -38,7 +38,7 @@ private slots:
         QVERIFY(f.dwarfInfo()->compilationUnits().size() > 0);
 
         DwarfDie *cu = nullptr;
-        foreach (auto die, f.dwarfInfo()->compilationUnits()) {
+        for (auto die : f.dwarfInfo()->compilationUnits()) {
             if (die->name().contains("single-executable")) {
                 cu = die;
                 break;
@@ -58,7 +58,7 @@ private slots:
         QVERIFY(f.dwarfInfo());
         QVERIFY(f.dwarfInfo()->compilationUnits().size() > 0);
 
-        foreach (auto cu, f.dwarfInfo()->compilationUnits()) {
+        for (auto cu : f.dwarfInfo()->compilationUnits()) {
             const auto lowPC = cu->attribute(DW_AT_low_pc);
             const auto ranges = cu->attribute(DW_AT_ranges);
             if (lowPC.isNull() && ranges.isNull())
