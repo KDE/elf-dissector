@@ -4,6 +4,10 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
   <name>ELF Dissector</name>
+  <content_rating type="oars-1.1"/>
+  <developer id="kde.org">
+    <name translate="no">KDE</name>
+  </developer>
   <name xml:lang="ca">ELF Dissector</name>
   <name xml:lang="ca-valencia">ELF Dissector</name>
   <name xml:lang="cs">ELF Dissector</name>
@@ -387,4 +391,5 @@
   <categories>
     <category>Development</category>
   </categories>
+  <url type="homepage">https://apps.kde.org/itinerary</url>
 </component>
