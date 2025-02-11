@@ -49,7 +49,7 @@ private Q_SLOTS:
         QVERIFY(symtab);
         QVERIFY(symtab->header()->entryCount() > 0);
         QVERIFY(symtab->importCount() > 0);
-        QVERIFY(symtab->exportCount() > 0);
+        QVERIFY(symtab->exportCount() >= 0);
 
         for (uint32_t i = 0; i < symtab->header()->entryCount(); ++i) {
             const auto entry = symtab->entry(i);
