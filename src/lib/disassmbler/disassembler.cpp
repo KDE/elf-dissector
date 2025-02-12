@@ -339,7 +339,7 @@ void Disassembler::printAddress(uint64_t addr, QString *s) const
     assert(section);
 
     const auto pltSection = dynamic_cast<ElfPltSection*>(section);
-    if (pltSection) {
+    if (pltSection && section->header()->entrySize()) {
         const auto pltEntry = pltSection->entry((addr - section->header()->virtualAddress()) / section->header()->entrySize());
         assert(pltEntry);
         s->append(" ("_L1);
