@@ -65,16 +65,31 @@ using namespace Qt::Literals;
 
 static int qstring_printf(void *data, const char *format, ...)
 {
-    QString buffer;
+    char buffer[1024];
     va_list args;
     va_start(args, format);
-    buffer.vasprintf(format, args);
+    auto size = std::vsnprintf(buffer, 1024, format, args);
     va_end(args);
 
     QString *s = static_cast<QString*>(data);
-    s->append(buffer);
-    return buffer.size();
+    s->append(QString::fromUtf8(buffer, size));
+    return size;
 }
+
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 39)
+static int qstring_printf_styled(void *data, [[maybe_unused]] enum disassembler_style style, const char* format, ...)
+{
+    char buffer[1024];
+    va_list args;
+    va_start(args, format);
+    auto size = std::vsnprintf(buffer, 1024, format, args);
+    va_end(args);
+
+    QString *s = static_cast<QString*>(data);
+    s->append(QString::fromUtf8(buffer, size));
+    return size;
+}
+#endif
 
 static void print_address(bfd_vma addr, struct disassemble_info *info)
 {
@@ -127,20 +142,6 @@ QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
     return disassembleCapstone(data, size);
 }
 
-#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 39)
-static int fprintf_styled(void *, enum disassembler_style, const char* fmt, ...)
-{
-    va_list args;
-    int r;
-
-    va_start(args, fmt);
-    r = vprintf(fmt, args);
-    va_end(args);
-
-    return r;
-}
-#endif
-
 QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t size)
 {
     QString result;
@@ -149,7 +150,7 @@ QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t si
     disassembler_ftype disassemble_fn;
     disassemble_info info;
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 39)
-    INIT_DISASSEMBLE_INFO(info, &result, qstring_printf, fprintf_styled);
+    INIT_DISASSEMBLE_INFO(info, &result, qstring_printf, qstring_printf_styled);
 #else
     INIT_DISASSEMBLE_INFO(info, &result, qstring_printf);
 #endif
