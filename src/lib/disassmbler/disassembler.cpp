@@ -118,7 +118,7 @@ QString Disassembler::disassemble(ElfPltEntry* entry)
 
 QString Disassembler::disassemble(const unsigned char* data, uint64_t size)
 {
-#if defined(__x86_64__) || defined(__i386__)
+#if (defined(__x86_64__) || defined(__i386__)) && !defined Q_OS_FREEBSD
     if (file()->header()->machine() == EM_386 || file()->header()->machine() == EM_X86_64) {
         return disassembleBinutils(data, size);
     }
@@ -144,6 +144,8 @@ static int fprintf_styled(void *, enum disassembler_style, const char* fmt, ...)
 QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t size)
 {
     QString result;
+#ifndef Q_OS_FREEBSD
+
     disassembler_ftype disassemble_fn;
     disassemble_info info;
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 39)
@@ -199,6 +201,7 @@ QString Disassembler::disassembleBinutils(const unsigned char* data, uint64_t si
         bytes += (*disassemble_fn)(bytes, &info);
         result += QLatin1String("<br/>");
     }
+#endif
 
     return result;
 }
