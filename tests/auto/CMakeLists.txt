@@ -50,6 +50,8 @@ add_executable(dependencymodeltest dependencymodeltest.cpp)
 target_link_libraries(dependencymodeltest Qt6::Test libelfdissectorui)
 add_test(NAME dependencymodeltest COMMAND dependencymodeltest)
 
+if (HAVE_DWARF)
 add_executable(typemodeltest typemodeltest.cpp)
 target_link_libraries(typemodeltest Qt6::Test libelfdissectorui)
 add_test(NAME typemodeltest COMMAND typemodeltest)
+endif()
