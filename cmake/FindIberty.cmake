@@ -101,6 +101,8 @@ if(Binutils_HAVE_CTF_F_NEWFUNCINFO)
 endif()
 
 check_c_source_compiles("
+#define PACKAGE
+#define PACKAGE_VERSION
     #include <dis-asm.h>
     int main(int, char**) {
         init_disassemble_info(NULL, NULL, NULL, NULL);
