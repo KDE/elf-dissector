@@ -12,215 +12,215 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/elf-dissector/elf-dissector_qt.pot\n"
-"X-Crowdin-File-ID: 11062\n"
+"X-Crowdin-File: /kf6-trunk/messages/elf-dissector/elf-dissector_qt.pot\n"
+"X-Crowdin-File-ID: 57170\n"
 
-#: 3rdparty/treemap/treemap.cpp:1350
+#: 3rdparty/treemap/treemap.cpp:1341
 #, qt-format
 msgctxt "TreeMapWidget|"
 msgid "Text %1"
 msgstr "文本 %1"
 
-#: 3rdparty/treemap/treemap.cpp:2870
+#: 3rdparty/treemap/treemap.cpp:2861
 msgctxt "TreeMapWidget|"
 msgid "Recursive Bisection"
 msgstr "递归二分"
 
-#: 3rdparty/treemap/treemap.cpp:2871
+#: 3rdparty/treemap/treemap.cpp:2862
 msgctxt "TreeMapWidget|"
 msgid "Columns"
 msgstr "列"
 
-#: 3rdparty/treemap/treemap.cpp:2872
+#: 3rdparty/treemap/treemap.cpp:2863
 msgctxt "TreeMapWidget|"
 msgid "Rows"
 msgstr "行"
 
-#: 3rdparty/treemap/treemap.cpp:2873
+#: 3rdparty/treemap/treemap.cpp:2864
 msgctxt "TreeMapWidget|"
 msgid "Always Best"
 msgstr "总是最好"
 
-#: 3rdparty/treemap/treemap.cpp:2874
+#: 3rdparty/treemap/treemap.cpp:2865
 msgctxt "TreeMapWidget|"
 msgid "Best"
 msgstr "最好"
 
-#: 3rdparty/treemap/treemap.cpp:2875
+#: 3rdparty/treemap/treemap.cpp:2866
 msgctxt "TreeMapWidget|"
 msgid "Alternate (V)"
 msgstr "备选 (纵)"
 
-#: 3rdparty/treemap/treemap.cpp:2876
+#: 3rdparty/treemap/treemap.cpp:2867
 msgctxt "TreeMapWidget|"
 msgid "Alternate (H)"
 msgstr "备选 (横)"
 
-#: 3rdparty/treemap/treemap.cpp:2877
+#: 3rdparty/treemap/treemap.cpp:2868
 msgctxt "TreeMapWidget|"
 msgid "Horizontal"
 msgstr "横向"
 
-#: 3rdparty/treemap/treemap.cpp:2878
+#: 3rdparty/treemap/treemap.cpp:2869
 msgctxt "TreeMapWidget|"
 msgid "Vertical"
 msgstr "纵向"
 
-#: lib/elf/elfdynamicentry.cpp:111
+#: lib/elf/elfdynamicentry.cpp:100
 #, qt-format
 msgctxt "QObject|"
 msgid "unknown (%1)"
 msgstr "未知 (%1)"
 
-#: ui/dependencymodel/dependencymodel.cpp:134
+#: ui/dependencymodel/dependencymodel.cpp:123
 msgctxt "DependencyModel|"
 msgid "Cyclic dependency!"
 msgstr "循环依赖！"
 
-#: ui/dependencymodel/dependencymodel.cpp:138
+#: ui/dependencymodel/dependencymodel.cpp:127
 msgctxt "DependencyModel|"
 msgid "Dependency not found!"
 msgstr "未找到依赖！"
 
-#: ui/dependencymodel/dependencymodel.cpp:236
+#: ui/dependencymodel/dependencymodel.cpp:225
 msgctxt "DependencyModel|"
 msgid "Library"
 msgstr "库"
 
-#: ui/dependencymodel/dependencymodel.cpp:237
+#: ui/dependencymodel/dependencymodel.cpp:226
 msgctxt "DependencyModel|"
 msgid "Symbols Used"
 msgstr "使用的符号"
 
-#: ui/dependencymodel/filelistmodel.cpp:67
+#: ui/dependencymodel/filelistmodel.cpp:56
 msgctxt "FileListModel|"
 msgid "Shared Object"
 msgstr "共享对象"
 
-#: ui/dependencymodel/fileusermodel.cpp:89
+#: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"
 msgid "Users"
 msgstr "用户"
 
-#: ui/dependencymodel/unuseddependenciesmodel.cpp:88
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:77
 msgctxt "UnusedDependenciesModel|"
 msgid "ELF File"
 msgstr "ELF 文件"
 
-#: ui/dependencymodel/unuseddependenciesmodel.cpp:89
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:78
 msgctxt "UnusedDependenciesModel|"
 msgid "Unused Dependency"
 msgstr "未使用的依赖"
 
-#: ui/dependencymodel/usedsymbolmodel.cpp:75
+#: ui/dependencymodel/usedsymbolmodel.cpp:64
 msgctxt "UsedSymbolModel|"
 msgid "Symbol"
 msgstr "符号"
 
-#: ui/elfmodel/datavisitor.cpp:154 ui/elfmodel/datavisitor.cpp:325
+#: ui/elfmodel/datavisitor.cpp:145 ui/elfmodel/datavisitor.cpp:316
 msgctxt "QObject|"
 msgid "<null>"
 msgstr "<null>"
 
-#: ui/elfmodel/datavisitor.cpp:359
+#: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "Construction VTable"
 msgstr "构建 VTable"
 
-#: ui/elfmodel/datavisitor.cpp:359
+#: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "VTable"
 msgstr "VTable"
 
-#: ui/elfmodel/elfmodel.cpp:134
+#: ui/elfmodel/elfmodel.cpp:125
 msgctxt "ElfModel|"
 msgid "Entry"
 msgstr "条目"
 
-#: ui/elfmodel/elfmodel.cpp:135
+#: ui/elfmodel/elfmodel.cpp:126
 msgctxt "ElfModel|"
 msgid "Size"
 msgstr "大小"
 
-#: ui/issuesmodel/issuesmodel.cpp:61
+#: ui/issuesmodel/issuesmodel.cpp:50
 #, qt-format
 msgctxt "IssuesModel|"
 msgid "%1 (implicit virtual destructor)"
 msgstr "%1 (隐式虚析构函数)"
 
-#: ui/issuesmodel/issuesmodel.cpp:87
+#: ui/issuesmodel/issuesmodel.cpp:76
 msgctxt "IssuesModel|"
 msgid "Issue"
 msgstr "问题"
 
-#: ui/issuesmodel/issuesmodel.cpp:88
+#: ui/issuesmodel/issuesmodel.cpp:77
 msgctxt "IssuesModel|"
 msgid "Location"
 msgstr "位置"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:71
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:60
 msgctxt "LoadBenchmarkModel|"
 msgid "File"
 msgstr "文件"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:72
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:61
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Median"
 msgstr "懒惰中位数"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:73
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:62
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Min"
 msgstr "懒惰最小值"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:74
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:63
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Median"
 msgstr "当前中位数"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:75
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:64
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Min"
 msgstr "当前最小值"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:76
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:65
 msgctxt "LoadBenchmarkModel|"
 msgid "Relocs"
 msgstr "重定位"
 
-#: ui/main.cpp:31
+#: ui/main.cpp:20
 msgctxt "MainWindow|"
 msgid "ELF Dissector"
 msgstr "ELF 解析器"
 
-#: ui/main.cpp:43
+#: ui/main.cpp:32
 msgctxt "MainWindow|"
 msgid "ELF file to open"
 msgstr "要打开的 ELF 文件"
 
-#: ui/mainwindow.cpp:94
+#: ui/mainwindow.cpp:83
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
 msgstr "打开 ELF 对象"
 
-#: ui/mainwindow.cpp:142
+#: ui/mainwindow.cpp:131
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
 msgstr "加载 ELF 文件失败"
 
-#: ui/mainwindow.cpp:142
+#: ui/mainwindow.cpp:131
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Could not load %1."
 msgstr "无法加载 %1。"
 
-#: ui/mainwindow.cpp:146
+#: ui/mainwindow.cpp:135
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
 msgstr "加载 %1 失败。"
 
-#: ui/mainwindow.cpp:153
+#: ui/mainwindow.cpp:142
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Loaded %1."
@@ -266,54 +266,54 @@ msgctxt "MainWindow|"
 msgid "Reopen &Previously Loaded Files"
 msgstr "重新打开之前打开过的文件(&P)"
 
-#: ui/navigator/codenavigator.cpp:36
+#: ui/navigator/codenavigator.cpp:28
 msgctxt "CodeNavigator|"
 msgid "KDevelop"
 msgstr "KDevelop"
 
-#: ui/navigator/codenavigator.cpp:37
+#: ui/navigator/codenavigator.cpp:29
 msgctxt "CodeNavigator|"
 msgid "Kate"
 msgstr "Kate"
 
-#: ui/navigator/codenavigator.cpp:38
+#: ui/navigator/codenavigator.cpp:30
 msgctxt "CodeNavigator|"
 msgid "KWrite"
 msgstr "KWrite"
 
-#: ui/navigator/codenavigator.cpp:39
+#: ui/navigator/codenavigator.cpp:31
 msgctxt "CodeNavigator|"
 msgid "Qt Creator"
 msgstr "Qt Creator"
 
-#: ui/navigator/codenavigator.cpp:81
+#: ui/navigator/codenavigator.cpp:73
 msgctxt "QObject|"
 msgid "Code Navigation"
 msgstr "代码导航"
 
-#: ui/navigator/codenavigator.cpp:105
+#: ui/navigator/codenavigator.cpp:97
 msgctxt "QObject|"
 msgid "Custom..."
 msgstr "自定义..."
 
-#: ui/navigator/codenavigator.cpp:117
+#: ui/navigator/codenavigator.cpp:109
 msgctxt "QObject|"
 msgid "Custom Code Navigation"
 msgstr "自定义代码导航"
 
-#: ui/navigator/codenavigator.cpp:118
+#: ui/navigator/codenavigator.cpp:110
 msgctxt "QObject|"
 msgid ""
 "Specify command to use for code navigation, '%f' will be replaced by the "
 "file name, '%l' by the line number."
 msgstr "指定用于代码导航的命令，'%f' 会被替换成文件名，'%l' 会被替换成行号。"
 
-#: ui/typemodel/typemodel.cpp:280
+#: ui/typemodel/typemodel.cpp:269
 msgctxt "TypeModel|"
 msgid "Data Type"
 msgstr "数据类型"
 
-#: ui/typemodel/typemodel.cpp:281
+#: ui/typemodel/typemodel.cpp:270
 msgctxt "TypeModel|"
 msgid "Size"
 msgstr "大小"
@@ -466,24 +466,24 @@ msgctxt "SizeTreeMapView|"
 msgid "&No Colorization"
 msgstr "无着色(&N)"
 
-#: ui/views/typeview.cpp:61 ui/views/typeview.cpp:73
+#: ui/views/typeview.cpp:50 ui/views/typeview.cpp:62
 msgctxt "TypeView|"
 msgid "Invalid DWARF entries"
 msgstr "无效的 DWARF 条目"
 
-#: ui/views/typeview.cpp:62 ui/views/typeview.cpp:74
+#: ui/views/typeview.cpp:51 ui/views/typeview.cpp:63
 msgctxt "TypeView|"
 msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
 "will be incomplete."
 msgstr "读取某些 ELF 对象的 DWARF 数据时发生错误，树将不完整。"
 
-#: ui/views/typeview.cpp:69
+#: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
 msgid "Compute Type Tree"
 msgstr "计算类型树"
 
-#: ui/views/typeview.cpp:69
+#: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
 msgid ""
 "Computing the type tree from DWARF data can take up to several minutes in "
@@ -498,7 +498,7 @@ msgctxt "TypeView|"
 msgid "Search"
 msgstr "查找"
 
-#: ui/widgets/gnuplotwidget.cpp:31
+#: ui/widgets/gnuplotwidget.cpp:20
 msgctxt "GnuplotWidget|"
 msgid "'gnuplot' not found, plotting not available."
 msgstr "找不到“gnuplot”，绘图不可用。"
