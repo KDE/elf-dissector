@@ -4,10 +4,6 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
   <name>ELF Dissector</name>
-  <content_rating type="oars-1.1"/>
-  <developer id="kde.org">
-    <name translate="no">KDE</name>
-  </developer>
   <name xml:lang="ca">ELF Dissector</name>
   <name xml:lang="ca-valencia">ELF Dissector</name>
   <name xml:lang="cs">ELF Dissector</name>
@@ -37,6 +33,10 @@
   <name xml:lang="uk">ELF Dissector</name>
   <name xml:lang="x-test">xxELF Dissectorxx</name>
   <name xml:lang="zh-CN">ELF 解析器</name>
+  <content_rating type="oars-1.1"/>
+  <developer id="kde.org">
+    <name translate="no">KDE</name>
+  </developer>
   <summary>Static analysis tool for ELF files</summary>
   <summary xml:lang="ca">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="ca-valencia">Eina d'anàlisi estàtica per als fitxers ELF</summary>
