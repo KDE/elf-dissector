@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2019 Volker Krause <vkrause@kde.org>
+# SPDX-License-Identifier: BSD-2-Clause
+
 # all code in a static library, for usage in unit tests
 set(libelfdissectorui_srcs
     ${CMAKE_SOURCE_DIR}/src/3rdparty/treemap/treemap.cpp

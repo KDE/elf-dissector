@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2015 Volker Krause <vkrause@kde.org>
+# SPDX-License-Identifier: BSD-2-Clause
+
 add_executable(demangler_test demangler_test.cpp)
 target_link_libraries(demangler_test Qt6::Test libelfdissector)
 add_test(NAME test-demangle COMMAND demangler_test)

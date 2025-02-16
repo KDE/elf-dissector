@@ -1,3 +1,8 @@
+/*
+    SPDX-FileCopyrightText: 2015 Volker Krause <vkrause@kde.org>
+    SPDX-License-Identifier: LGPL-2.0-or-later
+*/
+
 #ifndef CONFIG_ELFDISSECTOR_H
 #define CONFIG_ELFDISSECTOR_H
 

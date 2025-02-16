@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2015 Volker Krause <vkrause@kde.org>
+# SPDX-License-Identifier: BSD-2-Clause
+
 VER1 {
     global:
         function;

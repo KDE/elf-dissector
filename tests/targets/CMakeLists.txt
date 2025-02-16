@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2015 Volker Krause <vkrause@kde.org>
+# SPDX-License-Identifier: BSD-2-Clause
+
 set(CMAKE_AUTOMOC OFF)
 add_executable(single-executable single-executable.c)
 add_executable(structures structures.cpp)

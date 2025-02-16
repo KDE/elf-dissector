@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2019 Volker Krause <vkrause@kde.org>
+# SPDX-License-Identifier: BSD-2-Clause
+
 add_executable(elf-packcheck packcheck.cpp)
 target_link_libraries(elf-packcheck libelfdissector)
 install(TARGETS elf-packcheck ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
