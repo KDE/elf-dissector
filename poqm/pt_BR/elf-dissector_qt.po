@@ -13,212 +13,212 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 20.04.2\n"
 
-#: 3rdparty/treemap/treemap.cpp:1350
+#: 3rdparty/treemap/treemap.cpp:1341
 #, qt-format
 msgctxt "TreeMapWidget|"
 msgid "Text %1"
 msgstr "Texto %1"
 
-#: 3rdparty/treemap/treemap.cpp:2870
+#: 3rdparty/treemap/treemap.cpp:2861
 msgctxt "TreeMapWidget|"
 msgid "Recursive Bisection"
 msgstr "Bisseção recursiva"
 
-#: 3rdparty/treemap/treemap.cpp:2871
+#: 3rdparty/treemap/treemap.cpp:2862
 msgctxt "TreeMapWidget|"
 msgid "Columns"
 msgstr "Colunas"
 
-#: 3rdparty/treemap/treemap.cpp:2872
+#: 3rdparty/treemap/treemap.cpp:2863
 msgctxt "TreeMapWidget|"
 msgid "Rows"
 msgstr "Linhas"
 
-#: 3rdparty/treemap/treemap.cpp:2873
+#: 3rdparty/treemap/treemap.cpp:2864
 msgctxt "TreeMapWidget|"
 msgid "Always Best"
 msgstr "Sempre o melhor"
 
-#: 3rdparty/treemap/treemap.cpp:2874
+#: 3rdparty/treemap/treemap.cpp:2865
 msgctxt "TreeMapWidget|"
 msgid "Best"
 msgstr "Melhor"
 
-#: 3rdparty/treemap/treemap.cpp:2875
+#: 3rdparty/treemap/treemap.cpp:2866
 msgctxt "TreeMapWidget|"
 msgid "Alternate (V)"
 msgstr "Alternar (V)"
 
-#: 3rdparty/treemap/treemap.cpp:2876
+#: 3rdparty/treemap/treemap.cpp:2867
 msgctxt "TreeMapWidget|"
 msgid "Alternate (H)"
 msgstr "Alternar (H)"
 
-#: 3rdparty/treemap/treemap.cpp:2877
+#: 3rdparty/treemap/treemap.cpp:2868
 msgctxt "TreeMapWidget|"
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: 3rdparty/treemap/treemap.cpp:2878
+#: 3rdparty/treemap/treemap.cpp:2869
 msgctxt "TreeMapWidget|"
 msgid "Vertical"
 msgstr "Vertical"
 
-#: lib/elf/elfdynamicentry.cpp:111
+#: lib/elf/elfdynamicentry.cpp:100
 #, qt-format
 msgctxt "QObject|"
 msgid "unknown (%1)"
 msgstr "desconhecido (%1)"
 
-#: ui/dependencymodel/dependencymodel.cpp:134
+#: ui/dependencymodel/dependencymodel.cpp:123
 msgctxt "DependencyModel|"
 msgid "Cyclic dependency!"
 msgstr "Dependência cíclica!"
 
-#: ui/dependencymodel/dependencymodel.cpp:138
+#: ui/dependencymodel/dependencymodel.cpp:127
 msgctxt "DependencyModel|"
 msgid "Dependency not found!"
 msgstr "Dependência não encontrada!"
 
-#: ui/dependencymodel/dependencymodel.cpp:236
+#: ui/dependencymodel/dependencymodel.cpp:225
 msgctxt "DependencyModel|"
 msgid "Library"
 msgstr "Biblioteca"
 
-#: ui/dependencymodel/dependencymodel.cpp:237
+#: ui/dependencymodel/dependencymodel.cpp:226
 msgctxt "DependencyModel|"
 msgid "Symbols Used"
 msgstr "Símbolos usados"
 
-#: ui/dependencymodel/filelistmodel.cpp:67
+#: ui/dependencymodel/filelistmodel.cpp:56
 msgctxt "FileListModel|"
 msgid "Shared Object"
 msgstr "Objeto compartilhado"
 
-#: ui/dependencymodel/fileusermodel.cpp:89
+#: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"
 msgid "Users"
 msgstr "Usuários"
 
-#: ui/dependencymodel/unuseddependenciesmodel.cpp:88
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:77
 msgctxt "UnusedDependenciesModel|"
 msgid "ELF File"
 msgstr "Arquivo ELF"
 
-#: ui/dependencymodel/unuseddependenciesmodel.cpp:89
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:78
 msgctxt "UnusedDependenciesModel|"
 msgid "Unused Dependency"
 msgstr "Dependência não usada"
 
-#: ui/dependencymodel/usedsymbolmodel.cpp:75
+#: ui/dependencymodel/usedsymbolmodel.cpp:64
 msgctxt "UsedSymbolModel|"
 msgid "Symbol"
 msgstr "Símbolo"
 
-#: ui/elfmodel/datavisitor.cpp:154 ui/elfmodel/datavisitor.cpp:325
+#: ui/elfmodel/datavisitor.cpp:145 ui/elfmodel/datavisitor.cpp:316
 msgctxt "QObject|"
 msgid "<null>"
 msgstr "<null>"
 
-#: ui/elfmodel/datavisitor.cpp:359
+#: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "Construction VTable"
 msgstr "VTable de construção"
 
-#: ui/elfmodel/datavisitor.cpp:359
+#: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "VTable"
 msgstr "VTable"
 
-#: ui/elfmodel/elfmodel.cpp:134
+#: ui/elfmodel/elfmodel.cpp:125
 msgctxt "ElfModel|"
 msgid "Entry"
 msgstr "Entrada"
 
-#: ui/elfmodel/elfmodel.cpp:135
+#: ui/elfmodel/elfmodel.cpp:126
 msgctxt "ElfModel|"
 msgid "Size"
 msgstr "Tamanho"
 
-#: ui/issuesmodel/issuesmodel.cpp:61
+#: ui/issuesmodel/issuesmodel.cpp:50
 #, qt-format
 msgctxt "IssuesModel|"
 msgid "%1 (implicit virtual destructor)"
 msgstr "%1 (destruídor virtual implícito)"
 
-#: ui/issuesmodel/issuesmodel.cpp:87
+#: ui/issuesmodel/issuesmodel.cpp:76
 msgctxt "IssuesModel|"
 msgid "Issue"
 msgstr "Problema"
 
-#: ui/issuesmodel/issuesmodel.cpp:88
+#: ui/issuesmodel/issuesmodel.cpp:77
 msgctxt "IssuesModel|"
 msgid "Location"
 msgstr "Localização"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:71
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:60
 msgctxt "LoadBenchmarkModel|"
 msgid "File"
 msgstr "Arquivo"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:72
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:61
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Median"
 msgstr "Mediana preguiçosa"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:73
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:62
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Min"
 msgstr "Mínima preguiçosa"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:74
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:63
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Median"
 msgstr "Mediana atual"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:75
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:64
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Min"
 msgstr "Mínima atual"
 
-#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:76
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:65
 msgctxt "LoadBenchmarkModel|"
 msgid "Relocs"
 msgstr "Relocações"
 
-#: ui/main.cpp:31
+#: ui/main.cpp:20
 msgctxt "MainWindow|"
 msgid "ELF Dissector"
 msgstr "Dissecador ELF"
 
-#: ui/main.cpp:43
+#: ui/main.cpp:32
 msgctxt "MainWindow|"
 msgid "ELF file to open"
 msgstr "Arquivo ELF a abrir"
 
-#: ui/mainwindow.cpp:94
+#: ui/mainwindow.cpp:83
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
 msgstr "Abrir objeto ELF"
 
-#: ui/mainwindow.cpp:142
+#: ui/mainwindow.cpp:131
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
 msgstr "Falha ao carregar o arquivo ELF"
 
-#: ui/mainwindow.cpp:142
+#: ui/mainwindow.cpp:131
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Could not load %1."
 msgstr "Não foi possível carregar %1."
 
-#: ui/mainwindow.cpp:146
+#: ui/mainwindow.cpp:135
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
 msgstr "Falha ao carregar %1."
 
-#: ui/mainwindow.cpp:153
+#: ui/mainwindow.cpp:142
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Loaded %1."
@@ -264,42 +264,42 @@ msgctxt "MainWindow|"
 msgid "Reopen &Previously Loaded Files"
 msgstr "&Reabrir arquivos previamente carregados"
 
-#: ui/navigator/codenavigator.cpp:36
+#: ui/navigator/codenavigator.cpp:28
 msgctxt "CodeNavigator|"
 msgid "KDevelop"
 msgstr "KDevelop"
 
-#: ui/navigator/codenavigator.cpp:37
+#: ui/navigator/codenavigator.cpp:29
 msgctxt "CodeNavigator|"
 msgid "Kate"
 msgstr "Kate"
 
-#: ui/navigator/codenavigator.cpp:38
+#: ui/navigator/codenavigator.cpp:30
 msgctxt "CodeNavigator|"
 msgid "KWrite"
 msgstr "KWrite"
 
-#: ui/navigator/codenavigator.cpp:39
+#: ui/navigator/codenavigator.cpp:31
 msgctxt "CodeNavigator|"
 msgid "Qt Creator"
 msgstr "Qt Creator"
 
-#: ui/navigator/codenavigator.cpp:81
+#: ui/navigator/codenavigator.cpp:73
 msgctxt "QObject|"
 msgid "Code Navigation"
 msgstr "Navegação de código"
 
-#: ui/navigator/codenavigator.cpp:105
+#: ui/navigator/codenavigator.cpp:97
 msgctxt "QObject|"
 msgid "Custom..."
 msgstr "Personalizado..."
 
-#: ui/navigator/codenavigator.cpp:117
+#: ui/navigator/codenavigator.cpp:109
 msgctxt "QObject|"
 msgid "Custom Code Navigation"
 msgstr "Navegação de código personalizado"
 
-#: ui/navigator/codenavigator.cpp:118
+#: ui/navigator/codenavigator.cpp:110
 msgctxt "QObject|"
 msgid ""
 "Specify command to use for code navigation, '%f' will be replaced by the "
@@ -308,12 +308,12 @@ msgstr ""
 "Especifique o comando a ser usado para navegação de código, '%f' será "
 "substituído pelo nome do arquivo, '%l' pelo número da linha"
 
-#: ui/typemodel/typemodel.cpp:280
+#: ui/typemodel/typemodel.cpp:269
 msgctxt "TypeModel|"
 msgid "Data Type"
 msgstr "Tipo de dados"
 
-#: ui/typemodel/typemodel.cpp:281
+#: ui/typemodel/typemodel.cpp:270
 msgctxt "TypeModel|"
 msgid "Size"
 msgstr "Tamanho"
@@ -468,12 +468,12 @@ msgctxt "SizeTreeMapView|"
 msgid "&No Colorization"
 msgstr "Sem colori&zação"
 
-#: ui/views/typeview.cpp:61 ui/views/typeview.cpp:73
+#: ui/views/typeview.cpp:50 ui/views/typeview.cpp:62
 msgctxt "TypeView|"
 msgid "Invalid DWARF entries"
 msgstr "Entradas DWARF inválidas"
 
-#: ui/views/typeview.cpp:62 ui/views/typeview.cpp:74
+#: ui/views/typeview.cpp:51 ui/views/typeview.cpp:63
 msgctxt "TypeView|"
 msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
@@ -482,12 +482,12 @@ msgstr ""
 "Um erro ocorreu enquanto lia dados DWARF de alguns objetos ELF, a árvore "
 "estará incompleta."
 
-#: ui/views/typeview.cpp:69
+#: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
 msgid "Compute Type Tree"
 msgstr "Computar árvore de tipos"
 
-#: ui/views/typeview.cpp:69
+#: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
 msgid ""
 "Computing the type tree from DWARF data can take up to several minutes in "
@@ -503,7 +503,7 @@ msgctxt "TypeView|"
 msgid "Search"
 msgstr "Pesquisar"
 
-#: ui/widgets/gnuplotwidget.cpp:31
+#: ui/widgets/gnuplotwidget.cpp:20
 msgctxt "GnuplotWidget|"
 msgid "'gnuplot' not found, plotting not available."
 msgstr "O 'gnuplot' não foi encontrado, gráficos não disponíveis."
