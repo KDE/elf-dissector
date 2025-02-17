@@ -143,7 +143,10 @@ double ElfGnuHashSection::averagePrefixLength() const
         while (!(*hashValue1 & 1)) {
             const auto entry1 = symTab->entry(n1);
 
-            auto n2 = n1 + 1;
+            const auto n2 = n1 + 1;
+            if (n2 >= symTab->header()->entryCount()) {
+                break;
+            }
             auto hashValue2 = hashValue1 + 1;
             while (!(*hashValue2 & 1)) {
                 const auto entry2 = symTab->entry(n2);
