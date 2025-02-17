@@ -15,6 +15,7 @@ elseif (_out MATCHES "lld")
     set(LINKER_TYPE "LLD")
 else ()
     set(LINKER_TYPE "UNKNOWN")
+    message(AUTHOR_WARNING "Linker detection failed: ${_out}")
 endif()
 
-message("Detected linker: ${LINKER_TYPE}")
+message(STATUS "Detected linker: ${LINKER_TYPE}")
