@@ -12,6 +12,7 @@ include(ECMInstallIcons)
 include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
+include(DetectLinker)
 
 set(CMAKE_AUTOUIC on)
 set(CMAKE_AUTORCC on)

@@ -94,7 +94,7 @@ private Q_SLOTS:
         QVERIFY(def);
         QCOMPARE(def->versionIndex(), (uint16_t)2);
         QCOMPARE(symbolVersionDefs->definitionForVersionIndex(2), def);
-#ifdef Q_OS_FREEBSD
+#if HAVE_SINGLE_VERSION_LINKER
         // Both entries have auxiliarySize == 1
         QCOMPARE(def->auxiliarySize(), 1u);
         QCOMPARE(def->auxiliaryEntry(0)->name(), "VER1");
@@ -110,7 +110,7 @@ private Q_SLOTS:
         QVERIFY(def);
         QCOMPARE(def->versionIndex(), (uint16_t)3);
         QCOMPARE(symbolVersionDefs->definitionForVersionIndex(3), def);
-#ifdef Q_OS_FREEBSD
+#if HAVE_SINGLE_VERSION_LINKER
         // Both entries have auxiliarySize == 1
         QCOMPARE(def->auxiliarySize(), 1u);
         QCOMPARE(def->auxiliaryEntry(0)->name(), "VER2");
@@ -124,8 +124,8 @@ private Q_SLOTS:
         QVERIFY(defV1);
         QVERIFY(defV2);
 
-#ifdef Q_OS_FREEBSD
-        QEXPECT_FAIL("", "FreeBSD only 1 auxiliary", Continue);
+#if HAVE_SINGLE_VERSION_LINKER
+        QEXPECT_FAIL("", "LLD/Mold only 1 auxiliary", Continue);
 #endif
         QCOMPARE(defV2->auxiliarySize(), (uint16_t)2);
         auto defEntry = defV2->auxiliaryEntry(0);

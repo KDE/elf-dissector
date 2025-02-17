@@ -24,6 +24,11 @@ target_link_libraries(elfnotesectiontest Qt6::Test libelfdissector)
 add_test(NAME elfnotesectiontest COMMAND elfnotesectiontest)
 
 add_executable(elfgnusymbolversioningtest elfgnusymbolversioningtest.cpp)
+if (LINKER_TYPE STREQUAL "BFD" OR LINKER_TYPE STREQUAL "GOLD")
+    target_compile_definitions(elfgnusymbolversioningtest PRIVATE HAVE_SINGLE_VERSION_LINKER=0)
+else()
+    target_compile_definitions(elfgnusymbolversioningtest PRIVATE HAVE_SINGLE_VERSION_LINKER=1)
+endif()
 target_link_libraries(elfgnusymbolversioningtest Qt6::Test libelfdissector)
 add_test(NAME elfgnusymbolversioningtest COMMAND elfgnusymbolversioningtest)
 
