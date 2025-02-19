@@ -143,6 +143,8 @@ void ElfFile::close()
         delete m_sectionHeaders.at(i);
         delete m_sections.at(i);
     }
+    qDeleteAll(m_segmentHeaders);
+    m_segmentHeaders.clear();
     m_file.close();
     m_data = nullptr;
 }
