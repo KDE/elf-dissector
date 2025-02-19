@@ -14,7 +14,7 @@
 #include <QObject>
 
 #include <elf.h>
-#include <algorithm>
+#include <cstring>
 
 class ElfHashTest: public QObject
 {
@@ -44,8 +44,10 @@ private Q_SLOTS:
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 25)
         for (uint32_t i = 0; i < symTab->header()->entryCount(); ++i) {
             const auto entry = symTab->entry(i);
-            if (strcmp(entry->name(), "") == 0)
+            // qt_version_tag is a specially versioned symbol in openSUSE's Qt build thus affecting the KDE CI
+            if (std::strcmp(entry->name(), "") == 0 || std::strcmp(entry->name(), "qt_version_tag") == 0) {
                 continue;
+            }
             QCOMPARE(hashSection->lookup(entry->name()), entry);
         }
 #endif
@@ -80,6 +82,10 @@ private Q_SLOTS:
 
         for (uint32_t i = hashSection->symbolIndex(); i < symTab->header()->entryCount(); ++i) {
             const auto entry = symTab->entry(i);
+            // qt_version_tag is a specially versioned symbol in openSUSE's Qt build thus affecting the KDE CI
+            if (std::strcmp(entry->name(), "qt_version_tag") == 0) {
+                continue;
+            }
             QCOMPARE(hashSection->lookup(entry->name()), entry);
         }
 
