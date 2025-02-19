@@ -185,7 +185,7 @@ QVariant DataVisitor::doVisit(ElfSection* section, int arg) const
                 NavigatingDisassembler da(this);
                 s += "Code:<br/><tt>"_L1 + da.disassemble(section) + "</tt>"_L1;
             }
-            if (section->header()->type() == SHT_INIT_ARRAY || section->header()->type() == SHT_FINI_ARRAY) {
+            if (section->header()->type() == SHT_INIT_ARRAY || section->header()->type() == SHT_FINI_ARRAY || section->header()->type() == SHT_PREINIT_ARRAY) {
                 const auto addrSize = section->file()->addressSize();
                 s += QLatin1String("Content:<br/>");
                 for (uint i = 0; i < section->header()->size() / addrSize; ++i) {
