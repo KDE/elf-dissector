@@ -1,0 +1,502 @@
+# SPDX-FileCopyrightText: 2025 Yaron Shahrabani <sh.yaron@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"PO-Revision-Date: 2025-02-18 08:31+0200\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 24.12.1\n"
+
+#: 3rdparty/treemap/treemap.cpp:1341
+#, qt-format
+msgctxt "TreeMapWidget|"
+msgid "Text %1"
+msgstr "טקסט %1"
+
+#: 3rdparty/treemap/treemap.cpp:2861
+msgctxt "TreeMapWidget|"
+msgid "Recursive Bisection"
+msgstr "חלוקה רקורסיבית"
+
+#: 3rdparty/treemap/treemap.cpp:2862
+msgctxt "TreeMapWidget|"
+msgid "Columns"
+msgstr "עמודות"
+
+#: 3rdparty/treemap/treemap.cpp:2863
+msgctxt "TreeMapWidget|"
+msgid "Rows"
+msgstr "שורות"
+
+#: 3rdparty/treemap/treemap.cpp:2864
+msgctxt "TreeMapWidget|"
+msgid "Always Best"
+msgstr "תמיד הטוב ביותר"
+
+#: 3rdparty/treemap/treemap.cpp:2865
+msgctxt "TreeMapWidget|"
+msgid "Best"
+msgstr "הטוב ביותר"
+
+#: 3rdparty/treemap/treemap.cpp:2866
+msgctxt "TreeMapWidget|"
+msgid "Alternate (V)"
+msgstr "חלופי (מאונך)"
+
+#: 3rdparty/treemap/treemap.cpp:2867
+msgctxt "TreeMapWidget|"
+msgid "Alternate (H)"
+msgstr "חלופי (מאוזן)"
+
+#: 3rdparty/treemap/treemap.cpp:2868
+msgctxt "TreeMapWidget|"
+msgid "Horizontal"
+msgstr "אופקי"
+
+#: 3rdparty/treemap/treemap.cpp:2869
+msgctxt "TreeMapWidget|"
+msgid "Vertical"
+msgstr "אנכי"
+
+#: lib/elf/elfdynamicentry.cpp:100
+#, qt-format
+msgctxt "QObject|"
+msgid "unknown (%1)"
+msgstr "לא ידוע (%1)"
+
+#: ui/dependencymodel/dependencymodel.cpp:123
+msgctxt "DependencyModel|"
+msgid "Cyclic dependency!"
+msgstr "תלות מעגלית!"
+
+#: ui/dependencymodel/dependencymodel.cpp:127
+msgctxt "DependencyModel|"
+msgid "Dependency not found!"
+msgstr "התלות לא נמצאה!"
+
+#: ui/dependencymodel/dependencymodel.cpp:225
+msgctxt "DependencyModel|"
+msgid "Library"
+msgstr "ספרייה"
+
+#: ui/dependencymodel/dependencymodel.cpp:226
+msgctxt "DependencyModel|"
+msgid "Symbols Used"
+msgstr "סמלים בשימוש"
+
+#: ui/dependencymodel/filelistmodel.cpp:56
+msgctxt "FileListModel|"
+msgid "Shared Object"
+msgstr "עצם שיתופי"
+
+#: ui/dependencymodel/fileusermodel.cpp:78
+msgctxt "FileUserModel|"
+msgid "Users"
+msgstr "משתמשים"
+
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:77
+msgctxt "UnusedDependenciesModel|"
+msgid "ELF File"
+msgstr "קובץ ELF"
+
+#: ui/dependencymodel/unuseddependenciesmodel.cpp:78
+msgctxt "UnusedDependenciesModel|"
+msgid "Unused Dependency"
+msgstr "תלות שאינה בשימוש"
+
+#: ui/dependencymodel/usedsymbolmodel.cpp:64
+msgctxt "UsedSymbolModel|"
+msgid "Symbol"
+msgstr "סמל"
+
+#: ui/elfmodel/datavisitor.cpp:145 ui/elfmodel/datavisitor.cpp:316
+msgctxt "QObject|"
+msgid "<null>"
+msgstr "<ריק>"
+
+#: ui/elfmodel/datavisitor.cpp:350
+msgctxt "QObject|"
+msgid "Construction VTable"
+msgstr "טבלה וירטואלית של בנייה"
+
+#: ui/elfmodel/datavisitor.cpp:350
+msgctxt "QObject|"
+msgid "VTable"
+msgstr "טבלה וירטואלית"
+
+#: ui/elfmodel/elfmodel.cpp:125
+msgctxt "ElfModel|"
+msgid "Entry"
+msgstr "רשומה"
+
+#: ui/elfmodel/elfmodel.cpp:126
+msgctxt "ElfModel|"
+msgid "Size"
+msgstr "גודל"
+
+#: ui/issuesmodel/issuesmodel.cpp:50
+#, qt-format
+msgctxt "IssuesModel|"
+msgid "%1 (implicit virtual destructor)"
+msgstr "%1 (מפרק וירטואלי מרומז)"
+
+#: ui/issuesmodel/issuesmodel.cpp:76
+msgctxt "IssuesModel|"
+msgid "Issue"
+msgstr "תקלה"
+
+#: ui/issuesmodel/issuesmodel.cpp:77
+msgctxt "IssuesModel|"
+msgid "Location"
+msgstr "מקום"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:60
+msgctxt "LoadBenchmarkModel|"
+msgid "File"
+msgstr "קובץ"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:61
+msgctxt "LoadBenchmarkModel|"
+msgid "Lazy Median"
+msgstr "חציוני עצל (Lazy Median)"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:62
+msgctxt "LoadBenchmarkModel|"
+msgid "Lazy Min"
+msgstr "מזערי עצל (Lazy Min)"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:63
+msgctxt "LoadBenchmarkModel|"
+msgid "Now Median"
+msgstr "חציוני עכשיו (Now Median)"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:64
+msgctxt "LoadBenchmarkModel|"
+msgid "Now Min"
+msgstr "מזערי עכשיו (Now Min)"
+
+#: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:65
+msgctxt "LoadBenchmarkModel|"
+msgid "Relocs"
+msgstr "הצבה מחדש"
+
+#: ui/main.cpp:20
+msgctxt "MainWindow|"
+msgid "ELF Dissector"
+msgstr "מנתח ELF"
+
+#: ui/main.cpp:32
+msgctxt "MainWindow|"
+msgid "ELF file to open"
+msgstr "קובץ ELF לפתיחה"
+
+#: ui/mainwindow.cpp:83
+msgctxt "MainWindow|"
+msgid "Open ELF Object"
+msgstr "פתיח עצם ELF"
+
+#: ui/mainwindow.cpp:131
+msgctxt "MainWindow|"
+msgid "Failed to load ELF file"
+msgstr "טעינת קובץ ELF נכשלה"
+
+#: ui/mainwindow.cpp:131
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Could not load %1."
+msgstr "לא ניתן לטעון את %1‏."
+
+#: ui/mainwindow.cpp:135
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Failed to load %1."
+msgstr "הטעינה של %1 נכשלה."
+
+#: ui/mainwindow.cpp:142
+#, qt-format
+msgctxt "MainWindow|"
+msgid "Loaded %1."
+msgstr "%1 נטען."
+
+#: ui/mainwindow.ui:71
+msgctxt "MainWindow|"
+msgid "&File"
+msgstr "&קובץ"
+
+#: ui/mainwindow.ui:79
+msgctxt "MainWindow|"
+msgid "&Actions"
+msgstr "&פעולות"
+
+#: ui/mainwindow.ui:84
+msgctxt "MainWindow|"
+msgid "&Settings"
+msgstr "ה&גדרות"
+
+#: ui/mainwindow.ui:100
+msgctxt "MainWindow|"
+msgid "&Open..."
+msgstr "&פתיחה…"
+
+#: ui/mainwindow.ui:103
+msgctxt "MainWindow|"
+msgid "Ctrl+O"
+msgstr "Ctrl+O"
+
+#: ui/mainwindow.ui:113
+msgctxt "MainWindow|"
+msgid "&Quit"
+msgstr "י&ציאה"
+
+#: ui/mainwindow.ui:116
+msgctxt "MainWindow|"
+msgid "Ctrl+Q"
+msgstr "Ctrl+Q"
+
+#: ui/mainwindow.ui:129
+msgctxt "MainWindow|"
+msgid "Reopen &Previously Loaded Files"
+msgstr "פתיחת קבצים שנטענו ב&עבר מחדש"
+
+#: ui/navigator/codenavigator.cpp:28
+msgctxt "CodeNavigator|"
+msgid "KDevelop"
+msgstr "KDevelop"
+
+#: ui/navigator/codenavigator.cpp:29
+msgctxt "CodeNavigator|"
+msgid "Kate"
+msgstr "Kate"
+
+#: ui/navigator/codenavigator.cpp:30
+msgctxt "CodeNavigator|"
+msgid "KWrite"
+msgstr "KWrite"
+
+#: ui/navigator/codenavigator.cpp:31
+msgctxt "CodeNavigator|"
+msgid "Qt Creator"
+msgstr "Qt Creator"
+
+#: ui/navigator/codenavigator.cpp:73
+msgctxt "QObject|"
+msgid "Code Navigation"
+msgstr "ניווט בקוד"
+
+#: ui/navigator/codenavigator.cpp:97
+msgctxt "QObject|"
+msgid "Custom..."
+msgstr "התאמה אישית…"
+
+#: ui/navigator/codenavigator.cpp:109
+msgctxt "QObject|"
+msgid "Custom Code Navigation"
+msgstr "ניווט בקוד בהתאמה אישית"
+
+#: ui/navigator/codenavigator.cpp:110
+msgctxt "QObject|"
+msgid ""
+"Specify command to use for code navigation, '%f' will be replaced by the "
+"file name, '%l' by the line number."
+msgstr "לציין פקודה שתשמש לניווט בקוד, ‚%f’ יוחלף בשם הקובץ, ‚%l’ במספר השורה."
+
+#: ui/typemodel/typemodel.cpp:269
+msgctxt "TypeModel|"
+msgid "Data Type"
+msgstr "טיפוס נתונים"
+
+#: ui/typemodel/typemodel.cpp:270
+msgctxt "TypeModel|"
+msgid "Size"
+msgstr "גודל"
+
+#: ui/views/dependencyview.ui:21
+msgctxt "DependencyView|"
+msgid "Top Down"
+msgstr "מלמעלה למטה"
+
+#: ui/views/dependencyview.ui:34 ui/views/dependencyview.ui:55
+#: ui/views/dependencyview.ui:93 ui/views/dependencyview.ui:117
+#: ui/views/dependencyview.ui:141 ui/views/dependencyview.ui:178
+msgctxt "DependencyView|"
+msgid "Search"
+msgstr "חיפוש"
+
+#: ui/views/dependencyview.ui:80
+msgctxt "DependencyView|"
+msgid "Inverse"
+msgstr "היפוך"
+
+#: ui/views/dependencyview.ui:172
+msgctxt "DependencyView|"
+msgid "Unused"
+msgstr "לא בשימוש"
+
+#: ui/views/dependencyview.ui:199
+msgctxt "DependencyView|"
+msgid "&Optimize Dependency Order"
+msgstr "מי&טוב סדר תלויות"
+
+#: ui/views/elfstructureview.ui:36
+msgctxt "ElfStructureView|"
+msgid "Search"
+msgstr "חיפוש"
+
+#: ui/views/elfstructureview.ui:68
+msgctxt "ElfStructureView|"
+msgid "&Back"
+msgstr "ח&זרה"
+
+#: ui/views/elfstructureview.ui:76
+msgctxt "ElfStructureView|"
+msgid "&Forward"
+msgstr "ק&דימה"
+
+#: ui/views/issuesview.ui:29
+msgctxt "IssuesView|"
+msgid "Search"
+msgstr "חיפוש"
+
+#: ui/views/issuesview.ui:46
+msgctxt "IssuesView|"
+msgid "&Check for issues (expensive!)"
+msgstr "בדיקת &תקלות (בזבזני!)"
+
+#: ui/views/loadbenchmarkview.ui:41
+msgctxt "LoadBenchmarkView|"
+msgid "Data"
+msgstr "נתונים"
+
+#: ui/views/loadbenchmarkview.ui:64
+msgctxt "LoadBenchmarkView|"
+msgid "Plot"
+msgstr "שרטוט"
+
+#: ui/views/loadbenchmarkview.ui:81
+msgctxt "LoadBenchmarkView|"
+msgid "&Run Benchmark"
+msgstr "הרצת &בדיקת ביצועים"
+
+#: ui/views/loadbenchmarkview.ui:84
+msgctxt "LoadBenchmarkView|"
+msgid "Measure loading and dynamic linking time."
+msgstr "מדידת זמנים של טעינה וקישורים דינמיים."
+
+#: ui/views/sizetreemapview.ui:39
+msgctxt "SizeTreeMapView|"
+msgid "Search"
+msgstr "חיפוש"
+
+#: ui/views/sizetreemapview.ui:68
+msgctxt "SizeTreeMapView|"
+msgid "Hide &Debug Information"
+msgstr "הסתרת פרטי &ניפוי שגיאות"
+
+#: ui/views/sizetreemapview.ui:71
+msgctxt "SizeTreeMapView|"
+msgid "Do not show sections containing debug information."
+msgstr "לא להציג מקטעים שמכילים פרטי ניפוי שגיאות."
+
+#: ui/views/sizetreemapview.ui:84
+msgctxt "SizeTreeMapView|"
+msgid "Colorize &Sections"
+msgstr "צביעת מ&קטעים"
+
+#: ui/views/sizetreemapview.ui:87
+msgctxt "SizeTreeMapView|"
+msgid "Vary color of sections in the size tree map."
+msgstr "בחירת צבעים שונים למקטעים במפת עץ הגדלים."
+
+#: ui/views/sizetreemapview.ui:100
+msgctxt "SizeTreeMapView|"
+msgid "Colorize S&ymbols"
+msgstr "צביעת &סמלים"
+
+#: ui/views/sizetreemapview.ui:103
+msgctxt "SizeTreeMapView|"
+msgid "Vary the color of symbols in the size tree map."
+msgstr "בחירת צבעים שונים לסמלים במפת עץ הגדלים."
+
+#: ui/views/sizetreemapview.ui:116
+msgctxt "SizeTreeMapView|"
+msgid "&Relocation Heatmap"
+msgstr "מפת &חום לשינוי מקום"
+
+#: ui/views/sizetreemapview.ui:129
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-runtime"
+msgstr "הסתרת לא זמן ריצה"
+
+#: ui/views/sizetreemapview.ui:132
+msgctxt "SizeTreeMapView|"
+msgid ""
+"Do not show content from sections that are not loaded into memory at runtime."
+msgstr "לא להציג תוכן ממקטעים שלא נטענים לזיכרון בזמן הריצה."
+
+#: ui/views/sizetreemapview.ui:145
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-writable"
+msgstr "הסתרת לא לכתיבה"
+
+#: ui/views/sizetreemapview.ui:148
+msgctxt "SizeTreeMapView|"
+msgid "Do not show content that is read-only/shared."
+msgstr "לא  להציג תוכן לקריאה בלבד/שיתופי."
+
+#: ui/views/sizetreemapview.ui:161
+msgctxt "SizeTreeMapView|"
+msgid "Hide non-executable"
+msgstr "הסתרת לא להרצה"
+
+#: ui/views/sizetreemapview.ui:164
+msgctxt "SizeTreeMapView|"
+msgid "Do not show non-executable data content."
+msgstr "לא להציג תוכן נתונים שלא ניתן להריץ."
+
+#: ui/views/sizetreemapview.ui:177
+msgctxt "SizeTreeMapView|"
+msgid "&No Colorization"
+msgstr "ללא &צביעה"
+
+#: ui/views/typeview.cpp:50 ui/views/typeview.cpp:62
+msgctxt "TypeView|"
+msgid "Invalid DWARF entries"
+msgstr "רשומות DWARF שגויות"
+
+#: ui/views/typeview.cpp:51 ui/views/typeview.cpp:63
+msgctxt "TypeView|"
+msgid ""
+"An error occurred while reading DWARF data of some ELF objects, the tree "
+"will be incomplete."
+msgstr "אירעה שגיאה בקריאת נתוני ה־DWARF מחלק מעצמי ה־ELF, העץ יהיה חלקי."
+
+#: ui/views/typeview.cpp:58
+msgctxt "TypeView|"
+msgid "Compute Type Tree"
+msgstr "חישוב עץ טיפוסים"
+
+#: ui/views/typeview.cpp:58
+msgctxt "TypeView|"
+msgid ""
+"Computing the type tree from DWARF data can take up to several minutes in "
+"which the application will not respond, and use up to 1.5GB of memory. "
+"Proceed anyway?"
+msgstr ""
+"חישוב עץ הטיפוסים מנתוני DWARF עלול לארוך מספר דקות של חוסר פעילות מצד "
+"היישום וישתמש ב־1.5 ג״ב של זיכרון. להמשיך בכל זאת?"
+
+#: ui/views/typeview.ui:36
+msgctxt "TypeView|"
+msgid "Search"
+msgstr "חיפוש"
+
+#: ui/widgets/gnuplotwidget.cpp:20
+msgctxt "GnuplotWidget|"
+msgid "'gnuplot' not found, plotting not available."
+msgstr "‚gnuplot’ לא נמצא, אי אפשר לשרטט."
