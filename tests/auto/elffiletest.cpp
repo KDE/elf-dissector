@@ -55,18 +55,19 @@ private Q_SLOTS:
         QVERIFY(f.symbolTable());
         QVERIFY(f.symbolTable()->size() > 0);
 
-        if (f.indexOfSection(".plt") > 0) {
-            auto pltSection = f.section<ElfPltSection>(f.indexOfSection(".plt"));
+        if (auto pltIdx = f.indexOfSection(".plt"); pltIdx >= 0) {
+            auto pltSection = f.section<ElfPltSection>(pltIdx);
             QVERIFY(pltSection);
-#ifdef Q_OS_FREEBSD
-            QEXPECT_FAIL("", "FreeBSD no plt entries", Continue);
-#endif
-            QVERIFY(pltSection->header()->entryCount() > 0);
-            QVERIFY(pltSection->gotSection());
-            for (uint i = 1; i < pltSection->header()->entryCount(); ++i) {
-                auto pltEntry = pltSection->entry(i);
-                QVERIFY(pltEntry);
-                QVERIFY(pltEntry->gotEntry());
+            QVERIFY(pltSection->header()->size() > 0);
+            // ASAN produces .plt sections with entry size 0?
+            if (pltSection->header()->entrySize() > 0) {
+                QVERIFY(pltSection->header()->entryCount() > 0);
+                QVERIFY(pltSection->gotSection());
+                for (uint i = 1; i < pltSection->header()->entryCount(); ++i) {
+                    auto pltEntry = pltSection->entry(i);
+                    QVERIFY(pltEntry);
+                    QVERIFY(pltEntry->gotEntry());
+                }
             }
         }
 
