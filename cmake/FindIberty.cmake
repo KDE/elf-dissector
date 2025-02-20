@@ -114,6 +114,17 @@ if (Binutils_HAVE_4ARG_INTI_DISASSEMBLE_INFO)
     set(Binutils_VERSION_MINOR 39)
 endif()
 
+check_c_source_compiles("
+    #include <demangle.h>
+    int main(int argc, char **argv) {
+        return DEMANGLE_COMPONENT_STRUCTURED_BINDING;
+    }"
+    Binutils_HAVE_DEMANGLE_COMPONENT_STRUCTURED_BINDING
+)
+if(Binutils_HAVE_DEMANGLE_COMPONENT_STRUCTURED_BINDING)
+  set(Binutils_VERSION_MINOR 40)
+endif()
+
 if(TARGET Binutils::Iberty)
    target_link_libraries(Binutils::Iberty INTERFACE Binutils::Opcodes)
 endif()

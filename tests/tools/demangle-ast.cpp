@@ -435,6 +435,32 @@ static int handleNameComponent(demangle_component* component)
             // ??
             break;
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 40)
+        case DEMANGLE_COMPONENT_STRUCTURED_BINDING:
+            writeNode("STRUCTURED_BINDING");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_MODULE_ENTITY:
+            writeNode("MODULE_ENTITY");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_MODULE_NAME:
+            writeNode("MODULE_NAME");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_MODULE_PARTITION:
+            writeNode("MODULE_PARTITION");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_MODULE_INIT:
+            writeNode("MODULE_INIT");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            break;
+#endif
     }
     return sourceNode;
 }

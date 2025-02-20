@@ -101,11 +101,23 @@ private Q_SLOTS:
 
         QTest::newRow("transaction clone") << "_ZGTtNSt11logic_errorC1EPKc.cold.14" << (VB << "std" << "logic_error" << "transaction clone for logic_error(char const*) [clone .cold.14]");
 
-	QTest::newRow("initializer list") << "_Z1fP1BIXtl1ALi1EEEE" << (VB << "f(B<A{1}>*)");
-	QTest::newRow("template parameter object") << "_ZTAXtl1ALi1EEE" << (VB << "template parameter object for A{1}");
+        QTest::newRow("initializer list") << "_Z1fP1BIXtl1ALi1EEEE" << (VB << "f(B<A{1}>*)");
+        QTest::newRow("template parameter object") << "_ZTAXtl1ALi1EEE" << (VB << "template parameter object for A{1}");
 
         QTest::newRow("noexcept") << "_ZSt9__find_ifIPKcN9__gnu_cxx5__ops12_Iter_negateIPDoFiiEEEET_S8_S8_T0_St26random_access_iterator_tag.isra.0"
             << (VB << "std" << "__find_if" << "__find_if<char const*, __gnu_cxx::__ops::_Iter_negate<int (*)(int) noexcept>>(char const*, char const*, __gnu_cxx::__ops::_Iter_negate<int (*)(int) noexcept>, std::random_access_iterator_tag) [clone .isra.0]");
+
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 40)
+        QTest::newRow("structured-binding") << "_ZDC1a1bE" << (VB << "[a, b]");
+        QTest::newRow("structured-binding-ns") << "_ZNStDC1aEE" << (VB << "std" << "[a]");
+
+        QTest::newRow("module-1") << "_ZN5Outer5InnerW3FOO2FnERNS0_1XE" << (VB << "Outer" << "Inner" << "Fn@FOO(Outer::Inner::X&)");
+        QTest::newRow("module-2") << "_ZN5OuterW3FOO5Inner2FnERNS1_1XE" << (VB << "Outer" << "Inner@FOO" << "Fn(Outer::Inner@FOO::X&)");
+        QTest::newRow("module-3") << "_ZN4Quux4TotoW3FooW3Bar3BazEPNS0_S2_5PlughE" << (VB << "Quux" << "Toto" << "Baz@Foo.Bar(Quux::Toto::Plugh@Foo.Bar*)");
+        QTest::newRow("module-4") << "_ZNStW3STD9allocatorIiE1MEPi" << (VB << "std" << "allocator@STD" << "allocator@STD<int>" << "M(int*)");
+        QTest::newRow("module-5") << "_ZN3NMSW3MOD3FooB3ABIEv" << (VB << "NMS" << "Foo@MOD[abi:ABI]()");
+        QTest::newRow("module-5") << "_ZGIW3FooWP3BarW3Baz" << (VB << "initializer for module Foo:Bar.Baz");
+#endif
     }
 
     void testDemangler()

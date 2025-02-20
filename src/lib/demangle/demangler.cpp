@@ -547,6 +547,60 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             break;
         }
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 40)
+        case DEMANGLE_COMPONENT_STRUCTURED_BINDING:
+        {
+            QList<QByteArray> args;
+            if (!component->u.s_binary.right) {
+                handleNameComponent(component->u.s_binary.left, args);
+                nameParts.push_back("[" + args.last() + "]");
+            } else {
+                handleNameComponent(component->u.s_binary.left, args);
+                handleNameComponent(component->u.s_binary.right, args);
+                nameParts.push_back("[" + args.front() + ", " + args.back().mid(1));
+            }
+            break;
+        }
+        case DEMANGLE_COMPONENT_MODULE_ENTITY:
+        {
+            QList<QByteArray> args;
+            handleNameComponent(component->u.s_binary.left, args);
+            handleNameComponent(component->u.s_binary.right, args);
+            nameParts.push_back(args.front() + "@" + args.back());
+            break;
+        }
+        case DEMANGLE_COMPONENT_MODULE_NAME:
+        {
+            if (component->u.s_binary.left) {
+                QList<QByteArray> args;
+                handleNameComponent(component->u.s_binary.left, args);
+                handleNameComponent(component->u.s_binary.right, args);
+                nameParts.push_back(args.front() + "." + args.back());
+            } else {
+                handleNameComponent(component->u.s_binary.right, nameParts);
+            }
+            break;
+        }
+        case DEMANGLE_COMPONENT_MODULE_PARTITION:
+        {
+            if (component->u.s_binary.left) {
+                QList<QByteArray> args;
+                handleNameComponent(component->u.s_binary.left, args);
+                handleNameComponent(component->u.s_binary.right, args);
+                nameParts.push_back(args.front() + ":" + args.back());
+            } else {
+                handleNameComponent(component->u.s_binary.right, nameParts);
+            }
+            break;
+        }
+        case DEMANGLE_COMPONENT_MODULE_INIT:
+        {
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            const auto n = nameParts.takeLast();
+            nameParts.push_back("initializer for module " + n);
+            break;
+        }
+#endif
         default:
             qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type << m_mangledName;
     }
