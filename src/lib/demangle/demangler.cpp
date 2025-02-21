@@ -289,6 +289,10 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             if (!nameParts.last().endsWith('&') && !nameParts.last().isEmpty())
                 nameParts.last().append("&&");
             break;
+        case DEMANGLE_COMPONENT_COMPLEX:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().append(" _Complex");
+            break;
         case DEMANGLE_COMPONENT_BUILTIN_TYPE:
             nameParts.push_back(QByteArray(component->u.s_builtin.type->name, component->u.s_builtin.type->len));
             break;
@@ -491,8 +495,20 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
         case DEMANGLE_COMPONENT_LAMBDA:
         {
             QList<QByteArray> args;
+            QByteArray tmp;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 41)
+            if (component->u.s_unary_num.sub->type == DEMANGLE_COMPONENT_TEMPLATE_HEAD) {
+                handleNameComponent(component->u.s_unary_num.sub->u.s_binary.left, args);
+                tmp = "<" + args.last() + ">";
+                args.clear();
+                handleNameComponent(component->u.s_unary_num.sub->u.s_binary.right, args);
+            } else {
+                handleNameComponent(component->u.s_unary_num.sub, args);
+            }
+#else
             handleNameComponent(component->u.s_unary_num.sub, args);
-            nameParts.push_back("{lambda(" + join(args, ", ") + ")#" + QByteArray::number(component->u.s_unary_num.num + 1) + '}');
+#endif
+            nameParts.push_back("{lambda" + tmp + "(" + join(args, ", ") + ")#" + QByteArray::number(component->u.s_unary_num.num + 1) + '}');
             break;
         }
         case DEMANGLE_COMPONENT_DEFAULT_ARG:
@@ -598,6 +614,41 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             handleNameComponent(component->u.s_binary.left, nameParts);
             const auto n = nameParts.takeLast();
             nameParts.push_back("initializer for module " + n);
+            break;
+        }
+#endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 41)
+        case DEMANGLE_COMPONENT_TEMPLATE_HEAD:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last() = "<" + nameParts.last() + ">";
+            break;
+        case DEMANGLE_COMPONENT_TEMPLATE_TYPE_PARM:
+            nameParts.push_back("typename");
+            break;
+        case DEMANGLE_COMPONENT_TEMPLATE_NON_TYPE_PARM:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            break;
+        case DEMANGLE_COMPONENT_TEMPLATE_TEMPLATE_PARM:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last() = "template" + nameParts.last() + " class";
+            if (component->u.s_binary.right) {
+                handleNameComponent(component->u.s_binary.right, nameParts);
+                const auto b = nameParts.takeLast();
+                nameParts.last() += ", " + b;
+            }
+            break;
+        case DEMANGLE_COMPONENT_TEMPLATE_PACK_PARM:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last() += "...";
+            break;
+        case DEMANGLE_COMPONENT_EXTENDED_BUILTIN_TYPE:
+        {
+            QByteArray n(component->u.s_extended_builtin.type->name, component->u.s_extended_builtin.type->len);
+            n += QByteArray::number(component->u.s_extended_builtin.arg);
+            if (component->u.s_extended_builtin.suffix) {
+                n += component->u.s_extended_builtin.suffix;
+            }
+            nameParts.push_back(n);
             break;
         }
 #endif

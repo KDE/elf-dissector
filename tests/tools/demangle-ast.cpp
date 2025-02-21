@@ -461,6 +461,38 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 41)
+        case DEMANGLE_COMPONENT_TEMPLATE_HEAD:
+            writeNode("TEMPLATE_HEAD");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_TEMPLATE_TYPE_PARM:
+            writeNode("TEMPLATE_TYPE_PARM");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_TEMPLATE_NON_TYPE_PARM:
+            writeNode("TEMPLATE_NON_TYPE_PARM");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_TEMPLATE_TEMPLATE_PARM:
+            writeNode("TEMPLATE_TEMPLATE_PARM");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_TEMPLATE_PACK_PARM:
+            writeNode("TEMPLATE_PACK_PARM");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+        case DEMANGLE_COMPONENT_EXTENDED_BUILTIN_TYPE:
+            writeNode(QByteArray("EXTENDED_BUILTIN_TYPE: ")
+                + QByteArray(component->u.s_extended_builtin.type->name, component->u.s_extended_builtin.type->len)
+                + QByteArray::number(component->u.s_extended_builtin.arg) + component->u.s_extended_builtin.suffix);
+            break;
+#endif
     }
     return sourceNode;
 }

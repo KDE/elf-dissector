@@ -118,6 +118,18 @@ private Q_SLOTS:
         QTest::newRow("module-5") << "_ZN3NMSW3MOD3FooB3ABIEv" << (VB << "NMS" << "Foo@MOD[abi:ABI]()");
         QTest::newRow("module-5") << "_ZGIW3FooWP3BarW3Baz" << (VB << "initializer for module Foo:Bar.Baz");
 #endif
+
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 41)
+        // TODO (unsigned int)0 should be 0u
+        QTest::newRow("generic-lambda-1") << "_ZZN1XIfLj0EE2FnEvENKUlTyfT_E_clIiEEDafS1_" << (VB << "X" << "X<float, (unsigned int)0>" << "Fn()" << "{lambda<typename $T0>(float, $T0)#1}" << "operator()" << "operator()<int>(float, int) const");
+        QTest::newRow("generic-lambda-2") << "_ZZN1XIfLj0EE2FnEvENKUlTyT_E_clIiEEDaS1_" << (VB << "X" << "X<float, (unsigned int)0>" << "Fn()" << "{lambda<typename>($T0)#1}" << "operator()" << "operator()<int>(int) const");
+        QTest::newRow("generic-lambda-3") << "_ZNK6l_var2MUlTpTniDpRAT__iE_clIJLi2ELi2EEEEDaS2_" << (VB << "l_var2" << "{lambda<int... $N0>((int (&) [$N0])...)#1}" << "operator()" << "operator()<2, 2>(int (&) [2], int (&) [2]) const");
+        QTest::newRow("generic-lambda-4") << "_ZNK6l_var3MUlTtTpTniETpTniRT_IJXspT0_EEEE_clI1XJLi1ELi2ELi3EEEEDaS2_" << (VB << "l_var3" << "{lambda<template<int...> class $TT0, int... $N1>($TT0<($N1)...>&)#1}" << "operator()" << "operator()<X, 1, 2, 3>(X<1, 2, 3>&) const");
+
+        QTest::newRow("extended-builtin-1") << "_Z3xxxDF16_DF32_DF64_DF128_CDF16_Vb" << (VB << "xxx(_Float16, _Float32, _Float64, _Float128, _Float16 _Complex, bool volatile)");
+        QTest::newRow("extended-builtin-2") << "_Z3xxxDF32xDF64xDF128xCDF32xVb" << (VB << "xxx(_Float32x, _Float64x, _Float128x, _Float32x _Complex, bool volatile)");
+        QTest::newRow("extended-builtin-3") << "_Z3xxxDF16b" << (VB << "xxx(std::bfloat16_t)");
+#endif
     }
 
     void testDemangler()
@@ -132,6 +144,10 @@ private Q_SLOTS:
             qDebug() << expectedDemangled;
         }
         QEXPECT_FAIL("nested types", "bug in pointer handling", Continue);
+        QEXPECT_FAIL("generic-lambda-1", "generic lambda template argument handling missing", Continue);
+        QEXPECT_FAIL("generic-lambda-2", "generic lambda template argument handling missing", Continue);
+        QEXPECT_FAIL("generic-lambda-3", "generic lambda template argument handling missing", Continue);
+        QEXPECT_FAIL("generic-lambda-4", "generic lambda template argument handling missing", Continue);
         QCOMPARE(actualDemangled, expectedDemangled);
     }
 
