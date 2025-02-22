@@ -4,6 +4,7 @@ include(FindPackageHandleStandardArgs)
 
 find_path(Iberty_INCLUDE_DIR demangle.h PATH_SUFFIXES libiberty)
 find_library(Iberty_LIBRARY NAMES iberty)
+message(STATUS "Found libiberty: ${Iberty_LIBRARY}")
 
 find_package_handle_standard_args(Iberty DEFAULT_MSG Iberty_LIBRARY Iberty_INCLUDE_DIR)
 
@@ -48,7 +49,8 @@ mark_as_advanced(Iberty_LIBRARY Iberty_INCLUDE_DIR)
 
 
 find_path(Opcodes_INCLUDE_DIR dis-asm.h)
-find_library(Opcodes_LIBRARY NAMES opcodes)
+find_library(Opcodes_LIBRARY NAMES libopcodes.a opcodes)
+message(STATUS "Found libopcodes: ${Opcodes_LIBRARY}")
 
 find_package_handle_standard_args(Opcodes DEFAULT_MSG Opcodes_INCLUDE_DIR Opcodes_LIBRARY)
 
