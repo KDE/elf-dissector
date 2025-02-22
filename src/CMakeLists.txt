@@ -2,5 +2,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 add_subdirectory(lib)
-add_subdirectory(cli)
+if (NOT ELF_DISSECTOR_NO_CLI_TOOLS)
+    add_subdirectory(cli)
+endif()
 add_subdirectory(ui)

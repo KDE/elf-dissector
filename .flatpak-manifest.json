@@ -1,0 +1,59 @@
+{
+    "id": "org.kde.elf-dissector",
+    "branch": "master",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.8",
+    "sdk": "org.kde.Sdk",
+    "command": "elf-dissector",
+    "tags": ["nightly"],
+    "desktop-file-name-suffix": " (Nightly)",
+    "finish-args": [
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--device=dri",
+        "--share=network"
+    ],
+
+    "modules": [
+        {
+            "name": "binutils",
+            "buildsystem": "simple",
+            "build-commands": [
+                "cd libiberty && ./configure --enable-install-libiberty --prefix=/app",
+                "cd libiberty && make -j$FLATPAK_BUILDER_N_JOBS",
+                "cd libiberty && make install",
+                "cd opcodes && ./configure --prefix=/app",
+                "cd opcodes && make -j$FLATPAK_BUILDER_N_JOBS",
+                "cd opcodes && make install",
+                "find /app"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://ftp.gnu.org/gnu/binutils/binutils-2.44.tar.bz2",
+                    "sha256": "f66390a661faa117d00fab2e79cf2dc9d097b42cc296bf3f8677d1e7b452dc3a"
+                }
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/*.a",
+                "/share"
+            ]
+        },
+        {
+            "name": "elf-dissector",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DBUILD_TESTING=OFF",
+                "-DELF_DISSECTOR_NO_CLI_TOOLS=ON"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "."
+                }
+            ]
+        }
+    ]
+}
