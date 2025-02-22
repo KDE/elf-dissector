@@ -131,7 +131,7 @@ private Q_SLOTS:
         QTest::newRow("extended-builtin-3") << "_Z3xxxDF16b" << (VB << "xxx(std::bfloat16_t)");
 #endif
 
-#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 41)
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 42)
         QTest::newRow("friend") << "_ZN1SILi1EEF3barIiEEiR4Base" << (VB << "S" << "S<1>" << "bar[friend]" << "bar[friend]<int>(Base&)");
 
         QTest::newRow("requires-1") << "_Z1fIiQ1CIT_EEvv" << (VB << "f" << "f<int> requires C<int>()");
