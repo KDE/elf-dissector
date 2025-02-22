@@ -12,7 +12,8 @@
         "--socket=fallback-x11",
         "--socket=wayland",
         "--device=dri",
-        "--share=network"
+        "--share=network",
+        "--filesystem=host:ro"
     ],
 
     "modules": [
