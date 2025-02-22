@@ -425,6 +425,12 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 42)
+        case DEMANGLE_COMPONENT_FRIEND:
+            writeNode("FRIEND");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            break;
+#endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
         case DEMANGLE_COMPONENT_NOEXCEPT:
             writeNode("NOEXCEPT");
@@ -491,6 +497,13 @@ static int handleNameComponent(demangle_component* component)
             writeNode(QByteArray("EXTENDED_BUILTIN_TYPE: ")
                 + QByteArray(component->u.s_extended_builtin.type->name, component->u.s_extended_builtin.type->len)
                 + QByteArray::number(component->u.s_extended_builtin.arg) + component->u.s_extended_builtin.suffix);
+            break;
+#endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 42)
+        case DEMANGLE_COMPONENT_CONSTRAINTS:
+            writeNode("CONSTRAINTS");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
 #endif
     }

@@ -130,6 +130,13 @@ private Q_SLOTS:
         QTest::newRow("extended-builtin-2") << "_Z3xxxDF32xDF64xDF128xCDF32xVb" << (VB << "xxx(_Float32x, _Float64x, _Float128x, _Float32x _Complex, bool volatile)");
         QTest::newRow("extended-builtin-3") << "_Z3xxxDF16b" << (VB << "xxx(std::bfloat16_t)");
 #endif
+
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 41)
+        QTest::newRow("friend") << "_ZN1SILi1EEF3barIiEEiR4Base" << (VB << "S" << "S<1>" << "bar[friend]" << "bar[friend]<int>(Base&)");
+
+        QTest::newRow("requires-1") << "_Z1fIiQ1CIT_EEvv" << (VB << "f" << "f<int> requires C<int>()");
+        QTest::newRow("requires-2") << "_Z1fIiEvvQ1CIT_E" << (VB << "f" << "f<int>() requires C<int>");
+#endif
     }
 
     void testDemangler()

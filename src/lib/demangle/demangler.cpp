@@ -141,10 +141,24 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
                 handleNameComponent(component->u.s_binary.left, nameParts);
             }
             QList<QByteArray> args;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 42)
+            if (component->u.s_binary.right->type == DEMANGLE_COMPONENT_CONSTRAINTS) {
+                handleNameComponent(component->u.s_binary.right->u.s_binary.left, args);
+            } else {
+                handleNameComponent(component->u.s_binary.right, args);
+            }
+#else
             handleNameComponent(component->u.s_binary.right, args);
-            const QByteArray fullTemplate = nameParts.last() + '<' + join(args, ", ") + '>';
+#endif
+            QByteArray fullTemplate = nameParts.last() + '<' + join(args, ", ") + '>';
             if (m_inArgList) // we only want the template grouping on top-level
                 nameParts.removeLast();
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 42)
+            if (component->u.s_binary.right->type == DEMANGLE_COMPONENT_CONSTRAINTS) {
+                handleNameComponent(component->u.s_binary.right->u.s_binary.right, args);
+                fullTemplate += " requires " + args.last();
+            }
+#endif
             nameParts.push_back(fullTemplate);
             break;
         }
@@ -554,6 +568,12 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             break;
         }
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 42)
+        case DEMANGLE_COMPONENT_FRIEND:
+            handleOptionalNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last() += "[friend]";
+            break;
+#endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
         case DEMANGLE_COMPONENT_NOEXCEPT:
         {
@@ -649,6 +669,16 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
                 n += component->u.s_extended_builtin.suffix;
             }
             nameParts.push_back(n);
+            break;
+        }
+#endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 42)
+        case DEMANGLE_COMPONENT_CONSTRAINTS:
+        {
+            QList<QByteArray> args;
+            handleNameComponent(component->u.s_binary.left, args);
+            handleNameComponent(component->u.s_binary.right, args);
+            nameParts.push_back(args.front() + " requires " + args.back());
             break;
         }
 #endif
