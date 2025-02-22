@@ -332,6 +332,10 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
                 m_pendingPointer = previousPendingPointer;
             }
             fullName.append('(' + join(args, ", ") + ')');
+            if (m_explicitThisArg) {
+                fullName.insert(1, "this ");
+                m_explicitThisArg = false;
+            }
             nameParts.push_back(fullName);
             break;
         }
@@ -681,6 +685,12 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             nameParts.push_back(args.front() + " requires " + args.back());
             break;
         }
+#endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 43)
+        case DEMANGLE_COMPONENT_XOBJ_MEMBER_FUNCTION:
+            m_explicitThisArg = true;
+            handleOperatorComponent(component->u.s_binary.left, nameParts);
+            break;
 #endif
         default:
             qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type << m_mangledName;

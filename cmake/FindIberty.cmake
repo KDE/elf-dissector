@@ -147,6 +147,17 @@ if(Binutils_HAVE_DEMANGLE_COMPONENT_CONSTRAINTS)
   set(Binutils_VERSION_MINOR 42)
 endif()
 
+check_c_source_compiles("
+    #include <demangle.h>
+    int main(int argc, char **argv) {
+        return DEMANGLE_COMPONENT_XOBJ_MEMBER_FUNCTION;
+    }"
+    Binutils_HAVE_DEMANGLE_COMPONENT_XOBJ_MEMBER_FUNCTION
+)
+if(Binutils_HAVE_DEMANGLE_COMPONENT_XOBJ_MEMBER_FUNCTION)
+  set(Binutils_VERSION_MINOR 43)
+endif()
+
 if(TARGET Binutils::Iberty)
    target_link_libraries(Binutils::Iberty INTERFACE Binutils::Opcodes)
 endif()

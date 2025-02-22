@@ -137,6 +137,12 @@ private Q_SLOTS:
         QTest::newRow("requires-1") << "_Z1fIiQ1CIT_EEvv" << (VB << "f" << "f<int> requires C<int>()");
         QTest::newRow("requires-2") << "_Z1fIiEvvQ1CIT_E" << (VB << "f" << "f<int>() requires C<int>");
 #endif
+
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 43)
+        QTest::newRow("explicit-object-parameter-1") << "_ZNH1S3fooES_" << (VB << "S" << "foo(this S)");
+        QTest::newRow("explicit-object-parameter-2") << "_ZNH1S3barILi5EiEEvS_T0_" << (VB << "S" << "bar" << "bar<5, int>(this S, int)");
+        QTest::newRow("explicit-object-parameter-3") << "_ZNH1S3bazERKS_" << (VB << "S" << "baz(this S const&)");
+#endif
     }
 
     void testDemangler()

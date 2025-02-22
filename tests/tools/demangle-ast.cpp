@@ -506,6 +506,12 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
 #endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 43)
+        case DEMANGLE_COMPONENT_XOBJ_MEMBER_FUNCTION:
+            writeNode("EXPLICIT_OBJECT_PARAMETER");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            break;
+#endif
     }
     return sourceNode;
 }

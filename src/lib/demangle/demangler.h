@@ -54,6 +54,7 @@ private:
     bool m_pendingPointer = false;
     bool m_pendingReference = false;
     bool m_indexTemplateArgs = false;
+    bool m_explicitThisArg = false;
 
     // TODO shared value caching
 };
