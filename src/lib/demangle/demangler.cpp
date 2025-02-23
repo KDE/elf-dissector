@@ -504,6 +504,16 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             nameParts.push_back(typeStr);
             break;
         }
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 37)
+        case DEMANGLE_COMPONENT_VENDOR_EXPR:
+        {
+            QList<QByteArray> args;
+            handleOptionalNameComponent(component->u.s_binary.left, args);
+            handleOptionalNameComponent(component->u.s_binary.right, args);
+            nameParts.push_back(args.front() + '(' + args.back() + ')');
+            break;
+        }
+#endif
         case DEMANGLE_COMPONENT_NUMBER:
             nameParts.push_back(QByteArray::number((int)component->u.s_number.number));
             break;

@@ -349,6 +349,13 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 37)
+        case DEMANGLE_COMPONENT_VENDOR_EXPR:
+            writeNode("VENDOR_EXPR");
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
+            break;
+#endif
         case DEMANGLE_COMPONENT_JAVA_RESOURCE:
             writeNode("JAVA_RESOURCE");
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
