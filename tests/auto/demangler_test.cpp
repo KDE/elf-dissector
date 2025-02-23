@@ -104,8 +104,14 @@ private Q_SLOTS:
         QTest::newRow("initializer list") << "_Z1fP1BIXtl1ALi1EEEE" << (VB << "f(B<A{1}>*)");
         QTest::newRow("template parameter object") << "_ZTAXtl1ALi1EEE" << (VB << "template parameter object for A{1}");
 
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
         QTest::newRow("noexcept") << "_ZSt9__find_ifIPKcN9__gnu_cxx5__ops12_Iter_negateIPDoFiiEEEET_S8_S8_T0_St26random_access_iterator_tag.isra.0"
             << (VB << "std" << "__find_if" << "__find_if<char const*, __gnu_cxx::__ops::_Iter_negate<int (*)(int) noexcept>>(char const*, char const*, __gnu_cxx::__ops::_Iter_negate<int (*)(int) noexcept>, std::random_access_iterator_tag) [clone .isra.0]");
+
+        QTest::newRow("except-1") << "_Z1fIvJiELb0EEvPDOT1_EFT_DpT0_E" << (VB << "f" << "f<void, int, false>(void (*)(int) noexcept(false))");
+        QTest::newRow("except-2") << "_Z1fIvJiELb0EEvPDoFT_DpT0_E" << (VB << "f" << "f<void, int, false>(void (*)(int) noexcept)");
+        QTest::newRow("except-3") << "_Z1fIvJiELb0EEvPDwiEFT_DpT0_E" << (VB << "f" << "f<void, int, false>(void (*)(int) throw(int))");
+#endif
 
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 40)
         QTest::newRow("structured-binding") << "_ZDC1a1bE" << (VB << "[a, b]");

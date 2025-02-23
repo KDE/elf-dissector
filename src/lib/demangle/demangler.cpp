@@ -592,12 +592,23 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
 #endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
         case DEMANGLE_COMPONENT_NOEXCEPT:
-        {
             handleNameComponent(component->u.s_binary.left, nameParts);
-            const auto n = nameParts.takeLast();
-            nameParts.push_back(n + " noexcept");
+            nameParts.last() += " noexcept";
+            if (component->u.s_binary.right) {
+                handleNameComponent(component->u.s_binary.right, nameParts);
+                const auto n = nameParts.takeLast();
+                nameParts.last() += '(' + n + ')';
+            }
             break;
-        }
+        case DEMANGLE_COMPONENT_THROW_SPEC:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last() += " throw";
+            if (component->u.s_binary.right) {
+                handleNameComponent(component->u.s_binary.right, nameParts);
+                const auto n = nameParts.takeLast();
+                nameParts.last() += '(' + n + ')';
+            }
+            break;
 #endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 40)
         case DEMANGLE_COMPONENT_STRUCTURED_BINDING:
