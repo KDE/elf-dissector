@@ -532,6 +532,14 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             handleOptionalNameComponent(component->u.s_binary.left, nameParts);
             handleOptionalNameComponent(component->u.s_binary.right, nameParts);
             break;
+        case DEMANGLE_COMPONENT_GLOBAL_CONSTRUCTORS:
+            handleOptionalNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().insert(0, "global constructors keyed to ");
+            break;
+        case DEMANGLE_COMPONENT_GLOBAL_DESTRUCTORS:
+            handleOptionalNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().insert(0, "global destructor keyed to ");
+            break;
         case DEMANGLE_COMPONENT_LAMBDA:
         {
             QList<QByteArray> args;

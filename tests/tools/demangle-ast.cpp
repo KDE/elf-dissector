@@ -380,11 +380,11 @@ static int handleNameComponent(demangle_component* component)
             break;
         case DEMANGLE_COMPONENT_GLOBAL_CONSTRUCTORS:
             writeNode("GLOBAL_CONSTRUCTORS");
-            // TODO: content?
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
         case DEMANGLE_COMPONENT_GLOBAL_DESTRUCTORS:
             writeNode("GLOBAL_DESTRUCTORS");
-            // TODO: content?
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
         case DEMANGLE_COMPONENT_LAMBDA:
             writeNode(QByteArray("LAMBDA: ") + QByteArray::number(component->u.s_unary_num.num));
