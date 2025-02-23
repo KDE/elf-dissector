@@ -152,11 +152,11 @@ static int handleNameComponent(demangle_component* component)
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
         case DEMANGLE_COMPONENT_TLS_INIT:
             writeNode("TLS_INIT");
-            // content?
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
         case DEMANGLE_COMPONENT_TLS_WRAPPER:
             writeNode("TLS_WRAPPER");
-            // content ??
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
 #endif
         case DEMANGLE_COMPONENT_REFTEMP:

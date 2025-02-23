@@ -222,6 +222,16 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.push_back("guard variable");
             break;
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 24)
+        case DEMANGLE_COMPONENT_TLS_INIT:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().insert(0, "TLS init function for ");
+            break;
+        case DEMANGLE_COMPONENT_TLS_WRAPPER:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().insert(0, "TLS wrapper function for ");
+            break;
+#endif
         case DEMANGLE_COMPONENT_REFTEMP:
         {
             handleNameComponent(component->u.s_binary.left, nameParts);
