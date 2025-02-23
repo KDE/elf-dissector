@@ -496,6 +496,8 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
                 typeStr = type.last();
             } else if (type.first() == "unsigned long") {
                 typeStr = type.last() + "ul";
+            } else if (type.first() == "unsigned int") {
+                typeStr = type.last() + "u";
             } else { // custom type
                 typeStr = '(' + type.first() + ')' + type.last();
             }
