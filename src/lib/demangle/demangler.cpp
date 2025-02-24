@@ -218,6 +218,10 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.push_back("covariant return thunk");
             break;
+        case DEMANGLE_COMPONENT_JAVA_CLASS:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.insert(0, "java Class for ");
+            break;
         case DEMANGLE_COMPONENT_GUARD:
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.push_back("guard variable");
@@ -317,8 +321,15 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             handleNameComponent(component->u.s_binary.left, nameParts);
             nameParts.last().append(" _Complex");
             break;
+        case DEMANGLE_COMPONENT_IMAGINARY:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().append(" _Imaginary");
+            break;
         case DEMANGLE_COMPONENT_BUILTIN_TYPE:
             nameParts.push_back(QByteArray(component->u.s_builtin.type->name, component->u.s_builtin.type->len));
+            break;
+        case DEMANGLE_COMPONENT_VENDOR_TYPE:
+            handleNameComponent(component->u.s_binary.left, nameParts);
             break;
         case DEMANGLE_COMPONENT_FUNCTION_TYPE:
         {
@@ -524,6 +535,21 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             break;
         }
 #endif
+        case DEMANGLE_COMPONENT_JAVA_RESOURCE:
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            nameParts.last().insert(0, "java resource ");
+            break;
+        case DEMANGLE_COMPONENT_COMPOUND_NAME:
+        {
+            handleNameComponent(component->u.s_binary.left, nameParts);
+            handleNameComponent(component->u.s_binary.right, nameParts);
+            const auto n = nameParts.takeLast();
+            nameParts.last() += n;
+            break;
+        }
+        case DEMANGLE_COMPONENT_CHARACTER:
+            nameParts.push_back(QByteArray() + (char)component->u.s_character.character);
+            break;
         case DEMANGLE_COMPONENT_NUMBER:
             nameParts.push_back(QByteArray::number((int)component->u.s_number.number));
             break;
@@ -590,6 +616,12 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             nameParts.push_back(n + "[abi:" + args.last() + ']');
             break;
         }
+#endif
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 27)
+        case DEMANGLE_COMPONENT_TRANSACTION_SAFE:
+            handleOperatorComponent(component->u.s_binary.left, nameParts);
+            nameParts.last() += " transaction_safe";
+            break;
 #endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
         case DEMANGLE_COMPONENT_CLONE:

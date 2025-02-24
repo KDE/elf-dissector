@@ -104,6 +104,12 @@ private Q_SLOTS:
         QTest::newRow("initializer list") << "_Z1fP1BIXtl1ALi1EEEE" << (VB << "f(B<A{1}>*)");
         QTest::newRow("template parameter object") << "_ZTAXtl1ALi1EEE" << (VB << "template parameter object for A{1}");
 
+        QTest::newRow("compound-name") << "_ZGr32_java$Sutil$Siso4217$_properties" << (VB << "java resource java/util/iso4217.properties");
+
+#if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 27)
+        QTest::newRow("transaction-safe") << "_Z1fPDxFvvES0_" << (VB << "f(void (*)() transaction_safe, void (*)() transaction_safe)");
+#endif
+
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 28)
         QTest::newRow("noexcept") << "_ZSt9__find_ifIPKcN9__gnu_cxx5__ops12_Iter_negateIPDoFiiEEEET_S8_S8_T0_St26random_access_iterator_tag.isra.0"
             << (VB << "std" << "__find_if" << "__find_if<char const*, __gnu_cxx::__ops::_Iter_negate<int (*)(int) noexcept>>(char const*, char const*, __gnu_cxx::__ops::_Iter_negate<int (*)(int) noexcept>, std::random_access_iterator_tag) [clone .isra.0]");

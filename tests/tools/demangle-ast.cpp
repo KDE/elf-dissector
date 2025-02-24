@@ -366,8 +366,7 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
         case DEMANGLE_COMPONENT_CHARACTER:
-            writeNode("CHARACTER");
-            // TODO: content?
+            writeNode(QByteArray("CHARACTER: ") + (char)component->u.s_character.character);
             break;
         case DEMANGLE_COMPONENT_NUMBER:
             writeNode(QByteArray("NUMBER: ") + QByteArray::number((int)component->u.s_number.number));
@@ -422,7 +421,7 @@ static int handleNameComponent(demangle_component* component)
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 27)
         case DEMANGLE_COMPONENT_TRANSACTION_SAFE:
             writeNode("TRANSACTION_SAFE");
-            // ??
+            writeLink(sourceNode, handleNameComponent(component->u.s_binary.left));
             break;
 #endif
 #if BINUTILS_VERSION >= BINUTILS_VERSION_CHECK(2, 23)
