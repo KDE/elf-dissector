@@ -93,7 +93,6 @@ static QByteArray join(const QList<QByteArray> &v, const QByteArray &sep)
 
 void Demangler::handleNameComponent(demangle_component* component, QList< QByteArray >& nameParts)
 {
-    // TODO: complete the component types
     switch (component->type) {
         case DEMANGLE_COMPONENT_NAME:
             nameParts.push_back(QByteArray(component->u.s_name.s, component->u.s_name.len));
@@ -391,6 +390,17 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             handleNameComponent(component->u.s_binary.right, nameParts);
             break;
         }
+        case DEMANGLE_COMPONENT_FIXED_TYPE:
+            handleNameComponent(component->u.s_fixed.length, nameParts);
+            if (component->u.s_fixed.sat) {
+                nameParts.last() += " _Sat";
+            }
+            if (component->u.s_fixed.accum) {
+                nameParts.last() += " _Accum";
+            } else {
+                nameParts.last() += " _Fract";
+            }
+            break;
         case DEMANGLE_COMPONENT_VECTOR_TYPE:
         {
             QList<QByteArray> parts;
@@ -765,8 +775,6 @@ void Demangler::handleNameComponent(demangle_component* component, QList< QByteA
             handleOperatorComponent(component->u.s_binary.left, nameParts);
             break;
 #endif
-        default:
-            qDebug() << Q_FUNC_INFO << "unhandled component type" << component->type << m_mangledName;
     }
 }
 

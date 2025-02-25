@@ -253,8 +253,8 @@ static int handleNameComponent(demangle_component* component)
             writeLink(sourceNode, handleNameComponent(component->u.s_binary.right));
             break;
         case DEMANGLE_COMPONENT_FIXED_TYPE:
-            writeNode("FIXED_TYPE");
-            // TODO ???
+            writeNode("FIXED_TYPE accum:" + QByteArray::number(component->u.s_fixed.accum) + " sat:" + QByteArray::number(component->u.s_fixed.sat));
+            writeLink(sourceNode, handleNameComponent(component->u.s_fixed.length));
             break;
         case DEMANGLE_COMPONENT_VECTOR_TYPE:
             writeNode("VECTOR_TYPE");
