@@ -160,10 +160,10 @@ void SizeTreeMapView::reloadTreeMap()
 
     struct SymbolNode {
         TreeMapItem *item;
-        QHash<QByteArray, SymbolNode*> children;
+        std::unordered_map<QByteArray, std::unique_ptr<SymbolNode>> children;
     };
 
-    QList<SymbolNode*> sectionItems;
+    std::vector<std::unique_ptr<SymbolNode>> sectionItems;
     sectionItems.resize(file->sectionHeaders().size());
 
     if (!section) {
@@ -179,7 +179,7 @@ void SizeTreeMapView::reloadTreeMap()
                 item->setBackColor(sectionColorizer.nextColor());
             if (ui->actionRelocationHeatmap->isChecked() && shdr->flags() & SHF_WRITE)
                 item->setBackColor(relocColor(relocRatio(shdr)));
-            sectionItems[shdr->sectionIndex()] = new SymbolNode;
+            sectionItems[shdr->sectionIndex()].reset(new SymbolNode);
             sectionItems[shdr->sectionIndex()]->item = item;
         }
     } else {
@@ -188,7 +188,7 @@ void SizeTreeMapView::reloadTreeMap()
         item->setSum(section->header()->size());
         if (ui->actionRelocationHeatmap->isChecked() && section->header()->flags() & SHF_WRITE)
             item->setBackColor(relocColor(relocRatio(section->header())));
-        sectionItems[section->header()->sectionIndex()] = new SymbolNode;
+        sectionItems[section->header()->sectionIndex()].reset(new SymbolNode);
         sectionItems[section->header()->sectionIndex()]->item = item;
     }
 
@@ -201,28 +201,27 @@ void SizeTreeMapView::reloadTreeMap()
             const auto entry = symtab->entry(j);
             if (entry->size() == 0 || !sectionItems.at(entry->sectionIndex()))
                 continue;
-            SymbolNode *parentNode = sectionItems.at(entry->sectionIndex());
+            auto *parentNode = &sectionItems[entry->sectionIndex()];
             const QList<QByteArray> demangledNames = demangler.demangle(entry->name());
             for (const QByteArray &demangledName : demangledNames) {
-                SymbolNode *node = parentNode->children.value(demangledName);
+                auto &node = (*parentNode)->children[demangledName];
                 if (!node) {
-                    node = new SymbolNode;
-                    node->item = new TreeMapItem(parentNode->item);
+                    node.reset(new SymbolNode);
+                    node->item = new TreeMapItem((*parentNode)->item);
                     node->item->setField(0, QString::fromUtf8(demangledName));
-                    if (ui->actionColorizeSymbols->isChecked() && parentNode->item->parent() == baseItem) {
+                    if (ui->actionColorizeSymbols->isChecked() && (*parentNode)->item->parent() == baseItem) {
                         node->item->setBackColor(symbolColorizer.nextColor());
                     } else {
-                        node->item->setBackColor(parentNode->item->backColor());
+                        node->item->setBackColor((*parentNode)->item->backColor());
                     }
-                    parentNode->children.insert(demangledName, node);
                 }
                 node->item->setSum(node->item->sum() + entry->size());
                 node->item->setValue(node->item->sum());
                 node->item->setField(1, QString::number(node->item->sum()));
-                parentNode = node;
+                parentNode = &node;
             }
             if (ui->actionRelocationHeatmap->isChecked() && entry->sectionHeader()->flags() & SHF_WRITE)
-                parentNode->item->setBackColor(relocColor(relocRatio(entry)));
+                (*parentNode)->item->setBackColor(relocColor(relocRatio(entry)));
         }
     }
 
