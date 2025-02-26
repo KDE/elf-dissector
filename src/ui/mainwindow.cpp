@@ -4,6 +4,8 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
+#include "config-elf-dissector.h"
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -22,12 +24,14 @@
 
 #include <elf.h>
 
-static void addView(QStandardItemModel *model, const QString& iconName, const QString& title)
+static void addView(QStandardItemModel *model, const QString& iconName, const QString& title, int index)
 {
     auto icon = QIcon::fromTheme(iconName);
     if (icon.isNull())
         icon = QIcon::fromTheme(QStringLiteral("dialog-information")); // fallback
-    model->appendRow(new QStandardItem(icon, title));
+    auto item = new QStandardItem(icon, title);
+    item->setData(index, Qt::UserRole);
+    model->appendRow(item);
 }
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow), m_elfModel(new ElfModel(this))
@@ -44,15 +48,20 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionReopenPreviousFile, &QAction::triggered, this, &MainWindow::reloadFileOnStartup);
 
     auto viewModel = new QStandardItemModel(this);
-    addView(viewModel, QStringLiteral("document-preview"), QStringLiteral("ELF Structure"));
-    addView(viewModel, QStringLiteral("table"), QStringLiteral("Size Tree Map"));
-    addView(viewModel, QStringLiteral("view-list-tree"), QStringLiteral("Dependencies"));
-    addView(viewModel, QStringLiteral("code-class"), QStringLiteral("Data Types"));
-    addView(viewModel, QStringLiteral("chronometer"), QStringLiteral("Performance"));
-    addView(viewModel, QStringLiteral("dialog-warning"), QStringLiteral("Issues"));
+    addView(viewModel, QStringLiteral("document-preview"), QStringLiteral("ELF Structure"), 0);
+    addView(viewModel, QStringLiteral("table"), QStringLiteral("Size Tree Map"), 1);
+    addView(viewModel, QStringLiteral("view-list-tree"), QStringLiteral("Dependencies"), 2);
+#if HAVE_DWARF
+    addView(viewModel, QStringLiteral("code-class"), QStringLiteral("Data Types"), 3);
+#endif
+    addView(viewModel, QStringLiteral("chronometer"), QStringLiteral("Performance"), 4);
+#if HAVE_DWARF
+    addView(viewModel, QStringLiteral("dialog-warning"), QStringLiteral("Issues"), 5);
+#endif
     ui->viewSelector->setModel(viewModel);
-    connect(ui->viewSelector, &SidePane::currentIndexChanged, this, [this](int index){
-        ui->stackedWidget->setCurrentIndex(index);
+    connect(ui->viewSelector, &SidePane::currentIndexChanged, this, [this, viewModel](int index){
+        const auto viewIdx = viewModel->index(index, 0).data(Qt::UserRole).toInt();
+        ui->stackedWidget->setCurrentIndex(viewIdx);
     });
 
     ui->menuSettings->addAction(CodeNavigator::configMenu(this));
