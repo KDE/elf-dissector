@@ -43,6 +43,26 @@
             ]
         },
         {
+            "name": "capstone",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/capstone-engine/capstone/archive/5.0.tar.gz",
+                    "sha256": "df24344407baa7415eeb006f742afc9b92cd33abf2c4c120a6e97cfb376882dc"
+                }
+            ],
+            "config-opts": [
+                "-DCMAKE_INSTALL_LIBDIR=lib",
+                "-DCAPSTONE_BUILD_CSTOOL=OFF"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib"
+            ]
+        },
+        {
             "name": "elf-dissector",
             "buildsystem": "cmake-ninja",
             "config-opts": [
