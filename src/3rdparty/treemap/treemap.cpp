@@ -358,7 +358,7 @@ int findBreak(int& breakPos, QString text, QFontMetrics* fm, int maxWidth)
     int bottomPos = 0;
     while(1) {
         int halfPos = (bottomPos + breakPos)/2;
-        int halfWidth = fm->horizontalAdvance(text, halfPos);
+        int halfWidth = fm->boundingRect(text.left(halfPos)).width();
         if (halfWidth < maxWidth) {
             bottomPos = halfPos+1;
             continue;
@@ -389,7 +389,7 @@ int findBreak(int& breakPos, QString text, QFontMetrics* fm, int maxWidth)
         lastCat = cat;
 
         breakPos = pos;
-        usedWidth = fm->horizontalAdvance(text, breakPos);
+        usedWidth = fm->boundingRect(text.left(breakPos)).width();
         if (usedWidth < maxWidth) break;
     }
     return usedWidth;
@@ -1084,9 +1084,10 @@ void TreeMapItem::resort(bool recursive)
     if (_sortTextNo != -1)
         std::sort(_children->begin(), _children->end(), treeMapItemLessThan);
 
-    if (recursive)
+    if (recursive) {
         for(TreeMapItem* i : *_children)
             i->resort(recursive);
+    }
 }
 
 
@@ -1607,6 +1608,11 @@ TreeMapItem* TreeMapWidget::item(int x, int y) const
     return nullptr;
 }
 
+TreeMapItem* TreeMapWidget::item(QPointF pos) const
+{
+    return item(qRound(pos.x()), qRound(pos.y()));
+}
+
 TreeMapItem* TreeMapWidget::possibleSelection(TreeMapItem* i) const
 {
     if (i) {
@@ -1859,7 +1865,7 @@ void TreeMapWidget::mousePressEvent( QMouseEvent* e )
 
     _oldCurrent = _current;
 
-    TreeMapItem* i = item(e->x(), e->y());
+    TreeMapItem* i = item(e->position());
 
     _pressed = i;
 
@@ -1926,7 +1932,7 @@ void TreeMapWidget::mouseMoveEvent( QMouseEvent* e )
     //qDebug() << "TreeMapWidget::mouseMoveEvent";
 
     if (!_pressed) return;
-    TreeMapItem* over = item(e->x(), e->y());
+    TreeMapItem* over = item(e->position());
     if (_lastOver == over) return;
 
     setCurrent(over);
@@ -1996,7 +2002,7 @@ void TreeMapWidget::mouseReleaseEvent( QMouseEvent* )
 
 void TreeMapWidget::mouseDoubleClickEvent( QMouseEvent* e )
 {
-    TreeMapItem* over = item(e->x(), e->y());
+    TreeMapItem* over = item(e->position());
 
     Q_EMIT doubleClicked(over);
 }
@@ -2869,4 +2875,4 @@ void TreeMapWidget::addSplitDirectionItems(QMenu* m)
     addSplitAction(m, tr("Vertical"), TreeMapItem::Vertical);
 }
 
-
+#include "moc_treemap.cpp"
