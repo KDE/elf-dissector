@@ -15,53 +15,53 @@ msgstr ""
 "X-Crowdin-File: /kf6-trunk/messages/elf-dissector/elf-dissector_qt.pot\n"
 "X-Crowdin-File-ID: 57170\n"
 
-#: 3rdparty/treemap/treemap.cpp:1341
+#: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
 msgctxt "TreeMapWidget|"
 msgid "Text %1"
 msgstr "文本 %1"
 
-#: 3rdparty/treemap/treemap.cpp:2861
+#: 3rdparty/treemap/treemap.cpp:2867
 msgctxt "TreeMapWidget|"
 msgid "Recursive Bisection"
 msgstr "递归二分"
 
-#: 3rdparty/treemap/treemap.cpp:2862
+#: 3rdparty/treemap/treemap.cpp:2868
 msgctxt "TreeMapWidget|"
 msgid "Columns"
 msgstr "列"
 
-#: 3rdparty/treemap/treemap.cpp:2863
+#: 3rdparty/treemap/treemap.cpp:2869
 msgctxt "TreeMapWidget|"
 msgid "Rows"
 msgstr "行"
 
-#: 3rdparty/treemap/treemap.cpp:2864
+#: 3rdparty/treemap/treemap.cpp:2870
 msgctxt "TreeMapWidget|"
 msgid "Always Best"
 msgstr "总是最好"
 
-#: 3rdparty/treemap/treemap.cpp:2865
+#: 3rdparty/treemap/treemap.cpp:2871
 msgctxt "TreeMapWidget|"
 msgid "Best"
 msgstr "最好"
 
-#: 3rdparty/treemap/treemap.cpp:2866
+#: 3rdparty/treemap/treemap.cpp:2872
 msgctxt "TreeMapWidget|"
 msgid "Alternate (V)"
 msgstr "备选 (纵)"
 
-#: 3rdparty/treemap/treemap.cpp:2867
+#: 3rdparty/treemap/treemap.cpp:2873
 msgctxt "TreeMapWidget|"
 msgid "Alternate (H)"
 msgstr "备选 (横)"
 
-#: 3rdparty/treemap/treemap.cpp:2868
+#: 3rdparty/treemap/treemap.cpp:2874
 msgctxt "TreeMapWidget|"
 msgid "Horizontal"
 msgstr "横向"
 
-#: 3rdparty/treemap/treemap.cpp:2869
+#: 3rdparty/treemap/treemap.cpp:2875
 msgctxt "TreeMapWidget|"
 msgid "Vertical"
 msgstr "纵向"
@@ -198,29 +198,29 @@ msgctxt "MainWindow|"
 msgid "ELF file to open"
 msgstr "要打开的 ELF 文件"
 
-#: ui/mainwindow.cpp:83
+#: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
 msgstr "打开 ELF 对象"
 
-#: ui/mainwindow.cpp:131
+#: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
 msgstr "加载 ELF 文件失败"
 
-#: ui/mainwindow.cpp:131
+#: ui/mainwindow.cpp:140
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Could not load %1."
 msgstr "无法加载 %1。"
 
-#: ui/mainwindow.cpp:135
+#: ui/mainwindow.cpp:144
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
 msgstr "加载 %1 失败。"
 
-#: ui/mainwindow.cpp:142
+#: ui/mainwindow.cpp:151
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Loaded %1."

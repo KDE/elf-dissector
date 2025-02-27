@@ -20,53 +20,53 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 19.11.70\n"
 
-#: 3rdparty/treemap/treemap.cpp:1341
+#: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
 msgctxt "TreeMapWidget|"
 msgid "Text %1"
 msgstr "Текст %1"
 
-#: 3rdparty/treemap/treemap.cpp:2861
+#: 3rdparty/treemap/treemap.cpp:2867
 msgctxt "TreeMapWidget|"
 msgid "Recursive Bisection"
 msgstr "Рекурсивний поділ навпіл"
 
-#: 3rdparty/treemap/treemap.cpp:2862
+#: 3rdparty/treemap/treemap.cpp:2868
 msgctxt "TreeMapWidget|"
 msgid "Columns"
 msgstr "Стовпчики"
 
-#: 3rdparty/treemap/treemap.cpp:2863
+#: 3rdparty/treemap/treemap.cpp:2869
 msgctxt "TreeMapWidget|"
 msgid "Rows"
 msgstr "Рядки"
 
-#: 3rdparty/treemap/treemap.cpp:2864
+#: 3rdparty/treemap/treemap.cpp:2870
 msgctxt "TreeMapWidget|"
 msgid "Always Best"
 msgstr "Завжди найкраще"
 
-#: 3rdparty/treemap/treemap.cpp:2865
+#: 3rdparty/treemap/treemap.cpp:2871
 msgctxt "TreeMapWidget|"
 msgid "Best"
 msgstr "Найкраще"
 
-#: 3rdparty/treemap/treemap.cpp:2866
+#: 3rdparty/treemap/treemap.cpp:2872
 msgctxt "TreeMapWidget|"
 msgid "Alternate (V)"
 msgstr "Альтернативне (верт.)"
 
-#: 3rdparty/treemap/treemap.cpp:2867
+#: 3rdparty/treemap/treemap.cpp:2873
 msgctxt "TreeMapWidget|"
 msgid "Alternate (H)"
 msgstr "Альтернативне (гориз.)"
 
-#: 3rdparty/treemap/treemap.cpp:2868
+#: 3rdparty/treemap/treemap.cpp:2874
 msgctxt "TreeMapWidget|"
 msgid "Horizontal"
 msgstr "Горизонтально"
 
-#: 3rdparty/treemap/treemap.cpp:2869
+#: 3rdparty/treemap/treemap.cpp:2875
 msgctxt "TreeMapWidget|"
 msgid "Vertical"
 msgstr "Вертикально"
@@ -203,29 +203,29 @@ msgctxt "MainWindow|"
 msgid "ELF file to open"
 msgstr "файл ELF, який слід відкрити"
 
-#: ui/mainwindow.cpp:83
+#: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
 msgstr "Відкрити об'єкт ELF"
 
-#: ui/mainwindow.cpp:131
+#: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
 msgstr "Не вдалося завантажити файл ELF"
 
-#: ui/mainwindow.cpp:131
+#: ui/mainwindow.cpp:140
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Could not load %1."
 msgstr "Не вдалося завантажити %1."
 
-#: ui/mainwindow.cpp:135
+#: ui/mainwindow.cpp:144
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
 msgstr "Не вдалося завантажити %1."
 
-#: ui/mainwindow.cpp:142
+#: ui/mainwindow.cpp:151
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Loaded %1."

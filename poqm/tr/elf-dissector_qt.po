@@ -13,53 +13,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 25.03.70\n"
 
-#: 3rdparty/treemap/treemap.cpp:1341
+#: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
 msgctxt "TreeMapWidget|"
 msgid "Text %1"
 msgstr "Metin %1"
 
-#: 3rdparty/treemap/treemap.cpp:2861
+#: 3rdparty/treemap/treemap.cpp:2867
 msgctxt "TreeMapWidget|"
 msgid "Recursive Bisection"
 msgstr "Özyineli İkiye Bölme"
 
-#: 3rdparty/treemap/treemap.cpp:2862
+#: 3rdparty/treemap/treemap.cpp:2868
 msgctxt "TreeMapWidget|"
 msgid "Columns"
 msgstr "Sütunlar"
 
-#: 3rdparty/treemap/treemap.cpp:2863
+#: 3rdparty/treemap/treemap.cpp:2869
 msgctxt "TreeMapWidget|"
 msgid "Rows"
 msgstr "Satırlar"
 
-#: 3rdparty/treemap/treemap.cpp:2864
+#: 3rdparty/treemap/treemap.cpp:2870
 msgctxt "TreeMapWidget|"
 msgid "Always Best"
 msgstr "Her Zaman En İyi"
 
-#: 3rdparty/treemap/treemap.cpp:2865
+#: 3rdparty/treemap/treemap.cpp:2871
 msgctxt "TreeMapWidget|"
 msgid "Best"
 msgstr "En İyi"
 
-#: 3rdparty/treemap/treemap.cpp:2866
+#: 3rdparty/treemap/treemap.cpp:2872
 msgctxt "TreeMapWidget|"
 msgid "Alternate (V)"
 msgstr "Arasında Döndür (D)"
 
-#: 3rdparty/treemap/treemap.cpp:2867
+#: 3rdparty/treemap/treemap.cpp:2873
 msgctxt "TreeMapWidget|"
 msgid "Alternate (H)"
 msgstr "Arasında Döndür (Y)"
 
-#: 3rdparty/treemap/treemap.cpp:2868
+#: 3rdparty/treemap/treemap.cpp:2874
 msgctxt "TreeMapWidget|"
 msgid "Horizontal"
 msgstr "Yatay"
 
-#: 3rdparty/treemap/treemap.cpp:2869
+#: 3rdparty/treemap/treemap.cpp:2875
 msgctxt "TreeMapWidget|"
 msgid "Vertical"
 msgstr "Dikey"
@@ -196,29 +196,29 @@ msgctxt "MainWindow|"
 msgid "ELF file to open"
 msgstr "Açılacak ELF dosyası"
 
-#: ui/mainwindow.cpp:83
+#: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
 msgstr "ELF Nesnesi Aç"
 
-#: ui/mainwindow.cpp:131
+#: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
 msgstr "ELF dosyası yüklenemedi"
 
-#: ui/mainwindow.cpp:131
+#: ui/mainwindow.cpp:140
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Could not load %1."
 msgstr "%1 yüklenemedi."
 
-#: ui/mainwindow.cpp:135
+#: ui/mainwindow.cpp:144
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
 msgstr "%1 yüklemesi başarısız."
 
-#: ui/mainwindow.cpp:142
+#: ui/mainwindow.cpp:151
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Loaded %1."

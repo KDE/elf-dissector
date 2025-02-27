@@ -1,8 +1,8 @@
-# Giovanni Sora <g.sora@tiscali.it>, 2020, 2021.
+# SPDX-FileCopyrightText: 2020, 2021, 2025 Giovanni Sora <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2021-11-10 22:06+0100\n"
+"PO-Revision-Date: 2025-02-26 10:02+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -11,55 +11,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.08.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
-#: 3rdparty/treemap/treemap.cpp:1341
+#: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
 msgctxt "TreeMapWidget|"
 msgid "Text %1"
 msgstr "Texto %1"
 
-#: 3rdparty/treemap/treemap.cpp:2861
+#: 3rdparty/treemap/treemap.cpp:2867
 msgctxt "TreeMapWidget|"
 msgid "Recursive Bisection"
 msgstr "Bisection recursive"
 
-#: 3rdparty/treemap/treemap.cpp:2862
+#: 3rdparty/treemap/treemap.cpp:2868
 msgctxt "TreeMapWidget|"
 msgid "Columns"
 msgstr "Columnas"
 
-#: 3rdparty/treemap/treemap.cpp:2863
+#: 3rdparty/treemap/treemap.cpp:2869
 msgctxt "TreeMapWidget|"
 msgid "Rows"
 msgstr "Rangos"
 
-#: 3rdparty/treemap/treemap.cpp:2864
+#: 3rdparty/treemap/treemap.cpp:2870
 msgctxt "TreeMapWidget|"
 msgid "Always Best"
 msgstr "Sempre melior"
 
-#: 3rdparty/treemap/treemap.cpp:2865
+#: 3rdparty/treemap/treemap.cpp:2871
 msgctxt "TreeMapWidget|"
 msgid "Best"
 msgstr "Melior"
 
-#: 3rdparty/treemap/treemap.cpp:2866
+#: 3rdparty/treemap/treemap.cpp:2872
 msgctxt "TreeMapWidget|"
 msgid "Alternate (V)"
 msgstr "Alternative (V)"
 
-#: 3rdparty/treemap/treemap.cpp:2867
+#: 3rdparty/treemap/treemap.cpp:2873
 msgctxt "TreeMapWidget|"
 msgid "Alternate (H)"
 msgstr "Alternative (H)"
 
-#: 3rdparty/treemap/treemap.cpp:2868
+#: 3rdparty/treemap/treemap.cpp:2874
 msgctxt "TreeMapWidget|"
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: 3rdparty/treemap/treemap.cpp:2869
+#: 3rdparty/treemap/treemap.cpp:2875
 msgctxt "TreeMapWidget|"
 msgid "Vertical"
 msgstr "Vertical"
@@ -196,29 +196,29 @@ msgctxt "MainWindow|"
 msgid "ELF file to open"
 msgstr ""
 
-#: ui/mainwindow.cpp:83
+#: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
 msgstr ""
 
-#: ui/mainwindow.cpp:131
+#: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
 msgstr ""
 
-#: ui/mainwindow.cpp:131
+#: ui/mainwindow.cpp:140
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Could not load %1."
 msgstr ""
 
-#: ui/mainwindow.cpp:135
+#: ui/mainwindow.cpp:144
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
 msgstr "Il falleva a cargar %1."
 
-#: ui/mainwindow.cpp:142
+#: ui/mainwindow.cpp:151
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Loaded %1."
@@ -257,7 +257,7 @@ msgstr "&Quita"
 #: ui/mainwindow.ui:116
 msgctxt "MainWindow|"
 msgid "Ctrl+Q"
-msgstr ""
+msgstr "Ctrl+Q"
 
 #: ui/mainwindow.ui:129
 msgctxt "MainWindow|"
@@ -331,7 +331,7 @@ msgstr "Cerca"
 #: ui/views/dependencyview.ui:80
 msgctxt "DependencyView|"
 msgid "Inverse"
-msgstr ""
+msgstr "Revertite"
 
 #: ui/views/dependencyview.ui:172
 msgctxt "DependencyView|"
