@@ -53,12 +53,15 @@ private Q_SLOTS:
             if (lowPC.isNull() && ranges.isNull())
                 continue;
 
-            QVERIFY(lowPC.isNull() != ranges.isNull()); // exactly one of them must be present
-            if (lowPC.isNull()) {
+            if (cu->version() < 5) {
+                QVERIFY(lowPC.isNull() != ranges.isNull()); // exactly one of them must be present in DWARF version < 5
+            }
+            if (ranges.userType() == qMetaTypeId<DwarfRanges>()) {
                 const auto r = ranges.value<DwarfRanges>();
                 QVERIFY(r.isValid());
                 QVERIFY(r.size() > 0);
-            } else {
+            }
+            if (!lowPC.isNull() && lowPC.value<uint64_t>() != 0) {
                 const auto textSection = f.section<ElfSection>(f.indexOfSection(".text"));
                 QVERIFY(lowPC.value<uint64_t>() >= textSection->header()->virtualAddress());
                 QVERIFY(lowPC.value<uint64_t>() < textSection->header()->virtualAddress() + textSection->header()->size());

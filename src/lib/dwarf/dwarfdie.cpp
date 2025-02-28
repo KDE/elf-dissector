@@ -462,6 +462,7 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
         }
         case DW_FORM_string:
         case DW_FORM_strp:
+        case DW_FORM_line_strp:
         {
             char *str;
             res = dwarf_formstring(attr, &str, nullptr);
@@ -476,10 +477,18 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
             value = b ? true : false;
             break;
         }
+        case DW_FORM_ref_addr:
+        {
+            Dwarf_Off offset;
+            res = dwarf_global_formref(attr, &offset, nullptr);
+            value = QVariant::fromValue(dwarfInfo()->dieAtOffset(offset));
+            break;
+        }
         case DW_FORM_ref1:
         case DW_FORM_ref2:
         case DW_FORM_ref4:
         case DW_FORM_ref8:
+        case DW_FORM_ref_udata:
         {
             Dwarf_Off offset;
             res = dwarf_global_formref(attr, &offset, nullptr);
@@ -510,6 +519,13 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
             value = QVariant::fromValue(DwarfExpression(block, len, dwarfInfo()->elfFile()->addressSize()));
             break;
         }
+        case DW_FORM_implicit_const:
+        {
+            Dwarf_Signed n;
+            res = dwarf_formsdata(attr, &n, nullptr);
+            value = static_cast<qlonglong>(n);
+            break;
+        }
         default:
         {
             const char* formName;
@@ -532,7 +548,9 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
             break;
         }
         case DW_AT_ranges:
-            value = QVariant::fromValue(DwarfRanges(this, value.toLongLong()));
+            if (version() < 5) {
+                value = QVariant::fromValue(DwarfRanges(this, value.toLongLong()));
+            }
             break;
         case DW_AT_accessibility:
             stringifyEnum(value, &dwarf_get_ACCESS_name);
