@@ -27,10 +27,10 @@ Dwarf_Unsigned DwarfLine::line() const
     return 0;
 }
 
-Dwarf_Signed DwarfLine::column() const
+Dwarf_Unsigned DwarfLine::column() const
 {
-    Dwarf_Signed n = 0;
-    if (dwarf_lineoff(m_line, &n, nullptr) == DW_DLV_OK)
+    Dwarf_Unsigned n = 0;
+    if (dwarf_lineoff_b(m_line, &n, nullptr) == DW_DLV_OK)
         return n;
     return 0;
 }

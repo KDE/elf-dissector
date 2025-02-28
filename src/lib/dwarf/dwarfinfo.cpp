@@ -28,8 +28,8 @@ public:
 
     ElfFile *elfFile = nullptr;
     QList<DwarfCuDie*> compilationUnits;
-    Dwarf_Obj_Access_Interface objAccessIface;
-    Dwarf_Obj_Access_Methods objAccessMethods;
+    Dwarf_Obj_Access_Interface_a objAccessIface;
+    Dwarf_Obj_Access_Methods_a objAccessMethods;
 
     Dwarf_Debug dbg;
 
@@ -40,10 +40,10 @@ public:
 };
 
 
-static Dwarf_Endianness callback_get_byte_order(void *obj)
+static Dwarf_Small callback_get_byte_order(void *obj)
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
-    return d->elfFile->byteOrder() == ELFDATA2LSB ? DW_OBJECT_LSB : DW_OBJECT_MSB;
+    return d->elfFile->byteOrder() == ELFDATA2LSB ? DW_END_little : DW_END_big;
 }
 
 static Dwarf_Small callback_get_length_size(void *obj)
@@ -84,18 +84,18 @@ static void callback_dwarf_handler(Dwarf_Error error, Dwarf_Ptr errarg)
     d->isValid = false;
 }
 
-static int callback_get_section_info(void *obj, Dwarf_Half index, Dwarf_Obj_Access_Section *sectionInfo, int *error)
+static int callback_get_section_info(void *obj, Dwarf_Unsigned index, Dwarf_Obj_Access_Section_a *sectionInfo, int *error)
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
     const auto sectionHeader = d->elfFile->sectionHeaders().at(index);
-    sectionInfo->addr = (Dwarf_Addr)(d->elfFile->rawData() + sectionHeader->sectionOffset());
-    sectionInfo->size = sectionHeader->size();
-    sectionInfo->name = sectionHeader->name();
+    sectionInfo->as_addr = (Dwarf_Addr)(d->elfFile->rawData() + sectionHeader->sectionOffset());
+    sectionInfo->as_size = sectionHeader->size();
+    sectionInfo->as_name = sectionHeader->name();
     *error = DW_DLV_OK;
     return DW_DLV_OK;
 }
 
-static int callback_load_section(void *obj, Dwarf_Half index, Dwarf_Small **returnData, int *error)
+static int callback_load_section(void *obj, Dwarf_Unsigned index, Dwarf_Small **returnData, int *error)
 {
     const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
     const auto sectionHeader = d->elfFile->sectionHeaders().at(index);
@@ -104,39 +104,39 @@ static int callback_load_section(void *obj, Dwarf_Half index, Dwarf_Small **retu
     return DW_DLV_OK;
 }
 
+static Dwarf_Unsigned callback_get_filesize(void *obj)
+{
+    const DwarfInfoPrivate *d = reinterpret_cast<DwarfInfoPrivate*>(obj);
+    return d->elfFile->size();
+}
 
 DwarfInfoPrivate::DwarfInfoPrivate(DwarfInfo *qq) :
     q(qq),
     isValid(true)
 {
-    objAccessIface.object = this;
-    objAccessIface.methods = &objAccessMethods;
-    objAccessMethods.get_byte_order = callback_get_byte_order;
-    objAccessMethods.get_length_size = callback_get_length_size;
-    objAccessMethods.get_pointer_size = callback_get_pointer_size;
-    objAccessMethods.get_section_count = callback_get_section_count;
-    objAccessMethods.get_section_info = callback_get_section_info;
-    objAccessMethods.load_section = callback_load_section;
-#ifndef Q_OS_FREEBSD
-    // TODO: check structure fields at cmake or compile time
-    //       rather than ifdeffing on an OS.
-    //
-    // FreeBSD's DWARF.h doesn't have this (separate developments).
-    objAccessMethods.relocate_a_section = nullptr;
-#endif
+    objAccessIface.ai_object = this;
+    objAccessIface.ai_methods = &objAccessMethods;
+    objAccessMethods.om_get_byte_order = callback_get_byte_order;
+    objAccessMethods.om_get_length_size = callback_get_length_size;
+    objAccessMethods.om_get_pointer_size = callback_get_pointer_size;
+    objAccessMethods.om_get_section_count = callback_get_section_count;
+    objAccessMethods.om_get_section_info = callback_get_section_info;
+    objAccessMethods.om_load_section = callback_load_section;
+    objAccessMethods.om_get_filesize = callback_get_filesize;
+    objAccessMethods.om_relocate_a_section = nullptr;
 }
 
 DwarfInfoPrivate::~DwarfInfoPrivate()
 {
     qDeleteAll(compilationUnits);
-    dwarf_object_finish(dbg, nullptr);
+    dwarf_object_finish(dbg);
 }
 
 void DwarfInfoPrivate::scanCompilationUnits()
 {
     Dwarf_Unsigned nextHeader = 0;
     while (true) {
-        auto res = dwarf_next_cu_header(dbg, nullptr, nullptr, nullptr, nullptr, &nextHeader, nullptr);
+        auto res = dwarf_next_cu_header_d(dbg, true, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, &nextHeader, nullptr, nullptr);
         if (res != DW_DLV_OK)
             return;
 
@@ -167,7 +167,8 @@ DwarfInfo::DwarfInfo(ElfFile* elfFile) :
 {
     d->elfFile = elfFile;
 
-    if (dwarf_object_init(&d->objAccessIface, &callback_dwarf_handler, d.get(), &d->dbg, nullptr) != DW_DLV_OK) {
+    Dwarf_Error err = nullptr;
+    if (dwarf_object_init_b(&d->objAccessIface, &callback_dwarf_handler, d.get(), DW_GROUPNUMBER_ANY, &d->dbg, &err) != DW_DLV_OK) {
         qDebug() << "error loading dwarf data";
     }
 }

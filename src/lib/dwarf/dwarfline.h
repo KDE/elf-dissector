@@ -23,7 +23,7 @@ public:
     bool isNull() const;
 
     Dwarf_Unsigned line() const;
-    Dwarf_Signed column() const;
+    Dwarf_Unsigned column() const;
     Dwarf_Addr address() const;
 
 protected:
