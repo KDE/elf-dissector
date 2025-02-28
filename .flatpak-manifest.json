@@ -86,9 +86,12 @@
             "buildsystem": "autotools",
             "builddir": true,
             "config-opts": [
-                "--without-x11",
-                "--without-qt"
+                "--without-x",
+                "--without-qt",
+                "--without-latex",
+                "--without-tektronix"
             ],
+            "no-parallel-make": true,
             "sources": [
                 {
                     "type": "archive",
