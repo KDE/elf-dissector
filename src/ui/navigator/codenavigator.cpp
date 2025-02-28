@@ -57,8 +57,10 @@ void CodeNavigator::goTo(const QString& filePath, int line)
     command.replace(QLatin1String("%f"), filePath);
     command.replace(QLatin1String("%l"), QString::number(std::max(0, line)));
 
-    if (!command.isEmpty())
-        QProcess::startDetached(command);
+    const auto args = QProcess::splitCommand(command);
+    if (!args.isEmpty()) {
+        QProcess::startDetached(args.front(), args.mid(1));
+    }
 }
 
 void CodeNavigator::goTo(const QUrl& url)
