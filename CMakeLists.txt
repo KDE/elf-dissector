@@ -52,9 +52,9 @@ endif()
 find_package(Qt6 6.7 COMPONENTS Widgets Test NO_MODULE REQUIRED)
 
 find_package(Iberty REQUIRED)
-#find_package(Dwarf)
+find_package(Dwarf 0.10)
 if (TARGET Dwarf::Dwarf)
-    set(HAVE_DWARF TRUE)
+    #set(HAVE_DWARF TRUE) TODO
 endif()
 if (NOT OPCODES_FOUND)
     message(FATAL_ERROR "Binutils::Opcodes library not found")

@@ -43,6 +43,25 @@
             ]
         },
         {
+            "name": "libdwarf",
+            "buildsystem": "autotools",
+            "builddir": true,
+            "config-opts": [
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/davea42/libdwarf-code/releases/download/v0.11.1/libdwarf-0.11.1.tar.xz",
+                    "sha256": "b5be211b1bd0c1ee41b871b543c73cbff5822f76994f6b160fc70d01d1b5a1bf"
+                }
+            ],
+            "cleanup": [
+                "/bin",
+                "/lib",
+                "/share"
+            ]
+        },
+        {
             "name": "capstone",
             "buildsystem": "cmake-ninja",
             "builddir": true,
