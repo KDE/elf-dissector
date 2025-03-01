@@ -17,19 +17,36 @@ find_library(Dwarf_LIBRARY
     HINTS ${PKG_dwarf_LIBDIR} ${PKG_dwarf_LIBRARY_DIRS}
 )
 
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Dwarf
-    FOUND_VAR Dwarf_FOUND
-    REQUIRED_VARS Dwarf_LIBRARY Dwarf_INCLUDE_DIR
-    VERSION_VAR Dwarf_VERSION
-)
+# test if we found the real libdwarf of the FreeBSD variant
+# of the same name but with different API...
+include(CheckCSourceCompiles)
+include(CMakePushCheckState)
+cmake_push_check_state()
+set(CMAKE_REQUIRED_INCLUDES ${Dwarf_INCLUDE_DIR})
+set(CMAKE_REQUIRED_LIBRARIES ${Dwarf_LIBRARY})
+check_c_source_compiles("
+#include <libdwarf.h>
+int main(int argc, char** argv) {
+    Dwarf_Obj_Access_Interface_a objAccessIface;
+    return 0;
+}" Dwarf_ACTUALLY_BUILDS)
+cmake_pop_check_state()
 
-if(Dwarf_FOUND AND NOT TARGET Dwarf::Dwarf)
-    add_library(Dwarf::Dwarf UNKNOWN IMPORTED)
-    set_target_properties(Dwarf::Dwarf PROPERTIES
-        IMPORTED_LOCATION "${Dwarf_LIBRARY}"
-        INTERFACE_INCLUDE_DIRECTORIES "${Dwarf_INCLUDE_DIR}"
+if (Dwarf_ACTUALLY_BUILDS)
+    include(FindPackageHandleStandardArgs)
+    find_package_handle_standard_args(Dwarf
+        FOUND_VAR Dwarf_FOUND
+        REQUIRED_VARS Dwarf_LIBRARY Dwarf_INCLUDE_DIR
+        VERSION_VAR Dwarf_VERSION
     )
+
+    if(Dwarf_FOUND AND NOT TARGET Dwarf::Dwarf)
+        add_library(Dwarf::Dwarf UNKNOWN IMPORTED)
+        set_target_properties(Dwarf::Dwarf PROPERTIES
+            IMPORTED_LOCATION "${Dwarf_LIBRARY}"
+            INTERFACE_INCLUDE_DIRECTORIES "${Dwarf_INCLUDE_DIR}"
+        )
+    endif()
 endif()
 
 mark_as_advanced(Dwarf_LIBRARY Dwarf_INCLUDE_DIR Dwarf_VERSION)
