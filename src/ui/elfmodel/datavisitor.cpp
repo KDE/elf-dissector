@@ -783,6 +783,7 @@ QString DataVisitor::printDwarfDie(DwarfDie* die) const
     s += "TAG: "_L1 + QLatin1String(die->tagName()) + "<br/>"_L1;
     s += "Name: "_L1 + QString::fromUtf8(die->name()).toHtmlEscaped() + "<br/>"_L1;
     s += "Offset: "_L1 + QString::number(die->offset()) + "<br/>"_L1;
+    s += "Version: "_L1 + QString::number(die->version()) + "<br/>"_L1;
     for (const auto attrType : die->attributes()) {
         const QVariant attrValue = die->attribute(attrType);
         QString attrValueStr;

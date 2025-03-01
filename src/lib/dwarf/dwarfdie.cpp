@@ -101,6 +101,14 @@ Dwarf_Off DwarfDie::offset() const
     return offset;
 }
 
+Dwarf_Half DwarfDie::version() const
+{
+    Dwarf_Half version = 0;
+    Dwarf_Half offsetSize = 0;
+    dwarf_get_version_of_die(m_die, &version, &offsetSize);
+    return version;
+}
+
 static QList<int> arrayDimensions(const DwarfDie *die)
 {
     QList<int> dims;

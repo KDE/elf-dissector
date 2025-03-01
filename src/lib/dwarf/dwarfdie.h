@@ -33,6 +33,7 @@ public:
     Dwarf_Half tag() const;
     QByteArray tagName() const;
     Dwarf_Off offset() const;
+    Dwarf_Half version() const;
 
     /** If this DIE represents a type, this is the full type name. */
     QByteArray typeName() const;
