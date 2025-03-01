@@ -47,6 +47,8 @@
             "buildsystem": "autotools",
             "builddir": true,
             "config-opts": [
+                "--disable-static",
+                "--enable-shared"
             ],
             "sources": [
                 {
@@ -57,7 +59,7 @@
             ],
             "cleanup": [
                 "/bin",
-                "/lib",
+                "/lib/pkgconfig",
                 "/share"
             ]
         },
