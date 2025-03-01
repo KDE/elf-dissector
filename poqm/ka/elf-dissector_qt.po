@@ -284,22 +284,22 @@ msgctxt "CodeNavigator|"
 msgid "Qt Creator"
 msgstr "Qt Creator"
 
-#: ui/navigator/codenavigator.cpp:73
+#: ui/navigator/codenavigator.cpp:75
 msgctxt "QObject|"
 msgid "Code Navigation"
 msgstr "დოკუმენტის ნავიგაცია"
 
-#: ui/navigator/codenavigator.cpp:97
+#: ui/navigator/codenavigator.cpp:99
 msgctxt "QObject|"
 msgid "Custom..."
 msgstr "ხელით..."
 
-#: ui/navigator/codenavigator.cpp:109
+#: ui/navigator/codenavigator.cpp:111
 msgctxt "QObject|"
 msgid "Custom Code Navigation"
 msgstr "ხელით მითითებულ კოდში ნავიგაცია"
 
-#: ui/navigator/codenavigator.cpp:110
+#: ui/navigator/codenavigator.cpp:112
 msgctxt "QObject|"
 msgid ""
 "Specify command to use for code navigation, '%f' will be replaced by the "
