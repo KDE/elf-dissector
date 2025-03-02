@@ -542,6 +542,9 @@ QVariant DwarfDie::attributeLocal(Dwarf_Half attributeType) const
         case DW_AT_decl_file:
         case DW_AT_call_file:
         {
+            if (value.typeId() == QMetaType::QString) { // todo comments from above getting through to here
+                return value;
+            }
             const auto fileIndex = value.value<Dwarf_Unsigned>();
             // index 0 means not present, TODO handle that
             value = QString::fromUtf8(compilationUnit()->sourceFileForIndex(fileIndex -1));
