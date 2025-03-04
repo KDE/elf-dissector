@@ -63,7 +63,7 @@ static QString printSummary(int structSize, int usedBytes, int usedBits, int opt
 static int dataMemberLocation(DwarfDie *die)
 {
     const auto attr = die->attribute(DW_AT_data_member_location);
-    if (attr.canConvert(QVariant::Int))
+    if (attr.canConvert<int>())
         return attr.toInt();
     qWarning() << "Cannot convert location of" << die->displayName() << ":" << attr.value<DwarfExpression>().displayString();
     return 0;

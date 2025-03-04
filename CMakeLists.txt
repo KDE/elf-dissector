@@ -9,6 +9,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMSetupVersion)
 include(ECMPoQmTools)
 include(ECMInstallIcons)
+include(ECMDeprecationSettings)
 include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
@@ -74,6 +75,10 @@ set_package_properties(Gnuplot PROPERTIES
 # config files
 configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector.h)
 configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector-version.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector-version.h)
+
+ecm_set_disabled_deprecation_versions(
+    QT 6.8.0
+)
 
 # build things
 include_directories(
