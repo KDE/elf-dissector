@@ -15,7 +15,7 @@ ELF Dissector is useful if you need to do one or more of the following tasks:
 * ELF structure browser.
 * Tree map visualization of the size of the various parts of an ELF file.
 * Relocation heatmap.
-* Built-in disassmbler for x86 and AArch64.
+* Built-in disassembler for x86 and AArch64.
 * Browser for data type memory layouts extracted from DWARF debug information.
 * Forward and backward dependency viewer.
 
