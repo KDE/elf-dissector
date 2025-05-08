@@ -1,8 +1,13 @@
-# Eloy Cuadra <ecuadra@eloihr.net>, 2019.
+# Spanish translations for elf-dissector_qt.po package.
+# Copyright (C) 2019-2025 This file is copyright:
+# This file is distributed under the same license as the elf-dissector package.
+#
+# SPDX-FileCopyrightText: 2019, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: elf-dissector_qt\n"
-"PO-Revision-Date: 2019-11-09 20:20+0100\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"PO-Revision-Date: 2025-05-07 18:40+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -242,7 +247,7 @@ msgstr "&Preferencias"
 #: ui/mainwindow.ui:100
 msgctxt "MainWindow|"
 msgid "&Open..."
-msgstr "&Abrir..."
+msgstr "&Abrir…"
 
 #: ui/mainwindow.ui:103
 msgctxt "MainWindow|"
@@ -292,7 +297,7 @@ msgstr "Navegación por el código"
 #: ui/navigator/codenavigator.cpp:99
 msgctxt "QObject|"
 msgid "Custom..."
-msgstr "Personalizada..."
+msgstr "Personalizada…"
 
 #: ui/navigator/codenavigator.cpp:111
 msgctxt "QObject|"

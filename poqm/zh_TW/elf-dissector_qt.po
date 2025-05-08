@@ -1,141 +1,144 @@
+# SPDX-FileCopyrightText: 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: pan 93412\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-05-07 09:48+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 25.07.70\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
 msgctxt "TreeMapWidget|"
 msgid "Text %1"
-msgstr ""
+msgstr "文字 %1"
 
 #: 3rdparty/treemap/treemap.cpp:2867
 msgctxt "TreeMapWidget|"
 msgid "Recursive Bisection"
-msgstr ""
+msgstr "遞迴對切"
 
 #: 3rdparty/treemap/treemap.cpp:2868
 msgctxt "TreeMapWidget|"
 msgid "Columns"
-msgstr ""
+msgstr "欄"
 
 #: 3rdparty/treemap/treemap.cpp:2869
 msgctxt "TreeMapWidget|"
 msgid "Rows"
-msgstr ""
+msgstr "列"
 
 #: 3rdparty/treemap/treemap.cpp:2870
 msgctxt "TreeMapWidget|"
 msgid "Always Best"
-msgstr ""
+msgstr "總是最好的"
 
 #: 3rdparty/treemap/treemap.cpp:2871
 msgctxt "TreeMapWidget|"
 msgid "Best"
-msgstr ""
+msgstr "最好的"
 
 #: 3rdparty/treemap/treemap.cpp:2872
 msgctxt "TreeMapWidget|"
 msgid "Alternate (V)"
-msgstr ""
+msgstr "替代（垂直）"
 
 #: 3rdparty/treemap/treemap.cpp:2873
 msgctxt "TreeMapWidget|"
 msgid "Alternate (H)"
-msgstr ""
+msgstr "替代（水平）"
 
 #: 3rdparty/treemap/treemap.cpp:2874
 msgctxt "TreeMapWidget|"
 msgid "Horizontal"
-msgstr ""
+msgstr "水平"
 
 #: 3rdparty/treemap/treemap.cpp:2875
 msgctxt "TreeMapWidget|"
 msgid "Vertical"
-msgstr ""
+msgstr "垂直"
 
 #: lib/elf/elfdynamicentry.cpp:100
 #, qt-format
 msgctxt "QObject|"
 msgid "unknown (%1)"
-msgstr ""
+msgstr "未知 (%1)"
 
 #: ui/dependencymodel/dependencymodel.cpp:123
 msgctxt "DependencyModel|"
 msgid "Cyclic dependency!"
-msgstr ""
+msgstr "循環相依性！"
 
 #: ui/dependencymodel/dependencymodel.cpp:127
 msgctxt "DependencyModel|"
 msgid "Dependency not found!"
-msgstr ""
+msgstr "相依性找不到！"
 
 #: ui/dependencymodel/dependencymodel.cpp:225
 msgctxt "DependencyModel|"
 msgid "Library"
-msgstr ""
+msgstr "函式庫"
 
 #: ui/dependencymodel/dependencymodel.cpp:226
 msgctxt "DependencyModel|"
 msgid "Symbols Used"
-msgstr ""
+msgstr "使用的符號"
 
 #: ui/dependencymodel/filelistmodel.cpp:56
 msgctxt "FileListModel|"
 msgid "Shared Object"
-msgstr ""
+msgstr "共享物件"
 
 #: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"
 msgid "Users"
-msgstr ""
+msgstr "使用者"
 
 #: ui/dependencymodel/unuseddependenciesmodel.cpp:77
 msgctxt "UnusedDependenciesModel|"
 msgid "ELF File"
-msgstr ""
+msgstr "ELF 檔案"
 
 #: ui/dependencymodel/unuseddependenciesmodel.cpp:78
 msgctxt "UnusedDependenciesModel|"
 msgid "Unused Dependency"
-msgstr ""
+msgstr "未使用的相依性"
 
 #: ui/dependencymodel/usedsymbolmodel.cpp:64
 msgctxt "UsedSymbolModel|"
 msgid "Symbol"
-msgstr ""
+msgstr "符號"
 
 #: ui/elfmodel/datavisitor.cpp:145 ui/elfmodel/datavisitor.cpp:316
 msgctxt "QObject|"
 msgid "<null>"
-msgstr ""
+msgstr "<null>"
 
 #: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "Construction VTable"
-msgstr ""
+msgstr "建構 VTable"
 
 #: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "VTable"
-msgstr ""
+msgstr "VTable"
 
 #: ui/elfmodel/elfmodel.cpp:125
 msgctxt "ElfModel|"
 msgid "Entry"
-msgstr ""
+msgstr "項目"
 
 #: ui/elfmodel/elfmodel.cpp:126
 msgctxt "ElfModel|"
 msgid "Size"
-msgstr ""
+msgstr "大小"
 
 #: ui/issuesmodel/issuesmodel.cpp:50
 #, qt-format
@@ -146,17 +149,17 @@ msgstr ""
 #: ui/issuesmodel/issuesmodel.cpp:76
 msgctxt "IssuesModel|"
 msgid "Issue"
-msgstr ""
+msgstr "問題"
 
 #: ui/issuesmodel/issuesmodel.cpp:77
 msgctxt "IssuesModel|"
 msgid "Location"
-msgstr ""
+msgstr "位置"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:60
 msgctxt "LoadBenchmarkModel|"
 msgid "File"
-msgstr ""
+msgstr "檔案"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:61
 msgctxt "LoadBenchmarkModel|"
@@ -181,302 +184,302 @@ msgstr ""
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:65
 msgctxt "LoadBenchmarkModel|"
 msgid "Relocs"
-msgstr ""
+msgstr "重定位"
 
 #: ui/main.cpp:20
 msgctxt "MainWindow|"
 msgid "ELF Dissector"
-msgstr ""
+msgstr "ELF 解析器"
 
 #: ui/main.cpp:32
 msgctxt "MainWindow|"
 msgid "ELF file to open"
-msgstr ""
+msgstr "要開啟的 ELF 檔案"
 
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
-msgstr ""
+msgstr "開啟 ELF 物件"
 
 #: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
-msgstr ""
+msgstr "載入 ELF 檔案失敗"
 
 #: ui/mainwindow.cpp:140
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Could not load %1."
-msgstr ""
+msgstr "無法載入 %1。"
 
 #: ui/mainwindow.cpp:144
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
-msgstr ""
+msgstr "載入 %1 失敗。"
 
 #: ui/mainwindow.cpp:151
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Loaded %1."
-msgstr ""
+msgstr "已載入 %1。"
 
 #: ui/mainwindow.ui:71
 msgctxt "MainWindow|"
 msgid "&File"
-msgstr ""
+msgstr "檔案(&F)"
 
 #: ui/mainwindow.ui:79
 msgctxt "MainWindow|"
 msgid "&Actions"
-msgstr ""
+msgstr "動作(&A)"
 
 #: ui/mainwindow.ui:84
 msgctxt "MainWindow|"
 msgid "&Settings"
-msgstr ""
+msgstr "設定(&S)"
 
 #: ui/mainwindow.ui:100
 msgctxt "MainWindow|"
 msgid "&Open..."
-msgstr ""
+msgstr "開啟(&O)..."
 
 #: ui/mainwindow.ui:103
 msgctxt "MainWindow|"
 msgid "Ctrl+O"
-msgstr ""
+msgstr "Ctrl+O"
 
 #: ui/mainwindow.ui:113
 msgctxt "MainWindow|"
 msgid "&Quit"
-msgstr ""
+msgstr "離開(&Q)"
 
 #: ui/mainwindow.ui:116
 msgctxt "MainWindow|"
 msgid "Ctrl+Q"
-msgstr ""
+msgstr "Ctrl+Q"
 
 #: ui/mainwindow.ui:129
 msgctxt "MainWindow|"
 msgid "Reopen &Previously Loaded Files"
-msgstr ""
+msgstr "重新開啟先前載入過的檔案(&P)"
 
 #: ui/navigator/codenavigator.cpp:28
 msgctxt "CodeNavigator|"
 msgid "KDevelop"
-msgstr ""
+msgstr "KDevelop"
 
 #: ui/navigator/codenavigator.cpp:29
 msgctxt "CodeNavigator|"
 msgid "Kate"
-msgstr ""
+msgstr "Kate"
 
 #: ui/navigator/codenavigator.cpp:30
 msgctxt "CodeNavigator|"
 msgid "KWrite"
-msgstr ""
+msgstr "KWrite"
 
 #: ui/navigator/codenavigator.cpp:31
 msgctxt "CodeNavigator|"
 msgid "Qt Creator"
-msgstr ""
+msgstr "Qt Creator"
 
 #: ui/navigator/codenavigator.cpp:75
 msgctxt "QObject|"
 msgid "Code Navigation"
-msgstr ""
+msgstr "程式碼導覽"
 
 #: ui/navigator/codenavigator.cpp:99
 msgctxt "QObject|"
 msgid "Custom..."
-msgstr ""
+msgstr "自訂..."
 
 #: ui/navigator/codenavigator.cpp:111
 msgctxt "QObject|"
 msgid "Custom Code Navigation"
-msgstr ""
+msgstr "自訂程式碼導覽"
 
 #: ui/navigator/codenavigator.cpp:112
 msgctxt "QObject|"
 msgid ""
 "Specify command to use for code navigation, '%f' will be replaced by the "
 "file name, '%l' by the line number."
-msgstr ""
+msgstr "指定程式碼導覽用的命令，'%f' 會替換為檔案名稱，'%l' 會替換為行數。"
 
 #: ui/typemodel/typemodel.cpp:269
 msgctxt "TypeModel|"
 msgid "Data Type"
-msgstr ""
+msgstr "資料類型"
 
 #: ui/typemodel/typemodel.cpp:270
 msgctxt "TypeModel|"
 msgid "Size"
-msgstr ""
+msgstr "大小"
 
 #: ui/views/dependencyview.ui:21
 msgctxt "DependencyView|"
 msgid "Top Down"
-msgstr ""
+msgstr "上到下"
 
 #: ui/views/dependencyview.ui:34 ui/views/dependencyview.ui:55
 #: ui/views/dependencyview.ui:93 ui/views/dependencyview.ui:117
 #: ui/views/dependencyview.ui:141 ui/views/dependencyview.ui:178
 msgctxt "DependencyView|"
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
 #: ui/views/dependencyview.ui:80
 msgctxt "DependencyView|"
 msgid "Inverse"
-msgstr ""
+msgstr "反轉"
 
 #: ui/views/dependencyview.ui:172
 msgctxt "DependencyView|"
 msgid "Unused"
-msgstr ""
+msgstr "未使用"
 
 #: ui/views/dependencyview.ui:199
 msgctxt "DependencyView|"
 msgid "&Optimize Dependency Order"
-msgstr ""
+msgstr "最佳化相依性順序(&O)"
 
 #: ui/views/elfstructureview.ui:36
 msgctxt "ElfStructureView|"
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
 #: ui/views/elfstructureview.ui:68
 msgctxt "ElfStructureView|"
 msgid "&Back"
-msgstr ""
+msgstr "返回(&B)"
 
 #: ui/views/elfstructureview.ui:76
 msgctxt "ElfStructureView|"
 msgid "&Forward"
-msgstr ""
+msgstr "向前(&F)"
 
 #: ui/views/issuesview.ui:29
 msgctxt "IssuesView|"
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
 #: ui/views/issuesview.ui:46
 msgctxt "IssuesView|"
 msgid "&Check for issues (expensive!)"
-msgstr ""
+msgstr "檢查問題（需要很多時間！）(&C)"
 
 #: ui/views/loadbenchmarkview.ui:41
 msgctxt "LoadBenchmarkView|"
 msgid "Data"
-msgstr ""
+msgstr "資料"
 
 #: ui/views/loadbenchmarkview.ui:64
 msgctxt "LoadBenchmarkView|"
 msgid "Plot"
-msgstr ""
+msgstr "繪製圖表"
 
 #: ui/views/loadbenchmarkview.ui:81
 msgctxt "LoadBenchmarkView|"
 msgid "&Run Benchmark"
-msgstr ""
+msgstr "執行性能測試(&R)"
 
 #: ui/views/loadbenchmarkview.ui:84
 msgctxt "LoadBenchmarkView|"
 msgid "Measure loading and dynamic linking time."
-msgstr ""
+msgstr "測量載入與動態連結花費時間。"
 
 #: ui/views/sizetreemapview.ui:39
 msgctxt "SizeTreeMapView|"
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
 #: ui/views/sizetreemapview.ui:68
 msgctxt "SizeTreeMapView|"
 msgid "Hide &Debug Information"
-msgstr ""
+msgstr "隱藏除錯資訊(&D)"
 
 #: ui/views/sizetreemapview.ui:71
 msgctxt "SizeTreeMapView|"
 msgid "Do not show sections containing debug information."
-msgstr ""
+msgstr "不要顯示包含除錯資訊的區段。"
 
 #: ui/views/sizetreemapview.ui:84
 msgctxt "SizeTreeMapView|"
 msgid "Colorize &Sections"
-msgstr ""
+msgstr "為區段著色(&S)"
 
 #: ui/views/sizetreemapview.ui:87
 msgctxt "SizeTreeMapView|"
 msgid "Vary color of sections in the size tree map."
-msgstr ""
+msgstr "在大小樹狀圖裡讓區段色彩不同。"
 
 #: ui/views/sizetreemapview.ui:100
 msgctxt "SizeTreeMapView|"
 msgid "Colorize S&ymbols"
-msgstr ""
+msgstr "為符號著色(&Y)"
 
 #: ui/views/sizetreemapview.ui:103
 msgctxt "SizeTreeMapView|"
 msgid "Vary the color of symbols in the size tree map."
-msgstr ""
+msgstr "在大小樹狀圖裡讓符號色彩不同。"
 
 #: ui/views/sizetreemapview.ui:116
 msgctxt "SizeTreeMapView|"
 msgid "&Relocation Heatmap"
-msgstr ""
+msgstr "重定位熱區圖(&R)"
 
 #: ui/views/sizetreemapview.ui:129
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-runtime"
-msgstr ""
+msgstr "隱藏非執行時的"
 
 #: ui/views/sizetreemapview.ui:132
 msgctxt "SizeTreeMapView|"
 msgid ""
 "Do not show content from sections that are not loaded into memory at runtime."
-msgstr ""
+msgstr "不要顯示執行時不會載入記憶體內的區段的內容。"
 
 #: ui/views/sizetreemapview.ui:145
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-writable"
-msgstr ""
+msgstr "隱藏不可寫入"
 
 #: ui/views/sizetreemapview.ui:148
 msgctxt "SizeTreeMapView|"
 msgid "Do not show content that is read-only/shared."
-msgstr ""
+msgstr "不要顯示唯獨/共享的內容。"
 
 #: ui/views/sizetreemapview.ui:161
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-executable"
-msgstr ""
+msgstr "隱藏不可執行"
 
 #: ui/views/sizetreemapview.ui:164
 msgctxt "SizeTreeMapView|"
 msgid "Do not show non-executable data content."
-msgstr ""
+msgstr "不要顯示不可執行的資料內容。"
 
 #: ui/views/sizetreemapview.ui:177
 msgctxt "SizeTreeMapView|"
 msgid "&No Colorization"
-msgstr ""
+msgstr "無著色(&N)"
 
 #: ui/views/typeview.cpp:50 ui/views/typeview.cpp:62
 msgctxt "TypeView|"
 msgid "Invalid DWARF entries"
-msgstr ""
+msgstr "無效 DWARF 條目"
 
 #: ui/views/typeview.cpp:51 ui/views/typeview.cpp:63
 msgctxt "TypeView|"
 msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
 "will be incomplete."
-msgstr ""
+msgstr "讀取某些 ELF 物件的 DWARF 資料時發生錯誤，樹狀圖會是不完整的。"
 
 #: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
 msgid "Compute Type Tree"
-msgstr ""
+msgstr "計算類型樹狀圖"
 
 #: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
@@ -485,13 +488,15 @@ msgid ""
 "which the application will not respond, and use up to 1.5GB of memory. "
 "Proceed anyway?"
 msgstr ""
+"從 DWARF 資料計算類型樹狀圖可能會需要好幾分鐘，期間此應用程式不會回應，並且會"
+"需要至多 1.5GB 的記憶體。您要繼續嗎？"
 
 #: ui/views/typeview.ui:36
 msgctxt "TypeView|"
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
 #: ui/widgets/gnuplotwidget.cpp:20
 msgctxt "GnuplotWidget|"
 msgid "'gnuplot' not found, plotting not available."
-msgstr ""
+msgstr "找不到 'gnuplot'，圖表繪製不可用。"
