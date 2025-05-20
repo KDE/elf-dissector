@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan 93412\n"
-"PO-Revision-Date: 2025-05-07 09:48+0900\n"
+"PO-Revision-Date: 2025-05-19 21:30+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -144,7 +144,7 @@ msgstr "大小"
 #, qt-format
 msgctxt "IssuesModel|"
 msgid "%1 (implicit virtual destructor)"
-msgstr ""
+msgstr "%1（隱式虛擬解構子）"
 
 #: ui/issuesmodel/issuesmodel.cpp:76
 msgctxt "IssuesModel|"
@@ -164,22 +164,22 @@ msgstr "檔案"
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:61
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Median"
-msgstr ""
+msgstr "需要時（中位數）"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:62
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Min"
-msgstr ""
+msgstr "需要時（最小值）"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:63
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Median"
-msgstr ""
+msgstr "現在（中位數）"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:64
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Min"
-msgstr ""
+msgstr "現在（最小值）"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:65
 msgctxt "LoadBenchmarkModel|"
