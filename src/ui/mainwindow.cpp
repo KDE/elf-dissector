@@ -48,15 +48,15 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->actionReopenPreviousFile, &QAction::triggered, this, &MainWindow::reloadFileOnStartup);
 
     auto viewModel = new QStandardItemModel(this);
-    addView(viewModel, QStringLiteral("document-preview"), QStringLiteral("ELF Structure"), 0);
-    addView(viewModel, QStringLiteral("table"), QStringLiteral("Size Tree Map"), 1);
-    addView(viewModel, QStringLiteral("view-list-tree"), QStringLiteral("Dependencies"), 2);
+    addView(viewModel, QStringLiteral("document-preview"), tr("ELF Structure"), 0);
+    addView(viewModel, QStringLiteral("table"), tr("Size Tree Map"), 1);
+    addView(viewModel, QStringLiteral("view-list-tree"), tr("Dependencies"), 2);
 #if HAVE_DWARF
-    addView(viewModel, QStringLiteral("code-class"), QStringLiteral("Data Types"), 3);
+    addView(viewModel, QStringLiteral("code-class"), tr("Data Types"), 3);
 #endif
-    addView(viewModel, QStringLiteral("chronometer"), QStringLiteral("Performance"), 4);
+    addView(viewModel, QStringLiteral("chronometer"), tr("Performance"), 4);
 #if HAVE_DWARF
-    addView(viewModel, QStringLiteral("dialog-warning"), QStringLiteral("Issues"), 5);
+    addView(viewModel, QStringLiteral("dialog-warning"), tr("Issues"), 5);
 #endif
     ui->viewSelector->setModel(viewModel);
     connect(ui->viewSelector, &SidePane::currentIndexChanged, this, [this, viewModel](int index){
