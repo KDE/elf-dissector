@@ -76,6 +76,8 @@ set_package_properties(Gnuplot PROPERTIES
 configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector.h)
 configure_file(${CMAKE_SOURCE_DIR}/config-elf-dissector-version.h.cmake ${CMAKE_BINARY_DIR}/config-elf-dissector-version.h)
 
+ecm_install_po_files_as_qm(poqm)
+
 ecm_set_disabled_deprecation_versions(
     QT 6.8.0
 )
