@@ -12,6 +12,7 @@
   <name xml:lang="en-GB">ELF Dissector</name>
   <name xml:lang="eo">ELF Dissector</name>
   <name xml:lang="es">Disector ELF</name>
+  <name xml:lang="eu">ELF disekziogilea</name>
   <name xml:lang="fi">ELF-analysoija</name>
   <name xml:lang="fr">Analyseur « ELF »</name>
   <name xml:lang="gl">Disector de ELF</name>
@@ -47,6 +48,7 @@
   <summary xml:lang="en-GB">Static analysis tool for ELF files</summary>
   <summary xml:lang="eo">Statika analizilo por ELF-dosieroj</summary>
   <summary xml:lang="es">Herramienta de análisis estático para archivos ELF</summary>
+  <summary xml:lang="eu">ELF fitxategien analisi estatikorako tresna</summary>
   <summary xml:lang="fi">ELF-tiedostojen staattisen analyysin työkalu</summary>
   <summary xml:lang="fr">Outil d'analyse statique pour fichiers ELF</summary>
   <summary xml:lang="gl">Ferramenta de análise estática para ficheiros ELF</summary>
@@ -76,6 +78,7 @@
     <p xml:lang="en-GB">ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="eo">ELF Dissector estas utila se vi bezonas fari unu aŭ pli el la sekvaj taskoj:</p>
     <p xml:lang="es">El disector ELF es útil cuando necesita hacer una o más de las siguientes tareas:</p>
+    <p xml:lang="eu">ELF disekziogilea erabilgarria ondoko zereginetako bat edo gehiago egin behar baduzu:</p>
     <p xml:lang="fi">ELF-analysoijasta on apua, kun pitää tehdä jotakin seuraavista:</p>
     <p xml:lang="fr">L'analyseur ELF est utile quand vous avez besoin de réaliser une ou plusieurs de tâches suivantes :</p>
     <p xml:lang="gl">O disector de ELF é útil se necesita realizar algunha das seguintes tarefas:</p>
@@ -105,6 +108,7 @@
       <li xml:lang="en-GB">Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="eo">Inspektante antaŭen kaj malantaŭen dependecojn, sur biblioteko kaj simbolnivelo.</li>
       <li xml:lang="es">Inspeccionar dependencias adelante y atrás a nivel de biblioteca y símbolos.</li>
+      <li xml:lang="eu">Aurrera eta atzera doazen mendekotasunak ikuskatu, liburutegi eta sinbolo mailan.</li>
       <li xml:lang="fi">tutkia riippuvuuksia eteen- ja taaksepäin kirjasto- ja symbolitasolla</li>
       <li xml:lang="fr">Inspection en cours des dépendances aval et amont, au niveau « bibliothèque » ou « symbole ».</li>
       <li xml:lang="gl">Inspeccionar dependencias cara adiante e cara atrás, a nivel de bibliotecas e de símbolos.</li>
@@ -132,6 +136,7 @@
       <li xml:lang="en-GB">Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="eo">Identigante ŝargotempajn rendimentajn proplempunktojn kiel multekostaj statikaj konstrukciistoj aŭ troaj translokiĝoj.</li>
       <li xml:lang="es">Identificar cuellos de botella de rendimiento en tiempo de carga, como constructores estáticos costosos o excesivas reubicaciones.</li>
+      <li xml:lang="eu">Zama-denboraren errendimendu moteltze puntuak identifikatzea, hala nola eraikitzaile estatiko garestiak edo gehiegizko birkokapenak.</li>
       <li xml:lang="fi">tunnistaa latauksenaikaiset suorituskyvyn pullonkaulat kuten raskaat staattiset rakentajat tai liialliset siirrot</li>
       <li xml:lang="fr">Identification en cours des goulots d'étranglement en performances pour les temps de chargement, tels que constructeurs statiques conséquents ou des déplacements excessifs.</li>
       <li xml:lang="gl">Identificar colos de botella en tempo de carga como construtores estáticos custosos ou traslados excesivos.</li>
@@ -159,6 +164,7 @@
       <li xml:lang="en-GB">Size profiling of ELF files.</li>
       <li xml:lang="eo">Grandecprofilado de ELF-dosieroj.</li>
       <li xml:lang="es">Análisis de rendimiento de tamaño de archivos ELF.</li>
+      <li xml:lang="eu">ELF fitxategien tamaina profilatzea.</li>
       <li xml:lang="fi">profiloida ELF-tiedostojen kokoa.</li>
       <li xml:lang="fr">Profilage de taille pour les fichiers ELF.</li>
       <li xml:lang="gl">Análise de tamaño de ficheiros ELF.</li>
@@ -189,6 +195,7 @@
     <p xml:lang="en-GB">Main features:</p>
     <p xml:lang="eo">Ĉefaj trajtoj:</p>
     <p xml:lang="es">Funciones principales:</p>
+    <p xml:lang="eu">Ezaugarri nagusiak:</p>
     <p xml:lang="fi">Keskeiset ominaisuudet:</p>
     <p xml:lang="fr">Fonctions principales :</p>
     <p xml:lang="gl">Funcionalidades principais:</p>
@@ -222,6 +229,7 @@
       <li xml:lang="en-GB">ELF structure browser.</li>
       <li xml:lang="eo">ELF-strukturretumilo.</li>
       <li xml:lang="es">Explorador de estructura ELF.</li>
+      <li xml:lang="eu">ELF egituraren arakatzailea</li>
       <li xml:lang="fi">ELF-rakenneselain.</li>
       <li xml:lang="fr">Navigateur de structure ELF.</li>
       <li xml:lang="gl">Navegador de estruturas ELF.</li>
@@ -249,6 +257,7 @@
       <li xml:lang="en-GB">Tree map visualisation of the size of the various parts of an ELF file.</li>
       <li xml:lang="eo">Arba mapo bildigo de la grandeco de la diversaj partoj de ELF-dosiero.</li>
       <li xml:lang="es">Visualización en mapa de árbol del tamaño de las distintas partes de un archivo ELF.</li>
+      <li xml:lang="eu">ELF fitxategiaren atal ezberdinen tamainaren zuhaitz-mapa irudikatzea.</li>
       <li xml:lang="fi">ELF-tiedoston eri osien koon puukarttavisualisointi.</li>
       <li xml:lang="fr">Affichage par arborescence de la taille des différentes parties d'un fichier ELF.</li>
       <li xml:lang="gl">Visualización de mapa de árbore do tamaño das distintas partes dun ficheiro ELF.</li>
@@ -276,6 +285,7 @@
       <li xml:lang="en-GB">Relocation heatmap.</li>
       <li xml:lang="eo">Varmomapo de translokiĝo.</li>
       <li xml:lang="es">Mapa de calor de reubicaciones.</li>
+      <li xml:lang="eu">Birkokapenen bero-mapa.</li>
       <li xml:lang="fi">Uudelleensijoituksen lämpökartta.</li>
       <li xml:lang="fr">Carte des déplacements.</li>
       <li xml:lang="gl">Mapa de traslados.</li>
@@ -304,6 +314,7 @@
       <li xml:lang="en-GB">Built-in disassembler for x86 and AArch64.</li>
       <li xml:lang="eo">Enkonstruita malmuntilo por x86 kaj AArch64.</li>
       <li xml:lang="es">Desensamblador integrado para x86 y AArch64.</li>
+      <li xml:lang="eu">x86 eta AArch64 arkitekturetarako barneko desmihiztatzailea.</li>
       <li xml:lang="fi">Sisään rakennettu x86- ja AArch64-disassembleri.</li>
       <li xml:lang="fr">Dé-assembleur intégré pour processeurs « x86 » et « AArch64 ».</li>
       <li xml:lang="gl">Desensamblador de serie para x86 e AArch64.</li>
@@ -331,6 +342,7 @@
       <li xml:lang="en-GB">Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="eo">Retumilo por datumtipaj memor-aranĝoj ĉerpitaj el DWARF-sencimigaj informoj.</li>
       <li xml:lang="es">Explorador para capas de memoria de tipos de datos extraídos de información de depuración DWARF.</li>
+      <li xml:lang="eu">DWARF arazketa-informaziotik ateratako datu-mota memoria-antolaeren arakatzailea.</li>
       <li xml:lang="fi">DWARF-virheenpaikannustiedosta kerätty tietotyyppien muistiasetteluselain.</li>
       <li xml:lang="fr">Navigateur pour les profils mémoire associés aux types de données, qui ont été extraits des informations de débogage « DWARF ».</li>
       <li xml:lang="gl">Navegador para disposicións de memoria de tipos de datos extraídas de información de depuración de DWARF.</li>
@@ -358,6 +370,7 @@
       <li xml:lang="en-GB">Forward and backward dependency viewer.</li>
       <li xml:lang="eo">Antaŭen kaj malantaŭen dependecspektilon.</li>
       <li xml:lang="es">Visor de dependencias hacia atrás y hacia adelante.</li>
+      <li xml:lang="eu">Aurrera eta atzera doazen mendekotasunen erakuslea.</li>
       <li xml:lang="fi">Eteen- ja taaksepäin kulkevien riippuvuuksien katselin.</li>
       <li xml:lang="fr">Afficheur des dépendances aval et amont.</li>
       <li xml:lang="gl">Visor de dependencias cara adiante e cara atrás.</li>
@@ -389,6 +402,7 @@
       <caption xml:lang="en-GB">Size treemap views</caption>
       <caption xml:lang="eo">Grandecaj arbomapo-vidoj</caption>
       <caption xml:lang="es">Vistas de mapa en árbol de tamaños.</caption>
+      <caption xml:lang="eu">Tamainaren zuhaitz-mapa ikuspegiak</caption>
       <caption xml:lang="fi">Koon puukarttanäkymät</caption>
       <caption xml:lang="fr">Dimensionner les affichages en arborescence.</caption>
       <caption xml:lang="gl">Vistas de mapa de árbore de tamaños.</caption>
