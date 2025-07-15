@@ -196,6 +196,45 @@ msgctxt "MainWindow|"
 msgid "ELF file to open"
 msgstr "Fichier ELF à ouvrir"
 
+#: ui/mainwindow.cpp:51
+msgctxt "MainWindow|"
+msgid "ELF Structure"
+msgstr ""
+
+#: ui/mainwindow.cpp:52
+msgctxt "MainWindow|"
+msgid "Size Tree Map"
+msgstr ""
+
+#: ui/mainwindow.cpp:53
+#, fuzzy
+#| msgctxt "UnusedDependenciesModel|"
+#| msgid "Unused Dependency"
+msgctxt "MainWindow|"
+msgid "Dependencies"
+msgstr "Dépendance inutilisée"
+
+#: ui/mainwindow.cpp:55
+#, fuzzy
+#| msgctxt "TypeModel|"
+#| msgid "Data Type"
+msgctxt "MainWindow|"
+msgid "Data Types"
+msgstr "Type de données"
+
+#: ui/mainwindow.cpp:57
+msgctxt "MainWindow|"
+msgid "Performance"
+msgstr ""
+
+#: ui/mainwindow.cpp:59
+#, fuzzy
+#| msgctxt "IssuesModel|"
+#| msgid "Issue"
+msgctxt "MainWindow|"
+msgid "Issues"
+msgstr "Problème"
+
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
