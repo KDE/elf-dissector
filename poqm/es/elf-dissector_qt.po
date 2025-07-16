@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: elf-dissector_qt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"PO-Revision-Date: 2025-05-07 18:40+0100\n"
+"PO-Revision-Date: 2025-07-16 00:24+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.08.2\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
@@ -204,41 +204,32 @@ msgstr "Archivo ELF a abrir"
 #: ui/mainwindow.cpp:51
 msgctxt "MainWindow|"
 msgid "ELF Structure"
-msgstr ""
+msgstr "Estructura ELF"
 
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
 msgid "Size Tree Map"
-msgstr ""
+msgstr "Mapa de árbol de tamaños"
 
 #: ui/mainwindow.cpp:53
-#, fuzzy
-#| msgctxt "UnusedDependenciesModel|"
-#| msgid "Unused Dependency"
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr "Dependencia no usada"
+msgstr "Dependencias"
 
 #: ui/mainwindow.cpp:55
-#, fuzzy
-#| msgctxt "TypeModel|"
-#| msgid "Data Type"
 msgctxt "MainWindow|"
 msgid "Data Types"
-msgstr "Tipo de dato"
+msgstr "Tipos de datos"
 
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
 msgid "Performance"
-msgstr ""
+msgstr "Rendimiento"
 
 #: ui/mainwindow.cpp:59
-#, fuzzy
-#| msgctxt "IssuesModel|"
-#| msgid "Issue"
 msgctxt "MainWindow|"
 msgid "Issues"
-msgstr "Problema"
+msgstr "Problemas"
 
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"

@@ -209,20 +209,14 @@ msgid "Size Tree Map"
 msgstr ""
 
 #: ui/mainwindow.cpp:53
-#, fuzzy
-#| msgctxt "UnusedDependenciesModel|"
-#| msgid "Unused Dependency"
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr "未使用的依赖"
+msgstr ""
 
 #: ui/mainwindow.cpp:55
-#, fuzzy
-#| msgctxt "TypeModel|"
-#| msgid "Data Type"
 msgctxt "MainWindow|"
 msgid "Data Types"
-msgstr "数据类型"
+msgstr ""
 
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
@@ -230,12 +224,9 @@ msgid "Performance"
 msgstr ""
 
 #: ui/mainwindow.cpp:59
-#, fuzzy
-#| msgctxt "IssuesModel|"
-#| msgid "Issue"
 msgctxt "MainWindow|"
 msgid "Issues"
-msgstr "问题"
+msgstr ""
 
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"

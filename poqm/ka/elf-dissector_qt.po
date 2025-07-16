@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Qt-Contexts: true\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
@@ -199,41 +199,32 @@ msgstr "გასახსნელი ELF ფაილი"
 #: ui/mainwindow.cpp:51
 msgctxt "MainWindow|"
 msgid "ELF Structure"
-msgstr ""
+msgstr "ELF-ის სტრუქტურა"
 
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
 msgid "Size Tree Map"
-msgstr ""
+msgstr "ზომის ხის რუკა"
 
 #: ui/mainwindow.cpp:53
-#, fuzzy
-#| msgctxt "UnusedDependenciesModel|"
-#| msgid "Unused Dependency"
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr "გამოუყენებელი დამოკიდებულება"
+msgstr "დამოკიდებულებები"
 
 #: ui/mainwindow.cpp:55
-#, fuzzy
-#| msgctxt "TypeModel|"
-#| msgid "Data Type"
 msgctxt "MainWindow|"
 msgid "Data Types"
-msgstr "მონაცემების ტიპი"
+msgstr "მონაცემებთა ტიპები"
 
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
 msgid "Performance"
-msgstr ""
+msgstr "წარმადობა"
 
 #: ui/mainwindow.cpp:59
-#, fuzzy
-#| msgctxt "IssuesModel|"
-#| msgid "Issue"
 msgctxt "MainWindow|"
 msgid "Issues"
-msgstr "Პრობლემა"
+msgstr "პრობლემები"
 
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
