@@ -201,32 +201,32 @@ msgstr "要打开的 ELF 文件"
 #: ui/mainwindow.cpp:51
 msgctxt "MainWindow|"
 msgid "ELF Structure"
-msgstr ""
+msgstr "ELF 结构"
 
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
 msgid "Size Tree Map"
-msgstr ""
+msgstr "大小树状图"
 
 #: ui/mainwindow.cpp:53
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr ""
+msgstr "依赖"
 
 #: ui/mainwindow.cpp:55
 msgctxt "MainWindow|"
 msgid "Data Types"
-msgstr ""
+msgstr "数据类型"
 
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
 msgid "Performance"
-msgstr ""
+msgstr "性能"
 
 #: ui/mainwindow.cpp:59
 msgctxt "MainWindow|"
 msgid "Issues"
-msgstr ""
+msgstr "问题"
 
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
