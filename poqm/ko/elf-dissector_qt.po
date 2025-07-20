@@ -1,8 +1,8 @@
-# Shinjo Park <kde@peremen.name>, 2020.
+# SPDX-FileCopyrightText: 2020, 2025 Shinjo Park <kde@peremen.name>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2020-04-14 01:05+0200\n"
+"PO-Revision-Date: 2025-07-20 00:54+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 19.04.3\n"
+"X-Generator: Lokalize 24.12.3\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
@@ -199,25 +199,19 @@ msgstr "열 ELF 파일"
 #: ui/mainwindow.cpp:51
 msgctxt "MainWindow|"
 msgid "ELF Structure"
-msgstr ""
+msgstr "ELF 구조"
 
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
 msgid "Size Tree Map"
-msgstr ""
+msgstr "크기 트리 지도"
 
 #: ui/mainwindow.cpp:53
-#, fuzzy
-#| msgctxt "UnusedDependenciesModel|"
-#| msgid "Unused Dependency"
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr "사용하지 않은 의존성"
+msgstr "의존성"
 
 #: ui/mainwindow.cpp:55
-#, fuzzy
-#| msgctxt "TypeModel|"
-#| msgid "Data Type"
 msgctxt "MainWindow|"
 msgid "Data Types"
 msgstr "자료형"
@@ -225,12 +219,9 @@ msgstr "자료형"
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
 msgid "Performance"
-msgstr ""
+msgstr "성능"
 
 #: ui/mainwindow.cpp:59
-#, fuzzy
-#| msgctxt "IssuesModel|"
-#| msgid "Issue"
 msgctxt "MainWindow|"
 msgid "Issues"
 msgstr "문제점"
