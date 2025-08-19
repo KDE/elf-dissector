@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan 93412\n"
-"PO-Revision-Date: 2025-05-19 21:30+0900\n"
+"PO-Revision-Date: 2025-08-19 04:58+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.11.70\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
@@ -199,25 +199,19 @@ msgstr "要開啟的 ELF 檔案"
 #: ui/mainwindow.cpp:51
 msgctxt "MainWindow|"
 msgid "ELF Structure"
-msgstr ""
+msgstr "ELF 結構"
 
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
 msgid "Size Tree Map"
-msgstr ""
+msgstr "大小樹狀圖"
 
 #: ui/mainwindow.cpp:53
-#, fuzzy
-#| msgctxt "UnusedDependenciesModel|"
-#| msgid "Unused Dependency"
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr "未使用的相依性"
+msgstr "相依性"
 
 #: ui/mainwindow.cpp:55
-#, fuzzy
-#| msgctxt "TypeModel|"
-#| msgid "Data Type"
 msgctxt "MainWindow|"
 msgid "Data Types"
 msgstr "資料類型"
@@ -225,12 +219,9 @@ msgstr "資料類型"
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
 msgid "Performance"
-msgstr ""
+msgstr "效能"
 
 #: ui/mainwindow.cpp:59
-#, fuzzy
-#| msgctxt "IssuesModel|"
-#| msgid "Issue"
 msgctxt "MainWindow|"
 msgid "Issues"
 msgstr "問題"
