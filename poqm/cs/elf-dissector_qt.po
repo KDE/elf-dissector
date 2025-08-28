@@ -212,12 +212,9 @@ msgid "Dependencies"
 msgstr ""
 
 #: ui/mainwindow.cpp:55
-#, fuzzy
-#| msgctxt "TypeModel|"
-#| msgid "Data Type"
 msgctxt "MainWindow|"
 msgid "Data Types"
-msgstr "Datový typ"
+msgstr ""
 
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
@@ -225,12 +222,9 @@ msgid "Performance"
 msgstr ""
 
 #: ui/mainwindow.cpp:59
-#, fuzzy
-#| msgctxt "IssuesModel|"
-#| msgid "Issue"
 msgctxt "MainWindow|"
 msgid "Issues"
-msgstr "Vydání"
+msgstr ""
 
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
