@@ -33,7 +33,6 @@
   <name xml:lang="sv">ELF-dissektor</name>
   <name xml:lang="tr">ELF Parçalara Ayırıcı</name>
   <name xml:lang="uk">ELF Dissector</name>
-  <name xml:lang="x-test">xxELF Dissectorxx</name>
   <name xml:lang="zh-CN">ELF 解析器</name>
   <name xml:lang="zh-TW">ELF 解析器</name>
   <content_rating type="oars-1.1"/>
@@ -67,7 +66,6 @@
   <summary xml:lang="sv">Statiskt analysverktyg av ELF-filer</summary>
   <summary xml:lang="tr">ELF dosyaları için durağan çözümleme aracı</summary>
   <summary xml:lang="uk">Інструмент статичного аналізу файлів ELF</summary>
-  <summary xml:lang="x-test">xxStatic analysis tool for ELF filesxx</summary>
   <summary xml:lang="zh-CN">ELF 文件静态分析工具</summary>
   <summary xml:lang="zh-TW">ELF 檔案的靜態分析工具</summary>
   <description>
@@ -97,7 +95,6 @@
     <p xml:lang="sv">ELF-dissektor är användbar om du behöver utföra en eller fler av följande uppgifter:</p>
     <p xml:lang="tr">ELF Parçalara Ayırıcı, aşağıdaki görevlerden birini veya birkaçını yapmanız gerektiğinde yararlıdır:</p>
     <p xml:lang="uk">ELF Dissector стане у пригоді, коли вам захочеться виконати одне з таких завдань:</p>
-    <p xml:lang="x-test">xxELF Dissector is useful if you need to do one or more of the following tasks:xx</p>
     <p xml:lang="zh-CN">ELF 解析器对于以下任务很有用：</p>
     <p xml:lang="zh-TW">《ELF 解析器》在您需要進行以下工作時很有用：</p>
     <ul>
@@ -126,7 +123,6 @@
       <li xml:lang="sv">Inspektera framåt- och bakåtberoenden på biblioteks- och symbolnivå.</li>
       <li xml:lang="tr">İleri ve geri bağımlılıkları denetleme, kitaplık ve sembol düzeyinde.</li>
       <li xml:lang="uk">Інспектування прямих і зворотних залежностей на рівні бібліотек і символів.</li>
-      <li xml:lang="x-test">xxInspecting forward and backward dependencies, on library and symbol level.xx</li>
       <li xml:lang="zh-CN">在库和符号级别检查前向和后向依赖。</li>
       <li xml:lang="zh-TW">查看向前與向後的函式庫或符號相依性。</li>
       <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
@@ -154,7 +150,6 @@
       <li xml:lang="sv">Identifiera prestandaflaskhalsar vid laddning, såsom kostsamma statiska konstruktorer eller överdrivna relokeringar.</li>
       <li xml:lang="tr">Durağan yapıcılar veya gereğinden çok yeniden konumlandırmalar gibi yükleme zamanı başarım tıkanıklıklarını belirleme.</li>
       <li xml:lang="uk">Визначення вузьких місць у швидкодії під час завантаження, зокрема вартісних статичних конструкторів або надмірних пересувань даних.</li>
-      <li xml:lang="x-test">xxIdentifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.xx</li>
       <li xml:lang="zh-CN">查明加载时的性能瓶颈，例如昂贵的静态构造器或者过量的重定位。</li>
       <li xml:lang="zh-TW">發現載入時的性能問題，像是太花時間的靜態建構子或是太多重定位。</li>
       <li>Size profiling of ELF files.</li>
@@ -182,7 +177,6 @@
       <li xml:lang="sv">Storleksprofilering av ELF-filer.</li>
       <li xml:lang="tr">ELF dosyalarının boyut profillemesi.</li>
       <li xml:lang="uk">Профілювання за розміром файлів ELF.</li>
-      <li xml:lang="x-test">xxSize profiling of ELF files.xx</li>
       <li xml:lang="zh-CN">ELF 文件的大小分析</li>
       <li xml:lang="zh-TW">ELF 檔案的大小分析。</li>
     </ul>
@@ -216,7 +210,6 @@
     <p xml:lang="sv">Huvudfunktionalitet:</p>
     <p xml:lang="tr">Ana özellikler:</p>
     <p xml:lang="uk">Основні можливості:</p>
-    <p xml:lang="x-test">xxMain features:xx</p>
     <p xml:lang="zh-CN">主要功能：</p>
     <p xml:lang="zh-TW">主要功能：</p>
     <ul>
@@ -247,7 +240,6 @@
       <li xml:lang="sv">ELF-strukturbläddrare.</li>
       <li xml:lang="tr">ELF yapısı tarayıcısı</li>
       <li xml:lang="uk">Навігація структурою ELF.</li>
-      <li xml:lang="x-test">xxELF structure browser.xx</li>
       <li xml:lang="zh-CN">ELF 结构浏览器。</li>
       <li xml:lang="zh-TW">ELF 結構瀏覽器。</li>
       <li>Tree map visualization of the size of the various parts of an ELF file.</li>
@@ -275,7 +267,6 @@
       <li xml:lang="sv">Visualisering av storleken för de olika delarna av en ELF-file med en trädavbildning.</li>
       <li xml:lang="tr">Bir ELF dosyasının çeşitli kısımlarının ağaç haritası biçiminde görselleştirmesi</li>
       <li xml:lang="uk">Візуалізація у вигляді деревоподібної структури для розмірів різних частин файла ELF.</li>
-      <li xml:lang="x-test">xxTree map visualization of the size of the various parts of an ELF file.xx</li>
       <li xml:lang="zh-CN">ELF 文件各个部分大小的树形映射可视化。</li>
       <li xml:lang="zh-TW">樹狀圖檢視會視覺化呈現 ELF 檔案各個部分的大小。</li>
       <li>Relocation heatmap.</li>
@@ -303,7 +294,6 @@
       <li xml:lang="sv">Färgdiagram för relokeringar.</li>
       <li xml:lang="tr">Yeniden konumlandırma ısı haritası</li>
       <li xml:lang="uk">«Теплова» карта пересувань.</li>
-      <li xml:lang="x-test">xxRelocation heatmap.xx</li>
       <li xml:lang="zh-CN">重定位热图。</li>
       <li xml:lang="zh-TW">重定位熱區圖。</li>
       <li>Built-in disassembler for x86 and AArch64.</li>
@@ -332,7 +322,6 @@
       <li xml:lang="sv">Inbyggd disassembler för x86 och AArch64.</li>
       <li xml:lang="tr">x86 ve AArch64 için gömülü gelen parçalara ayırıcı</li>
       <li xml:lang="uk">Вбудований дизасемблер для x86 та AArch64.</li>
-      <li xml:lang="x-test">xxBuilt-in disassembler for x86 and AArch64.xx</li>
       <li xml:lang="zh-CN">内置的 x86 和 AArch64 反汇编器。</li>
       <li xml:lang="zh-TW">x86 和 AArch64 的內建 disassembler。</li>
       <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
@@ -360,7 +349,6 @@
       <li xml:lang="sv">Bläddrare för minneslayout av datatyper extraherad från DWARF avlusningsinformation.</li>
       <li xml:lang="tr">DWARF hata ayıklama bilgisinden ayıklanan veri türü bellek yerleşimleri için tarayıcı</li>
       <li xml:lang="uk">Навігатор компонуваннями пам'яті для типів даних на основі діагностичних даних DWARF.</li>
-      <li xml:lang="x-test">xxBrowser for data type memory layouts extracted from DWARF debug information.xx</li>
       <li xml:lang="zh-CN">从 DWARF 调试信息中提取的数据类型内存布局浏览器</li>
       <li xml:lang="zh-TW">從 DWARF 除錯資訊取出的資料類型記憶體佈局的瀏覽器。</li>
       <li>Forward and backward dependency viewer.</li>
@@ -388,7 +376,6 @@
       <li xml:lang="sv">Visning av framåt- och bakåtberoenden.</li>
       <li xml:lang="tr">İleri ve geri bağımlılık görüntüleyicisi</li>
       <li xml:lang="uk">Прямий і зворотний перегляд залежностей.</li>
-      <li xml:lang="x-test">xxForward and backward dependency viewer.xx</li>
       <li xml:lang="zh-CN">前向和后向依赖查看器。</li>
       <li xml:lang="zh-TW">向前與向後的相依性檢視器。</li>
     </ul>
@@ -420,7 +407,6 @@
       <caption xml:lang="sv">Ändra storlek på trädavbildningar</caption>
       <caption xml:lang="tr">Boyut ağaç haritası görünümleri</caption>
       <caption xml:lang="uk">Перегляд ієрархічної карти розмірів</caption>
-      <caption xml:lang="x-test">xxSize treemap viewsxx</caption>
       <caption xml:lang="zh-CN">大小树状视图</caption>
       <caption xml:lang="zh-TW">大小樹狀圖檢視</caption>
       <image type="source">https://cdn.kde.org/screenshots/elf-dissector/elf-dissector-size-treemap.png</image>
