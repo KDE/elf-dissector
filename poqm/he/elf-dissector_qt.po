@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2025-07-15 08:00+0300\n"
+"PO-Revision-Date: 2025-10-05 12:18+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -12,7 +12,7 @@ msgstr ""
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
@@ -478,7 +478,7 @@ msgstr "הסתרת לא לכתיבה"
 #: ui/views/sizetreemapview.ui:148
 msgctxt "SizeTreeMapView|"
 msgid "Do not show content that is read-only/shared."
-msgstr "לא  להציג תוכן לקריאה בלבד/שיתופי."
+msgstr "לא להציג תוכן לקריאה בלבד/שיתופי."
 
 #: ui/views/sizetreemapview.ui:161
 msgctxt "SizeTreeMapView|"
