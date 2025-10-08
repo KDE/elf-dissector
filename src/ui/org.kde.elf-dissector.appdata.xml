@@ -4,6 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
   <name>ELF Dissector</name>
+  <name xml:lang="ar">محلل ELF</name>
   <name xml:lang="ca">ELF Dissector</name>
   <name xml:lang="ca-valencia">ELF Dissector</name>
   <name xml:lang="cs">ELF Dissector</name>
@@ -40,6 +41,7 @@
     <name translate="no">KDE</name>
   </developer>
   <summary>Static analysis tool for ELF files</summary>
+  <summary xml:lang="ar">أداة تحليل ساكن لملفات ELF</summary>
   <summary xml:lang="ca">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="ca-valencia">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="de">Statische Analyse für ELF-Dateien</summary>
@@ -70,6 +72,7 @@
   <summary xml:lang="zh-TW">ELF 檔案的靜態分析工具</summary>
   <description>
     <p>ELF Dissector is useful if you need to do one or more of the following tasks:</p>
+    <p xml:lang="ar">محلل ELF مفيد إن احتجت لإنجاز مهمة أو أكثر من المهام التالية:</p>
     <p xml:lang="ca">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
     <p xml:lang="ca-valencia">ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
     <p xml:lang="el">Ο ανατόμος ELF είναι χρήσιμος αν θέλετε να κάνετε μία ή περισσότερες από τις ακόλουθες εργασίες:</p>
@@ -99,6 +102,7 @@
     <p xml:lang="zh-TW">《ELF 解析器》在您需要進行以下工作時很有用：</p>
     <ul>
       <li>Inspecting forward and backward dependencies, on library and symbol level.</li>
+      <li xml:lang="ar">افحص التبعيات الأمامية والخلفية، على مستوى المكتبة والرمز.</li>
       <li xml:lang="ca">Inspeccionar les dependències cap endavant i cap enrere, a nivell de biblioteca i símbols.</li>
       <li xml:lang="ca-valencia">Inspeccionar les dependències cap avant i cap arrere, a nivell de biblioteca i símbols.</li>
       <li xml:lang="el">Επιθεώρηση προς τα εμπρός και προς τα πίσω εξαρτήσεων, σε επίπεδο βιβλιοθηκών και συμβόλων.</li>
@@ -126,6 +130,7 @@
       <li xml:lang="zh-CN">在库和符号级别检查前向和后向依赖。</li>
       <li xml:lang="zh-TW">查看向前與向後的函式庫或符號相依性。</li>
       <li>Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
+      <li xml:lang="ar">حدد اختناقات أداء وقت التحميل مثل المنشئات الساكنة المكلفة أو عمليات النقل المفرطة.</li>
       <li xml:lang="ca">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocalitzacions excessives.</li>
       <li xml:lang="ca-valencia">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocalitzacions excessives.</li>
       <li xml:lang="el">Ταυτοποίηση συμφορήσεων στην απόδοση κατά τη φόρτωση όπως στατικούς constructors με υπερκατανάλωση πόρων ή εκτεταμένες μεταθέσεις.</li>
@@ -153,6 +158,7 @@
       <li xml:lang="zh-CN">查明加载时的性能瓶颈，例如昂贵的静态构造器或者过量的重定位。</li>
       <li xml:lang="zh-TW">發現載入時的性能問題，像是太花時間的靜態建構子或是太多重定位。</li>
       <li>Size profiling of ELF files.</li>
+      <li xml:lang="ar">ضع تشكيلة لحجم ملفات ELF.</li>
       <li xml:lang="ca">Anàlisi del rendiment de mida dels fitxers ELF.</li>
       <li xml:lang="ca-valencia">Anàlisi del rendiment de mida dels fitxers ELF.</li>
       <li xml:lang="el">Προφίλ μεγέθους για ELF αρχεία.</li>
@@ -181,6 +187,7 @@
       <li xml:lang="zh-TW">ELF 檔案的大小分析。</li>
     </ul>
     <p>Main features:</p>
+    <p xml:lang="ar">المميزات الرئيسة:</p>
     <p xml:lang="ca">Característiques principals:</p>
     <p xml:lang="ca-valencia">Característiques principals:</p>
     <p xml:lang="cs">Hlavní vlastnosti:</p>
@@ -214,6 +221,7 @@
     <p xml:lang="zh-TW">主要功能：</p>
     <ul>
       <li>ELF structure browser.</li>
+      <li xml:lang="ar">متصفح لهيكل ELF.</li>
       <li xml:lang="ca">Explorador de l'estructura ELF.</li>
       <li xml:lang="ca-valencia">Explorador de l'estructura ELF.</li>
       <li xml:lang="cs">Prohlížeč struktury ELF.</li>
@@ -243,6 +251,7 @@
       <li xml:lang="zh-CN">ELF 结构浏览器。</li>
       <li xml:lang="zh-TW">ELF 結構瀏覽器。</li>
       <li>Tree map visualization of the size of the various parts of an ELF file.</li>
+      <li xml:lang="ar">تصور خريطة شجرية لحجم الأجزاء المختلفة لملف ELF.</li>
       <li xml:lang="ca">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
       <li xml:lang="ca-valencia">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
       <li xml:lang="el">Αναπαράσταση δενδρικού χάρτη μεγέθους των διαφόρων τμημάτων ενός αρχείου ELF.</li>
@@ -270,6 +279,7 @@
       <li xml:lang="zh-CN">ELF 文件各个部分大小的树形映射可视化。</li>
       <li xml:lang="zh-TW">樹狀圖檢視會視覺化呈現 ELF 檔案各個部分的大小。</li>
       <li>Relocation heatmap.</li>
+      <li xml:lang="ar">خريطة حرارية لإعادة التوطين.</li>
       <li xml:lang="ca">Gràfic d'intensitat de colors de les relocalitzacions.</li>
       <li xml:lang="ca-valencia">Gràfic d'intensitat de colors de les relocalitzacions.</li>
       <li xml:lang="el">Χάρτης μετάθεσης.</li>
@@ -297,6 +307,7 @@
       <li xml:lang="zh-CN">重定位热图。</li>
       <li xml:lang="zh-TW">重定位熱區圖。</li>
       <li>Built-in disassembler for x86 and AArch64.</li>
+      <li xml:lang="ar">مفكك تجميع مضمن لـ x86 و AArch64.</li>
       <li xml:lang="ca">Desassemblador integrat per a x86 i AArch64.</li>
       <li xml:lang="ca-valencia">Desassemblador integrat per a x86 i AArch64.</li>
       <li xml:lang="de">Eingebauter Disassembler für x86 und AArch64.</li>
@@ -325,6 +336,7 @@
       <li xml:lang="zh-CN">内置的 x86 和 AArch64 反汇编器。</li>
       <li xml:lang="zh-TW">x86 和 AArch64 的內建 disassembler。</li>
       <li>Browser for data type memory layouts extracted from DWARF debug information.</li>
+      <li xml:lang="ar">متصفح لتخطيطات ذاكرة نوع البيانات المستخرجة من معلومات تصحيح أخطاء DWARF.</li>
       <li xml:lang="ca">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
       <li xml:lang="ca-valencia">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
       <li xml:lang="el">Περιηγητής για διατάξεις μνήμης τύπων δεδομένων που εξάγονται από πληροφορίες αποσφαλμάτωσης DWARF.</li>
@@ -352,6 +364,7 @@
       <li xml:lang="zh-CN">从 DWARF 调试信息中提取的数据类型内存布局浏览器</li>
       <li xml:lang="zh-TW">從 DWARF 除錯資訊取出的資料類型記憶體佈局的瀏覽器。</li>
       <li>Forward and backward dependency viewer.</li>
+      <li xml:lang="ar">عارض التبعية الأمامية والخلفية.</li>
       <li xml:lang="ca">Visualitzador de les dependències cap endavant i cap enrere.</li>
       <li xml:lang="ca-valencia">Visor de les dependències cap avant i cap arrere.</li>
       <li xml:lang="el">Προβολή προς τα εμπρός και προς τα πίσω εξαρτήσεων.</li>
@@ -383,6 +396,7 @@
   <screenshots>
     <screenshot type="default">
       <caption>Size treemap views</caption>
+      <caption xml:lang="ar">مشاهدات خريطة شجرة الحجم</caption>
       <caption xml:lang="ca">Vista del mapa d'arbre de la mida</caption>
       <caption xml:lang="ca-valencia">Vista del mapa d'arbre de la mida</caption>
       <caption xml:lang="el">Προβολές δενδρικού χάρτη μεγεθών</caption>
