@@ -1,4 +1,4 @@
-# Burkhard Lück <lueck@hube-lueck.de>, 2019, 2020, 2021.
+# SPDX-FileCopyrightText: 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: elf-dissector_qt\n"
