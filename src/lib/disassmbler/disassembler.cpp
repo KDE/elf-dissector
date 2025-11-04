@@ -47,6 +47,8 @@
 #endif
 
 #ifdef HAVE_CAPSTONE
+//https://github.com/capstone-engine/capstone/blob/c059126d98837a1c4f6988756fe30fc10904f6a6/docs/cs_v6_release_guide.md#notes-about-aarch64-systemz-and-arm-renaming
+#define CAPSTONE_AARCH64_COMPAT_HEADER
 #include <capstone.h>
 #endif
 
@@ -223,6 +225,7 @@ QString Disassembler::disassembleCapstone(const unsigned char* data, uint64_t si
             err = cs_open(CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, &handle);
             break;
         case EM_AARCH64:
+            // capstone-6: CS_ARCH_ARM64 -> CS_ARCH_AARCH64
             err = cs_open(CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, &handle);
             break;
         default:
