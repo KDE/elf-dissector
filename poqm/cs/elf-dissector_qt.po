@@ -1,8 +1,8 @@
-# Vit Pelcak <vit@pelcak.org>, 2019.
+# SPDX-FileCopyrightText: 2019, 2025 Vit Pelcak <vit@pelcak.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2019-09-30 14:56+0200\n"
+"PO-Revision-Date: 2025-12-05 10:51+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 19.08.1\n"
+"X-Generator: Lokalize 25.08.3\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
@@ -199,7 +199,7 @@ msgstr "Soubor ELF k otevření"
 #: ui/mainwindow.cpp:51
 msgctxt "MainWindow|"
 msgid "ELF Structure"
-msgstr ""
+msgstr "Struktura ELF"
 
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
@@ -209,17 +209,17 @@ msgstr ""
 #: ui/mainwindow.cpp:53
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr ""
+msgstr "Závislosti"
 
 #: ui/mainwindow.cpp:55
 msgctxt "MainWindow|"
 msgid "Data Types"
-msgstr ""
+msgstr "Typy dat"
 
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
 msgid "Performance"
-msgstr ""
+msgstr "Výkon"
 
 #: ui/mainwindow.cpp:59
 msgctxt "MainWindow|"
