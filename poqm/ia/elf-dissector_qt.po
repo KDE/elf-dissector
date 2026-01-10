@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2020, 2021, 2025 Giovanni Sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2020, 2021, 2025, 2026 Giovanni Sora <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2025-02-26 10:02+0100\n"
+"PO-Revision-Date: 2026-01-09 15:15+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -118,7 +118,7 @@ msgstr "Symbolo"
 #: ui/elfmodel/datavisitor.cpp:145 ui/elfmodel/datavisitor.cpp:316
 msgctxt "QObject|"
 msgid "<null>"
-msgstr ""
+msgstr "<null>"
 
 #: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
@@ -194,12 +194,12 @@ msgstr "ELF Dissector"
 #: ui/main.cpp:32
 msgctxt "MainWindow|"
 msgid "ELF file to open"
-msgstr ""
+msgstr "File ELF a aperir"
 
 #: ui/mainwindow.cpp:51
 msgctxt "MainWindow|"
 msgid "ELF Structure"
-msgstr ""
+msgstr "Structura de ELF"
 
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
@@ -209,12 +209,9 @@ msgstr ""
 #: ui/mainwindow.cpp:53
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr ""
+msgstr "Dependentias"
 
 #: ui/mainwindow.cpp:55
-#, fuzzy
-#| msgctxt "TypeModel|"
-#| msgid "Data Type"
 msgctxt "MainWindow|"
 msgid "Data Types"
 msgstr "Typo de datos"
@@ -222,15 +219,12 @@ msgstr "Typo de datos"
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
 msgid "Performance"
-msgstr ""
+msgstr "Prestation"
 
 #: ui/mainwindow.cpp:59
-#, fuzzy
-#| msgctxt "IssuesModel|"
-#| msgid "Issue"
 msgctxt "MainWindow|"
 msgid "Issues"
-msgstr "Emission"
+msgstr "Emissiones"
 
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
