@@ -241,7 +241,7 @@ msgstr "Obri un objecte ELF"
 #: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
-msgstr "No s'ha pogut carregar el fitxer ELF"
+msgstr "Ha fallat mentre es carregava el fitxer ELF"
 
 #: ui/mainwindow.cpp:140
 #, qt-format
@@ -253,7 +253,7 @@ msgstr "No s'ha pogut carregar %1."
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
-msgstr "S'ha produït un error en carregar %1."
+msgstr "S'ha produït un error mentre es carregava %1."
 
 #: ui/mainwindow.cpp:151
 #, qt-format
@@ -516,8 +516,8 @@ msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
 "will be incomplete."
 msgstr ""
-"S'ha produït un error en llegir dades DWARF d'objectes ELF, l'arbre serà "
-"incomplet."
+"S'ha produït un error mentre es llegien dades DWARF d'objectes ELF, l'arbre "
+"serà incomplet."
 
 #: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
