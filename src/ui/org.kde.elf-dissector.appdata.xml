@@ -64,6 +64,7 @@
   <summary xml:lang="pl">Narzędzie analizy statycznej dla plików ELF</summary>
   <summary xml:lang="pt">Ferramenta de análise estática de ficheiros ELF</summary>
   <summary xml:lang="pt-BR">Ferramenta de análise estática para arquivos ELF</summary>
+  <summary xml:lang="ru">Средство статического анализа файлов ELF</summary>
   <summary xml:lang="sl">Orodje za statično analizo datotek ELF</summary>
   <summary xml:lang="sv">Statiskt analysverktyg av ELF-filer</summary>
   <summary xml:lang="tr">ELF dosyaları için durağan çözümleme aracı</summary>
@@ -94,6 +95,7 @@
     <p xml:lang="pl">Dysektor ELF jest przydatny jako:</p>
     <p xml:lang="pt">A Análise do ELF é útil se precisar de fazer uma ou mais das seguintes tarefas:</p>
     <p xml:lang="pt-BR">O ELF Dissector é útil se você precisa para fazer uma ou mais das seguintes tarefas:</p>
+    <p xml:lang="ru">ELF Dissector пригодится для выполнения одной или нескольких из следующих задач:</p>
     <p xml:lang="sl">ELF Dissector je uporaben, če morate opraviti eno ali več naslednjih nalog:</p>
     <p xml:lang="sv">ELF-dissektor är användbar om du behöver utföra en eller fler av följande uppgifter:</p>
     <p xml:lang="tr">ELF Parçalara Ayırıcı, aşağıdaki görevlerden birini veya birkaçını yapmanız gerektiğinde yararlıdır:</p>
@@ -123,6 +125,7 @@
       <li xml:lang="pl">Przeglądanie zależności w przód i w tył na poziomie biblioteki i symboli.</li>
       <li xml:lang="pt">Inspecção das dependências anteriores e posteriores, ao nível da biblioteca e do símbolo.</li>
       <li xml:lang="pt-BR">Inspecionar dependências para frente e para trás, em nível de biblioteca e símbolos.</li>
+      <li xml:lang="ru">Проверка прямых и обратных зависимостей на уровне библиотек и символов.</li>
       <li xml:lang="sl">Pregledovanje odvisnosti naprej in nazaj na ravni knjižnice in simbolov.</li>
       <li xml:lang="sv">Inspektera framåt- och bakåtberoenden på biblioteks- och symbolnivå.</li>
       <li xml:lang="tr">İleri ve geri bağımlılıkları denetleme, kitaplık ve sembol düzeyinde.</li>
@@ -151,6 +154,7 @@
       <li xml:lang="pl">Rozpoznawanie wąskich gardeł przy wczytywaniu, takich jak kosztowne statyczne konstruktory lub nadmierne relokacje.</li>
       <li xml:lang="pt">Identificação de constrangimentos de performance no carregamento, como construtores estáticos dispendiosos ou realocações excessivas.</li>
       <li xml:lang="pt-BR">Identificar gargalos de performance em tempo de execução, como construtores estáticos custosos ou relocações custosas.</li>
+      <li xml:lang="ru">Выявление узких мест производительности при загрузке, таких как затратные статические конструкторы или избыточные перемещения;</li>
       <li xml:lang="sl">Prepoznavanje ozkih grl v obremenitvi, kot so dragi statični konstruktorji ali prekomerne premestitve.</li>
       <li xml:lang="sv">Identifiera prestandaflaskhalsar vid laddning, såsom kostsamma statiska konstruktorer eller överdrivna relokeringar.</li>
       <li xml:lang="tr">Durağan yapıcılar veya gereğinden çok yeniden konumlandırmalar gibi yükleme zamanı başarım tıkanıklıklarını belirleme.</li>
@@ -179,6 +183,7 @@
       <li xml:lang="pl">Profilowanie rozmiaru plików ELF.</li>
       <li xml:lang="pt">Análise do tamanho dos ficheiros ELF.</li>
       <li xml:lang="pt-BR">Caracterização por tamanho de arquivos ELF.</li>
+      <li xml:lang="ru">Профилирование размера файлов ELF;</li>
       <li xml:lang="sl">Profiliranje velikosti iz datotek ELF.</li>
       <li xml:lang="sv">Storleksprofilering av ELF-filer.</li>
       <li xml:lang="tr">ELF dosyalarının boyut profillemesi.</li>
@@ -244,6 +249,7 @@
       <li xml:lang="pl">Przeglądarka struktury ELF.</li>
       <li xml:lang="pt">Navegação pela estrutura ELF.</li>
       <li xml:lang="pt-BR">Navegador de estrutura ELF.</li>
+      <li xml:lang="ru">Просмотр структуры ELF;</li>
       <li xml:lang="sl">Brskalnik ELF struktur.</li>
       <li xml:lang="sv">ELF-strukturbläddrare.</li>
       <li xml:lang="tr">ELF yapısı tarayıcısı</li>
@@ -272,6 +278,7 @@
       <li xml:lang="pl">Obrazowanie drzewiastej mapy rozmiaru różnych części plików ELF.</li>
       <li xml:lang="pt">Visualização em árvore do tamanho das diversas componentes de um ficheiro ELF.</li>
       <li xml:lang="pt-BR">Visualização em árvore do tamanho das várias partes de um arquivo ELF.</li>
+      <li xml:lang="ru">Визуализация в виде карты дерева размеров различных частей файла ELF;</li>
       <li xml:lang="sl">Vizualna predstavitev drevesne strukture velikosti različnih delov datoteke ELF.</li>
       <li xml:lang="sv">Visualisering av storleken för de olika delarna av en ELF-file med en trädavbildning.</li>
       <li xml:lang="tr">Bir ELF dosyasının çeşitli kısımlarının ağaç haritası biçiminde görselleştirmesi</li>
@@ -300,6 +307,7 @@
       <li xml:lang="pl">Gorąca mapa relokacji.</li>
       <li xml:lang="pt">'Mapa de calor' das realocações.</li>
       <li xml:lang="pt-BR">Mapa de calor de relocação.</li>
+      <li xml:lang="ru">Карта перемещений;</li>
       <li xml:lang="sl">Toplotni grafikon premestitev.</li>
       <li xml:lang="sv">Färgdiagram för relokeringar.</li>
       <li xml:lang="tr">Yeniden konumlandırma ısı haritası</li>
@@ -329,6 +337,7 @@
       <li xml:lang="pl">Wbudowany dysasembler dla x86 oraz AArch64.</li>
       <li xml:lang="pt">Descodificação para Assembly incorporada para o x86 e o AArch64.</li>
       <li xml:lang="pt-BR">Desmontador embutido para x86 e AArch64.</li>
+      <li xml:lang="ru">Встроенный дизассемблер для x86 и AArch64;</li>
       <li xml:lang="sl">Vgrajen raz-zbirnik za x86 in AArch64.</li>
       <li xml:lang="sv">Inbyggd disassembler för x86 och AArch64.</li>
       <li xml:lang="tr">x86 ve AArch64 için gömülü gelen parçalara ayırıcı</li>
@@ -357,6 +366,7 @@
       <li xml:lang="pl">Przeglądarka układów rodzajów danych w pamięci wydobytych z danych diagnostycznych DWARF</li>
       <li xml:lang="pt">Navegação pelos diferentes formatos de memória para dados extraídos a partir da informação de depuração DWARF.</li>
       <li xml:lang="pt-BR">Navegador para layouts de memória dos tipos de dados extraídos das informações de depuração do DWARF.</li>
+      <li xml:lang="ru">Обозреватель расположения в памяти для типов данных, извлечённых из отладочной информации DWARF;</li>
       <li xml:lang="sl">Brskalnik za postavitve pomnilniških struktur podatkov, pridobljeno iz podatkov o odpravljanju napak DWARF.</li>
       <li xml:lang="sv">Bläddrare för minneslayout av datatyper extraherad från DWARF avlusningsinformation.</li>
       <li xml:lang="tr">DWARF hata ayıklama bilgisinden ayıklanan veri türü bellek yerleşimleri için tarayıcı</li>
@@ -385,6 +395,7 @@
       <li xml:lang="pl">Przeglądarka zależności w przód i w tył.</li>
       <li xml:lang="pt">Visualização das dependências anteriores e posteriores.</li>
       <li xml:lang="pt-BR">Visualizador de dependências para frente e para trás.</li>
+      <li xml:lang="ru">Средство просмотра прямых и обратных зависимостей;</li>
       <li xml:lang="sl">Vpogledovalnik odvisnosti naprej in nazaj.</li>
       <li xml:lang="sv">Visning av framåt- och bakåtberoenden.</li>
       <li xml:lang="tr">İleri ve geri bağımlılık görüntüleyicisi</li>
@@ -417,6 +428,7 @@
       <caption xml:lang="pl">Widok drzewiastej mapy rozmiaru</caption>
       <caption xml:lang="pt">Dimensionamento da área da árvore</caption>
       <caption xml:lang="pt-BR">Visualização de árvore de tamanhos</caption>
+      <caption xml:lang="ru">Вид древовидной карты размеров;</caption>
       <caption xml:lang="sl">Pogled v drevesno strukturo velikosti</caption>
       <caption xml:lang="sv">Ändra storlek på trädavbildningar</caption>
       <caption xml:lang="tr">Boyut ağaç haritası görünümleri</caption>
