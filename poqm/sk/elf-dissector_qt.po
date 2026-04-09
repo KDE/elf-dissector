@@ -12,8 +12,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 21.08.3\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
@@ -76,12 +76,12 @@ msgstr "neznáme (%1)"
 #: ui/dependencymodel/dependencymodel.cpp:123
 msgctxt "DependencyModel|"
 msgid "Cyclic dependency!"
-msgstr ""
+msgstr "Cyklická závislosť!"
 
 #: ui/dependencymodel/dependencymodel.cpp:127
 msgctxt "DependencyModel|"
 msgid "Dependency not found!"
-msgstr ""
+msgstr "Závislosť sa nenašla!"
 
 #: ui/dependencymodel/dependencymodel.cpp:225
 msgctxt "DependencyModel|"
@@ -91,12 +91,12 @@ msgstr "Knižnica"
 #: ui/dependencymodel/dependencymodel.cpp:226
 msgctxt "DependencyModel|"
 msgid "Symbols Used"
-msgstr ""
+msgstr "Symbols Used"
 
 #: ui/dependencymodel/filelistmodel.cpp:56
 msgctxt "FileListModel|"
 msgid "Shared Object"
-msgstr ""
+msgstr "Shared Object"
 
 #: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"
@@ -111,7 +111,7 @@ msgstr ""
 #: ui/dependencymodel/unuseddependenciesmodel.cpp:78
 msgctxt "UnusedDependenciesModel|"
 msgid "Unused Dependency"
-msgstr ""
+msgstr "Unused Dependency"
 
 #: ui/dependencymodel/usedsymbolmodel.cpp:64
 msgctxt "UsedSymbolModel|"
@@ -131,7 +131,7 @@ msgstr ""
 #: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "VTable"
-msgstr ""
+msgstr "VTable"
 
 #: ui/elfmodel/elfmodel.cpp:125
 msgctxt "ElfModel|"
@@ -167,27 +167,27 @@ msgstr "Súbor"
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:61
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Median"
-msgstr ""
+msgstr "Lazy Median"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:62
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Min"
-msgstr ""
+msgstr "Lazy Min"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:63
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Median"
-msgstr ""
+msgstr "Now Median"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:64
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Min"
-msgstr ""
+msgstr "Now Min"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:65
 msgctxt "LoadBenchmarkModel|"
 msgid "Relocs"
-msgstr ""
+msgstr "Relocs"
 
 #: ui/main.cpp:20
 msgctxt "MainWindow|"
@@ -207,17 +207,14 @@ msgstr ""
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
 msgid "Size Tree Map"
-msgstr ""
+msgstr "Size Tree Map"
 
 #: ui/mainwindow.cpp:53
 msgctxt "MainWindow|"
 msgid "Dependencies"
-msgstr ""
+msgstr "Závislosti"
 
 #: ui/mainwindow.cpp:55
-#, fuzzy
-#| msgctxt "TypeModel|"
-#| msgid "Data Type"
 msgctxt "MainWindow|"
 msgid "Data Types"
 msgstr "Dátový typ"
@@ -225,12 +222,9 @@ msgstr "Dátový typ"
 #: ui/mainwindow.cpp:57
 msgctxt "MainWindow|"
 msgid "Performance"
-msgstr ""
+msgstr "Výkon"
 
 #: ui/mainwindow.cpp:59
-#, fuzzy
-#| msgctxt "IssuesModel|"
-#| msgid "Issue"
 msgctxt "MainWindow|"
 msgid "Issues"
 msgstr "Vydanie"
@@ -243,7 +237,7 @@ msgstr ""
 #: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
-msgstr ""
+msgstr "Nepodarilo sa load ELF file"
 
 #: ui/mainwindow.cpp:140
 #, qt-format
@@ -255,7 +249,7 @@ msgstr "Nebolo možné načítať %1."
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
-msgstr ""
+msgstr "Nepodarilo sa load %1."
 
 #: ui/mainwindow.cpp:151
 #, qt-format
@@ -326,7 +320,7 @@ msgstr "Qt Creator"
 #: ui/navigator/codenavigator.cpp:75
 msgctxt "QObject|"
 msgid "Code Navigation"
-msgstr ""
+msgstr "Navigácia v kóde"
 
 #: ui/navigator/codenavigator.cpp:99
 msgctxt "QObject|"
@@ -336,7 +330,7 @@ msgstr "Vlastné..."
 #: ui/navigator/codenavigator.cpp:111
 msgctxt "QObject|"
 msgid "Custom Code Navigation"
-msgstr ""
+msgstr "Vlastná navigácia v kóde"
 
 #: ui/navigator/codenavigator.cpp:112
 msgctxt "QObject|"
@@ -370,7 +364,7 @@ msgstr "Hľadať"
 #: ui/views/dependencyview.ui:80
 msgctxt "DependencyView|"
 msgid "Inverse"
-msgstr ""
+msgstr "Inverzný sínus"
 
 #: ui/views/dependencyview.ui:172
 msgctxt "DependencyView|"
@@ -518,7 +512,7 @@ msgstr ""
 #: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
 msgid "Compute Type Tree"
-msgstr ""
+msgstr "Compute Type Tree"
 
 #: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
