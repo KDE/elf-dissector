@@ -106,7 +106,7 @@ msgstr "Používatelia"
 #: ui/dependencymodel/unuseddependenciesmodel.cpp:77
 msgctxt "UnusedDependenciesModel|"
 msgid "ELF File"
-msgstr ""
+msgstr "Súbor ELF"
 
 #: ui/dependencymodel/unuseddependenciesmodel.cpp:78
 msgctxt "UnusedDependenciesModel|"
@@ -126,7 +126,7 @@ msgstr "<null>"
 #: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "Construction VTable"
-msgstr ""
+msgstr "Konštrukčná VTable"
 
 #: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
@@ -147,7 +147,7 @@ msgstr "Veľkosť"
 #, qt-format
 msgctxt "IssuesModel|"
 msgid "%1 (implicit virtual destructor)"
-msgstr ""
+msgstr "%1 (implicitný virtuálny deštruktor)"
 
 #: ui/issuesmodel/issuesmodel.cpp:76
 msgctxt "IssuesModel|"
@@ -197,12 +197,12 @@ msgstr "ELF Dissector"
 #: ui/main.cpp:32
 msgctxt "MainWindow|"
 msgid "ELF file to open"
-msgstr ""
+msgstr "Súbor ELF na otvorenie"
 
 #: ui/mainwindow.cpp:51
 msgctxt "MainWindow|"
 msgid "ELF Structure"
-msgstr ""
+msgstr "Štruktúra ELF"
 
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
@@ -232,7 +232,7 @@ msgstr "Vydanie"
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
-msgstr ""
+msgstr "Otvoriť objekt ELF"
 
 #: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
@@ -295,7 +295,7 @@ msgstr "Ctrl+Q"
 #: ui/mainwindow.ui:129
 msgctxt "MainWindow|"
 msgid "Reopen &Previously Loaded Files"
-msgstr ""
+msgstr "Znova otvoriť &predtým načítané súbory"
 
 #: ui/navigator/codenavigator.cpp:28
 msgctxt "CodeNavigator|"
@@ -338,6 +338,8 @@ msgid ""
 "Specify command to use for code navigation, '%f' will be replaced by the "
 "file name, '%l' by the line number."
 msgstr ""
+"Specify command to use for code navigation, '%f' will be replaced by the "
+"file name, '%l' by the line number."
 
 #: ui/typemodel/typemodel.cpp:269
 msgctxt "TypeModel|"
@@ -374,7 +376,7 @@ msgstr "Nepoužité"
 #: ui/views/dependencyview.ui:199
 msgctxt "DependencyView|"
 msgid "&Optimize Dependency Order"
-msgstr ""
+msgstr "&Optimalizovať poradie závislostí"
 
 #: ui/views/elfstructureview.ui:36
 msgctxt "ElfStructureView|"
@@ -399,7 +401,7 @@ msgstr "Hľadať"
 #: ui/views/issuesview.ui:46
 msgctxt "IssuesView|"
 msgid "&Check for issues (expensive!)"
-msgstr ""
+msgstr "&Skontrolovať problémy (náročné!)"
 
 #: ui/views/loadbenchmarkview.ui:41
 msgctxt "LoadBenchmarkView|"
@@ -414,12 +416,12 @@ msgstr "Kresliť"
 #: ui/views/loadbenchmarkview.ui:81
 msgctxt "LoadBenchmarkView|"
 msgid "&Run Benchmark"
-msgstr ""
+msgstr "&Spustiť benchmark"
 
 #: ui/views/loadbenchmarkview.ui:84
 msgctxt "LoadBenchmarkView|"
 msgid "Measure loading and dynamic linking time."
-msgstr ""
+msgstr "Merať čas načítania a dynamického linkovania."
 
 #: ui/views/sizetreemapview.ui:39
 msgctxt "SizeTreeMapView|"
@@ -429,78 +431,79 @@ msgstr "Hľadať"
 #: ui/views/sizetreemapview.ui:68
 msgctxt "SizeTreeMapView|"
 msgid "Hide &Debug Information"
-msgstr ""
+msgstr "Skryť &ladiace informácie"
 
 #: ui/views/sizetreemapview.ui:71
 msgctxt "SizeTreeMapView|"
 msgid "Do not show sections containing debug information."
-msgstr ""
+msgstr "Nezobrazovať sekcie obsahujúce ladiace informácie."
 
 #: ui/views/sizetreemapview.ui:84
 msgctxt "SizeTreeMapView|"
 msgid "Colorize &Sections"
-msgstr ""
+msgstr "Zafarbiť &sekcie"
 
 #: ui/views/sizetreemapview.ui:87
 msgctxt "SizeTreeMapView|"
 msgid "Vary color of sections in the size tree map."
-msgstr ""
+msgstr "Meniť farbu sekcií v stromovej mape veľkostí."
 
 #: ui/views/sizetreemapview.ui:100
 msgctxt "SizeTreeMapView|"
 msgid "Colorize S&ymbols"
-msgstr ""
+msgstr "Zafarbiť s&ymboly"
 
 #: ui/views/sizetreemapview.ui:103
 msgctxt "SizeTreeMapView|"
 msgid "Vary the color of symbols in the size tree map."
-msgstr ""
+msgstr "Meniť farbu symbolov v stromovej mape veľkostí."
 
 #: ui/views/sizetreemapview.ui:116
 msgctxt "SizeTreeMapView|"
 msgid "&Relocation Heatmap"
-msgstr ""
+msgstr "&Teplotná mapa relokácií"
 
 #: ui/views/sizetreemapview.ui:129
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-runtime"
-msgstr ""
+msgstr "Skryť nebehovú"
 
 #: ui/views/sizetreemapview.ui:132
 msgctxt "SizeTreeMapView|"
 msgid ""
 "Do not show content from sections that are not loaded into memory at runtime."
 msgstr ""
+"Nezobrazovať obsah zo sekcií, ktoré sa nenačítavajú do pamäte počas behu."
 
 #: ui/views/sizetreemapview.ui:145
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-writable"
-msgstr ""
+msgstr "Skryť nezapisovateľné"
 
 #: ui/views/sizetreemapview.ui:148
 msgctxt "SizeTreeMapView|"
 msgid "Do not show content that is read-only/shared."
-msgstr ""
+msgstr "Nezobrazovať obsah, ktorý je iba na čítanie/zdieľaný."
 
 #: ui/views/sizetreemapview.ui:161
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-executable"
-msgstr ""
+msgstr "Skryť nespustiteľné"
 
 #: ui/views/sizetreemapview.ui:164
 msgctxt "SizeTreeMapView|"
 msgid "Do not show non-executable data content."
-msgstr ""
+msgstr "Nezobrazovať nespustiteľný dátový obsah."
 
 #: ui/views/sizetreemapview.ui:177
 msgctxt "SizeTreeMapView|"
 msgid "&No Colorization"
-msgstr ""
+msgstr "&Bez zafarbenia"
 
 #: ui/views/typeview.cpp:50 ui/views/typeview.cpp:62
 msgctxt "TypeView|"
 msgid "Invalid DWARF entries"
-msgstr ""
+msgstr "Neplatné položky DWARF"
 
 #: ui/views/typeview.cpp:51 ui/views/typeview.cpp:63
 msgctxt "TypeView|"
@@ -508,6 +511,8 @@ msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
 "will be incomplete."
 msgstr ""
+"Počas čítania DWARF dát niektorých objektov ELF sa vyskytla chyba, strom "
+"bude neúplný."
 
 #: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
@@ -521,6 +526,9 @@ msgid ""
 "which the application will not respond, and use up to 1.5GB of memory. "
 "Proceed anyway?"
 msgstr ""
+"Computing the type tree from DWARF data can take up to several minutes in "
+"which the application will not respond, and use up to 1.5GB of memory. "
+"Proceed anyway?"
 
 #: ui/views/typeview.ui:36
 msgctxt "TypeView|"
@@ -530,4 +538,4 @@ msgstr "Hľadať"
 #: ui/widgets/gnuplotwidget.cpp:20
 msgctxt "GnuplotWidget|"
 msgid "'gnuplot' not found, plotting not available."
-msgstr ""
+msgstr "„gnuplot\" nebol nájdený, vykresľovanie nie je dostupné."
