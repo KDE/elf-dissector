@@ -33,6 +33,7 @@
   <name xml:lang="sl">ELF Dissector</name>
   <name xml:lang="sv">ELF-dissektor</name>
   <name xml:lang="tr">ELF Parçalara Ayırıcı</name>
+  <name xml:lang="ug">ELF تەھلىل قىلغۇچى</name>
   <name xml:lang="uk">ELF Dissector</name>
   <name xml:lang="zh-CN">ELF 解析器</name>
   <name xml:lang="zh-TW">ELF 解析器</name>
@@ -226,6 +227,7 @@
     <p xml:lang="sl">Glavne možnosti:</p>
     <p xml:lang="sv">Huvudfunktionalitet:</p>
     <p xml:lang="tr">Ana özellikler:</p>
+    <p xml:lang="ug">ئاساسىي ئىقتىدارى:</p>
     <p xml:lang="uk">Основні можливості:</p>
     <p xml:lang="zh-CN">主要功能：</p>
     <p xml:lang="zh-TW">主要功能：</p>
