@@ -1,16 +1,17 @@
 # SPDX-FileCopyrightText: 2019, 2025 Vit Pelcak <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2026 Libor Filípek <libor.filipek@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2025-12-05 10:51+0100\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-07-09 12:19+0200\n"
+"Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 26.04.3\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
@@ -73,12 +74,12 @@ msgstr "neznámý (%1)"
 #: ui/dependencymodel/dependencymodel.cpp:123
 msgctxt "DependencyModel|"
 msgid "Cyclic dependency!"
-msgstr ""
+msgstr "Cyklická závislost!"
 
 #: ui/dependencymodel/dependencymodel.cpp:127
 msgctxt "DependencyModel|"
 msgid "Dependency not found!"
-msgstr ""
+msgstr "Závislost nebyla nalezena!"
 
 #: ui/dependencymodel/dependencymodel.cpp:225
 msgctxt "DependencyModel|"
@@ -88,12 +89,12 @@ msgstr "Knihovna"
 #: ui/dependencymodel/dependencymodel.cpp:226
 msgctxt "DependencyModel|"
 msgid "Symbols Used"
-msgstr ""
+msgstr "Použité symboly"
 
 #: ui/dependencymodel/filelistmodel.cpp:56
 msgctxt "FileListModel|"
 msgid "Shared Object"
-msgstr ""
+msgstr "Sdílený objekt"
 
 #: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"
@@ -108,7 +109,7 @@ msgstr "Soubor ELF"
 #: ui/dependencymodel/unuseddependenciesmodel.cpp:78
 msgctxt "UnusedDependenciesModel|"
 msgid "Unused Dependency"
-msgstr ""
+msgstr "Nepoužívaná závislost"
 
 #: ui/dependencymodel/usedsymbolmodel.cpp:64
 msgctxt "UsedSymbolModel|"
@@ -123,12 +124,12 @@ msgstr "<null>"
 #: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "Construction VTable"
-msgstr ""
+msgstr "Vytvoření VTable"
 
 #: ui/elfmodel/datavisitor.cpp:350
 msgctxt "QObject|"
 msgid "VTable"
-msgstr ""
+msgstr "VTable"
 
 #: ui/elfmodel/elfmodel.cpp:125
 msgctxt "ElfModel|"
@@ -144,7 +145,7 @@ msgstr "Velikost"
 #, qt-format
 msgctxt "IssuesModel|"
 msgid "%1 (implicit virtual destructor)"
-msgstr ""
+msgstr "%1 (implicitní virtuální destruktor)"
 
 #: ui/issuesmodel/issuesmodel.cpp:76
 msgctxt "IssuesModel|"
@@ -164,27 +165,27 @@ msgstr "Soubor"
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:61
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Median"
-msgstr ""
+msgstr "Líný medián"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:62
 msgctxt "LoadBenchmarkModel|"
 msgid "Lazy Min"
-msgstr ""
+msgstr "Líné minimum"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:63
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Median"
-msgstr ""
+msgstr "Medián nyní"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:64
 msgctxt "LoadBenchmarkModel|"
 msgid "Now Min"
-msgstr ""
+msgstr "Minimum nyní"
 
 #: ui/loadbenchmarkmodel/loadbenchmarkmodel.cpp:65
 msgctxt "LoadBenchmarkModel|"
 msgid "Relocs"
-msgstr ""
+msgstr "Přesuny"
 
 #: ui/main.cpp:20
 msgctxt "MainWindow|"
@@ -204,7 +205,7 @@ msgstr "Struktura ELF"
 #: ui/mainwindow.cpp:52
 msgctxt "MainWindow|"
 msgid "Size Tree Map"
-msgstr ""
+msgstr "Stromová mapa velikostí"
 
 #: ui/mainwindow.cpp:53
 msgctxt "MainWindow|"
@@ -224,29 +225,29 @@ msgstr "Výkon"
 #: ui/mainwindow.cpp:59
 msgctxt "MainWindow|"
 msgid "Issues"
-msgstr ""
+msgstr "Problémy"
 
 #: ui/mainwindow.cpp:92
 msgctxt "MainWindow|"
 msgid "Open ELF Object"
-msgstr ""
+msgstr "Otevřít ELF objekt"
 
 #: ui/mainwindow.cpp:140
 msgctxt "MainWindow|"
 msgid "Failed to load ELF file"
-msgstr ""
+msgstr "Nepodařilo se načíst ELF soubor"
 
 #: ui/mainwindow.cpp:140
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Could not load %1."
-msgstr ""
+msgstr "Nelze načíst %1."
 
 #: ui/mainwindow.cpp:144
 #, qt-format
 msgctxt "MainWindow|"
 msgid "Failed to load %1."
-msgstr ""
+msgstr "Načtení %1 se nezdařilo."
 
 #: ui/mainwindow.cpp:151
 #, qt-format
@@ -292,7 +293,7 @@ msgstr "Ctrl+Q"
 #: ui/mainwindow.ui:129
 msgctxt "MainWindow|"
 msgid "Reopen &Previously Loaded Files"
-msgstr ""
+msgstr "Znovu otevřít &dříve načtené soubory"
 
 #: ui/navigator/codenavigator.cpp:28
 msgctxt "CodeNavigator|"
@@ -335,6 +336,8 @@ msgid ""
 "Specify command to use for code navigation, '%f' will be replaced by the "
 "file name, '%l' by the line number."
 msgstr ""
+"Zadejte příkaz, který se má použít pro navigaci v kódu; '%f' bude nahrazeno "
+"názvem souboru, '%l' číslem řádku."
 
 #: ui/typemodel/typemodel.cpp:269
 msgctxt "TypeModel|"
@@ -349,7 +352,7 @@ msgstr "Velikost"
 #: ui/views/dependencyview.ui:21
 msgctxt "DependencyView|"
 msgid "Top Down"
-msgstr ""
+msgstr "Shora dolů"
 
 #: ui/views/dependencyview.ui:34 ui/views/dependencyview.ui:55
 #: ui/views/dependencyview.ui:93 ui/views/dependencyview.ui:117
@@ -361,7 +364,7 @@ msgstr "Hledat"
 #: ui/views/dependencyview.ui:80
 msgctxt "DependencyView|"
 msgid "Inverse"
-msgstr ""
+msgstr "Inverzně"
 
 #: ui/views/dependencyview.ui:172
 msgctxt "DependencyView|"
@@ -371,7 +374,7 @@ msgstr "Nepoužito"
 #: ui/views/dependencyview.ui:199
 msgctxt "DependencyView|"
 msgid "&Optimize Dependency Order"
-msgstr ""
+msgstr "&Optimalizovat pořadí závislostí"
 
 #: ui/views/elfstructureview.ui:36
 msgctxt "ElfStructureView|"
@@ -396,7 +399,7 @@ msgstr "Hledat"
 #: ui/views/issuesview.ui:46
 msgctxt "IssuesView|"
 msgid "&Check for issues (expensive!)"
-msgstr ""
+msgstr "&Zkontrolovat případné problémy (nákladné!)"
 
 #: ui/views/loadbenchmarkview.ui:41
 msgctxt "LoadBenchmarkView|"
@@ -411,12 +414,12 @@ msgstr "Vykreslit"
 #: ui/views/loadbenchmarkview.ui:81
 msgctxt "LoadBenchmarkView|"
 msgid "&Run Benchmark"
-msgstr ""
+msgstr "Spustit &benchmark"
 
 #: ui/views/loadbenchmarkview.ui:84
 msgctxt "LoadBenchmarkView|"
 msgid "Measure loading and dynamic linking time."
-msgstr ""
+msgstr "Změřit dobu načítání a dobu dynamického propojení."
 
 #: ui/views/sizetreemapview.ui:39
 msgctxt "SizeTreeMapView|"
@@ -426,78 +429,79 @@ msgstr "Hledat"
 #: ui/views/sizetreemapview.ui:68
 msgctxt "SizeTreeMapView|"
 msgid "Hide &Debug Information"
-msgstr ""
+msgstr "Skrýt &informace o ladění"
 
 #: ui/views/sizetreemapview.ui:71
 msgctxt "SizeTreeMapView|"
 msgid "Do not show sections containing debug information."
-msgstr ""
+msgstr "Nezobrazovat oddíly obsahující ladicí informace."
 
 #: ui/views/sizetreemapview.ui:84
 msgctxt "SizeTreeMapView|"
 msgid "Colorize &Sections"
-msgstr ""
+msgstr "Zabarvit &oddíly"
 
 #: ui/views/sizetreemapview.ui:87
 msgctxt "SizeTreeMapView|"
 msgid "Vary color of sections in the size tree map."
-msgstr ""
+msgstr "Změnit barvu jednotlivých úseků na stromové mapě velikostí."
 
 #: ui/views/sizetreemapview.ui:100
 msgctxt "SizeTreeMapView|"
 msgid "Colorize S&ymbols"
-msgstr ""
+msgstr "Zabarvit &symboly"
 
 #: ui/views/sizetreemapview.ui:103
 msgctxt "SizeTreeMapView|"
 msgid "Vary the color of symbols in the size tree map."
-msgstr ""
+msgstr "Změnit barvu symbolů na stromové mapě velikostí."
 
 #: ui/views/sizetreemapview.ui:116
 msgctxt "SizeTreeMapView|"
 msgid "&Relocation Heatmap"
-msgstr ""
+msgstr "&Teplotní mapa přemístění"
 
 #: ui/views/sizetreemapview.ui:129
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-runtime"
-msgstr ""
+msgstr "Skrýt obsah mimo běhové prostředí"
 
 #: ui/views/sizetreemapview.ui:132
 msgctxt "SizeTreeMapView|"
 msgid ""
 "Do not show content from sections that are not loaded into memory at runtime."
 msgstr ""
+"Nezobrazovat obsah z oddílů, které nejsou v době běhu načteny do paměti."
 
 #: ui/views/sizetreemapview.ui:145
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-writable"
-msgstr ""
+msgstr "Skrýt nezapisovatelné"
 
 #: ui/views/sizetreemapview.ui:148
 msgctxt "SizeTreeMapView|"
 msgid "Do not show content that is read-only/shared."
-msgstr ""
+msgstr "Nezobrazovat obsah, který je pouze pro čtení nebo sdílený."
 
 #: ui/views/sizetreemapview.ui:161
 msgctxt "SizeTreeMapView|"
 msgid "Hide non-executable"
-msgstr ""
+msgstr "Skrýt nespustitelné"
 
 #: ui/views/sizetreemapview.ui:164
 msgctxt "SizeTreeMapView|"
 msgid "Do not show non-executable data content."
-msgstr ""
+msgstr "Nezobrazovat datový obsah, který nelze spustit."
 
 #: ui/views/sizetreemapview.ui:177
 msgctxt "SizeTreeMapView|"
 msgid "&No Colorization"
-msgstr ""
+msgstr "&Žádné zabarvení"
 
 #: ui/views/typeview.cpp:50 ui/views/typeview.cpp:62
 msgctxt "TypeView|"
 msgid "Invalid DWARF entries"
-msgstr ""
+msgstr "Neplatné položky DWARF"
 
 #: ui/views/typeview.cpp:51 ui/views/typeview.cpp:63
 msgctxt "TypeView|"
@@ -505,11 +509,13 @@ msgid ""
 "An error occurred while reading DWARF data of some ELF objects, the tree "
 "will be incomplete."
 msgstr ""
+"Při čtení dat ve formátu DWARF u některých objektů ELF došlo k chybě, strom "
+"bude neúplný."
 
 #: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
 msgid "Compute Type Tree"
-msgstr ""
+msgstr "Strom typů výpočetních operací"
 
 #: ui/views/typeview.cpp:58
 msgctxt "TypeView|"
@@ -518,6 +524,9 @@ msgid ""
 "which the application will not respond, and use up to 1.5GB of memory. "
 "Proceed anyway?"
 msgstr ""
+"Výpočet typového stromu z dat ve formátu DWARF může trvat až několik minut, "
+"během nichž aplikace nebude reagovat, a může zabrat až 1,5 GB paměti. Chcete "
+"přesto pokračovat?"
 
 #: ui/views/typeview.ui:36
 msgctxt "TypeView|"
@@ -527,4 +536,4 @@ msgstr "Hledat"
 #: ui/widgets/gnuplotwidget.cpp:20
 msgctxt "GnuplotWidget|"
 msgid "'gnuplot' not found, plotting not available."
-msgstr ""
+msgstr "'gnuplot' nebyl nalezen, vykreslování není k dispozici."
