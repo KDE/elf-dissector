@@ -45,6 +45,7 @@
   <summary xml:lang="ar">أداة تحليل ساكن لملفات ELF</summary>
   <summary xml:lang="ca">Eina d'anàlisi estàtica per als fitxers ELF</summary>
   <summary xml:lang="ca-valencia">Eina d'anàlisi estàtica per als fitxers ELF</summary>
+  <summary xml:lang="cs">Nástroj pro statickou analýzu souborů ELF</summary>
   <summary xml:lang="de">Statische Analyse für ELF-Dateien</summary>
   <summary xml:lang="el">Εργαλείο στατικής ανάλυσης για ELF αρχεία</summary>
   <summary xml:lang="en-GB">Static analysis tool for ELF files</summary>
@@ -78,6 +79,7 @@
     <p xml:lang="ar">محلل ELF مفيد إن احتجت لإنجاز مهمة أو أكثر من المهام التالية:</p>
     <p xml:lang="ca">L'ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
     <p xml:lang="ca-valencia">ELF Dissector és útil si cal fer una o més de les tasques següents:</p>
+    <p xml:lang="cs">Nástroj ELF Dissector se hodí, pokud potřebujete provést jednu nebo více z následujících úloh:</p>
     <p xml:lang="el">Ο ανατόμος ELF είναι χρήσιμος αν θέλετε να κάνετε μία ή περισσότερες από τις ακόλουθες εργασίες:</p>
     <p xml:lang="en-GB">ELF Dissector is useful if you need to do one or more of the following tasks:</p>
     <p xml:lang="eo">ELF Dissector estas utila se vi bezonas fari unu aŭ pli el la sekvaj taskoj:</p>
@@ -110,6 +112,7 @@
       <li xml:lang="ar">افحص التبعيات الأمامية والخلفية، على مستوى المكتبة والرمز.</li>
       <li xml:lang="ca">Inspeccionar les dependències cap endavant i cap enrere, a nivell de biblioteca i símbols.</li>
       <li xml:lang="ca-valencia">Inspeccionar les dependències cap avant i cap arrere, a nivell de biblioteca i símbols.</li>
+      <li xml:lang="cs">Kontrola závislostí vpřed i vzad na úrovni knihoven a symbolů.</li>
       <li xml:lang="el">Επιθεώρηση προς τα εμπρός και προς τα πίσω εξαρτήσεων, σε επίπεδο βιβλιοθηκών και συμβόλων.</li>
       <li xml:lang="en-GB">Inspecting forward and backward dependencies, on library and symbol level.</li>
       <li xml:lang="eo">Inspektante antaŭen kaj malantaŭen dependecojn, sur biblioteko kaj simbolnivelo.</li>
@@ -140,6 +143,7 @@
       <li xml:lang="ar">حدد اختناقات أداء وقت التحميل مثل المنشئات الساكنة المكلفة أو عمليات النقل المفرطة.</li>
       <li xml:lang="ca">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocalitzacions excessives.</li>
       <li xml:lang="ca-valencia">Identificació de colls d'ampolla de rendiment en temps de càrrega com constructors estàtics cars o relocalitzacions excessives.</li>
+      <li xml:lang="cs">Identifikace úzkých míst ovlivňujících výkon při načítání, jako jsou například náročné statické konstruktory nebo nadměrné přesuny.</li>
       <li xml:lang="el">Ταυτοποίηση συμφορήσεων στην απόδοση κατά τη φόρτωση όπως στατικούς constructors με υπερκατανάλωση πόρων ή εκτεταμένες μεταθέσεις.</li>
       <li xml:lang="en-GB">Identifying load-time performance bottlenecks such as expensive static constructors or excessive relocations.</li>
       <li xml:lang="eo">Identigante ŝargotempajn rendimentajn proplempunktojn kiel multekostaj statikaj konstrukciistoj aŭ troaj translokiĝoj.</li>
@@ -170,6 +174,7 @@
       <li xml:lang="ar">ضع تشكيلة لحجم ملفات ELF.</li>
       <li xml:lang="ca">Anàlisi del rendiment de mida dels fitxers ELF.</li>
       <li xml:lang="ca-valencia">Anàlisi del rendiment de mida dels fitxers ELF.</li>
+      <li xml:lang="cs">Analýza velikosti souborů ELF.</li>
       <li xml:lang="el">Προφίλ μεγέθους για ELF αρχεία.</li>
       <li xml:lang="en-GB">Size profiling of ELF files.</li>
       <li xml:lang="eo">Grandecprofilado de ELF-dosieroj.</li>
@@ -268,6 +273,7 @@
       <li xml:lang="ar">تصور خريطة شجرية لحجم الأجزاء المختلفة لملف ELF.</li>
       <li xml:lang="ca">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
       <li xml:lang="ca-valencia">Visualització de mapa d'arbre de la mida de parts diverses d'un fitxer ELF.</li>
+      <li xml:lang="cs">Vizualizace velikosti jednotlivých částí souboru ELF ve formě stromové mapy.</li>
       <li xml:lang="el">Αναπαράσταση δενδρικού χάρτη μεγέθους των διαφόρων τμημάτων ενός αρχείου ELF.</li>
       <li xml:lang="en-GB">Tree map visualisation of the size of the various parts of an ELF file.</li>
       <li xml:lang="eo">Arba mapo bildigo de la grandeco de la diversaj partoj de ELF-dosiero.</li>
@@ -298,6 +304,7 @@
       <li xml:lang="ar">خريطة حرارية لإعادة التوطين.</li>
       <li xml:lang="ca">Gràfic d'intensitat de colors de les relocalitzacions.</li>
       <li xml:lang="ca-valencia">Gràfic d'intensitat de colors de les relocalitzacions.</li>
+      <li xml:lang="cs">Teplotní mapa přemístění.</li>
       <li xml:lang="el">Χάρτης μετάθεσης.</li>
       <li xml:lang="en-GB">Relocation heatmap.</li>
       <li xml:lang="eo">Varmomapo de translokiĝo.</li>
@@ -328,6 +335,7 @@
       <li xml:lang="ar">مفكك تجميع مضمن لـ x86 و AArch64.</li>
       <li xml:lang="ca">Desassemblador integrat per a x86 i AArch64.</li>
       <li xml:lang="ca-valencia">Desassemblador integrat per a x86 i AArch64.</li>
+      <li xml:lang="cs">Integrovaný disassembler pro architektury x86 a AArch64.</li>
       <li xml:lang="de">Eingebauter Disassembler für x86 und AArch64.</li>
       <li xml:lang="el">Ενσωματωμένος αποσυναρμολογητής για x86 και AArch64.</li>
       <li xml:lang="en-GB">Built-in disassembler for x86 and AArch64.</li>
@@ -359,6 +367,7 @@
       <li xml:lang="ar">متصفح لتخطيطات ذاكرة نوع البيانات المستخرجة من معلومات تصحيح أخطاء DWARF.</li>
       <li xml:lang="ca">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
       <li xml:lang="ca-valencia">Navegador de les disposicions de memòria pel tipus de dada extretes de la informació de depuració DWARF.</li>
+      <li xml:lang="cs">Prohlížeč rozložení paměti datových typů extrahovaných z ladicích informací ve formátu DWARF.</li>
       <li xml:lang="el">Περιηγητής για διατάξεις μνήμης τύπων δεδομένων που εξάγονται από πληροφορίες αποσφαλμάτωσης DWARF.</li>
       <li xml:lang="en-GB">Browser for data type memory layouts extracted from DWARF debug information.</li>
       <li xml:lang="eo">Retumilo por datumtipaj memor-aranĝoj ĉerpitaj el DWARF-sencimigaj informoj.</li>
@@ -389,6 +398,7 @@
       <li xml:lang="ar">عارض التبعية الأمامية والخلفية.</li>
       <li xml:lang="ca">Visualitzador de les dependències cap endavant i cap enrere.</li>
       <li xml:lang="ca-valencia">Visor de les dependències cap avant i cap arrere.</li>
+      <li xml:lang="cs">Prohlížeč dopředných a zpětných závislostí.</li>
       <li xml:lang="el">Προβολή προς τα εμπρός και προς τα πίσω εξαρτήσεων.</li>
       <li xml:lang="en-GB">Forward and backward dependency viewer.</li>
       <li xml:lang="eo">Antaŭen kaj malantaŭen dependecspektilon.</li>
@@ -423,6 +433,7 @@
       <caption xml:lang="ar">مشاهدات خريطة شجرة الحجم</caption>
       <caption xml:lang="ca">Vista del mapa d'arbre de la mida</caption>
       <caption xml:lang="ca-valencia">Vista del mapa d'arbre de la mida</caption>
+      <caption xml:lang="cs">Zobrazení stromových map podle velikosti</caption>
       <caption xml:lang="el">Προβολές δενδρικού χάρτη μεγεθών</caption>
       <caption xml:lang="en-GB">Size treemap views</caption>
       <caption xml:lang="eo">Grandecaj arbomapo-vidoj</caption>
