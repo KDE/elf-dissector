@@ -5,7 +5,9 @@
     "runtime-version": "6.11",
     "sdk": "org.kde.Sdk",
     "command": "elf-dissector",
-    "tags": ["nightly"],
+    "tags": [
+        "nightly"
+    ],
     "desktop-file-name-suffix": " (Nightly)",
     "finish-args": [
         "--share=ipc",
@@ -15,7 +17,6 @@
         "--share=network",
         "--filesystem=host:ro"
     ],
-
     "modules": [
         {
             "name": "binutils",
@@ -104,7 +105,6 @@
             "cleanup": [
                 "/man",
                 "libexec/gnuplot/6.0/gnuplot_x11"
-
             ]
         },
         {
