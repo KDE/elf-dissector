@@ -95,10 +95,26 @@ msgctxt "DependencyModel|"
 msgid "Symbols Used"
 msgstr "Brukte symbol"
 
-#: ui/dependencymodel/filelistmodel.cpp:56
+#: ui/dependencymodel/filelistmodel.cpp:97
 msgctxt "FileListModel|"
 msgid "Shared Object"
 msgstr "Delt objekt"
+
+#: ui/dependencymodel/filelistmodel.cpp:98
+#, fuzzy
+#| msgctxt "LoadBenchmarkModel|"
+#| msgid "File"
+msgctxt "FileListModel|"
+msgid "Files"
+msgstr "Fil"
+
+#: ui/dependencymodel/filelistmodel.cpp:99
+#, fuzzy
+#| msgctxt "UsedSymbolModel|"
+#| msgid "Symbol"
+msgctxt "FileListModel|"
+msgid "Symbols"
+msgstr "Symbol"
 
 #: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"

@@ -90,9 +90,19 @@ msgctxt "DependencyModel|"
 msgid "Symbols Used"
 msgstr ""
 
-#: ui/dependencymodel/filelistmodel.cpp:56
+#: ui/dependencymodel/filelistmodel.cpp:97
 msgctxt "FileListModel|"
 msgid "Shared Object"
+msgstr ""
+
+#: ui/dependencymodel/filelistmodel.cpp:98
+msgctxt "FileListModel|"
+msgid "Files"
+msgstr ""
+
+#: ui/dependencymodel/filelistmodel.cpp:99
+msgctxt "FileListModel|"
+msgid "Symbols"
 msgstr ""
 
 #: ui/dependencymodel/fileusermodel.cpp:78
