@@ -48,6 +48,7 @@ DependencyView::DependencyView(QWidget* parent):
     proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
     proxy->setSourceModel(m_fileListModel);
     ui->inverseFileList->setModel(proxy);
+    ui->inverseFileList->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     connect(ui->inverseFileListSearchLine, &QLineEdit::textChanged, proxy, &QSortFilterProxyModel::setFilterFixedString);
     connect(ui->inverseFileList->selectionModel(), &QItemSelectionModel::selectionChanged, this, &DependencyView::inverseFileSelected);
 
