@@ -102,16 +102,12 @@ msgstr "Delt objekt"
 
 #: ui/dependencymodel/filelistmodel.cpp:98
 #, fuzzy
-#| msgctxt "LoadBenchmarkModel|"
-#| msgid "File"
 msgctxt "FileListModel|"
 msgid "Files"
 msgstr "Fil"
 
 #: ui/dependencymodel/filelistmodel.cpp:99
 #, fuzzy
-#| msgctxt "UsedSymbolModel|"
-#| msgid "Symbol"
 msgctxt "FileListModel|"
 msgid "Symbols"
 msgstr "Symbol"

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2026-02-18 11:15+0200\n"
+"PO-Revision-Date: 2026-10-02 07:51+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -98,20 +98,14 @@ msgid "Shared Object"
 msgstr "Общая библиотека"
 
 #: ui/dependencymodel/filelistmodel.cpp:98
-#, fuzzy
-#| msgctxt "LoadBenchmarkModel|"
-#| msgid "File"
 msgctxt "FileListModel|"
 msgid "Files"
-msgstr "Файл"
+msgstr "Файлы"
 
 #: ui/dependencymodel/filelistmodel.cpp:99
-#, fuzzy
-#| msgctxt "UsedSymbolModel|"
-#| msgid "Symbol"
 msgctxt "FileListModel|"
 msgid "Symbols"
-msgstr "Символ"
+msgstr "Символы"
 
 #: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"

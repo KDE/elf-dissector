@@ -1,9 +1,9 @@
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022-2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2025-07-17 23:03+0300\n"
-"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
+"PO-Revision-Date: 2026-10-02 19:20+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.04.2\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
@@ -96,20 +96,14 @@ msgid "Shared Object"
 msgstr "Paylaşılan Nesne"
 
 #: ui/dependencymodel/filelistmodel.cpp:98
-#, fuzzy
-#| msgctxt "LoadBenchmarkModel|"
-#| msgid "File"
 msgctxt "FileListModel|"
 msgid "Files"
-msgstr "Dosya"
+msgstr "Dosyalar"
 
 #: ui/dependencymodel/filelistmodel.cpp:99
-#, fuzzy
-#| msgctxt "UsedSymbolModel|"
-#| msgid "Symbol"
 msgctxt "FileListModel|"
 msgid "Symbols"
-msgstr "Sembol"
+msgstr "Semboller"
 
 #: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"
