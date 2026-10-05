@@ -1,16 +1,16 @@
-# SPDX-FileCopyrightText: 2020, 2023, 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2020, 2023-2026 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: elf-dissector_qt\n"
-"PO-Revision-Date: 2025-07-16 09:33+0200\n"
+"PO-Revision-Date: 2026-10-03 07:39+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
-"Language-Team: French <French <kde-francophone@kde.org>>\n"
+"Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.80\n"
+"X-Generator: Lokalize 26.08.1\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
@@ -96,20 +96,14 @@ msgid "Shared Object"
 msgstr "Objet partagé"
 
 #: ui/dependencymodel/filelistmodel.cpp:98
-#, fuzzy
-#| msgctxt "LoadBenchmarkModel|"
-#| msgid "File"
 msgctxt "FileListModel|"
 msgid "Files"
-msgstr "Fichier"
+msgstr "Fichiers"
 
 #: ui/dependencymodel/filelistmodel.cpp:99
-#, fuzzy
-#| msgctxt "UsedSymbolModel|"
-#| msgid "Symbol"
 msgctxt "FileListModel|"
 msgid "Symbols"
-msgstr "Symbole"
+msgstr "Symboles"
 
 #: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"
