@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2026-10-02 19:20+0300\n"
+"PO-Revision-Date: 2026-10-08 19:05+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -307,7 +307,7 @@ msgstr "Önceden Yüklenen Dosyaları Ye&niden Aç"
 #: ui/navigator/codenavigator.cpp:28
 msgctxt "CodeNavigator|"
 msgid "KDevelop"
-msgstr "K Geliştir"
+msgstr "KDevelop"
 
 #: ui/navigator/codenavigator.cpp:29
 msgctxt "CodeNavigator|"
@@ -317,7 +317,7 @@ msgstr "Kate"
 #: ui/navigator/codenavigator.cpp:30
 msgctxt "CodeNavigator|"
 msgid "KWrite"
-msgstr "K Yaz"
+msgstr "KWrite"
 
 #: ui/navigator/codenavigator.cpp:31
 msgctxt "CodeNavigator|"
