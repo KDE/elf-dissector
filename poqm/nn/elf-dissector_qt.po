@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2026-02-26 18:54+0100\n"
+"PO-Revision-Date: 2026-10-26 22:11+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 26.03.70\n"
+"X-Generator: Lokalize 26.11.70\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: qtrich\n"
@@ -101,13 +101,11 @@ msgid "Shared Object"
 msgstr "Delt objekt"
 
 #: ui/dependencymodel/filelistmodel.cpp:98
-#, fuzzy
 msgctxt "FileListModel|"
 msgid "Files"
-msgstr "Fil"
+msgstr "Filer"
 
 #: ui/dependencymodel/filelistmodel.cpp:99
-#, fuzzy
 msgctxt "FileListModel|"
 msgid "Symbols"
 msgstr "Symbol"
