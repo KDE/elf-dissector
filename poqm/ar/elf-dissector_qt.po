@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2025, 2026 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2025-10-06 12:02+0400\n"
+"PO-Revision-Date: 2026-10-03 15:41+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.12.3\n"
 "X-Qt-Contexts: true\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
@@ -97,20 +97,14 @@ msgid "Shared Object"
 msgstr "كائن مشترك"
 
 #: ui/dependencymodel/filelistmodel.cpp:98
-#, fuzzy
-#| msgctxt "LoadBenchmarkModel|"
-#| msgid "File"
 msgctxt "FileListModel|"
 msgid "Files"
-msgstr "ملف"
+msgstr "الملفات"
 
 #: ui/dependencymodel/filelistmodel.cpp:99
-#, fuzzy
-#| msgctxt "UsedSymbolModel|"
-#| msgid "Symbol"
 msgctxt "FileListModel|"
 msgid "Symbols"
-msgstr "الرمز"
+msgstr "الرموز"
 
 #: ui/dependencymodel/fileusermodel.cpp:78
 msgctxt "FileUserModel|"
