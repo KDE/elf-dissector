@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2025-2026 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: pan 93412\n"
-"PO-Revision-Date: 2025-08-19 04:58+0900\n"
+"PO-Revision-Date: 2026-11-03 19:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 25.11.70\n"
+"X-Generator: Lokalize 26.11.70\n"
 
 #: 3rdparty/treemap/treemap.cpp:1342
 #, qt-format
@@ -96,17 +96,11 @@ msgid "Shared Object"
 msgstr "共享物件"
 
 #: ui/dependencymodel/filelistmodel.cpp:98
-#, fuzzy
-#| msgctxt "LoadBenchmarkModel|"
-#| msgid "File"
 msgctxt "FileListModel|"
 msgid "Files"
 msgstr "檔案"
 
 #: ui/dependencymodel/filelistmodel.cpp:99
-#, fuzzy
-#| msgctxt "UsedSymbolModel|"
-#| msgid "Symbol"
 msgctxt "FileListModel|"
 msgid "Symbols"
 msgstr "符號"
